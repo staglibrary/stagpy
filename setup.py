@@ -8,13 +8,6 @@ LONG_DESCRIPTION =\
 
 # specify the name of the extension and source files
 # required to compile this
-# ext_modules = [Extension(name='swig.stag_internal',
-#                          sources=["swig/stag_internal.i"],
-#                          swig_opts=["-c++"],
-#                          # libraries=['Eigen'],
-#                          # library_dirs=["eigen-3.3.9"],
-#                          include_dirs=["eigen-3.3.9", "stag_lib"])]
-
 ext_modules = [Extension(name='swig._stag_internal',
                          sources=["swig/stag_internal_wrap.cxx", "stag_lib/stag.cpp", "stag_lib/utility.cpp"],
                          include_dirs=["eigen-3.3.9", "stag_lib"])]

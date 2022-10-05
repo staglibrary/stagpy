@@ -1,4 +1,4 @@
-import swig.stag_internal
+from . import stag_internal
 import scipy.sparse
 
 from .utility import return_sparse_matrix
@@ -28,10 +28,10 @@ class Graph:
         # This class is essentially a thin wrapper around the stag_internal library, written in C++.
         # Initialise the internal graph object with the provided adjacency matrix.
         adj_mat_csr = adj_mat.tocsr()
-        outer_starts = swig.stag_internal.vectori(adj_mat_csr.indptr.tolist())
-        inner_indices = swig.stag_internal.vectori(adj_mat_csr.indices.tolist())
-        values = swig.stag_internal.vectord(adj_mat_csr.data.tolist())
-        self.internal_graph = swig.stag_internal.Graph(outer_starts, inner_indices, values)
+        outer_starts = stag_internal.vectori(adj_mat_csr.indptr.tolist())
+        inner_indices = stag_internal.vectori(adj_mat_csr.indices.tolist())
+        values = stag_internal.vectord(adj_mat_csr.data.tolist())
+        self.internal_graph = stag_internal.Graph(outer_starts, inner_indices, values)
 
     @return_sparse_matrix
     def adjacency(self):

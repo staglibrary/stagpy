@@ -1,9 +1,0 @@
-# File types
-**/*.so
-**/*.cmake
-**/CMakeCache.txt
-**/Makefile
-
-# Directories
-**/CMakeFiles
-**/stag

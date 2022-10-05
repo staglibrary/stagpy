@@ -2811,8 +2811,8 @@ namespace swig {
 }
 
 
-    #include "../stag_lib/stag.h"
-    #include "../stag_lib/utility.h"
+    #include "stag_lib/stag.h"
+    #include "stag_lib/utility.h"
 
 
 #include <iostream>

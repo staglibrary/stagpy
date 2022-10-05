@@ -4,7 +4,9 @@
 #include <Eigen/Sparse>
 #include <vector>
 
-typedef Eigen::SparseMatrix<double, Eigen::RowMajor> SprsMat;
+// The fundamental datatype used in this library is the sparse matrix. For
+// convenience, we define the sparse matrix type here.
+#define SprsMat Eigen::SparseMatrix<double, Eigen::RowMajor>
 
 namespace stag {
 
@@ -46,16 +48,18 @@ namespace stag {
        */
       SprsMat laplacian();
 
-      /*
+      /**
        * The volume of the graph.
        *
-       * The volume is defined as the sum of all of the node degrees.
+       * The volume is defined as the sum of the node degrees.
        *
        * @return the graph's volume.
        */
       double volume();
 
     private:
+      // The ground truth definition of the graph object is the adjacency
+      // matrix, stored in a sparse format.
       SprsMat adjacency_matrix_;
   };
 }

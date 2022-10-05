@@ -19,19 +19,25 @@ class Graph:
     Vertices are referred to by their index in the adjacency matrix.
     """
 
-    def __init__(self, adj_mat):
+    def __init__(self, adj_mat, internal_graph=None):
         """
         Initialise the graph with an adjacency matrix.
 
         :param adj_mat: A sparse scipy matrix.
+        :param from_internal:
         """
         # This class is essentially a thin wrapper around the stag_internal library, written in C++.
-        # Initialise the internal graph object with the provided adjacency matrix.
-        adj_mat_csr = adj_mat.tocsr()
-        outer_starts = stag_internal.vectori(adj_mat_csr.indptr.tolist())
-        inner_indices = stag_internal.vectori(adj_mat_csr.indices.tolist())
-        values = stag_internal.vectord(adj_mat_csr.data.tolist())
-        self.internal_graph = stag_internal.Graph(outer_starts, inner_indices, values)
+
+        if internal_graph is None:
+            # Initialise the internal graph object with the provided adjacency matrix.
+            adj_mat_csr = adj_mat.tocsr()
+            outer_starts = stag_internal.vectori(adj_mat_csr.indptr.tolist())
+            inner_indices = stag_internal.vectori(adj_mat_csr.indices.tolist())
+            values = stag_internal.vectord(adj_mat_csr.data.tolist())
+            self.internal_graph = stag_internal.Graph(outer_starts, inner_indices, values)
+        else:
+            # The initialiser was called with an internal graph object.
+            self.internal_graph = internal_graph
 
     @return_sparse_matrix
     def adjacency(self):
@@ -65,3 +71,13 @@ class Graph:
         :return: the graph's volume.
         """
         return self.internal_graph.volume()
+
+
+def cycle_graph(n):
+    """
+    Construct a cycle graph on n vertices.
+
+    :param n:
+    :return: a graph object representing the n-cycle
+    """
+    return Graph(None, internal_graph=stag_internal.cycle_graph(n))

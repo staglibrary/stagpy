@@ -9567,6 +9567,29 @@ SWIGINTERN PyObject *Graph_swiginit(PyObject *SWIGUNUSEDPARM(self), PyObject *ar
   return SWIG_Python_InitShadowInstance(args);
 }
 
+SWIGINTERN PyObject *_wrap_cycle_graph(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  int arg1 ;
+  int val1 ;
+  int ecode1 = 0 ;
+  PyObject *swig_obj[1] ;
+  SwigValueWrapper< stag::Graph > result;
+  
+  if (!args) SWIG_fail;
+  swig_obj[0] = args;
+  ecode1 = SWIG_AsVal_int(swig_obj[0], &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "cycle_graph" "', argument " "1"" of type '" "int""'");
+  } 
+  arg1 = static_cast< int >(val1);
+  result = stag::cycle_graph(arg1);
+  resultobj = SWIG_NewPointerObj((new stag::Graph(static_cast< const stag::Graph& >(result))), SWIGTYPE_p_stag__Graph, SWIG_POINTER_OWN |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
 SWIGINTERN PyObject *_wrap_sprsMatValues(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   Eigen::SparseMatrix< double,Eigen::RowMajor > *arg1 = 0 ;
@@ -9742,6 +9765,7 @@ static PyMethodDef SwigMethods[] = {
 	 { "delete_Graph", _wrap_delete_Graph, METH_O, NULL},
 	 { "Graph_swigregister", Graph_swigregister, METH_O, NULL},
 	 { "Graph_swiginit", Graph_swiginit, METH_VARARGS, NULL},
+	 { "cycle_graph", _wrap_cycle_graph, METH_O, NULL},
 	 { "sprsMatValues", _wrap_sprsMatValues, METH_O, NULL},
 	 { "sprsMatInnerIndices", _wrap_sprsMatInnerIndices, METH_O, NULL},
 	 { "sprsMatOuterStarts", _wrap_sprsMatOuterStarts, METH_O, NULL},

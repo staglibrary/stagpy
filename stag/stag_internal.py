@@ -355,6 +355,9 @@ class Graph(object):
 _stag_internal.Graph_swigregister(Graph)
 
 
+def cycle_graph(n):
+    return _stag_internal.cycle_graph(n)
+
 def sprsMatValues(matrix):
     return _stag_internal.sprsMatValues(matrix)
 

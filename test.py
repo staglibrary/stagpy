@@ -4,8 +4,7 @@ import scipy.sparse
 
 
 def main():
-    adj_mat = sp.sparse.csr_matrix([[0, 1, 1, 1], [1, 0, 0, 0], [1, 0, 0, 0], [1, 0, 0, 0]])
-    graph = stag.graph.Graph(adj_mat)
+    graph = stag.graph.cycle_graph(10)
     lap = graph.laplacian()
     print(lap.todense())
     print(graph.volume())

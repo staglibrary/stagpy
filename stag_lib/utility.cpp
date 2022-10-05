@@ -18,7 +18,7 @@ std::vector<int> stag::sprsMatOuterStarts(SprsMat &matrix) {
   // Return the required indices vector
   int *indexPtr = matrix.outerIndexPtr();
   long outerSize = matrix.outerSize();
-  return {indexPtr, indexPtr + outerSize};
+  return {indexPtr, indexPtr + outerSize + 1};
 }
 
 std::vector<double> stag::sprsMatValues(SprsMat &matrix) {

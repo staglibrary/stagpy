@@ -14,7 +14,7 @@ setup(
     description=DESCRIPTION,
     long_description=LONG_DESCRIPTION,
     packages=find_packages(),
-    install_requires=[],
+    install_requires=["scipy"],
     long_description_content_type='text/markdown',
 
     keywords=['python', 'spectral', 'graph', 'algorithms', 'clustering', 'cheeger'],

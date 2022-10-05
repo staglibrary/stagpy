@@ -341,6 +341,9 @@ class Graph(object):
     def __init__(self, *args):
         _stag_internal.Graph_swiginit(self, _stag_internal.new_Graph(*args))
 
+    def adjacency(self):
+        return _stag_internal.Graph_adjacency(self)
+
     def laplacian(self):
         return _stag_internal.Graph_laplacian(self)
 

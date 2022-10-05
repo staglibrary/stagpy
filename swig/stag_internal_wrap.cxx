@@ -9376,48 +9376,43 @@ fail:
 
 SWIGINTERN PyObject *_wrap_new_Graph__SWIG_1(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
   PyObject *resultobj = 0;
-  int arg1 ;
-  std::vector< int,std::allocator< int > > arg2 ;
-  std::vector< int,std::allocator< int > > arg3 ;
-  std::vector< double,std::allocator< double > > arg4 ;
-  int val1 ;
-  int ecode1 = 0 ;
+  std::vector< int,std::allocator< int > > *arg1 = 0 ;
+  std::vector< int,std::allocator< int > > *arg2 = 0 ;
+  std::vector< double,std::allocator< double > > *arg3 = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  void *argp2 = 0 ;
+  int res2 = 0 ;
+  void *argp3 = 0 ;
+  int res3 = 0 ;
   stag::Graph *result = 0 ;
   
-  if ((nobjs < 4) || (nobjs > 4)) SWIG_fail;
-  ecode1 = SWIG_AsVal_int(swig_obj[0], &val1);
-  if (!SWIG_IsOK(ecode1)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "new_Graph" "', argument " "1"" of type '" "int""'");
-  } 
-  arg1 = static_cast< int >(val1);
-  {
-    std::vector< int,std::allocator< int > > *ptr = (std::vector< int,std::allocator< int > > *)0;
-    int res = swig::asptr(swig_obj[1], &ptr);
-    if (!SWIG_IsOK(res) || !ptr) {
-      SWIG_exception_fail(SWIG_ArgError((ptr ? res : SWIG_TypeError)), "in method '" "new_Graph" "', argument " "2"" of type '" "std::vector< int,std::allocator< int > >""'"); 
-    }
-    arg2 = *ptr;
-    if (SWIG_IsNewObj(res)) delete ptr;
+  if ((nobjs < 3) || (nobjs > 3)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1, SWIGTYPE_p_std__vectorT_int_std__allocatorT_int_t_t,  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "new_Graph" "', argument " "1"" of type '" "std::vector< int,std::allocator< int > > &""'"); 
   }
-  {
-    std::vector< int,std::allocator< int > > *ptr = (std::vector< int,std::allocator< int > > *)0;
-    int res = swig::asptr(swig_obj[2], &ptr);
-    if (!SWIG_IsOK(res) || !ptr) {
-      SWIG_exception_fail(SWIG_ArgError((ptr ? res : SWIG_TypeError)), "in method '" "new_Graph" "', argument " "3"" of type '" "std::vector< int,std::allocator< int > >""'"); 
-    }
-    arg3 = *ptr;
-    if (SWIG_IsNewObj(res)) delete ptr;
+  if (!argp1) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "new_Graph" "', argument " "1"" of type '" "std::vector< int,std::allocator< int > > &""'"); 
   }
-  {
-    std::vector< double,std::allocator< double > > *ptr = (std::vector< double,std::allocator< double > > *)0;
-    int res = swig::asptr(swig_obj[3], &ptr);
-    if (!SWIG_IsOK(res) || !ptr) {
-      SWIG_exception_fail(SWIG_ArgError((ptr ? res : SWIG_TypeError)), "in method '" "new_Graph" "', argument " "4"" of type '" "std::vector< double,std::allocator< double > >""'"); 
-    }
-    arg4 = *ptr;
-    if (SWIG_IsNewObj(res)) delete ptr;
+  arg1 = reinterpret_cast< std::vector< int,std::allocator< int > > * >(argp1);
+  res2 = SWIG_ConvertPtr(swig_obj[1], &argp2, SWIGTYPE_p_std__vectorT_int_std__allocatorT_int_t_t,  0 );
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "new_Graph" "', argument " "2"" of type '" "std::vector< int,std::allocator< int > > &""'"); 
   }
-  result = (stag::Graph *)new stag::Graph(arg1,arg2,arg3,arg4);
+  if (!argp2) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "new_Graph" "', argument " "2"" of type '" "std::vector< int,std::allocator< int > > &""'"); 
+  }
+  arg2 = reinterpret_cast< std::vector< int,std::allocator< int > > * >(argp2);
+  res3 = SWIG_ConvertPtr(swig_obj[2], &argp3, SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t,  0 );
+  if (!SWIG_IsOK(res3)) {
+    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "new_Graph" "', argument " "3"" of type '" "std::vector< double,std::allocator< double > > &""'"); 
+  }
+  if (!argp3) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "new_Graph" "', argument " "3"" of type '" "std::vector< double,std::allocator< double > > &""'"); 
+  }
+  arg3 = reinterpret_cast< std::vector< double,std::allocator< double > > * >(argp3);
+  result = (stag::Graph *)new stag::Graph(*arg1,*arg2,*arg3);
   resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_stag__Graph, SWIG_POINTER_NEW |  0 );
   return resultobj;
 fail:
@@ -9427,11 +9422,11 @@ fail:
 
 SWIGINTERN PyObject *_wrap_new_Graph(PyObject *self, PyObject *args) {
   Py_ssize_t argc;
-  PyObject *argv[5] = {
+  PyObject *argv[4] = {
     0
   };
   
-  if (!(argc = SWIG_Python_UnpackTuple(args, "new_Graph", 0, 4, argv))) SWIG_fail;
+  if (!(argc = SWIG_Python_UnpackTuple(args, "new_Graph", 0, 3, argv))) SWIG_fail;
   --argc;
   if (argc == 1) {
     int _v;
@@ -9441,24 +9436,21 @@ SWIGINTERN PyObject *_wrap_new_Graph(PyObject *self, PyObject *args) {
       return _wrap_new_Graph__SWIG_0(self, argc, argv);
     }
   }
-  if (argc == 4) {
+  if (argc == 3) {
     int _v;
-    {
-      int res = SWIG_AsVal_int(argv[0], NULL);
-      _v = SWIG_CheckState(res);
-    }
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_std__vectorT_int_std__allocatorT_int_t_t, SWIG_POINTER_NO_NULL);
+    _v = SWIG_CheckState(res);
     if (_v) {
-      int res = swig::asptr(argv[1], (std::vector< int,std::allocator< int > >**)(0));
+      void *vptr = 0;
+      int res = SWIG_ConvertPtr(argv[1], &vptr, SWIGTYPE_p_std__vectorT_int_std__allocatorT_int_t_t, SWIG_POINTER_NO_NULL);
       _v = SWIG_CheckState(res);
       if (_v) {
-        int res = swig::asptr(argv[2], (std::vector< int,std::allocator< int > >**)(0));
+        void *vptr = 0;
+        int res = SWIG_ConvertPtr(argv[2], &vptr, SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t, SWIG_POINTER_NO_NULL);
         _v = SWIG_CheckState(res);
         if (_v) {
-          int res = swig::asptr(argv[3], (std::vector< double,std::allocator< double > >**)(0));
-          _v = SWIG_CheckState(res);
-          if (_v) {
-            return _wrap_new_Graph__SWIG_1(self, argc, argv);
-          }
+          return _wrap_new_Graph__SWIG_1(self, argc, argv);
         }
       }
     }
@@ -9468,8 +9460,31 @@ fail:
   SWIG_Python_RaiseOrModifyTypeError("Wrong number or type of arguments for overloaded function 'new_Graph'.\n"
     "  Possible C/C++ prototypes are:\n"
     "    stag::Graph::Graph(Eigen::SparseMatrix< double,Eigen::RowMajor > const &)\n"
-    "    stag::Graph::Graph(int,std::vector< int,std::allocator< int > >,std::vector< int,std::allocator< int > >,std::vector< double,std::allocator< double > >)\n");
+    "    stag::Graph::Graph(std::vector< int,std::allocator< int > > &,std::vector< int,std::allocator< int > > &,std::vector< double,std::allocator< double > > &)\n");
   return 0;
+}
+
+
+SWIGINTERN PyObject *_wrap_Graph_adjacency(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  stag::Graph *arg1 = (stag::Graph *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject *swig_obj[1] ;
+  Eigen::SparseMatrix< double,Eigen::RowMajor > result;
+  
+  if (!args) SWIG_fail;
+  swig_obj[0] = args;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_stag__Graph, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Graph_adjacency" "', argument " "1"" of type '" "stag::Graph *""'"); 
+  }
+  arg1 = reinterpret_cast< stag::Graph * >(argp1);
+  result = (arg1)->adjacency();
+  resultobj = SWIG_NewPointerObj((new Eigen::SparseMatrix< double,Eigen::RowMajor >(static_cast< const Eigen::SparseMatrix< double,Eigen::RowMajor >& >(result))), SWIGTYPE_p_Eigen__SparseMatrixT_double_Eigen__RowMajor_t, SWIG_POINTER_OWN |  0 );
+  return resultobj;
+fail:
+  return NULL;
 }
 
 
@@ -9721,6 +9736,7 @@ static PyMethodDef SwigMethods[] = {
 	 { "vectord_swigregister", vectord_swigregister, METH_O, NULL},
 	 { "vectord_swiginit", vectord_swiginit, METH_VARARGS, NULL},
 	 { "new_Graph", _wrap_new_Graph, METH_VARARGS, NULL},
+	 { "Graph_adjacency", _wrap_Graph_adjacency, METH_O, NULL},
 	 { "Graph_laplacian", _wrap_Graph_laplacian, METH_O, NULL},
 	 { "Graph_volume", _wrap_Graph_volume, METH_O, NULL},
 	 { "delete_Graph", _wrap_delete_Graph, METH_O, NULL},

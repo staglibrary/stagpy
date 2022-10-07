@@ -2811,8 +2811,11 @@ namespace swig {
 }
 
 
+//     #include "eigen-3.3.9/Eigen/Core"
+//     #include "eigen-3.3.9/Eigen/Sparse"
     #include "stag_lib/stag.h"
     #include "stag_lib/utility.h"
+
 
 
 #include <iostream>
@@ -9471,7 +9474,7 @@ SWIGINTERN PyObject *_wrap_Graph_adjacency(PyObject *SWIGUNUSEDPARM(self), PyObj
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
-  Eigen::SparseMatrix< double,Eigen::RowMajor > result;
+  Eigen::SparseMatrix< double,Eigen::RowMajor > *result = 0 ;
   
   if (!args) SWIG_fail;
   swig_obj[0] = args;
@@ -9480,8 +9483,8 @@ SWIGINTERN PyObject *_wrap_Graph_adjacency(PyObject *SWIGUNUSEDPARM(self), PyObj
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Graph_adjacency" "', argument " "1"" of type '" "stag::Graph *""'"); 
   }
   arg1 = reinterpret_cast< stag::Graph * >(argp1);
-  result = (arg1)->adjacency();
-  resultobj = SWIG_NewPointerObj((new Eigen::SparseMatrix< double,Eigen::RowMajor >(static_cast< const Eigen::SparseMatrix< double,Eigen::RowMajor >& >(result))), SWIGTYPE_p_Eigen__SparseMatrixT_double_Eigen__RowMajor_t, SWIG_POINTER_OWN |  0 );
+  result = (Eigen::SparseMatrix< double,Eigen::RowMajor > *)(arg1)->adjacency();
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_Eigen__SparseMatrixT_double_Eigen__RowMajor_t, 0 |  0 );
   return resultobj;
 fail:
   return NULL;
@@ -9494,7 +9497,7 @@ SWIGINTERN PyObject *_wrap_Graph_laplacian(PyObject *SWIGUNUSEDPARM(self), PyObj
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
-  Eigen::SparseMatrix< double,Eigen::RowMajor > result;
+  Eigen::SparseMatrix< double,Eigen::RowMajor > *result = 0 ;
   
   if (!args) SWIG_fail;
   swig_obj[0] = args;
@@ -9503,8 +9506,8 @@ SWIGINTERN PyObject *_wrap_Graph_laplacian(PyObject *SWIGUNUSEDPARM(self), PyObj
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Graph_laplacian" "', argument " "1"" of type '" "stag::Graph *""'"); 
   }
   arg1 = reinterpret_cast< stag::Graph * >(argp1);
-  result = (arg1)->laplacian();
-  resultobj = SWIG_NewPointerObj((new Eigen::SparseMatrix< double,Eigen::RowMajor >(static_cast< const Eigen::SparseMatrix< double,Eigen::RowMajor >& >(result))), SWIGTYPE_p_Eigen__SparseMatrixT_double_Eigen__RowMajor_t, SWIG_POINTER_OWN |  0 );
+  result = (Eigen::SparseMatrix< double,Eigen::RowMajor > *)(arg1)->laplacian();
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_Eigen__SparseMatrixT_double_Eigen__RowMajor_t, 0 |  0 );
   return resultobj;
 fail:
   return NULL;
@@ -9592,7 +9595,7 @@ fail:
 
 SWIGINTERN PyObject *_wrap_sprsMatValues(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
-  Eigen::SparseMatrix< double,Eigen::RowMajor > *arg1 = 0 ;
+  Eigen::SparseMatrix< double,Eigen::RowMajor > *arg1 = (Eigen::SparseMatrix< double,Eigen::RowMajor > *) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
@@ -9600,15 +9603,12 @@ SWIGINTERN PyObject *_wrap_sprsMatValues(PyObject *SWIGUNUSEDPARM(self), PyObjec
   
   if (!args) SWIG_fail;
   swig_obj[0] = args;
-  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1, SWIGTYPE_p_Eigen__SparseMatrixT_double_Eigen__RowMajor_t,  0 );
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_Eigen__SparseMatrixT_double_Eigen__RowMajor_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "sprsMatValues" "', argument " "1"" of type '" "Eigen::SparseMatrix< double,Eigen::RowMajor > &""'"); 
-  }
-  if (!argp1) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "sprsMatValues" "', argument " "1"" of type '" "Eigen::SparseMatrix< double,Eigen::RowMajor > &""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "sprsMatValues" "', argument " "1"" of type '" "Eigen::SparseMatrix< double,Eigen::RowMajor > const *""'"); 
   }
   arg1 = reinterpret_cast< Eigen::SparseMatrix< double,Eigen::RowMajor > * >(argp1);
-  result = stag::sprsMatValues(*arg1);
+  result = stag::sprsMatValues((Eigen::SparseMatrix< double,Eigen::RowMajor > const *)arg1);
   resultobj = swig::from(static_cast< std::vector< double,std::allocator< double > > >(result));
   return resultobj;
 fail:
@@ -9618,7 +9618,7 @@ fail:
 
 SWIGINTERN PyObject *_wrap_sprsMatInnerIndices(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
-  Eigen::SparseMatrix< double,Eigen::RowMajor > *arg1 = 0 ;
+  Eigen::SparseMatrix< double,Eigen::RowMajor > *arg1 = (Eigen::SparseMatrix< double,Eigen::RowMajor > *) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
@@ -9626,15 +9626,12 @@ SWIGINTERN PyObject *_wrap_sprsMatInnerIndices(PyObject *SWIGUNUSEDPARM(self), P
   
   if (!args) SWIG_fail;
   swig_obj[0] = args;
-  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1, SWIGTYPE_p_Eigen__SparseMatrixT_double_Eigen__RowMajor_t,  0 );
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_Eigen__SparseMatrixT_double_Eigen__RowMajor_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "sprsMatInnerIndices" "', argument " "1"" of type '" "Eigen::SparseMatrix< double,Eigen::RowMajor > &""'"); 
-  }
-  if (!argp1) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "sprsMatInnerIndices" "', argument " "1"" of type '" "Eigen::SparseMatrix< double,Eigen::RowMajor > &""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "sprsMatInnerIndices" "', argument " "1"" of type '" "Eigen::SparseMatrix< double,Eigen::RowMajor > const *""'"); 
   }
   arg1 = reinterpret_cast< Eigen::SparseMatrix< double,Eigen::RowMajor > * >(argp1);
-  result = stag::sprsMatInnerIndices(*arg1);
+  result = stag::sprsMatInnerIndices((Eigen::SparseMatrix< double,Eigen::RowMajor > const *)arg1);
   resultobj = swig::from(static_cast< std::vector< int,std::allocator< int > > >(result));
   return resultobj;
 fail:
@@ -9644,7 +9641,7 @@ fail:
 
 SWIGINTERN PyObject *_wrap_sprsMatOuterStarts(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
-  Eigen::SparseMatrix< double,Eigen::RowMajor > *arg1 = 0 ;
+  Eigen::SparseMatrix< double,Eigen::RowMajor > *arg1 = (Eigen::SparseMatrix< double,Eigen::RowMajor > *) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
@@ -9652,15 +9649,12 @@ SWIGINTERN PyObject *_wrap_sprsMatOuterStarts(PyObject *SWIGUNUSEDPARM(self), Py
   
   if (!args) SWIG_fail;
   swig_obj[0] = args;
-  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1, SWIGTYPE_p_Eigen__SparseMatrixT_double_Eigen__RowMajor_t,  0 );
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_Eigen__SparseMatrixT_double_Eigen__RowMajor_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "sprsMatOuterStarts" "', argument " "1"" of type '" "Eigen::SparseMatrix< double,Eigen::RowMajor > &""'"); 
-  }
-  if (!argp1) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "sprsMatOuterStarts" "', argument " "1"" of type '" "Eigen::SparseMatrix< double,Eigen::RowMajor > &""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "sprsMatOuterStarts" "', argument " "1"" of type '" "Eigen::SparseMatrix< double,Eigen::RowMajor > const *""'"); 
   }
   arg1 = reinterpret_cast< Eigen::SparseMatrix< double,Eigen::RowMajor > * >(argp1);
-  result = stag::sprsMatOuterStarts(*arg1);
+  result = stag::sprsMatOuterStarts((Eigen::SparseMatrix< double,Eigen::RowMajor > const *)arg1);
   resultobj = swig::from(static_cast< std::vector< int,std::allocator< int > > >(result));
   return resultobj;
 fail:

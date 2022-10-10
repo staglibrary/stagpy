@@ -353,10 +353,17 @@ class Graph(object):
 
 # Register Graph in _stag_internal:
 _stag_internal.Graph_swigregister(Graph)
+cvar = _stag_internal.cvar
+VERSION_MAJOR = cvar.VERSION_MAJOR
+VERSION_MINOR = cvar.VERSION_MINOR
+VERSION_PATCH = cvar.VERSION_PATCH
 
 
 def cycle_graph(n):
     return _stag_internal.cycle_graph(n)
+
+def complete_graph(n):
+    return _stag_internal.complete_graph(n)
 
 def sprsMatValues(matrix):
     return _stag_internal.sprsMatValues(matrix)

@@ -81,3 +81,13 @@ def cycle_graph(n):
     :return: a graph object representing the n-cycle
     """
     return Graph(None, internal_graph=stag_internal.cycle_graph(n))
+
+
+def complete_graph(n):
+    """
+    Construct a complete graph on n vertices.
+
+    :param n:
+    :return: a graph object representing the complete graph
+    """
+    return Graph(None, internal_graph=stag_internal.complete_graph(n))

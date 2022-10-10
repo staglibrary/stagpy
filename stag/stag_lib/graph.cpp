@@ -1,4 +1,4 @@
-#include "stag.h"
+#include "graph.h"
 
 stag::Graph::Graph(const SprsMat& adjacency_matrix) {
   adjacency_matrix_ = adjacency_matrix;
@@ -61,6 +61,20 @@ stag::Graph stag::cycle_graph(int n) {
   for (int i = 0; i < n; i++) {
     non_zero_entries.emplace_back(i, (i + n + 1) % n, 1);
     non_zero_entries.emplace_back(i, (i + n - 1) % n, 1);
+  }
+  adj_mat.setFromTriplets(non_zero_entries.begin(), non_zero_entries.end());
+  return stag::Graph(adj_mat);
+}
+
+stag::Graph stag::complete_graph(int n) {
+  SprsMat adj_mat(n, n);
+  std::vector<Eigen::Triplet<double>> non_zero_entries;
+  for (int i = 0; i < n; i++) {
+    for (int j = 0; j < n; j++) {
+      if (i != j) {
+        non_zero_entries.emplace_back(i, j, 1);
+      }
+    }
   }
   adj_mat.setFromTriplets(non_zero_entries.begin(), non_zero_entries.end());
   return stag::Graph(adj_mat);

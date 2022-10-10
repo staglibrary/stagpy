@@ -2811,11 +2811,9 @@ namespace swig {
 }
 
 
-//     #include "eigen-3.3.9/Eigen/Core"
-//     #include "eigen-3.3.9/Eigen/Sparse"
     #include "stag_lib/stag.h"
+    #include "stag_lib/graph.h"
     #include "stag_lib/utility.h"
-
 
 
 #include <iostream>
@@ -4851,6 +4849,13 @@ SWIGINTERN std::vector< double >::iterator std_vector_Sl_double_Sg__erase__SWIG_
 SWIGINTERN std::vector< double >::iterator std_vector_Sl_double_Sg__erase__SWIG_1(std::vector< double > *self,std::vector< double >::iterator first,std::vector< double >::iterator last){ return self->erase(first, last); }
 SWIGINTERN std::vector< double >::iterator std_vector_Sl_double_Sg__insert__SWIG_0(std::vector< double > *self,std::vector< double >::iterator pos,std::vector< double >::value_type const &x){ return self->insert(pos, x); }
 SWIGINTERN void std_vector_Sl_double_Sg__insert__SWIG_1(std::vector< double > *self,std::vector< double >::iterator pos,std::vector< double >::size_type n,std::vector< double >::value_type const &x){ self->insert(pos, n, x); }
+
+SWIGINTERNINLINE PyObject*
+  SWIG_From_unsigned_SS_int  (unsigned int value)
+{
+  return PyInt_FromSize_t((size_t) value);
+}
+
 
 SWIGINTERN swig_type_info*
 SWIG_pchar_descriptor(void)
@@ -9353,6 +9358,48 @@ SWIGINTERN PyObject *vectord_swiginit(PyObject *SWIGUNUSEDPARM(self), PyObject *
   return SWIG_Python_InitShadowInstance(args);
 }
 
+SWIGINTERN int Swig_var_VERSION_MAJOR_set(PyObject *) {
+  SWIG_Error(SWIG_AttributeError,"Variable VERSION_MAJOR is read-only.");
+  return 1;
+}
+
+
+SWIGINTERN PyObject *Swig_var_VERSION_MAJOR_get(void) {
+  PyObject *pyobj = 0;
+  
+  pyobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(stag::VERSION_MAJOR));
+  return pyobj;
+}
+
+
+SWIGINTERN int Swig_var_VERSION_MINOR_set(PyObject *) {
+  SWIG_Error(SWIG_AttributeError,"Variable VERSION_MINOR is read-only.");
+  return 1;
+}
+
+
+SWIGINTERN PyObject *Swig_var_VERSION_MINOR_get(void) {
+  PyObject *pyobj = 0;
+  
+  pyobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(stag::VERSION_MINOR));
+  return pyobj;
+}
+
+
+SWIGINTERN int Swig_var_VERSION_PATCH_set(PyObject *) {
+  SWIG_Error(SWIG_AttributeError,"Variable VERSION_PATCH is read-only.");
+  return 1;
+}
+
+
+SWIGINTERN PyObject *Swig_var_VERSION_PATCH_get(void) {
+  PyObject *pyobj = 0;
+  
+  pyobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(stag::VERSION_PATCH));
+  return pyobj;
+}
+
+
 SWIGINTERN PyObject *_wrap_new_Graph__SWIG_0(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
   PyObject *resultobj = 0;
   Eigen::SparseMatrix< double,Eigen::RowMajor > *arg1 = 0 ;
@@ -9593,6 +9640,29 @@ fail:
 }
 
 
+SWIGINTERN PyObject *_wrap_complete_graph(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  int arg1 ;
+  int val1 ;
+  int ecode1 = 0 ;
+  PyObject *swig_obj[1] ;
+  SwigValueWrapper< stag::Graph > result;
+  
+  if (!args) SWIG_fail;
+  swig_obj[0] = args;
+  ecode1 = SWIG_AsVal_int(swig_obj[0], &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "complete_graph" "', argument " "1"" of type '" "int""'");
+  } 
+  arg1 = static_cast< int >(val1);
+  result = stag::complete_graph(arg1);
+  resultobj = SWIG_NewPointerObj((new stag::Graph(static_cast< const stag::Graph& >(result))), SWIGTYPE_p_stag__Graph, SWIG_POINTER_OWN |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
 SWIGINTERN PyObject *_wrap_sprsMatValues(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   Eigen::SparseMatrix< double,Eigen::RowMajor > *arg1 = (Eigen::SparseMatrix< double,Eigen::RowMajor > *) 0 ;
@@ -9760,6 +9830,7 @@ static PyMethodDef SwigMethods[] = {
 	 { "Graph_swigregister", Graph_swigregister, METH_O, NULL},
 	 { "Graph_swiginit", Graph_swiginit, METH_VARARGS, NULL},
 	 { "cycle_graph", _wrap_cycle_graph, METH_O, NULL},
+	 { "complete_graph", _wrap_complete_graph, METH_O, NULL},
 	 { "sprsMatValues", _wrap_sprsMatValues, METH_O, NULL},
 	 { "sprsMatInnerIndices", _wrap_sprsMatInnerIndices, METH_O, NULL},
 	 { "sprsMatOuterStarts", _wrap_sprsMatOuterStarts, METH_O, NULL},
@@ -10574,7 +10645,21 @@ SWIG_init(void) {
   // thread safe initialization
   swig::container_owner_attribute();
   
-  SWIG_Python_SetConstant(d, "VERSION",SWIG_FromCharPtr("0.1.0"));
+  globals = SWIG_globals();
+  if (!globals) {
+    PyErr_SetString(PyExc_TypeError, "Failure to create SWIG globals.");
+#if PY_VERSION_HEX >= 0x03000000
+    return NULL;
+#else
+    return;
+#endif
+  }
+  PyDict_SetItemString(md, "cvar", globals);
+  Py_DECREF(globals);
+  SWIG_addvarlink(globals, "VERSION_MAJOR", Swig_var_VERSION_MAJOR_get, Swig_var_VERSION_MAJOR_set);
+  SWIG_addvarlink(globals, "VERSION_MINOR", Swig_var_VERSION_MINOR_get, Swig_var_VERSION_MINOR_set);
+  SWIG_addvarlink(globals, "VERSION_PATCH", Swig_var_VERSION_PATCH_get, Swig_var_VERSION_PATCH_set);
+  SWIG_Python_SetConstant(d, "VERSION",SWIG_FromCharPtr("0.1.6"));
 #if PY_VERSION_HEX >= 0x03000000
   return m;
 #else

@@ -1,4 +1,4 @@
-# STAGPy - Spectral Toollkit of Algorithms for Graphs
+# STAGPy - Spectral Toolkit of Algorithms for Graphs
 
 STAG is a library providing efficient spectral algorithms for the analysis of massive graphs. STAGPy is a python wrapper around the underlying c++ library which provides convenient methods for learning on graphs in python.
 

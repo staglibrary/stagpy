@@ -108,7 +108,7 @@ namespace stag {
        *
        * @return a sparse Eigen matrix representing the graph adjacency matrix.
        */
-      [[nodiscard]] const SprsMat* adjacency() const;
+      const SprsMat* adjacency() const;
 
       /**
        * Construct the Laplacian matrix of the graph.
@@ -179,7 +179,7 @@ namespace stag {
       /**
        * The number of vertices in the graph.
        */
-      [[nodiscard]] stag_int number_of_vertices() const;
+      stag_int number_of_vertices() const;
 
       /**
        * The number of edges in the graph.
@@ -187,7 +187,7 @@ namespace stag {
        * This is defined based on the number of non-zero elements in the
        * adjacency matrix, and ignores the weights of the edges.
        */
-       [[nodiscard]] stag_int number_of_edges() const;
+       stag_int number_of_edges() const;
 
        // Override the abstract methods in the LocalGraph base class.
        double degree(stag_int v) override;

@@ -4,6 +4,9 @@
     #include "stag_lib/stag.h"
     #include "stag_lib/graph.h"
     #include "stag_lib/utility.h"
+    #include "stag_lib/cluster.h"
+    #include "stag_lib/graphio.h"
+    #include "stag_lib/random.h"
 %}
 
 %include <std_vector.i>
@@ -17,6 +20,9 @@ namespace std {
 %include "stag_lib/stag.h"
 %include "stag_lib/graph.h"
 %include "stag_lib/utility.h"
+%include "stag_lib/cluster.h"
+%include "stag_lib/graphio.h"
+%include "stag_lib/random.h"
 
 // Metadata about the python interface
 #define VERSION "0.1.6"

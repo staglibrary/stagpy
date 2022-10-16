@@ -334,7 +334,48 @@ class vectord(object):
 # Register vectord in _stag_internal:
 _stag_internal.vectord_swigregister(vectord)
 
-class Graph(object):
+class edge(object):
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
+    __repr__ = _swig_repr
+    v1 = property(_stag_internal.edge_v1_get, _stag_internal.edge_v1_set)
+    v2 = property(_stag_internal.edge_v2_get, _stag_internal.edge_v2_set)
+    weight = property(_stag_internal.edge_weight_get, _stag_internal.edge_weight_set)
+
+    def __init__(self):
+        _stag_internal.edge_swiginit(self, _stag_internal.new_edge())
+    __swig_destroy__ = _stag_internal.delete_edge
+
+# Register edge in _stag_internal:
+_stag_internal.edge_swigregister(edge)
+cvar = _stag_internal.cvar
+VERSION_MAJOR = cvar.VERSION_MAJOR
+VERSION_MINOR = cvar.VERSION_MINOR
+VERSION_PATCH = cvar.VERSION_PATCH
+
+class LocalGraph(object):
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
+
+    def __init__(self, *args, **kwargs):
+        raise AttributeError("No constructor defined - class is abstract")
+    __repr__ = _swig_repr
+
+    def degree(self, v):
+        return _stag_internal.LocalGraph_degree(self, v)
+
+    def degree_unweighted(self, v):
+        return _stag_internal.LocalGraph_degree_unweighted(self, v)
+
+    def neighbors(self, v):
+        return _stag_internal.LocalGraph_neighbors(self, v)
+
+    def neighbors_unweighted(self, v):
+        return _stag_internal.LocalGraph_neighbors_unweighted(self, v)
+    __swig_destroy__ = _stag_internal.delete_LocalGraph
+
+# Register LocalGraph in _stag_internal:
+_stag_internal.LocalGraph_swigregister(LocalGraph)
+
+class Graph(LocalGraph):
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
     __repr__ = _swig_repr
 
@@ -347,23 +388,58 @@ class Graph(object):
     def laplacian(self):
         return _stag_internal.Graph_laplacian(self)
 
-    def volume(self):
-        return _stag_internal.Graph_volume(self)
+    def normalised_laplacian(self):
+        return _stag_internal.Graph_normalised_laplacian(self)
+
+    def degree_matrix(self):
+        return _stag_internal.Graph_degree_matrix(self)
+
+    def inverse_degree_matrix(self):
+        return _stag_internal.Graph_inverse_degree_matrix(self)
+
+    def lazy_random_walk_matrix(self):
+        return _stag_internal.Graph_lazy_random_walk_matrix(self)
+
+    def total_volume(self):
+        return _stag_internal.Graph_total_volume(self)
+
+    def number_of_vertices(self):
+        return _stag_internal.Graph_number_of_vertices(self)
+
+    def number_of_edges(self):
+        return _stag_internal.Graph_number_of_edges(self)
+
+    def degree(self, v):
+        return _stag_internal.Graph_degree(self, v)
+
+    def degree_unweighted(self, v):
+        return _stag_internal.Graph_degree_unweighted(self, v)
+
+    def neighbors(self, v):
+        return _stag_internal.Graph_neighbors(self, v)
+
+    def neighbors_unweighted(self, v):
+        return _stag_internal.Graph_neighbors_unweighted(self, v)
     __swig_destroy__ = _stag_internal.delete_Graph
 
 # Register Graph in _stag_internal:
 _stag_internal.Graph_swigregister(Graph)
-cvar = _stag_internal.cvar
-VERSION_MAJOR = cvar.VERSION_MAJOR
-VERSION_MINOR = cvar.VERSION_MINOR
-VERSION_PATCH = cvar.VERSION_PATCH
 
+
+def __eq__(*args):
+    return _stag_internal.__eq__(*args)
+
+def __ne__(*args):
+    return _stag_internal.__ne__(*args)
 
 def cycle_graph(n):
     return _stag_internal.cycle_graph(n)
 
 def complete_graph(n):
     return _stag_internal.complete_graph(n)
+
+def barbell_graph(n):
+    return _stag_internal.barbell_graph(n)
 
 def sprsMatValues(matrix):
     return _stag_internal.sprsMatValues(matrix)
@@ -373,6 +449,36 @@ def sprsMatInnerIndices(matrix):
 
 def sprsMatOuterStarts(matrix):
     return _stag_internal.sprsMatOuterStarts(matrix)
+
+def sprsMatToVec(*args):
+    return _stag_internal.sprsMatToVec(*args)
+
+def isSymmetric(matrix):
+    return _stag_internal.isSymmetric(matrix)
+
+def local_cluster(graph, seed_vertex, target_volume):
+    return _stag_internal.local_cluster(graph, seed_vertex, target_volume)
+
+def local_cluster_acl(*args):
+    return _stag_internal.local_cluster_acl(*args)
+
+def approximate_pagerank(graph, seed_vector, alpha, epsilon):
+    return _stag_internal.approximate_pagerank(graph, seed_vector, alpha, epsilon)
+
+def sweep_set_conductance(graph, vec):
+    return _stag_internal.sweep_set_conductance(graph, vec)
+
+def load_edgelist(filename):
+    return _stag_internal.load_edgelist(filename)
+
+def save_edgelist(graph, filename):
+    return _stag_internal.save_edgelist(graph, filename)
+
+def sbm(*args):
+    return _stag_internal.sbm(*args)
+
+def erdos_renyi(*args):
+    return _stag_internal.erdos_renyi(*args)
 VERSION = _stag_internal.VERSION
 
 

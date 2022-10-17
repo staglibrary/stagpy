@@ -1,4 +1,5 @@
 from . import stag_internal
+from . import graph
 import scipy.sparse
 
 
@@ -17,5 +18,19 @@ def return_sparse_matrix(func):
         values = stag_internal.sprsMatValues(swig_sparse_matrix)
         del swig_sparse_matrix
         return scipy.sparse.csr_matrix((values, inner_indices, outer_starts))
+
+    return decorated_function
+
+
+def return_graph(func):
+    """
+    A decorator which transforms a graph returned from the C++ library to the python version.
+
+    :param func: the function whose output we would like to wrap
+    :return: the decorated function
+    """
+    def decorated_function(*args):
+        swig_graph = func(*args)
+        return graph.Graph(None, internal_graph=swig_graph)
 
     return decorated_function

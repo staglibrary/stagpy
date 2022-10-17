@@ -19,6 +19,10 @@ namespace std {
     %template(vectord) vector<double>;
 }
 
+// Define typemaps for passing by reference
+%include <std_string.i>
+%apply std::string& INPUT {std::string& filename};
+
 // Include the complete STAG library
 %include "stag_lib/stag.h"
 %include "stag_lib/graph.h"

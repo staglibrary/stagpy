@@ -3,7 +3,7 @@ from abc import ABC, abstractmethod
 from typing import List
 
 from . import stag_internal
-from .utility import return_sparse_matrix, return_graph
+from . import utility
 
 
 class Edge(object):
@@ -118,7 +118,7 @@ class Graph(LocalGraph):
         # Call the LocalGraph initialisation method.
         super().__init__()
 
-    @return_sparse_matrix
+    @utility.return_sparse_matrix
     def adjacency(self):
         """
         Return the sparse adjacency matrix of the graph.
@@ -127,7 +127,7 @@ class Graph(LocalGraph):
         """
         return self.internal_graph.adjacency()
 
-    @return_sparse_matrix
+    @utility.return_sparse_matrix
     def laplacian(self):
         """
         Construct the Laplacian matrix of the graph.
@@ -141,7 +141,7 @@ class Graph(LocalGraph):
         """
         return self.internal_graph.laplacian()
 
-    @return_sparse_matrix
+    @utility.return_sparse_matrix
     def normalised_laplacian(self):
         """
         Construct the normalised Laplacian matrix of the graph.
@@ -155,7 +155,7 @@ class Graph(LocalGraph):
         """
         return self.internal_graph.normalised_laplacian()
 
-    @return_sparse_matrix
+    @utility.return_sparse_matrix
     def degree_matrix(self):
         """
         The degree matrix of the graph.
@@ -167,7 +167,7 @@ class Graph(LocalGraph):
         """
         return self.internal_graph.degree_matrix()
     
-    @return_sparse_matrix
+    @utility.return_sparse_matrix
     def inverse_degree_matrix(self):
         """
         The inverse degree matrix of the graph.
@@ -180,7 +180,7 @@ class Graph(LocalGraph):
         """
         return self.internal_graph.inverse_degree_matrix()
     
-    @return_sparse_matrix
+    @utility.return_sparse_matrix
     def lazy_random_walk_matrix(self):
         """
         The lazy random walk matrix of the graph.
@@ -264,7 +264,7 @@ class Graph(LocalGraph):
         return networkx.Graph(self.adjacency())
 
 
-@return_graph
+@utility.return_graph
 def cycle_graph(n):
     """
     Construct a cycle graph on n vertices.
@@ -275,7 +275,7 @@ def cycle_graph(n):
     return stag_internal.cycle_graph(n)
 
 
-@return_graph
+@utility.return_graph
 def complete_graph(n):
     """
     Construct a complete graph on n vertices.
@@ -286,7 +286,7 @@ def complete_graph(n):
     return stag_internal.complete_graph(n)
 
 
-@return_graph
+@utility.return_graph
 def barbell_graph(n):
     """
     Construct a barbell graph. The barbell graph consists of 2 cliques on n vertices,

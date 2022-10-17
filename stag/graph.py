@@ -1,10 +1,86 @@
 import networkx
+from abc import ABC, abstractmethod
+from typing import List
 
 from . import stag_internal
-from .utility import return_sparse_matrix
+from .utility import return_sparse_matrix, return_graph
 
 
-class Graph:
+class Edge(object):
+    """An object representing a weighted edge in a graph."""
+
+    def __init__(self, v1, v2, weight):
+        """
+        :param v1: The first vertex in the edge.
+        :param v2: The second vertex in the edge.
+        :param weight: The weight of the edge.
+        """
+        self.v1 = v1
+        self.v2 = v2
+        self.weight = weight
+        self.internal_edge = stag_internal.edge()
+        self.internal_edge.v1 = v1
+        self.internal_edge.v2 = v2
+        self.internal_edge.weight = weight
+
+    def __eq__(self, other):
+        return self.v1 == other.v1 and self.v2 == other.v2 and self.weight == other.weight
+
+    def __ne__(self, other):
+        return not self.__eq__(other)
+
+
+class LocalGraph(stag_internal.LocalGraph, ABC):
+    """
+    An abstract class representing local graph operations.
+    For now, this class inherits directly from the internal local graph class.
+    This 'intermediate' class is included for possible future python-specific functionality.
+    """
+
+    def __init__(self):
+        pass
+
+    @abstractmethod
+    def degree(self, v) -> float:
+        """Given a vertex v, return its weighted degree."""
+        pass
+
+    @abstractmethod
+    def degree_unweighted(self, v) -> int:
+        """
+        Given a vertex v, return its unweighted degree. That is, the number of
+        neighbors of v, ignoring the edge weights.
+        """
+        pass
+    
+    @abstractmethod
+    def neighbors(self, v) -> List[Edge]:
+        """
+        Given a vertex v, return a vector of edges representing the
+        neighborhood of v.
+
+        The returned edges will all have the ordering (v, x) such that
+        edge.v = v.
+
+        :param v: an int representing some vertex in the graph
+        :return: a list of Edge objects containing the neighborhood information
+        """
+        pass
+    
+    @abstractmethod
+    def neighbors_unweighted(self, v) -> List[int]:
+        """
+        Given a vertex v, return a vector containing the neighbors of v.
+
+        The weights of edges to the neighbors are not returned by this method.
+
+        :param v: an int representing some vertex in the graph
+        :return: an int vector giving the neighbors of v
+        """
+        pass
+
+
+class Graph(LocalGraph):
     """
     Represents a graph. We keep things very simple - a graph is represented by its sparse adjacency matrix.
 
@@ -24,10 +100,10 @@ class Graph:
         Initialise the graph with an adjacency matrix.
 
         :param adj_mat: A sparse scipy matrix.
-        :param from_internal:
+        :param internal_graph: (optional) provide an internal STAG graph object with
+                               which to initialise the python wrapper
         """
         # This class is essentially a thin wrapper around the stag_internal library, written in C++.
-
         if internal_graph is None:
             # Initialise the internal graph object with the provided adjacency matrix.
             adj_mat_csr = adj_mat.tocsr()
@@ -38,6 +114,9 @@ class Graph:
         else:
             # The initialiser was called with an internal graph object.
             self.internal_graph: stag_internal.Graph = internal_graph
+
+        # Call the LocalGraph initialisation method.
+        super().__init__()
 
     @return_sparse_matrix
     def adjacency(self):
@@ -150,6 +229,12 @@ class Graph:
     def neighbors_unweighted(self, vertex: int):
         return self.internal_graph.neighbors_unweighted(vertex)
 
+    def __eq__(self, other):
+        return self.adjacency() == other.adjacency()
+
+    def __ne__(self, other):
+        return not self.__eq__(other)
+
     def to_networkx(self):
         """
         Construct a networkx graph object which is equivalent to this STAG graph.
@@ -157,6 +242,7 @@ class Graph:
         return networkx.Graph(self.adjacency())
 
 
+@return_graph
 def cycle_graph(n):
     """
     Construct a cycle graph on n vertices.
@@ -164,9 +250,10 @@ def cycle_graph(n):
     :param n:
     :return: a graph object representing the n-cycle
     """
-    return Graph(None, internal_graph=stag_internal.cycle_graph(n))
+    return stag_internal.cycle_graph(n)
 
 
+@return_graph
 def complete_graph(n):
     """
     Construct a complete graph on n vertices.
@@ -174,7 +261,19 @@ def complete_graph(n):
     :param n:
     :return: a graph object representing the complete graph
     """
-    return Graph(None, internal_graph=stag_internal.complete_graph(n))
+    return stag_internal.complete_graph(n)
+
+
+@return_graph
+def barbell_graph(n):
+    """
+    Construct a barbell graph. The barbell graph consists of 2 cliques on n vertices,
+    connected by a single edge.
+
+    :param n:
+    :return:
+    """
+    return stag_internal.barbell_graph(n)
 
 
 def from_networkx(netx_graph, edge_weight_attribute="weight"):

@@ -230,7 +230,29 @@ class Graph(LocalGraph):
         return self.internal_graph.neighbors_unweighted(vertex)
 
     def __eq__(self, other):
-        return self.adjacency() == other.adjacency()
+        #
+        # IMPORTANT NOTE
+        # Checking whether two graphs are the same is thought to be a 'difficult'
+        # problem, and so this method does not really check for mathematical equivalence.
+        # Rather, we just check that the adjacency matrices are the same. As such, this method
+        # should not be relied on to test for graph isomorphism!
+        #
+
+        # Check basic size information about the two graphs first
+        if self.number_of_vertices() != other.number_of_vertices():
+            return False
+
+        if self.number_of_edges() != other.number_of_edges():
+            return False
+
+        # Check that the data vectors of the graph adjacency matrices are equal.
+        a1 = self.internal_graph.adjacency()
+        a2 = other.internal_graph.adjacency()
+        if stag_internal.sprsMatOuterStarts(a1) != stag_internal.sprsMatOuterStarts(a2):
+            return False
+        if stag_internal.sprsMatInnerIndices(a1) != stag_internal.sprsMatInnerIndices(a2):
+            return False
+        return stag_internal.sprsMatValues(a1) == stag_internal.sprsMatValues(a2)
 
     def __ne__(self, other):
         return not self.__eq__(other)

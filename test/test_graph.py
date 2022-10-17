@@ -4,7 +4,6 @@ Tests for the graph object.
 import numpy as np
 import scipy as sp
 import scipy.sparse
-import math
 import networkx
 import pytest
 from context import stag
@@ -13,10 +12,10 @@ import stag.random
 import stag.graphio
 
 # Define the adjacency matrices of some useful graphs.
-C4_ADJ_MAT = scipy.sparse.csr_matrix([[0, 1, 0, 1], [1, 0, 1, 0], [0, 1, 0, 1], [1, 0, 1, 0]])
-K6_ADJ_MAT = scipy.sparse.csr_matrix([[0, 1, 1, 1, 1, 1], [1, 0, 1, 1, 1, 1], [1, 1, 0, 1, 1, 1],
+C4_ADJ_MAT = scipy.sparse.csc_matrix([[0, 1, 0, 1], [1, 0, 1, 0], [0, 1, 0, 1], [1, 0, 1, 0]])
+K6_ADJ_MAT = scipy.sparse.csc_matrix([[0, 1, 1, 1, 1, 1], [1, 0, 1, 1, 1, 1], [1, 1, 0, 1, 1, 1],
                                       [1, 1, 1, 0, 1, 1], [1, 1, 1, 1, 0, 1], [1, 1, 1, 1, 1, 0]])
-BARBELL5_ADJ_MAT = scipy.sparse.csr_matrix([[0, 1, 1, 1, 1, 0, 0, 0, 0, 0],
+BARBELL5_ADJ_MAT = scipy.sparse.csc_matrix([[0, 1, 1, 1, 1, 0, 0, 0, 0, 0],
                                             [1, 0, 1, 1, 1, 0, 0, 0, 0, 0],
                                             [1, 1, 0, 1, 1, 0, 0, 0, 0, 0],
                                             [1, 1, 1, 0, 1, 0, 0, 0, 0, 0],
@@ -27,9 +26,6 @@ BARBELL5_ADJ_MAT = scipy.sparse.csr_matrix([[0, 1, 1, 1, 1, 0, 0, 0, 0, 0],
                                             [0, 0, 0, 0, 0, 1, 1, 1, 0, 1],
                                             [0, 0, 0, 0, 0, 1, 1, 1, 1, 0],
                                             ])
-
-# Define a small constant for making sure floats are close
-EPSILON = 0.00001
 
 
 def test_graph_constructor():
@@ -63,19 +59,29 @@ def test_complete_graph():
     # Create a complete graph
     n = 4
     graph = stag.graph.complete_graph(n)
-    expected_adjacency_matrix = sp.sparse.csr_matrix([[0, 1, 1, 1], [1, 0, 1, 1], [1, 1, 0, 1], [1, 1, 1, 0]])
+    expected_adjacency_matrix = sp.sparse.csc_matrix([[0, 1, 1, 1],
+                                                      [1, 0, 1, 1],
+                                                      [1, 1, 0, 1],
+                                                      [1, 1, 1, 0]])
 
     assert graph.number_of_vertices() == 4
     adj_mat_diff = (graph.adjacency() - expected_adjacency_matrix)
     adj_mat_diff.eliminate_zeros()
     assert adj_mat_diff.nnz == 0
 
+    expected_norm_lap = sp.sparse.csc_matrix([[1, -1/3, -1/3, -1/3],
+                                              [-1/3, 1, -1/3, -1/3],
+                                              [-1/3, -1/3, 1, -1/3],
+                                              [-1/3, -1/3, -1/3, 1]])
+    norm_lap_diff = (graph.normalised_laplacian() - expected_norm_lap)
+    assert(np.all(norm_lap_diff.todense() == pytest.approx(0)))
+
 
 def test_cycle_graph():
     # Create a cycle graph
     n = 5
     graph = stag.graph.cycle_graph(n)
-    expected_adjacency_matrix = sp.sparse.csr_matrix([[0, 1, 0, 0, 1],
+    expected_adjacency_matrix = sp.sparse.csc_matrix([[0, 1, 0, 0, 1],
                                                       [1, 0, 1, 0, 0],
                                                       [0, 1, 0, 1, 0],
                                                       [0, 0, 1, 0, 1],
@@ -85,6 +91,15 @@ def test_cycle_graph():
     adj_mat_diff = (graph.adjacency() - expected_adjacency_matrix)
     adj_mat_diff.eliminate_zeros()
     assert adj_mat_diff.nnz == 0
+
+    expected_laplacian_matrix = sp.sparse.csc_matrix([[2, -1, 0, 0, -1],
+                                                      [-1, 2, -1, 0, 0],
+                                                      [0, -1, 2, -1, 0],
+                                                      [0, 0, -1, 2, -1],
+                                                      [-1, 0, 0, -1, 2]])
+    lap_diff = (graph.laplacian() - expected_laplacian_matrix)
+    lap_diff.eliminate_zeros()
+    assert lap_diff.nnz == 0
 
 
 def test_adjacency_matrix():
@@ -120,7 +135,7 @@ def test_num_edges():
     assert graph.total_volume() == 42
 
     # Now create a weighted graph and check the number of edges method.
-    adjacency_matrix = scipy.sparse.csr_matrix([[0, 2, 0, 1],
+    adjacency_matrix = scipy.sparse.csc_matrix([[0, 2, 0, 1],
                                                 [2, 0, 3, 0],
                                                 [0, 3, 0, 1],
                                                 [1, 0, 1, 0]])
@@ -132,7 +147,7 @@ def test_num_edges():
 
 def test_float_weights():
     # Create a graph with floating-point edge weights.
-    adjacency_matrix = scipy.sparse.csr_matrix([[0, 2.2, 0, 1],
+    adjacency_matrix = scipy.sparse.csc_matrix([[0, 2.2, 0, 1],
                                                 [2.2, 0, 3.1, 0],
                                                 [0, 3.1, 0, 1.09],
                                                 [1, 0, 1.09, 0]])
@@ -140,6 +155,12 @@ def test_float_weights():
     assert graph.number_of_vertices() == 4
     assert graph.number_of_edges() == 4
     assert graph.total_volume() == pytest.approx(14.78)
+    assert graph.degree(0) == pytest.approx(3.2)
+    assert graph.degree(2) == pytest.approx(4.19)
+
+    # Check the unweighted degrees
+    assert graph.degree_unweighted(0) == 2
+    assert graph.degree_unweighted(2) == 2
 
 
 def test_networkx():
@@ -151,7 +172,7 @@ def test_networkx():
     assert graph.number_of_vertices() == 9
     assert graph.number_of_edges() == 14
 
-    expected_adjacency_matrix = sp.sparse.csr_matrix([[0, 1, 1, 1, 0, 0, 0, 0, 0],
+    expected_adjacency_matrix = sp.sparse.csc_matrix([[0, 1, 1, 1, 0, 0, 0, 0, 0],
                                                       [1, 0, 1, 1, 0, 0, 0, 0, 0],
                                                       [1, 1, 0, 1, 0, 0, 0, 0, 0],
                                                       [1, 1, 1, 0, 0, 0, 0, 0, 1],
@@ -182,7 +203,7 @@ def test_edgelist():
     # TEST 1 #
     ##########
     # Let's load the different test graphs, and check that we get what we'd expect.
-    expected_adj_mat = sp.sparse.csr_matrix([[0, 1, 1],
+    expected_adj_mat = sp.sparse.csc_matrix([[0, 1, 1],
                                              [1, 0, 1],
                                              [1, 1, 0]])
     graph = stag.graphio.load_edgelist("data/test1.edgelist")
@@ -200,7 +221,7 @@ def test_edgelist():
     ##########
     # TEST 2 #
     ##########
-    expected_adj_mat = sp.sparse.csr_matrix([[0, 0.5, 0.5],
+    expected_adj_mat = sp.sparse.csc_matrix([[0, 0.5, 0.5],
                                              [0.5, 0, 1],
                                              [0.5, 1, 0]])
     graph = stag.graphio.load_edgelist("data/test2.edgelist")
@@ -218,7 +239,7 @@ def test_edgelist():
     ##########
     # TEST 3 #
     ##########
-    expected_adj_mat = sp.sparse.csr_matrix([[0, 1, 0.5],
+    expected_adj_mat = sp.sparse.csc_matrix([[0, 1, 0.5],
                                              [1, 0, 1],
                                              [0.5, 1, 0]])
     graph = stag.graphio.load_edgelist("data/test3.edgelist")
@@ -236,7 +257,7 @@ def test_edgelist():
     ##########
     # TEST 4 #
     ##########
-    expected_adj_mat = sp.sparse.csr_matrix([[0, 1, 0.5],
+    expected_adj_mat = sp.sparse.csc_matrix([[0, 1, 0.5],
                                              [1, 0, 1],
                                              [0.5, 1, 0]])
     graph = stag.graphio.load_edgelist("data/test4.edgelist")
@@ -250,3 +271,63 @@ def test_edgelist():
     adj_mat_diff = (graph.adjacency() - expected_adj_mat)
     adj_mat_diff.eliminate_zeros()
     assert adj_mat_diff.nnz == 0
+
+
+def test_degree_matrix():
+    # Construct a graph and get its degree matrix
+    g = stag.graph.barbell_graph(4)
+    expected_degree_mat = sp.sparse.diags([3, 3, 3, 4, 4, 3, 3, 3])
+    deg_mat_diff = g.degree_matrix() - expected_degree_mat
+    assert(np.all(deg_mat_diff.todense() == pytest.approx(0)))
+
+
+def test_inverse_degree_matrix():
+    # Construct a graph and get its inverse degree matrix
+    g = stag.graph.barbell_graph(4)
+    expected_inv_degree_mat = sp.sparse.diags([1/3, 1/3, 1/3, 1/4, 1/4, 1/3, 1/3, 1/3])
+    inv_deg_mat_diff = g.inverse_degree_matrix() - expected_inv_degree_mat
+    assert(np.all(inv_deg_mat_diff.todense() == pytest.approx(0)))
+
+
+def test_lazy_random_walk_matrix():
+    # Construct a graph
+    g = stag.graph.barbell_graph(3)
+    expected_rw_mat = sp.sparse.csc_matrix([[1/2, 1/4, 1/6,   0,   0,   0],
+                                            [1/4, 1/2, 1/6,   0,   0,   0],
+                                            [1/4, 1/4, 1/2, 1/6,   0,   0],
+                                            [  0,   0, 1/6, 1/2, 1/4, 1/4],
+                                            [  0,   0,   0, 1/6, 1/2, 1/4],
+                                            [  0,   0,   0, 1/6, 1/4, 1/2]])
+    rw_mat_diff = g.lazy_random_walk_matrix() - expected_rw_mat
+    assert(np.all(rw_mat_diff.todense() == pytest.approx(0)))
+
+
+def test_edge():
+    # Test the edge object
+    e = stag.graph.Edge(1, 2, 0.3)
+    assert(e.v1 == 1)
+    assert(e.v2 == 2)
+    assert(e.weight == 0.3)
+
+    # Define two edges and make sure they are equal
+    e2 = stag.graph.Edge(1, 2, 0.3)
+    assert(e == e2)
+
+    # Define a different edge
+    e3 = stag.graph.Edge(1, 3, 0.2)
+    assert (e2 != e3)
+
+
+def test_graph_equality():
+    g1 = stag.graph.complete_graph(6)
+    g2 = stag.graph.complete_graph(6)
+    assert g1 == g2
+
+    g3 = stag.graph.Graph(K6_ADJ_MAT)
+    assert g2 == g3
+
+    g4 = stag.graph.Graph(BARBELL5_ADJ_MAT)
+    assert g2 != g4
+
+    g5 = stag.graph.barbell_graph(5)
+    assert g4 == g5

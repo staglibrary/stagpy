@@ -17,7 +17,7 @@ def return_sparse_matrix(func):
         inner_indices = stag_internal.sprsMatInnerIndices(swig_sparse_matrix)
         values = stag_internal.sprsMatValues(swig_sparse_matrix)
         del swig_sparse_matrix
-        return scipy.sparse.csr_matrix((values, inner_indices, outer_starts))
+        return scipy.sparse.csc_matrix((values, inner_indices, outer_starts))
 
     return decorated_function
 

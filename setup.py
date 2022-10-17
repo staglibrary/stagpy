@@ -29,7 +29,7 @@ setup(
     description=DESCRIPTION,
     long_description=LONG_DESCRIPTION,
     packages=find_packages(),
-    install_requires=["scipy", "networkx"],
+    install_requires=["scipy", "networkx", "matplotlib"],
     long_description_content_type='text/markdown',
     url=URL,
     include_package_data=True,

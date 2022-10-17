@@ -1,2 +1,3 @@
 include stag/stag_lib/*.h
 recursive-include stag/eigen-3.3.9 *
+graft stag/stag_lib/

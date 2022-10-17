@@ -1,5 +1,7 @@
 /* SWIG interface file for STAG library */
 %module stag_internal
+%module(directors="1") stag_internal
+
 %{
     #include "stag_lib/stag.h"
     #include "stag_lib/graph.h"
@@ -23,6 +25,9 @@ namespace std {
 %include "stag_lib/cluster.h"
 %include "stag_lib/graphio.h"
 %include "stag_lib/random.h"
+
+// Add a director for the local graph object
+%feature("director") LocalGraph;
 
 // Metadata about the python interface
 #define VERSION "0.1.6"

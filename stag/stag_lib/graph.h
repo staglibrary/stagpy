@@ -13,7 +13,7 @@
 
 // The fundamental datatype used in this library is the sparse matrix. For
 // convenience, we define the sparse matrix type here.
-#define stag_int Eigen::Index
+#define stag_int long long int
 #define SprsMat Eigen::SparseMatrix<double, Eigen::ColMajor, stag_int>
 #define EdgeTriplet Eigen::Triplet<double, stag_int>
 
@@ -70,6 +70,9 @@ namespace stag {
        * @return an int vector giving the neighbors of v
        */
       virtual std::vector<stag_int> neighbors_unweighted(stag_int v) = 0;
+
+      // Add virtual destructor
+      virtual ~LocalGraph() = 0;
   };
 
   /**

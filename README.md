@@ -4,6 +4,3 @@ STAG is a library providing efficient spectral algorithms for the analysis of ma
 
 ## Project Status
 The STAG library is under active development. Further documentation will be added here in the near future.
-
-## Funding Information
-The development of this library is part of He Sun's Fellowship  titled "Efficient Spectral Algorithms for Massive and Dynamic Graphs", which is funded by the UK Engineering and Physical Sciences Research Council (EPSRC, EP/T00729X/1). The team developing this library consists of [Peter Macgregor](https://pmacg.github.io/index.html) and [He Sun](https://homepages.inf.ed.ac.uk/hsun4/index.html).

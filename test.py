@@ -7,7 +7,7 @@ def main():
     graph = stag.graph.cycle_graph(10)
     lap = graph.laplacian()
     print(lap.todense())
-    print(graph.volume())
+    print(graph.total_volume())
 
 
 if __name__ == "__main__":

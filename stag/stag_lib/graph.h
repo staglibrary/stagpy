@@ -70,9 +70,6 @@ namespace stag {
        * @return an int vector giving the neighbors of v
        */
       virtual std::vector<stag_int> neighbors_unweighted(stag_int v) = 0;
-
-      // Add virtual destructor
-      virtual ~LocalGraph() = 0;
   };
 
   /**

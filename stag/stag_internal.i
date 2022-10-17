@@ -15,6 +15,7 @@
 namespace std {
     // Create the bindings for the std::vector types
     %template(vectori) vector<int>;
+    %template(vectorl) vector<long long int>;
     %template(vectord) vector<double>;
 }
 

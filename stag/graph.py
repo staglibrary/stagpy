@@ -62,7 +62,7 @@ class Graph:
         """
         return self.internal_graph.laplacian()
 
-    def volume(self):
+    def total_volume(self):
         """
         The volume of the graph.
 
@@ -70,7 +70,7 @@ class Graph:
 
         :return: the graph's volume.
         """
-        return self.internal_graph.volume()
+        return self.internal_graph.total_volume()
 
 
 def cycle_graph(n):

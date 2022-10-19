@@ -13203,6 +13203,53 @@ fail:
 }
 
 
+SWIGINTERN PyObject *_wrap_sprsMatFromVectors(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::vector< long long,std::allocator< long long > > *arg1 = 0 ;
+  std::vector< long long,std::allocator< long long > > *arg2 = 0 ;
+  std::vector< double,std::allocator< double > > *arg3 = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  void *argp2 = 0 ;
+  int res2 = 0 ;
+  void *argp3 = 0 ;
+  int res3 = 0 ;
+  PyObject *swig_obj[3] ;
+  Eigen::SparseMatrix< double,Eigen::ColMajor,long long > result;
+  
+  if (!SWIG_Python_UnpackTuple(args, "sprsMatFromVectors", 3, 3, swig_obj)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1, SWIGTYPE_p_std__vectorT_long_long_std__allocatorT_long_long_t_t,  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "sprsMatFromVectors" "', argument " "1"" of type '" "std::vector< long long,std::allocator< long long > > &""'"); 
+  }
+  if (!argp1) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "sprsMatFromVectors" "', argument " "1"" of type '" "std::vector< long long,std::allocator< long long > > &""'"); 
+  }
+  arg1 = reinterpret_cast< std::vector< long long,std::allocator< long long > > * >(argp1);
+  res2 = SWIG_ConvertPtr(swig_obj[1], &argp2, SWIGTYPE_p_std__vectorT_long_long_std__allocatorT_long_long_t_t,  0 );
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "sprsMatFromVectors" "', argument " "2"" of type '" "std::vector< long long,std::allocator< long long > > &""'"); 
+  }
+  if (!argp2) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "sprsMatFromVectors" "', argument " "2"" of type '" "std::vector< long long,std::allocator< long long > > &""'"); 
+  }
+  arg2 = reinterpret_cast< std::vector< long long,std::allocator< long long > > * >(argp2);
+  res3 = SWIG_ConvertPtr(swig_obj[2], &argp3, SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t,  0 );
+  if (!SWIG_IsOK(res3)) {
+    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "sprsMatFromVectors" "', argument " "3"" of type '" "std::vector< double,std::allocator< double > > &""'"); 
+  }
+  if (!argp3) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "sprsMatFromVectors" "', argument " "3"" of type '" "std::vector< double,std::allocator< double > > &""'"); 
+  }
+  arg3 = reinterpret_cast< std::vector< double,std::allocator< double > > * >(argp3);
+  result = stag::sprsMatFromVectors(*arg1,*arg2,*arg3);
+  resultobj = SWIG_NewPointerObj((new Eigen::SparseMatrix< double,Eigen::ColMajor,long long >(static_cast< const Eigen::SparseMatrix< double,Eigen::ColMajor,long long >& >(result))), SWIGTYPE_p_Eigen__SparseMatrixT_double_Eigen__ColMajor_long_long_t, SWIG_POINTER_OWN |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
 SWIGINTERN PyObject *_wrap_isSymmetric(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   Eigen::SparseMatrix< double,Eigen::ColMajor,long long > *arg1 = (Eigen::SparseMatrix< double,Eigen::ColMajor,long long > *) 0 ;
@@ -14024,6 +14071,7 @@ static PyMethodDef SwigMethods[] = {
 	 { "sprsMatInnerIndices", _wrap_sprsMatInnerIndices, METH_O, NULL},
 	 { "sprsMatOuterStarts", _wrap_sprsMatOuterStarts, METH_O, NULL},
 	 { "sprsMatToVec", _wrap_sprsMatToVec, METH_VARARGS, NULL},
+	 { "sprsMatFromVectors", _wrap_sprsMatFromVectors, METH_VARARGS, NULL},
 	 { "isSymmetric", _wrap_isSymmetric, METH_O, NULL},
 	 { "local_cluster", _wrap_local_cluster, METH_VARARGS, NULL},
 	 { "local_cluster_acl", _wrap_local_cluster_acl, METH_VARARGS, NULL},

@@ -561,6 +561,9 @@ def sprsMatOuterStarts(matrix):
 def sprsMatToVec(*args):
     return _stag_internal.sprsMatToVec(*args)
 
+def sprsMatFromVectors(column_starts, row_indices, values):
+    return _stag_internal.sprsMatFromVectors(column_starts, row_indices, values)
+
 def isSymmetric(matrix):
     return _stag_internal.isSymmetric(matrix)
 

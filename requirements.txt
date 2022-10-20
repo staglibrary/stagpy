@@ -1,5 +1,9 @@
+# Needed for using the library
 scipy
-auditwheel
 networkx
-pytest
 matplotlib
+
+# Needed for development only
+twine
+auditwheel
+pytest

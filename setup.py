@@ -1,11 +1,11 @@
 from setuptools import setup, find_packages
 from distutils.core import setup, Extension
 
-VERSION = '0.1.6'
+VERSION = '0.2.1'
 DESCRIPTION = 'STAG - Spectral Algorithms for Graphs'
 LONG_DESCRIPTION =\
     "This library provides several methods and algorithms relating to spectral graph theory in python."
-URL = "https://pmacg.github.io"
+URL = "https://staglibrary.io"
 
 # specify the name of the extension and source files
 # required to compile this

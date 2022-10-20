@@ -1,8 +1,8 @@
 name: Python package build
 
-on: [push]
-#  release:
-#    types: [created]
+on:
+  release:
+    types: [created]
 
 jobs:
   build:

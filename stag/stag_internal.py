@@ -442,6 +442,41 @@ class vectord(object):
 # Register vectord in _stag_internal:
 _stag_internal.vectord_swigregister(vectord)
 
+class TupleMM(object):
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
+    __repr__ = _swig_repr
+
+    def __init__(self, arg2, arg3):
+        _stag_internal.TupleMM_swiginit(self, _stag_internal.new_TupleMM(arg2, arg3))
+
+    def get0(self):
+        return _stag_internal.TupleMM_get0(self)
+
+    def get1(self):
+        return _stag_internal.TupleMM_get1(self)
+
+    def set0(self, val):
+        return _stag_internal.TupleMM_set0(self, val)
+
+    def set1(self, val):
+        return _stag_internal.TupleMM_set1(self, val)
+
+    def __len__(self):
+        return _stag_internal.TupleMM___len__(self)
+
+    #[7]
+    def __getitem__(self, n):
+        if n >= len(self): raise IndexError()
+        return getattr(self, 'get%d' % n)()
+    def __setitem__(self, n, val):
+        if n >= len(self): raise IndexError()
+        getattr(self, 'set%d' % n)(val)
+
+    __swig_destroy__ = _stag_internal.delete_TupleMM
+
+# Register TupleMM in _stag_internal:
+_stag_internal.TupleMM_swigregister(TupleMM)
+
 class edge(object):
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
     __repr__ = _swig_repr

@@ -19,6 +19,11 @@ namespace std {
     %template(vectord) vector<double>;
 }
 
+// Create bindings for tuples
+%include <std_tuple.i>
+// %std_tuple(TupleMM, Eigen::SparseMatrix<double,Eigen::ColMajor,long long>, Eigen::SparseMatrix<double,Eigen::ColMajor,long long>);
+%std_tuple(TupleMM, SprsMat, SprsMat)
+
 // Define typemaps for passing by reference
 %include <std_string.i>
 %apply std::string& INPUT {std::string& filename};

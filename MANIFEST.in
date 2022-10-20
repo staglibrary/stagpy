@@ -1,3 +1,4 @@
 include stag/stag_lib/*.h
+include stag/stag_internal_wrap.h
 recursive-include stag/eigen-3.3.9 *
 graft stag/stag_lib/

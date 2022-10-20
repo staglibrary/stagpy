@@ -61,6 +61,8 @@ class _SwigNonDynamicMeta(type):
     __setattr__ = _swig_setattr_nondynamic_class_variable(type.__setattr__)
 
 
+import weakref
+
 class SwigPyIterator(object):
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
 
@@ -228,6 +230,112 @@ class vectori(object):
 # Register vectori in _stag_internal:
 _stag_internal.vectori_swigregister(vectori)
 
+class vectorl(object):
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
+    __repr__ = _swig_repr
+
+    def iterator(self):
+        return _stag_internal.vectorl_iterator(self)
+    def __iter__(self):
+        return self.iterator()
+
+    def __nonzero__(self):
+        return _stag_internal.vectorl___nonzero__(self)
+
+    def __bool__(self):
+        return _stag_internal.vectorl___bool__(self)
+
+    def __len__(self):
+        return _stag_internal.vectorl___len__(self)
+
+    def __getslice__(self, i, j):
+        return _stag_internal.vectorl___getslice__(self, i, j)
+
+    def __setslice__(self, *args):
+        return _stag_internal.vectorl___setslice__(self, *args)
+
+    def __delslice__(self, i, j):
+        return _stag_internal.vectorl___delslice__(self, i, j)
+
+    def __delitem__(self, *args):
+        return _stag_internal.vectorl___delitem__(self, *args)
+
+    def __getitem__(self, *args):
+        return _stag_internal.vectorl___getitem__(self, *args)
+
+    def __setitem__(self, *args):
+        return _stag_internal.vectorl___setitem__(self, *args)
+
+    def pop(self):
+        return _stag_internal.vectorl_pop(self)
+
+    def append(self, x):
+        return _stag_internal.vectorl_append(self, x)
+
+    def empty(self):
+        return _stag_internal.vectorl_empty(self)
+
+    def size(self):
+        return _stag_internal.vectorl_size(self)
+
+    def swap(self, v):
+        return _stag_internal.vectorl_swap(self, v)
+
+    def begin(self):
+        return _stag_internal.vectorl_begin(self)
+
+    def end(self):
+        return _stag_internal.vectorl_end(self)
+
+    def rbegin(self):
+        return _stag_internal.vectorl_rbegin(self)
+
+    def rend(self):
+        return _stag_internal.vectorl_rend(self)
+
+    def clear(self):
+        return _stag_internal.vectorl_clear(self)
+
+    def get_allocator(self):
+        return _stag_internal.vectorl_get_allocator(self)
+
+    def pop_back(self):
+        return _stag_internal.vectorl_pop_back(self)
+
+    def erase(self, *args):
+        return _stag_internal.vectorl_erase(self, *args)
+
+    def __init__(self, *args):
+        _stag_internal.vectorl_swiginit(self, _stag_internal.new_vectorl(*args))
+
+    def push_back(self, x):
+        return _stag_internal.vectorl_push_back(self, x)
+
+    def front(self):
+        return _stag_internal.vectorl_front(self)
+
+    def back(self):
+        return _stag_internal.vectorl_back(self)
+
+    def assign(self, n, x):
+        return _stag_internal.vectorl_assign(self, n, x)
+
+    def resize(self, *args):
+        return _stag_internal.vectorl_resize(self, *args)
+
+    def insert(self, *args):
+        return _stag_internal.vectorl_insert(self, *args)
+
+    def reserve(self, n):
+        return _stag_internal.vectorl_reserve(self, n)
+
+    def capacity(self):
+        return _stag_internal.vectorl_capacity(self)
+    __swig_destroy__ = _stag_internal.delete_vectorl
+
+# Register vectorl in _stag_internal:
+_stag_internal.vectorl_swigregister(vectorl)
+
 class vectord(object):
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
     __repr__ = _swig_repr
@@ -334,7 +442,83 @@ class vectord(object):
 # Register vectord in _stag_internal:
 _stag_internal.vectord_swigregister(vectord)
 
-class Graph(object):
+class TupleMM(object):
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
+    __repr__ = _swig_repr
+
+    def __init__(self, arg2, arg3):
+        _stag_internal.TupleMM_swiginit(self, _stag_internal.new_TupleMM(arg2, arg3))
+
+    def get0(self):
+        return _stag_internal.TupleMM_get0(self)
+
+    def get1(self):
+        return _stag_internal.TupleMM_get1(self)
+
+    def set0(self, val):
+        return _stag_internal.TupleMM_set0(self, val)
+
+    def set1(self, val):
+        return _stag_internal.TupleMM_set1(self, val)
+
+    def __len__(self):
+        return _stag_internal.TupleMM___len__(self)
+
+    #[7]
+    def __getitem__(self, n):
+        if n >= len(self): raise IndexError()
+        return getattr(self, 'get%d' % n)()
+    def __setitem__(self, n, val):
+        if n >= len(self): raise IndexError()
+        getattr(self, 'set%d' % n)(val)
+
+    __swig_destroy__ = _stag_internal.delete_TupleMM
+
+# Register TupleMM in _stag_internal:
+_stag_internal.TupleMM_swigregister(TupleMM)
+
+class edge(object):
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
+    __repr__ = _swig_repr
+    v1 = property(_stag_internal.edge_v1_get, _stag_internal.edge_v1_set)
+    v2 = property(_stag_internal.edge_v2_get, _stag_internal.edge_v2_set)
+    weight = property(_stag_internal.edge_weight_get, _stag_internal.edge_weight_set)
+
+    def __init__(self):
+        _stag_internal.edge_swiginit(self, _stag_internal.new_edge())
+    __swig_destroy__ = _stag_internal.delete_edge
+
+# Register edge in _stag_internal:
+_stag_internal.edge_swigregister(edge)
+cvar = _stag_internal.cvar
+VERSION_MAJOR = cvar.VERSION_MAJOR
+VERSION_MINOR = cvar.VERSION_MINOR
+VERSION_PATCH = cvar.VERSION_PATCH
+
+class LocalGraph(object):
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
+
+    def __init__(self, *args, **kwargs):
+        raise AttributeError("No constructor defined - class is abstract")
+    __repr__ = _swig_repr
+
+    def degree(self, v):
+        return _stag_internal.LocalGraph_degree(self, v)
+
+    def degree_unweighted(self, v):
+        return _stag_internal.LocalGraph_degree_unweighted(self, v)
+
+    def neighbors(self, v):
+        return _stag_internal.LocalGraph_neighbors(self, v)
+
+    def neighbors_unweighted(self, v):
+        return _stag_internal.LocalGraph_neighbors_unweighted(self, v)
+    __swig_destroy__ = _stag_internal.delete_LocalGraph
+
+# Register LocalGraph in _stag_internal:
+_stag_internal.LocalGraph_swigregister(LocalGraph)
+
+class Graph(LocalGraph):
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
     __repr__ = _swig_repr
 
@@ -347,23 +531,58 @@ class Graph(object):
     def laplacian(self):
         return _stag_internal.Graph_laplacian(self)
 
-    def volume(self):
-        return _stag_internal.Graph_volume(self)
+    def normalised_laplacian(self):
+        return _stag_internal.Graph_normalised_laplacian(self)
+
+    def degree_matrix(self):
+        return _stag_internal.Graph_degree_matrix(self)
+
+    def inverse_degree_matrix(self):
+        return _stag_internal.Graph_inverse_degree_matrix(self)
+
+    def lazy_random_walk_matrix(self):
+        return _stag_internal.Graph_lazy_random_walk_matrix(self)
+
+    def total_volume(self):
+        return _stag_internal.Graph_total_volume(self)
+
+    def number_of_vertices(self):
+        return _stag_internal.Graph_number_of_vertices(self)
+
+    def number_of_edges(self):
+        return _stag_internal.Graph_number_of_edges(self)
+
+    def degree(self, v):
+        return _stag_internal.Graph_degree(self, v)
+
+    def degree_unweighted(self, v):
+        return _stag_internal.Graph_degree_unweighted(self, v)
+
+    def neighbors(self, v):
+        return _stag_internal.Graph_neighbors(self, v)
+
+    def neighbors_unweighted(self, v):
+        return _stag_internal.Graph_neighbors_unweighted(self, v)
     __swig_destroy__ = _stag_internal.delete_Graph
 
 # Register Graph in _stag_internal:
 _stag_internal.Graph_swigregister(Graph)
-cvar = _stag_internal.cvar
-VERSION_MAJOR = cvar.VERSION_MAJOR
-VERSION_MINOR = cvar.VERSION_MINOR
-VERSION_PATCH = cvar.VERSION_PATCH
 
+
+def __eq__(*args):
+    return _stag_internal.__eq__(*args)
+
+def __ne__(*args):
+    return _stag_internal.__ne__(*args)
 
 def cycle_graph(n):
     return _stag_internal.cycle_graph(n)
 
 def complete_graph(n):
     return _stag_internal.complete_graph(n)
+
+def barbell_graph(n):
+    return _stag_internal.barbell_graph(n)
 
 def sprsMatValues(matrix):
     return _stag_internal.sprsMatValues(matrix)
@@ -373,6 +592,50 @@ def sprsMatInnerIndices(matrix):
 
 def sprsMatOuterStarts(matrix):
     return _stag_internal.sprsMatOuterStarts(matrix)
+
+def sprsMatToVec(*args):
+    return _stag_internal.sprsMatToVec(*args)
+
+def sprsMatFromVectors(column_starts, row_indices, values):
+    return _stag_internal.sprsMatFromVectors(column_starts, row_indices, values)
+
+def isSymmetric(matrix):
+    return _stag_internal.isSymmetric(matrix)
+
+def local_cluster(graph, seed_vertex, target_volume):
+    return _stag_internal.local_cluster(graph, seed_vertex, target_volume)
+
+def local_cluster_acl(*args):
+    return _stag_internal.local_cluster_acl(*args)
+
+def approximate_pagerank(graph, seed_vector, alpha, epsilon):
+    return _stag_internal.approximate_pagerank(graph, seed_vector, alpha, epsilon)
+
+def sweep_set_conductance(graph, vec):
+    return _stag_internal.sweep_set_conductance(graph, vec)
+
+def load_edgelist(filename):
+    return _stag_internal.load_edgelist(filename)
+
+def save_edgelist(graph, filename):
+    return _stag_internal.save_edgelist(graph, filename)
+
+def sbm(*args):
+    return _stag_internal.sbm(*args)
+
+def erdos_renyi(*args):
+    return _stag_internal.erdos_renyi(*args)
+class SprsMat(object):
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
+    __repr__ = _swig_repr
+    __swig_destroy__ = _stag_internal.delete_SprsMat
+
+    def __init__(self):
+        _stag_internal.SprsMat_swiginit(self, _stag_internal.new_SprsMat())
+
+# Register SprsMat in _stag_internal:
+_stag_internal.SprsMat_swigregister(SprsMat)
+
 VERSION = _stag_internal.VERSION
 
 

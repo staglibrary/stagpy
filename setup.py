@@ -12,8 +12,12 @@ URL = "https://pmacg.github.io"
 ext_modules = [Extension(name='stag._stag_internal',
                          sources=["stag/stag_internal_wrap.cxx",
                                   "stag/stag_lib/graph.cpp",
+                                  "stag/stag_lib/random.cpp",
+                                  "stag/stag_lib/graphio.cpp",
+                                  "stag/stag_lib/cluster.cpp",
                                   "stag/stag_lib/utility.cpp"],
-                         include_dirs=["stag/eigen-3.3.9", "stag/stag_lib"])]
+                         include_dirs=["stag/eigen-3.3.9", "stag/stag_lib"],
+                         extra_compile_args=['-std=c++2a'])]
 
 # Setting up
 setup(
@@ -25,7 +29,7 @@ setup(
     description=DESCRIPTION,
     long_description=LONG_DESCRIPTION,
     packages=find_packages(),
-    install_requires=["scipy"],
+    install_requires=["scipy", "networkx", "matplotlib"],
     long_description_content_type='text/markdown',
     url=URL,
     include_package_data=True,

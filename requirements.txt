@@ -1,2 +1,5 @@
 scipy
 auditwheel
+networkx
+pytest
+matplotlib

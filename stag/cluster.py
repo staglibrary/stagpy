@@ -47,7 +47,7 @@ def local_cluster_acl(g: graph.Graph, seed_vertex: int, locality: float, error=0
     :return: a vector containing the indices of vectors considered to be in the
             same cluster as the seed_vertex.
     """
-    return stag_internal.local_cluster_acl(g, seed_vertex, locality, error)
+    return stag_internal.local_cluster_acl(g.internal_graph, seed_vertex, locality, error)
 
 
 def approximate_pagerank(g: graph.Graph, seed_vector: scipy.sparse.csc_matrix, alpha: float, epsilon: float):

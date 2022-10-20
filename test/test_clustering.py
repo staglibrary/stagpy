@@ -7,10 +7,10 @@ import stag.graph
 import stag.cluster
 
 # Define the adjacency matrices of some useful graphs.
-C4_ADJ_MAT = scipy.sparse.csr_matrix([[0, 1, 0, 1], [1, 0, 1, 0], [0, 1, 0, 1], [1, 0, 1, 0]])
-K6_ADJ_MAT = scipy.sparse.csr_matrix([[0, 1, 1, 1, 1, 1], [1, 0, 1, 1, 1, 1], [1, 1, 0, 1, 1, 1],
+C4_ADJ_MAT = scipy.sparse.csc_matrix([[0, 1, 0, 1], [1, 0, 1, 0], [0, 1, 0, 1], [1, 0, 1, 0]])
+K6_ADJ_MAT = scipy.sparse.csc_matrix([[0, 1, 1, 1, 1, 1], [1, 0, 1, 1, 1, 1], [1, 1, 0, 1, 1, 1],
                                       [1, 1, 1, 0, 1, 1], [1, 1, 1, 1, 0, 1], [1, 1, 1, 1, 1, 0]])
-BARBELL5_ADJ_MAT = scipy.sparse.csr_matrix([[0, 1, 1, 1, 1, 0, 0, 0, 0, 0],
+BARBELL5_ADJ_MAT = scipy.sparse.csc_matrix([[0, 1, 1, 1, 1, 0, 0, 0, 0, 0],
                                             [1, 0, 1, 1, 1, 0, 0, 0, 0, 0],
                                             [1, 1, 0, 1, 1, 0, 0, 0, 0, 0],
                                             [1, 1, 1, 0, 1, 0, 0, 0, 0, 0],
@@ -36,11 +36,15 @@ def test_default_local_clustering():
 
 def test_acl_local_clustering():
     # Construct a graph object with a well-defined cluster structure
-    graph = stag.random.sbm(1000, 2, 0.01, 0.001)
+    graph = stag.graph.barbell_graph(10)
 
-    # Find a local cluster near the first vertex
-    cluster = stag.cluster.local_cluster(graph, 1, int(500 * 500 * 0.011))
-    pass
+    # Run the acl clustering method
+    cluster = stag.cluster.local_cluster_acl(graph, 0, 0.9, 0.0001)
+
+    # Check that we found one of the clusters
+    expected_cluster = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9}
+
+    assert set(cluster) == expected_cluster
 
 
 def test_approximate_pagerank():

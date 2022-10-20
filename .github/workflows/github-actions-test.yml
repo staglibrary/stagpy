@@ -20,7 +20,7 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
       - name: Install SWIG
-        run: apt-get install swig
+        run: sudo apt-get install swig
       - name: Generate C++ wrapper code
         run: |
           cd stag

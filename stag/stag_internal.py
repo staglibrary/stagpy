@@ -625,6 +625,17 @@ def sbm(*args):
 
 def erdos_renyi(*args):
     return _stag_internal.erdos_renyi(*args)
+class SprsMat(object):
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
+    __repr__ = _swig_repr
+    __swig_destroy__ = _stag_internal.delete_SprsMat
+
+    def __init__(self):
+        _stag_internal.SprsMat_swiginit(self, _stag_internal.new_SprsMat())
+
+# Register SprsMat in _stag_internal:
+_stag_internal.SprsMat_swigregister(SprsMat)
+
 VERSION = _stag_internal.VERSION
 
 

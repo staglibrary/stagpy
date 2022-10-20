@@ -39,5 +39,11 @@ namespace std {
 // Add a director for the local graph object
 %feature("director") LocalGraph;
 
+// Include a destructor for the sparse matrix type
+class SprsMat {
+public:
+    ~SprsMat();
+};
+
 // Metadata about the python interface
 #define VERSION "0.1.6"

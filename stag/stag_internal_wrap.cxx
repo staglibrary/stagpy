@@ -14122,6 +14122,52 @@ fail:
 }
 
 
+SWIGINTERN PyObject *_wrap_delete_SprsMat(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  SprsMat *arg1 = (SprsMat *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject *swig_obj[1] ;
+  
+  if (!args) SWIG_fail;
+  swig_obj[0] = args;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_Eigen__SparseMatrixT_double_Eigen__ColMajor_stag_int_t, SWIG_POINTER_DISOWN |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_SprsMat" "', argument " "1"" of type '" "SprsMat *""'"); 
+  }
+  arg1 = reinterpret_cast< SprsMat * >(argp1);
+  delete arg1;
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_new_SprsMat(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  SprsMat *result = 0 ;
+  
+  if (!SWIG_Python_UnpackTuple(args, "new_SprsMat", 0, 0, 0)) SWIG_fail;
+  result = (SprsMat *)new SprsMat();
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_Eigen__SparseMatrixT_double_Eigen__ColMajor_stag_int_t, SWIG_POINTER_NEW |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *SprsMat_swigregister(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *obj;
+  if (!SWIG_Python_UnpackTuple(args, "swigregister", 1, 1, &obj)) return NULL;
+  SWIG_TypeNewClientData(SWIGTYPE_p_Eigen__SparseMatrixT_double_Eigen__ColMajor_stag_int_t, SWIG_NewClientData(obj));
+  return SWIG_Py_Void();
+}
+
+SWIGINTERN PyObject *SprsMat_swiginit(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  return SWIG_Python_InitShadowInstance(args);
+}
+
 static PyMethodDef SwigMethods[] = {
 	 { "SWIG_PyInstanceMethod_New", SWIG_PyInstanceMethod_New, METH_O, NULL},
 	 { "delete_SwigPyIterator", _wrap_delete_SwigPyIterator, METH_O, NULL},
@@ -14308,6 +14354,10 @@ static PyMethodDef SwigMethods[] = {
 	 { "save_edgelist", _wrap_save_edgelist, METH_VARARGS, NULL},
 	 { "sbm", _wrap_sbm, METH_VARARGS, NULL},
 	 { "erdos_renyi", _wrap_erdos_renyi, METH_VARARGS, NULL},
+	 { "delete_SprsMat", _wrap_delete_SprsMat, METH_O, NULL},
+	 { "new_SprsMat", _wrap_new_SprsMat, METH_NOARGS, NULL},
+	 { "SprsMat_swigregister", SprsMat_swigregister, METH_O, NULL},
+	 { "SprsMat_swiginit", SprsMat_swiginit, METH_VARARGS, NULL},
 	 { NULL, NULL, 0, NULL }
 };
 

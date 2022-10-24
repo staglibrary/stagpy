@@ -1,11 +1,23 @@
+import os
+import platform
+
 from setuptools import setup, find_packages
 from distutils.core import setup, Extension
 
-VERSION = '0.2.2'
+VERSION = '0.2.4'
 DESCRIPTION = 'STAG: Spectral Toolkit of Algorithms for Graphs'
 LONG_DESCRIPTION =\
     "This library provides several methods and algorithms relating to spectral graph theory in python."
 URL = "https://staglibrary.io"
+
+# Depending on the build platform, the required compiler flags are slightly
+# different.
+if platform.system() == 'Linux':
+    compile_args = ['-std=c++2a']
+elif platform.system() == 'Windows':
+    compile_args = ['/std:c++20']
+else:
+    compile_args = ['-std=c++2a']
 
 # specify the name of the extension and source files
 # required to compile this
@@ -17,7 +29,7 @@ ext_modules = [Extension(name='stag._stag_internal',
                                   "stag/stag_lib/cluster.cpp",
                                   "stag/stag_lib/utility.cpp"],
                          include_dirs=["stag/eigen-3.3.9", "stag/stag_lib"],
-                         extra_compile_args=['-std=c++2a'])]
+                         extra_compile_args=compile_args)]
 
 # Setting up
 setup(

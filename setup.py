@@ -10,8 +10,8 @@ LONG_DESCRIPTION =\
     "This library provides several methods and algorithms relating to spectral graph theory in python."
 URL = "https://staglibrary.io"
 
-# specify the name of the extension and source files
-# required to compile this
+# Depending on the build platform, the required compiler flags are slightly
+# different.
 if platform.system() == 'Linux':
     compile_args = ['-std=c++2a']
 elif platform.system() == 'Windows':
@@ -19,6 +19,8 @@ elif platform.system() == 'Windows':
 else:
     compile_args = ['-std=c++2a']
 
+# specify the name of the extension and source files
+# required to compile this
 ext_modules = [Extension(name='stag._stag_internal',
                          sources=["stag/stag_internal_wrap.cxx",
                                   "stag/stag_lib/graph.cpp",

@@ -62,3 +62,20 @@ def test_approximate_pagerank():
     expected_r = [5./81, 2./27 + 5./162, 2./27, 2./27 + 5./162]
     np.testing.assert_almost_equal(p.todense().transpose().tolist()[0], expected_p)
     np.testing.assert_almost_equal(r.todense().transpose().tolist()[0], expected_r)
+
+
+def test_sweep_set():
+    # Construct a simple graph to test with
+    graph = stag.graph.barbell_graph(4)
+
+    # Create the vector to test. The optimal conductance will be the first 4 vertices
+    s = scipy.sparse.csc_matrix((8, 1))
+    s[0, 0] = 0.1
+    s[1, 0] = 0.25
+    s[2, 0] = 0.2
+    s[3, 0] = 0.15
+    s[4, 0] = 0.05
+    
+    # Compute the sweep set
+    sweep_set = stag.cluster.sweep_set_conductance(graph, s)
+    assert set(sweep_set) == {0, 1, 2, 3}

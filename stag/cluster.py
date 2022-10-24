@@ -81,3 +81,25 @@ def approximate_pagerank(g: graph.Graph, seed_vector: scipy.sparse.csc_matrix, a
                                               alpha,
                                               epsilon)
     return utility.swig_sprs_to_scipy(apr[0]), utility.swig_sprs_to_scipy(apr[1])
+
+
+def sweep_set_conductance(g: graph.Graph, vec: scipy.sparse.csc_matrix):
+    """
+    Find the sweep set of the given vector with the minimum conductance.
+   
+    First, sort the vector, and then let
+        S_i = {v_j : j <= i}
+    and return the set of original indices corresponding to
+        argmin_i conducance(S_i)
+   
+    This method is expected to be run on vectors whose support is much less
+    than the total size of the graph. If the total volume of the support of vec
+    is larger than half of the volume of the total graph, then this method may
+    return unexpected results.
+   
+    :param: graph
+    :param: vec
+    :return: a vector containing the indices of vec which give the minimum
+            conductance in the given graph
+    """
+    return stag_internal.sweep_set_conductance(g.internal_graph, utility.scipy_to_swig_sprs(vec))

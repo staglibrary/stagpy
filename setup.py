@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 from distutils.core import setup, Extension
 
-VERSION = '0.2.2'
+VERSION = '0.2.3'
 DESCRIPTION = 'STAG: Spectral Toolkit of Algorithms for Graphs'
 LONG_DESCRIPTION =\
     "This library provides several methods and algorithms relating to spectral graph theory in python."

@@ -15,7 +15,7 @@ URL = "https://staglibrary.io"
 if platform.system() == 'Linux':
     compile_args = ['-std=c++2a']
 elif platform.system() == 'Windows':
-    compile_args = ['/std:c++2a']
+    compile_args = ['/std:c++20']
 else:
     compile_args = ['-std=c++2a']
 

@@ -1,2 +1,3 @@
 stag/eigen-3.3.9/** linguist-vendored
-stag/stag_lib/* linguist-vendored
+stag/stag_lib/*.c linguist-vendored
+stag/stag_lib/*.h linguist-vendored

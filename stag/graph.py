@@ -304,6 +304,18 @@ def barbell_graph(n):
     return stag_internal.barbell_graph(n)
 
 
+@utility.return_graph
+def star_graph(n):
+    """
+    Construct a star graph. The star graph consists of one central vertex connected
+    by an edge to (n-1) surrounding vertices.
+
+    :param n:
+    :return:
+    """
+    return stag_internal.star_graph(n)
+
+
 def from_networkx(netx_graph, edge_weight_attribute="weight"):
     """
     Given a networkx graph, convert it to a STAG graph object.

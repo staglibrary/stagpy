@@ -136,6 +136,11 @@ class Graph(LocalGraph):
         :param internal_graph: (optional) provide an internal STAG graph object with
                                which to initialise the python wrapper
         """
+        # Call the LocalGraph initialisation method - it is important that this
+        # is called first. This is because we override the internal_graph
+        # object in the current constructor.
+        super().__init__()
+
         # This class is essentially a thin wrapper around the stag_internal library, written in C++.
         if internal_graph is None:
             # Initialise the internal graph object with the provided adjacency matrix.
@@ -148,8 +153,6 @@ class Graph(LocalGraph):
             # The initialiser was called with an internal graph object.
             self.internal_graph: stag_internal.Graph = internal_graph
 
-        # Call the LocalGraph initialisation method.
-        super().__init__()
 
     @utility.return_sparse_matrix
     def adjacency(self):

@@ -15794,7 +15794,7 @@ fail:
 
 SWIGINTERN PyObject *_wrap_local_cluster_acl__SWIG_0(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
   PyObject *resultobj = 0;
-  stag::LocalGraph *arg1 = 0 ;
+  stag::LocalGraph *arg1 = (stag::LocalGraph *) 0 ;
   stag_int arg2 ;
   double arg3 ;
   void *argp1 = 0 ;
@@ -15806,12 +15806,9 @@ SWIGINTERN PyObject *_wrap_local_cluster_acl__SWIG_0(PyObject *SWIGUNUSEDPARM(se
   std::vector< stag_int,std::allocator< stag_int > > result;
   
   if ((nobjs < 3) || (nobjs > 3)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1, SWIGTYPE_p_stag__LocalGraph,  0 );
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_stag__LocalGraph, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "local_cluster_acl" "', argument " "1"" of type '" "stag::LocalGraph &""'"); 
-  }
-  if (!argp1) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "local_cluster_acl" "', argument " "1"" of type '" "stag::LocalGraph &""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "local_cluster_acl" "', argument " "1"" of type '" "stag::LocalGraph *""'"); 
   }
   arg1 = reinterpret_cast< stag::LocalGraph * >(argp1);
   ecode2 = SWIG_AsVal_long_SS_long(swig_obj[1], &val2);
@@ -15824,7 +15821,7 @@ SWIGINTERN PyObject *_wrap_local_cluster_acl__SWIG_0(PyObject *SWIGUNUSEDPARM(se
     SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "local_cluster_acl" "', argument " "3"" of type '" "double""'");
   } 
   arg3 = static_cast< double >(val3);
-  result = stag::local_cluster_acl(*arg1,arg2,arg3);
+  result = stag::local_cluster_acl(arg1,arg2,arg3);
   resultobj = swig::from(static_cast< std::vector< long long,std::allocator< long long > > >(result));
   return resultobj;
 fail:
@@ -15834,7 +15831,7 @@ fail:
 
 SWIGINTERN PyObject *_wrap_local_cluster_acl__SWIG_1(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
   PyObject *resultobj = 0;
-  stag::LocalGraph *arg1 = 0 ;
+  stag::LocalGraph *arg1 = (stag::LocalGraph *) 0 ;
   stag_int arg2 ;
   double arg3 ;
   double arg4 ;
@@ -15849,12 +15846,9 @@ SWIGINTERN PyObject *_wrap_local_cluster_acl__SWIG_1(PyObject *SWIGUNUSEDPARM(se
   std::vector< stag_int,std::allocator< stag_int > > result;
   
   if ((nobjs < 4) || (nobjs > 4)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1, SWIGTYPE_p_stag__LocalGraph,  0 );
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_stag__LocalGraph, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "local_cluster_acl" "', argument " "1"" of type '" "stag::LocalGraph &""'"); 
-  }
-  if (!argp1) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "local_cluster_acl" "', argument " "1"" of type '" "stag::LocalGraph &""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "local_cluster_acl" "', argument " "1"" of type '" "stag::LocalGraph *""'"); 
   }
   arg1 = reinterpret_cast< stag::LocalGraph * >(argp1);
   ecode2 = SWIG_AsVal_long_SS_long(swig_obj[1], &val2);
@@ -15872,7 +15866,7 @@ SWIGINTERN PyObject *_wrap_local_cluster_acl__SWIG_1(PyObject *SWIGUNUSEDPARM(se
     SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "local_cluster_acl" "', argument " "4"" of type '" "double""'");
   } 
   arg4 = static_cast< double >(val4);
-  result = stag::local_cluster_acl(*arg1,arg2,arg3,arg4);
+  result = stag::local_cluster_acl(arg1,arg2,arg3,arg4);
   resultobj = swig::from(static_cast< std::vector< long long,std::allocator< long long > > >(result));
   return resultobj;
 fail:
@@ -15891,7 +15885,7 @@ SWIGINTERN PyObject *_wrap_local_cluster_acl(PyObject *self, PyObject *args) {
   if (argc == 3) {
     int _v;
     void *vptr = 0;
-    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_stag__LocalGraph, SWIG_POINTER_NO_NULL);
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_stag__LocalGraph, 0);
     _v = SWIG_CheckState(res);
     if (_v) {
       {
@@ -15912,7 +15906,7 @@ SWIGINTERN PyObject *_wrap_local_cluster_acl(PyObject *self, PyObject *args) {
   if (argc == 4) {
     int _v;
     void *vptr = 0;
-    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_stag__LocalGraph, SWIG_POINTER_NO_NULL);
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_stag__LocalGraph, 0);
     _v = SWIG_CheckState(res);
     if (_v) {
       {
@@ -15940,15 +15934,15 @@ SWIGINTERN PyObject *_wrap_local_cluster_acl(PyObject *self, PyObject *args) {
 fail:
   SWIG_Python_RaiseOrModifyTypeError("Wrong number or type of arguments for overloaded function 'local_cluster_acl'.\n"
     "  Possible C/C++ prototypes are:\n"
-    "    stag::local_cluster_acl(stag::LocalGraph &,stag_int,double)\n"
-    "    stag::local_cluster_acl(stag::LocalGraph &,stag_int,double,double)\n");
+    "    stag::local_cluster_acl(stag::LocalGraph *,stag_int,double)\n"
+    "    stag::local_cluster_acl(stag::LocalGraph *,stag_int,double,double)\n");
   return 0;
 }
 
 
 SWIGINTERN PyObject *_wrap_approximate_pagerank(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
-  stag::LocalGraph *arg1 = 0 ;
+  stag::LocalGraph *arg1 = (stag::LocalGraph *) 0 ;
   SprsMat *arg2 = 0 ;
   double arg3 ;
   double arg4 ;
@@ -15964,12 +15958,9 @@ SWIGINTERN PyObject *_wrap_approximate_pagerank(PyObject *SWIGUNUSEDPARM(self), 
   SwigValueWrapper< std::tuple< SprsMat,SprsMat > > result;
   
   if (!SWIG_Python_UnpackTuple(args, "approximate_pagerank", 4, 4, swig_obj)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1, SWIGTYPE_p_stag__LocalGraph,  0 );
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_stag__LocalGraph, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "approximate_pagerank" "', argument " "1"" of type '" "stag::LocalGraph &""'"); 
-  }
-  if (!argp1) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "approximate_pagerank" "', argument " "1"" of type '" "stag::LocalGraph &""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "approximate_pagerank" "', argument " "1"" of type '" "stag::LocalGraph *""'"); 
   }
   arg1 = reinterpret_cast< stag::LocalGraph * >(argp1);
   res2 = SWIG_ConvertPtr(swig_obj[1], &argp2, SWIGTYPE_p_Eigen__SparseMatrixT_double_Eigen__ColMajor_stag_int_t,  0 );
@@ -15990,7 +15981,7 @@ SWIGINTERN PyObject *_wrap_approximate_pagerank(PyObject *SWIGUNUSEDPARM(self), 
     SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "approximate_pagerank" "', argument " "4"" of type '" "double""'");
   } 
   arg4 = static_cast< double >(val4);
-  result = stag::approximate_pagerank(*arg1,*arg2,arg3,arg4);
+  result = stag::approximate_pagerank(arg1,*arg2,arg3,arg4);
   resultobj = SWIG_NewPointerObj((new std::tuple< SprsMat,SprsMat >(static_cast< const std::tuple< SprsMat,SprsMat >& >(result))), SWIGTYPE_p_std__tupleT_SprsMat_SprsMat_t, SWIG_POINTER_OWN |  0 );
   return resultobj;
 fail:
@@ -16000,7 +15991,7 @@ fail:
 
 SWIGINTERN PyObject *_wrap_sweep_set_conductance(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
-  stag::LocalGraph *arg1 = 0 ;
+  stag::LocalGraph *arg1 = (stag::LocalGraph *) 0 ;
   SprsMat *arg2 = 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
@@ -16010,12 +16001,9 @@ SWIGINTERN PyObject *_wrap_sweep_set_conductance(PyObject *SWIGUNUSEDPARM(self),
   std::vector< stag_int,std::allocator< stag_int > > result;
   
   if (!SWIG_Python_UnpackTuple(args, "sweep_set_conductance", 2, 2, swig_obj)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1, SWIGTYPE_p_stag__LocalGraph,  0 );
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_stag__LocalGraph, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "sweep_set_conductance" "', argument " "1"" of type '" "stag::LocalGraph &""'"); 
-  }
-  if (!argp1) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "sweep_set_conductance" "', argument " "1"" of type '" "stag::LocalGraph &""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "sweep_set_conductance" "', argument " "1"" of type '" "stag::LocalGraph *""'"); 
   }
   arg1 = reinterpret_cast< stag::LocalGraph * >(argp1);
   res2 = SWIG_ConvertPtr(swig_obj[1], &argp2, SWIGTYPE_p_Eigen__SparseMatrixT_double_Eigen__ColMajor_stag_int_t,  0 );
@@ -16026,7 +16014,7 @@ SWIGINTERN PyObject *_wrap_sweep_set_conductance(PyObject *SWIGUNUSEDPARM(self),
     SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "sweep_set_conductance" "', argument " "2"" of type '" "SprsMat &""'"); 
   }
   arg2 = reinterpret_cast< SprsMat * >(argp2);
-  result = stag::sweep_set_conductance(*arg1,*arg2);
+  result = stag::sweep_set_conductance(arg1,*arg2);
   resultobj = swig::from(static_cast< std::vector< long long,std::allocator< long long > > >(result));
   return resultobj;
 fail:

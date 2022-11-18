@@ -82,3 +82,21 @@ def test_edgelist():
     adj_mat_diff = (graph.adjacency() - expected_adj_mat)
     adj_mat_diff.eliminate_zeros()
     assert adj_mat_diff.nnz == 0
+
+    ##########
+    # TEST 5 #
+    ##########
+    expected_adj_mat = sp.sparse.csc_matrix([[0, 0.5, 0.5],
+                                             [0.5, 0, 1],
+                                             [0.5, 1, 0]])
+    graph = stag.graphio.load_edgelist("data/test5.edgelist")
+    adj_mat_diff = (graph.adjacency() - expected_adj_mat)
+    adj_mat_diff.eliminate_zeros()
+    assert adj_mat_diff.nnz == 0
+
+    # Now save and reload the graph and check that the adjacency matrix has not changed
+    stag.graphio.save_edgelist(graph, "data/temp.edgelist")
+    graph = stag.graphio.load_edgelist("data/temp.edgelist")
+    adj_mat_diff = (graph.adjacency() - expected_adj_mat)
+    adj_mat_diff.eliminate_zeros()
+    assert adj_mat_diff.nnz == 0

@@ -513,6 +513,12 @@ class LocalGraph(object):
 
     def neighbors_unweighted(self, v):
         return _stag_internal.LocalGraph_neighbors_unweighted(self, v)
+
+    def degrees(self, vertices):
+        return _stag_internal.LocalGraph_degrees(self, vertices)
+
+    def degrees_unweighted(self, vertices):
+        return _stag_internal.LocalGraph_degrees_unweighted(self, vertices)
     __swig_destroy__ = _stag_internal.delete_LocalGraph
 
 # Register LocalGraph in _stag_internal:
@@ -583,6 +589,9 @@ def complete_graph(n):
 
 def barbell_graph(n):
     return _stag_internal.barbell_graph(n)
+
+def star_graph(n):
+    return _stag_internal.star_graph(n)
 
 def sprsMatValues(matrix):
     return _stag_internal.sprsMatValues(matrix)

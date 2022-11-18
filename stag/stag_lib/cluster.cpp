@@ -5,7 +5,7 @@
  * license.
 */
 #include <vector>
-#include <queue>
+#include <deque>
 #include <unordered_set>
 #include <stdexcept>
 #include <algorithm>
@@ -14,14 +14,14 @@
 #include <cluster.h>
 #include <utility.h>
 
-std::vector<stag_int> stag::local_cluster(stag::LocalGraph *graph, stag_int seed_vertex, stag_int target_volume) {
+std::vector<stag_int> stag::local_cluster(stag::LocalGraph *graph, stag_int seed_vertex, double target_volume) {
   // The 'locality' parameter should essentially be a constant if we expect the conductance
   // of the target cluster to be a constant. Set it to 0.01.
   // The error parameter should decrease as the inverse of the target volume.
   return stag::local_cluster_acl(graph,
                                  seed_vertex,
                                  0.01,
-                                 1./ (double) target_volume);
+                                 1./ target_volume);
 }
 
 //------------------------------------------------------------------------------
@@ -43,11 +43,13 @@ std::vector<stag_int> stag::local_cluster_acl(stag::LocalGraph *graph,
   std::tuple<SprsMat, SprsMat> apr = stag::approximate_pagerank(graph, seedDist, locality, error);
   SprsMat p = std::get<0>(apr);
 
-  // Normalise the values in p by their degree
-  double deg;
+  // Normalise the values in p by their degree. Make just one 'call' to the
+  // LocalGraph object to get the degrees for all relevant vertices.
+  std::vector<double> degrees = graph->degrees(stag::sprsMatInnerIndices(&p));
+  stag_int degree_index = 0;
   for (SprsMat::InnerIterator it(p, 0); it; ++it) {
-    deg = graph->degree(it.row());
-    it.valueRef() = it.value() / deg;
+    it.valueRef() = it.value() / degrees.at(degree_index);
+    degree_index++;
   }
 
   // Perform the sweep set operation on the approximate pagerank p to find the
@@ -117,21 +119,26 @@ std::tuple<SprsMat, SprsMat> stag::approximate_pagerank(stag::LocalGraph *graph,
   // Initialise r to be equal to the seed vector
   SprsMat r(seed_vector);
 
+  // Compress the seed vector
+  seed_vector.makeCompressed();
+
   // We will maintain a queue of vertices satisfying
   //    r(u) >= epsilon * deg(u)
   // Along with the queue, maintain an unordered set which tracks the vertices
   // already in the queue.
   stag_int u;
-  double deg;
-  std::queue<stag_int> vertex_queue;
+  std::vector<double> degrees = graph->degrees(
+      stag::sprsMatInnerIndices(&seed_vector));
+  std::deque<stag_int> vertex_queue;
   std::unordered_set<stag_int> queue_members;
+  stag_int degree_index = 0;
   for (SprsMat::InnerIterator it(seed_vector, 0); it; ++it) {
     u = it.row();
-    deg = graph->degree(u);
-    if (r.coeff(u, 0) >= epsilon * deg) {
-      vertex_queue.push(u);
+    if (r.coeff(u, 0) >= epsilon * degrees.at(degree_index)) {
+      vertex_queue.push_back(u);
       queue_members.insert(u);
     }
+    degree_index++;
   }
 
   // While the queue is not empty, push an entry off the queue and apply the
@@ -139,29 +146,34 @@ std::tuple<SprsMat, SprsMat> stag::approximate_pagerank(stag::LocalGraph *graph,
   while (!vertex_queue.empty()) {
     // Get the next vertex from the queue
     u = vertex_queue.front();
-    vertex_queue.pop();
+    vertex_queue.pop_front();
     queue_members.erase(u);
 
     // Perform the push operation on this vertex
     push(graph, &p, &r, alpha, u);
 
     // Check u to see if it should be added back to the queue
-    deg = graph->degree(u);
-    if (r.coeff(u, 0) >= epsilon * deg) {
-      vertex_queue.push(u);
+    // If so, then we add it back to the start of the queue in order to be as
+    // cache-efficient as possible when accessing a graph from disk.
+    if (r.coeff(u, 0) >= epsilon * graph->degree(u)) {
+      vertex_queue.push_front(u);
       queue_members.insert(u);
     }
 
     // Check the neighbors of u to see if they should be added back to the queue
     // Skip any neighbors which are already in the queue.
+    std::vector<stag_int> neighbors = graph->neighbors_unweighted(u);
+    std::vector<double> neighbor_degrees = graph->degrees(neighbors);
+    degree_index = 0;
     stag_int v;
     for (stag::edge e : graph->neighbors(u)) {
       v = e.v2;
-      deg = graph->degree(v);
-      if (r.coeff(e.v2, 0) >= epsilon * deg && !queue_members.contains(v)) {
-        vertex_queue.push(v);
+      if (r.coeff(e.v2, 0) >= epsilon * neighbor_degrees.at(degree_index) &&
+            !queue_members.contains(v)) {
+        vertex_queue.push_back(v);
         queue_members.insert(v);
       }
+      degree_index++;
     }
   }
 
@@ -185,6 +197,9 @@ std::vector<stag_int> stag::sweep_set_conductance(stag::LocalGraph* graph,
   std::stable_sort(sorted_indices.begin(), sorted_indices.end(),
                    [&vec](stag_int i1, stag_int i2) {return vec.coeff(i1, 0) > vec.coeff(i2, 0);});
 
+  // Get the degrees of every vertex in the vector
+  std::vector<double> degrees = graph->degrees(sorted_indices);
+
   // We will iterate through the indices in order of their increasing value
   // and add them to the vertex_set
   std::unordered_set<stag_int> vertex_set;
@@ -202,11 +217,11 @@ std::vector<stag_int> stag::sweep_set_conductance(stag::LocalGraph* graph,
     vertex_set.insert(v);
 
     // Update the vertex set volume
-    set_volume += graph->degree(v);
+    set_volume += degrees.at(current_idx - 1);
 
     // Update the cut weight. We need to add the total degree of the node v,
     // and then remove any edges from v to the rest of the vertex set.
-    cut_weight += graph->degree(v);
+    cut_weight += degrees.at(current_idx - 1);
     for (stag::edge e : graph->neighbors(v)) {
       if (vertex_set.contains(e.v2)) cut_weight -= 2 * e.weight;
     }

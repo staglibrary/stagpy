@@ -79,6 +79,12 @@ class LocalGraph(stag_internal.LocalGraph, ABC):
         """
         pass
 
+    def degrees_unweighted(self, vertices: List[int]) -> List[int]:
+        return [self.degree_unweighted(v) for v in vertices]
+
+    def degrees(self, vertices: List[int]) -> List[float]:
+        return [self.degree(v) for v in vertices]
+
 
 class Graph(LocalGraph):
     """

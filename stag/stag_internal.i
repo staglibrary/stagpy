@@ -17,6 +17,7 @@ namespace std {
     %template(vectori) vector<int>;
     %template(vectorl) vector<long long>;
     %template(vectord) vector<double>;
+    %template(vectore) vector<stag::edge>;
 }
 
 // Create bindings for tuples
@@ -28,6 +29,9 @@ namespace std {
 %include <std_string.i>
 %apply std::string& INPUT {std::string& filename};
 
+// Add a director for the local graph object
+%feature("director") LocalGraph;
+
 // Include the complete STAG library
 %include "stag_lib/stag.h"
 %include "stag_lib/graph.h"
@@ -35,9 +39,6 @@ namespace std {
 %include "stag_lib/cluster.h"
 %include "stag_lib/graphio.h"
 %include "stag_lib/random.h"
-
-// Add a director for the local graph object
-%feature("director") LocalGraph;
 
 // Include a destructor for the sparse matrix type
 class SprsMat {

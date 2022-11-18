@@ -29,8 +29,11 @@ class Edge(object):
     def __ne__(self, other):
         return not self.__eq__(other)
 
+    def __repr__(self):
+        return f"Edge({self.v1}, {self.v2}, weight={self.weight})"
 
-class LocalGraph(stag_internal.LocalGraph, ABC):
+
+class LocalGraph(ABC):
     """
     An abstract class representing local graph operations.
     For now, this class inherits directly from the internal local graph class.
@@ -38,7 +41,7 @@ class LocalGraph(stag_internal.LocalGraph, ABC):
     """
 
     def __init__(self):
-        pass
+        self.internal_graph = PythonDefinedLocalGraph(self)
 
     @abstractmethod
     def degree(self, v) -> float:
@@ -52,7 +55,7 @@ class LocalGraph(stag_internal.LocalGraph, ABC):
         neighbors of v, ignoring the edge weights.
         """
         pass
-    
+
     @abstractmethod
     def neighbors(self, v) -> List[Edge]:
         """
@@ -66,7 +69,7 @@ class LocalGraph(stag_internal.LocalGraph, ABC):
         :return: a list of Edge objects containing the neighborhood information
         """
         pass
-    
+
     @abstractmethod
     def neighbors_unweighted(self, v) -> List[int]:
         """
@@ -84,6 +87,30 @@ class LocalGraph(stag_internal.LocalGraph, ABC):
 
     def degrees(self, vertices: List[int]) -> List[float]:
         return [self.degree(v) for v in vertices]
+
+
+class PythonDefinedLocalGraph(stag_internal.LocalGraph):
+    def __init__(self, python_local_graph: LocalGraph):
+        super().__init__()
+        self.python_graph = python_local_graph
+
+    def degree(self, v: int):
+        return self.python_graph.degree(v)
+
+    def degree_unweighted(self, v: int):
+        return self.python_graph.degree_unweighted(v)
+
+    def neighbors(self, v: int):
+        return [e.internal_edge for e in self.python_graph.neighbors(v)]
+
+    def neighbors_unweighted(self, v: int):
+        return self.python_graph.neighbors_unweighted(v)
+
+    def degrees(self, vertices: List[int]):
+        return self.python_graph.degrees(vertices)
+
+    def degrees_unweighted(self, vertices):
+        return self.python_graph.degrees_unweighted(vertices)
 
 
 class Graph(LocalGraph):
@@ -109,6 +136,11 @@ class Graph(LocalGraph):
         :param internal_graph: (optional) provide an internal STAG graph object with
                                which to initialise the python wrapper
         """
+        # Call the LocalGraph initialisation method - it is important that this
+        # is called first. This is because we override the internal_graph
+        # object in the current constructor.
+        super().__init__()
+
         # This class is essentially a thin wrapper around the stag_internal library, written in C++.
         if internal_graph is None:
             # Initialise the internal graph object with the provided adjacency matrix.
@@ -121,8 +153,6 @@ class Graph(LocalGraph):
             # The initialiser was called with an internal graph object.
             self.internal_graph: stag_internal.Graph = internal_graph
 
-        # Call the LocalGraph initialisation method.
-        super().__init__()
 
     @utility.return_sparse_matrix
     def adjacency(self):

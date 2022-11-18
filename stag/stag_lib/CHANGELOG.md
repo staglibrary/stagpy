@@ -4,6 +4,16 @@ All notable changes to the library are documented here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.0] - 2022-11-18
+### Fixed
+- [Issue #37](https://github.com/staglibrary/stag/issues/37): Allow float type as target volume in local clustering method
+
+### Added
+- [Issue #43](https://github.com/staglibrary/stag/issues/43): Add batched queries for degrees in local graph class
+- [Issue #36](https://github.com/staglibrary/stag/issues/36): Allow edgelist entries to be separated by tabs
+- [Issue #42](https://github.com/staglibrary/stag/issues/42): Improve the cache-efficiency of the approximate pagerank algorithm
+- Add constructor for star graph: `stag::star_graph(n)`
+
 ## [0.2.1] - 2022-10-19
 ### Changed
 - [Issue #27](https://github.com/staglibrary/stag/issues/27): Use `long long` integer type throughout the library

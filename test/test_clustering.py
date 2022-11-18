@@ -34,6 +34,17 @@ def test_default_local_clustering():
     assert (set(cluster) == {0, 1, 2, 3, 4})
 
 
+def test_local_clustering_float_weight():
+    # Construct a graph object with the barbell adjacency matrix
+    graph = stag.graph.Graph(BARBELL5_ADJ_MAT)
+
+    # Find a local cluster near the first vertex
+    cluster = stag.cluster.local_cluster(graph, 1, 20.23)
+
+    # Assert that the correct clusters have been found.
+    assert (set(cluster) == {0, 1, 2, 3, 4})
+
+
 def test_acl_local_clustering():
     # Construct a graph object with a well-defined cluster structure
     graph = stag.graph.barbell_graph(10)

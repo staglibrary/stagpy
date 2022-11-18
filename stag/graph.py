@@ -82,6 +82,12 @@ class LocalGraph(ABC):
         """
         pass
 
+    def degrees_unweighted(self, vertices: List[int]) -> List[int]:
+        return [self.degree_unweighted(v) for v in vertices]
+
+    def degrees(self, vertices: List[int]) -> List[float]:
+        return [self.degree(v) for v in vertices]
+
 
 class PythonDefinedLocalGraph(stag_internal.LocalGraph):
     def __init__(self, python_local_graph: LocalGraph):
@@ -317,6 +323,18 @@ def barbell_graph(n):
     :return:
     """
     return stag_internal.barbell_graph(n)
+
+
+@utility.return_graph
+def star_graph(n):
+    """
+    Construct a star graph. The star graph consists of one central vertex connected
+    by an edge to (n-1) surrounding vertices.
+
+    :param n:
+    :return:
+    """
+    return stag_internal.star_graph(n)
 
 
 def from_networkx(netx_graph, edge_weight_attribute="weight"):

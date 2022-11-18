@@ -28,7 +28,7 @@ namespace stag {
    * @return a vector containing the indices of vectors considered to be in the
    *         same cluster as the seed_vertex.
    */
-  std::vector<stag_int> local_cluster(stag::LocalGraph& graph, stag_int seed_vertex, stag_int target_volume);
+  std::vector<stag_int> local_cluster(stag::LocalGraph* graph, stag_int seed_vertex, double target_volume);
 
   /**
    * The ACL local clustering algorithm. Given a graph and starting vertex,
@@ -96,6 +96,10 @@ namespace stag {
    * than the total size of the graph. If the total volume of the support of vec
    * is larger than half of the volume of the total graph, then this method may
    * return unexpected results.
+   *
+   * Note that the caller is responsible for any required normalisation of the
+   * input vector. In particular, this method does not normalise the vector by
+   * the node degrees.
    *
    * @param graph
    * @param vec

@@ -14583,6 +14583,70 @@ fail:
 }
 
 
+SWIGINTERN PyObject *_wrap_LocalGraph_degrees(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  stag::LocalGraph *arg1 = (stag::LocalGraph *) 0 ;
+  std::vector< stag_int,std::allocator< stag_int > > arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject *swig_obj[2] ;
+  std::vector< double,std::allocator< double > > result;
+  
+  if (!SWIG_Python_UnpackTuple(args, "LocalGraph_degrees", 2, 2, swig_obj)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_stag__LocalGraph, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "LocalGraph_degrees" "', argument " "1"" of type '" "stag::LocalGraph *""'"); 
+  }
+  arg1 = reinterpret_cast< stag::LocalGraph * >(argp1);
+  {
+    std::vector< long long,std::allocator< long long > > *ptr = (std::vector< long long,std::allocator< long long > > *)0;
+    int res = swig::asptr(swig_obj[1], &ptr);
+    if (!SWIG_IsOK(res) || !ptr) {
+      SWIG_exception_fail(SWIG_ArgError((ptr ? res : SWIG_TypeError)), "in method '" "LocalGraph_degrees" "', argument " "2"" of type '" "std::vector< stag_int,std::allocator< stag_int > >""'"); 
+    }
+    arg2 = *ptr;
+    if (SWIG_IsNewObj(res)) delete ptr;
+  }
+  result = (arg1)->degrees(arg2);
+  resultobj = swig::from(static_cast< std::vector< double,std::allocator< double > > >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_LocalGraph_degrees_unweighted(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  stag::LocalGraph *arg1 = (stag::LocalGraph *) 0 ;
+  std::vector< stag_int,std::allocator< stag_int > > arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject *swig_obj[2] ;
+  std::vector< stag_int,std::allocator< stag_int > > result;
+  
+  if (!SWIG_Python_UnpackTuple(args, "LocalGraph_degrees_unweighted", 2, 2, swig_obj)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_stag__LocalGraph, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "LocalGraph_degrees_unweighted" "', argument " "1"" of type '" "stag::LocalGraph *""'"); 
+  }
+  arg1 = reinterpret_cast< stag::LocalGraph * >(argp1);
+  {
+    std::vector< long long,std::allocator< long long > > *ptr = (std::vector< long long,std::allocator< long long > > *)0;
+    int res = swig::asptr(swig_obj[1], &ptr);
+    if (!SWIG_IsOK(res) || !ptr) {
+      SWIG_exception_fail(SWIG_ArgError((ptr ? res : SWIG_TypeError)), "in method '" "LocalGraph_degrees_unweighted" "', argument " "2"" of type '" "std::vector< stag_int,std::allocator< stag_int > >""'"); 
+    }
+    arg2 = *ptr;
+    if (SWIG_IsNewObj(res)) delete ptr;
+  }
+  result = (arg1)->degrees_unweighted(arg2);
+  resultobj = swig::from(static_cast< std::vector< long long,std::allocator< long long > > >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
 SWIGINTERN PyObject *_wrap_delete_LocalGraph(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   stag::LocalGraph *arg1 = (stag::LocalGraph *) 0 ;
@@ -15436,6 +15500,29 @@ fail:
 }
 
 
+SWIGINTERN PyObject *_wrap_star_graph(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  stag_int arg1 ;
+  long long val1 ;
+  int ecode1 = 0 ;
+  PyObject *swig_obj[1] ;
+  SwigValueWrapper< stag::Graph > result;
+  
+  if (!args) SWIG_fail;
+  swig_obj[0] = args;
+  ecode1 = SWIG_AsVal_long_SS_long(swig_obj[0], &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "star_graph" "', argument " "1"" of type '" "stag_int""'");
+  } 
+  arg1 = static_cast< stag_int >(val1);
+  result = stag::star_graph(arg1);
+  resultobj = SWIG_NewPointerObj((new stag::Graph(static_cast< const stag::Graph& >(result))), SWIGTYPE_p_stag__Graph, SWIG_POINTER_OWN |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
 SWIGINTERN PyObject *_wrap_sprsMatValues(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   SprsMat *arg1 = (SprsMat *) 0 ;
@@ -15669,25 +15756,22 @@ fail:
 
 SWIGINTERN PyObject *_wrap_local_cluster(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
-  stag::LocalGraph *arg1 = 0 ;
+  stag::LocalGraph *arg1 = (stag::LocalGraph *) 0 ;
   stag_int arg2 ;
-  stag_int arg3 ;
+  double arg3 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
   long long val2 ;
   int ecode2 = 0 ;
-  long long val3 ;
+  double val3 ;
   int ecode3 = 0 ;
   PyObject *swig_obj[3] ;
   std::vector< stag_int,std::allocator< stag_int > > result;
   
   if (!SWIG_Python_UnpackTuple(args, "local_cluster", 3, 3, swig_obj)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1, SWIGTYPE_p_stag__LocalGraph,  0 );
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_stag__LocalGraph, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "local_cluster" "', argument " "1"" of type '" "stag::LocalGraph &""'"); 
-  }
-  if (!argp1) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "local_cluster" "', argument " "1"" of type '" "stag::LocalGraph &""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "local_cluster" "', argument " "1"" of type '" "stag::LocalGraph *""'"); 
   }
   arg1 = reinterpret_cast< stag::LocalGraph * >(argp1);
   ecode2 = SWIG_AsVal_long_SS_long(swig_obj[1], &val2);
@@ -15695,12 +15779,12 @@ SWIGINTERN PyObject *_wrap_local_cluster(PyObject *SWIGUNUSEDPARM(self), PyObjec
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "local_cluster" "', argument " "2"" of type '" "stag_int""'");
   } 
   arg2 = static_cast< stag_int >(val2);
-  ecode3 = SWIG_AsVal_long_SS_long(swig_obj[2], &val3);
+  ecode3 = SWIG_AsVal_double(swig_obj[2], &val3);
   if (!SWIG_IsOK(ecode3)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "local_cluster" "', argument " "3"" of type '" "stag_int""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "local_cluster" "', argument " "3"" of type '" "double""'");
   } 
-  arg3 = static_cast< stag_int >(val3);
-  result = stag::local_cluster(*arg1,arg2,arg3);
+  arg3 = static_cast< double >(val3);
+  result = stag::local_cluster(arg1,arg2,arg3);
   resultobj = swig::from(static_cast< std::vector< long long,std::allocator< long long > > >(result));
   return resultobj;
 fail:
@@ -16542,6 +16626,8 @@ static PyMethodDef SwigMethods[] = {
 	 { "LocalGraph_degree_unweighted", _wrap_LocalGraph_degree_unweighted, METH_VARARGS, NULL},
 	 { "LocalGraph_neighbors", _wrap_LocalGraph_neighbors, METH_VARARGS, NULL},
 	 { "LocalGraph_neighbors_unweighted", _wrap_LocalGraph_neighbors_unweighted, METH_VARARGS, NULL},
+	 { "LocalGraph_degrees", _wrap_LocalGraph_degrees, METH_VARARGS, NULL},
+	 { "LocalGraph_degrees_unweighted", _wrap_LocalGraph_degrees_unweighted, METH_VARARGS, NULL},
 	 { "delete_LocalGraph", _wrap_delete_LocalGraph, METH_O, NULL},
 	 { "new_LocalGraph", _wrap_new_LocalGraph, METH_O, NULL},
 	 { "disown_LocalGraph", _wrap_disown_LocalGraph, METH_O, NULL},
@@ -16569,6 +16655,7 @@ static PyMethodDef SwigMethods[] = {
 	 { "cycle_graph", _wrap_cycle_graph, METH_O, NULL},
 	 { "complete_graph", _wrap_complete_graph, METH_O, NULL},
 	 { "barbell_graph", _wrap_barbell_graph, METH_O, NULL},
+	 { "star_graph", _wrap_star_graph, METH_O, NULL},
 	 { "sprsMatValues", _wrap_sprsMatValues, METH_O, NULL},
 	 { "sprsMatInnerIndices", _wrap_sprsMatInnerIndices, METH_O, NULL},
 	 { "sprsMatOuterStarts", _wrap_sprsMatOuterStarts, METH_O, NULL},

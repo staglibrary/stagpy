@@ -683,6 +683,12 @@ class Graph(LocalGraph):
 
     def neighbors_unweighted(self, v):
         return _stag_internal.Graph_neighbors_unweighted(self, v)
+
+    def degrees(self, vertices):
+        return _stag_internal.Graph_degrees(self, vertices)
+
+    def degrees_unweighted(self, vertices):
+        return _stag_internal.Graph_degrees_unweighted(self, vertices)
     __swig_destroy__ = _stag_internal.delete_Graph
 
 # Register Graph in _stag_internal:

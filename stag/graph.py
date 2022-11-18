@@ -106,6 +106,12 @@ class PythonDefinedLocalGraph(stag_internal.LocalGraph):
     def neighbors_unweighted(self, v: int):
         return self.python_graph.neighbors_unweighted(v)
 
+    def degrees(self, vertices: List[int]):
+        return self.python_graph.degrees(vertices)
+
+    def degrees_unweighted(self, vertices):
+        return self.python_graph.degrees_unweighted(vertices)
+
 
 class Graph(LocalGraph):
     """

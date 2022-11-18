@@ -11,7 +11,7 @@
 // Local Graph Methods
 //------------------------------------------------------------------------------
 
-std::vector<double> stag::LocalGraph::degrees(std::vector<stag_int> vertices) {
+std::vector<double> stag::Graph::degrees(std::vector<stag_int> vertices) {
   std::vector<double> degrees;
 
   for (stag_int v : vertices) {
@@ -21,7 +21,7 @@ std::vector<double> stag::LocalGraph::degrees(std::vector<stag_int> vertices) {
   return degrees;
 }
 
-std::vector<stag_int> stag::LocalGraph::degrees_unweighted(
+std::vector<stag_int> stag::Graph::degrees_unweighted(
     std::vector<stag_int> vertices) {
   std::vector<stag_int> degrees;
 

@@ -5858,6 +5858,72 @@ std::vector< stag_int, std::allocator< stag_int > > SwigDirector_LocalGraph::nei
 }
 
 
+std::vector< double, std::allocator< double > > SwigDirector_LocalGraph::degrees(std::vector< stag_int, std::allocator< stag_int > > vertices) {
+  std::vector< double,std::allocator< double > > c_result;
+  swig::SwigVar_PyObject obj0;
+  obj0 = swig::from(static_cast< std::vector< long long,std::allocator< long long > > >(vertices));
+  if (!swig_get_self()) {
+    Swig::DirectorException::raise("'self' uninitialized, maybe you forgot to call LocalGraph.__init__.");
+  }
+#if defined(SWIG_PYTHON_DIRECTOR_VTABLE)
+  const size_t swig_method_index = 4;
+  const char *const swig_method_name = "degrees";
+  PyObject *method = swig_get_method(swig_method_index, swig_method_name);
+  swig::SwigVar_PyObject result = PyObject_CallFunctionObjArgs(method ,(PyObject *)obj0, NULL);
+#else
+  swig::SwigVar_PyObject swig_method_name = SWIG_Python_str_FromChar("degrees");
+  swig::SwigVar_PyObject result = PyObject_CallMethodObjArgs(swig_get_self(), (PyObject *) swig_method_name ,(PyObject *)obj0, NULL);
+#endif
+  if (!result) {
+    PyObject *error = PyErr_Occurred();
+    if (error) {
+      Swig::DirectorMethodException::raise("Error detected when calling 'LocalGraph.degrees'");
+    }
+  }
+  std::vector< double,std::allocator< double > > *swig_optr = 0;
+  int swig_ores = swig::asptr(result, &swig_optr);
+  if (!SWIG_IsOK(swig_ores) || !swig_optr) {
+    Swig::DirectorTypeMismatchException::raise(SWIG_ErrorType(SWIG_ArgError((swig_optr ? swig_ores : SWIG_TypeError))), "in output value of type '""std::vector< double,std::allocator< double > >""'");
+  }
+  c_result = *swig_optr;
+  if (SWIG_IsNewObj(swig_ores)) delete swig_optr;
+  return (std::vector< double,std::allocator< double > >) c_result;
+}
+
+
+std::vector< stag_int, std::allocator< stag_int > > SwigDirector_LocalGraph::degrees_unweighted(std::vector< stag_int, std::allocator< stag_int > > vertices) {
+  std::vector< stag_int,std::allocator< stag_int > > c_result;
+  swig::SwigVar_PyObject obj0;
+  obj0 = swig::from(static_cast< std::vector< long long,std::allocator< long long > > >(vertices));
+  if (!swig_get_self()) {
+    Swig::DirectorException::raise("'self' uninitialized, maybe you forgot to call LocalGraph.__init__.");
+  }
+#if defined(SWIG_PYTHON_DIRECTOR_VTABLE)
+  const size_t swig_method_index = 5;
+  const char *const swig_method_name = "degrees_unweighted";
+  PyObject *method = swig_get_method(swig_method_index, swig_method_name);
+  swig::SwigVar_PyObject result = PyObject_CallFunctionObjArgs(method ,(PyObject *)obj0, NULL);
+#else
+  swig::SwigVar_PyObject swig_method_name = SWIG_Python_str_FromChar("degrees_unweighted");
+  swig::SwigVar_PyObject result = PyObject_CallMethodObjArgs(swig_get_self(), (PyObject *) swig_method_name ,(PyObject *)obj0, NULL);
+#endif
+  if (!result) {
+    PyObject *error = PyErr_Occurred();
+    if (error) {
+      Swig::DirectorMethodException::raise("Error detected when calling 'LocalGraph.degrees_unweighted'");
+    }
+  }
+  std::vector< long long,std::allocator< long long > > *swig_optr = 0;
+  int swig_ores = swig::asptr(result, &swig_optr);
+  if (!SWIG_IsOK(swig_ores) || !swig_optr) {
+    Swig::DirectorTypeMismatchException::raise(SWIG_ErrorType(SWIG_ArgError((swig_optr ? swig_ores : SWIG_TypeError))), "in output value of type '""std::vector< stag_int,std::allocator< stag_int > >""'");
+  }
+  c_result = *swig_optr;
+  if (SWIG_IsNewObj(swig_ores)) delete swig_optr;
+  return (std::vector< stag_int,std::allocator< stag_int > >) c_result;
+}
+
+
 SwigDirector_LocalGraph::~SwigDirector_LocalGraph() {
 }
 
@@ -14590,6 +14656,8 @@ SWIGINTERN PyObject *_wrap_LocalGraph_degrees(PyObject *SWIGUNUSEDPARM(self), Py
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject *swig_obj[2] ;
+  Swig::Director *director = 0;
+  bool upcall = false;
   std::vector< double,std::allocator< double > > result;
   
   if (!SWIG_Python_UnpackTuple(args, "LocalGraph_degrees", 2, 2, swig_obj)) SWIG_fail;
@@ -14607,7 +14675,17 @@ SWIGINTERN PyObject *_wrap_LocalGraph_degrees(PyObject *SWIGUNUSEDPARM(self), Py
     arg2 = *ptr;
     if (SWIG_IsNewObj(res)) delete ptr;
   }
-  result = (arg1)->degrees(arg2);
+  director = SWIG_DIRECTOR_CAST(arg1);
+  upcall = (director && (director->swig_get_self()==swig_obj[0]));
+  try {
+    if (upcall) {
+      Swig::DirectorPureVirtualException::raise("stag::LocalGraph::degrees");
+    } else {
+      result = (arg1)->degrees(arg2);
+    }
+  } catch (Swig::DirectorException&) {
+    SWIG_fail;
+  }
   resultobj = swig::from(static_cast< std::vector< double,std::allocator< double > > >(result));
   return resultobj;
 fail:
@@ -14622,6 +14700,8 @@ SWIGINTERN PyObject *_wrap_LocalGraph_degrees_unweighted(PyObject *SWIGUNUSEDPAR
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject *swig_obj[2] ;
+  Swig::Director *director = 0;
+  bool upcall = false;
   std::vector< stag_int,std::allocator< stag_int > > result;
   
   if (!SWIG_Python_UnpackTuple(args, "LocalGraph_degrees_unweighted", 2, 2, swig_obj)) SWIG_fail;
@@ -14639,7 +14719,17 @@ SWIGINTERN PyObject *_wrap_LocalGraph_degrees_unweighted(PyObject *SWIGUNUSEDPAR
     arg2 = *ptr;
     if (SWIG_IsNewObj(res)) delete ptr;
   }
-  result = (arg1)->degrees_unweighted(arg2);
+  director = SWIG_DIRECTOR_CAST(arg1);
+  upcall = (director && (director->swig_get_self()==swig_obj[0]));
+  try {
+    if (upcall) {
+      Swig::DirectorPureVirtualException::raise("stag::LocalGraph::degrees_unweighted");
+    } else {
+      result = (arg1)->degrees_unweighted(arg2);
+    }
+  } catch (Swig::DirectorException&) {
+    SWIG_fail;
+  }
   resultobj = swig::from(static_cast< std::vector< long long,std::allocator< long long > > >(result));
   return resultobj;
 fail:
@@ -15165,6 +15255,70 @@ SWIGINTERN PyObject *_wrap_Graph_neighbors_unweighted(PyObject *SWIGUNUSEDPARM(s
   } 
   arg2 = static_cast< stag_int >(val2);
   result = (arg1)->neighbors_unweighted(arg2);
+  resultobj = swig::from(static_cast< std::vector< long long,std::allocator< long long > > >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_Graph_degrees(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  stag::Graph *arg1 = (stag::Graph *) 0 ;
+  std::vector< stag_int,std::allocator< stag_int > > arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject *swig_obj[2] ;
+  std::vector< double,std::allocator< double > > result;
+  
+  if (!SWIG_Python_UnpackTuple(args, "Graph_degrees", 2, 2, swig_obj)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_stag__Graph, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Graph_degrees" "', argument " "1"" of type '" "stag::Graph *""'"); 
+  }
+  arg1 = reinterpret_cast< stag::Graph * >(argp1);
+  {
+    std::vector< long long,std::allocator< long long > > *ptr = (std::vector< long long,std::allocator< long long > > *)0;
+    int res = swig::asptr(swig_obj[1], &ptr);
+    if (!SWIG_IsOK(res) || !ptr) {
+      SWIG_exception_fail(SWIG_ArgError((ptr ? res : SWIG_TypeError)), "in method '" "Graph_degrees" "', argument " "2"" of type '" "std::vector< stag_int,std::allocator< stag_int > >""'"); 
+    }
+    arg2 = *ptr;
+    if (SWIG_IsNewObj(res)) delete ptr;
+  }
+  result = (arg1)->degrees(arg2);
+  resultobj = swig::from(static_cast< std::vector< double,std::allocator< double > > >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_Graph_degrees_unweighted(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  stag::Graph *arg1 = (stag::Graph *) 0 ;
+  std::vector< stag_int,std::allocator< stag_int > > arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject *swig_obj[2] ;
+  std::vector< stag_int,std::allocator< stag_int > > result;
+  
+  if (!SWIG_Python_UnpackTuple(args, "Graph_degrees_unweighted", 2, 2, swig_obj)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_stag__Graph, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Graph_degrees_unweighted" "', argument " "1"" of type '" "stag::Graph *""'"); 
+  }
+  arg1 = reinterpret_cast< stag::Graph * >(argp1);
+  {
+    std::vector< long long,std::allocator< long long > > *ptr = (std::vector< long long,std::allocator< long long > > *)0;
+    int res = swig::asptr(swig_obj[1], &ptr);
+    if (!SWIG_IsOK(res) || !ptr) {
+      SWIG_exception_fail(SWIG_ArgError((ptr ? res : SWIG_TypeError)), "in method '" "Graph_degrees_unweighted" "', argument " "2"" of type '" "std::vector< stag_int,std::allocator< stag_int > >""'"); 
+    }
+    arg2 = *ptr;
+    if (SWIG_IsNewObj(res)) delete ptr;
+  }
+  result = (arg1)->degrees_unweighted(arg2);
   resultobj = swig::from(static_cast< std::vector< long long,std::allocator< long long > > >(result));
   return resultobj;
 fail:
@@ -16635,6 +16789,8 @@ static PyMethodDef SwigMethods[] = {
 	 { "Graph_degree_unweighted", _wrap_Graph_degree_unweighted, METH_VARARGS, NULL},
 	 { "Graph_neighbors", _wrap_Graph_neighbors, METH_VARARGS, NULL},
 	 { "Graph_neighbors_unweighted", _wrap_Graph_neighbors_unweighted, METH_VARARGS, NULL},
+	 { "Graph_degrees", _wrap_Graph_degrees, METH_VARARGS, NULL},
+	 { "Graph_degrees_unweighted", _wrap_Graph_degrees_unweighted, METH_VARARGS, NULL},
 	 { "delete_Graph", _wrap_delete_Graph, METH_O, NULL},
 	 { "Graph_swigregister", Graph_swigregister, METH_O, NULL},
 	 { "Graph_swiginit", Graph_swiginit, METH_VARARGS, NULL},

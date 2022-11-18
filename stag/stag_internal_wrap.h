@@ -23,6 +23,8 @@ public:
     virtual stag_int degree_unweighted(stag_int v);
     virtual std::vector< stag::edge, std::allocator< stag::edge > > neighbors(stag_int v);
     virtual std::vector< stag_int, std::allocator< stag_int > > neighbors_unweighted(stag_int v);
+    virtual std::vector< double, std::allocator< double > > degrees(std::vector< stag_int, std::allocator< stag_int > > vertices);
+    virtual std::vector< stag_int, std::allocator< stag_int > > degrees_unweighted(std::vector< stag_int, std::allocator< stag_int > > vertices);
     virtual ~SwigDirector_LocalGraph();
 
 /* Internal director utilities */
@@ -54,7 +56,7 @@ private:
       return method;
     }
 private:
-    mutable swig::SwigVar_PyObject vtable[4];
+    mutable swig::SwigVar_PyObject vtable[6];
 #endif
 
 };

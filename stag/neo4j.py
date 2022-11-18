@@ -29,7 +29,6 @@ class Neo4jGraph(graph.LocalGraph):
 
     @lru_cache(maxsize=1024)
     def degree_unweighted(self, v) -> int:
-        print(f"Degree Query: {v}")
         with self.driver.session() as session:
             result = session.execute_read(self._degree_query, v)
         return result
@@ -45,6 +44,25 @@ class Neo4jGraph(graph.LocalGraph):
                         "WHERE id(n1) = $node_id "
                         "RETURN count(n2)", node_id=node_id)
         return result.single()[0]
+
+    def degrees(self, vertices: List[int]) -> List[float]:
+        return self.degrees_unweighted(vertices)
+
+    @lru_cache(maxsize=1024)
+    def degrees_unweighted(self, vertices: List[int]) -> List[int]:
+        with self.driver.session() as session:
+            result = session.execute_read(self._degrees_query, vertices)
+        return [x[0] for x in result]
+
+    @staticmethod
+    def _degrees_query(tx, node_ids):
+        # To get the degree of the given nodes, we will execute the following
+        # Cypher command:
+        #    MATCH (n1) WHERE id(n1) in [node_ids] return size([p = (n1)--() | p]) as degree
+        result = tx.run("MATCH (n1) "
+                        f"WHERE id(n1) in {[x for x in node_ids]} "
+                        "RETURN size([p = (n1)--() | p]) as degree")
+        return list(result.values())
 
     def neighbors(self, v) -> List[graph.Edge]:
         return [graph.Edge(v, u, 1) for u in self.neighbors_unweighted(v)]
@@ -64,7 +82,7 @@ class Neo4jGraph(graph.LocalGraph):
         # with the given node ID.
         result = tx.run("MATCH (n1)-[]-(n2) "
                         "WHERE id(n1) = $node_id "
-                        "RETURN id(n2)", node_id=node_id)
+                        "RETURN DISTINCT id(n2)", node_id=node_id)
         return list(result.values())
 
     def query_id(self, property_name: str, property_value: str) -> int:
@@ -91,7 +109,6 @@ class Neo4jGraph(graph.LocalGraph):
                         f"RETURN (n1.{property_name}) "
                         "LIMIT 1")
         return result.single()[0]
-
 
     def __del__(self):
         # When the graph object it destroyed, close the connection to the backing

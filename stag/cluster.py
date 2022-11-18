@@ -5,7 +5,7 @@ from . import graph
 from . import utility
 
 
-def local_cluster(g: graph.Graph, seed_vertex: int, target_volume):
+def local_cluster(g: graph.LocalGraph, seed_vertex: int, target_volume):
     """
     Default local clustering algorithm. Given a graph and starting vertex,
     return a cluster which is close to the starting vertex.

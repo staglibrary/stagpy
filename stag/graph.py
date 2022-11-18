@@ -29,8 +29,11 @@ class Edge(object):
     def __ne__(self, other):
         return not self.__eq__(other)
 
+    def __repr__(self):
+        return f"Edge({self.v1}, {self.v2}, weight={self.weight})"
 
-class LocalGraph(stag_internal.LocalGraph, ABC):
+
+class LocalGraph(ABC):
     """
     An abstract class representing local graph operations.
     For now, this class inherits directly from the internal local graph class.
@@ -38,7 +41,7 @@ class LocalGraph(stag_internal.LocalGraph, ABC):
     """
 
     def __init__(self):
-        pass
+        self.internal_graph = PythonDefinedLocalGraph(self)
 
     @abstractmethod
     def degree(self, v) -> float:
@@ -52,7 +55,7 @@ class LocalGraph(stag_internal.LocalGraph, ABC):
         neighbors of v, ignoring the edge weights.
         """
         pass
-    
+
     @abstractmethod
     def neighbors(self, v) -> List[Edge]:
         """
@@ -66,7 +69,7 @@ class LocalGraph(stag_internal.LocalGraph, ABC):
         :return: a list of Edge objects containing the neighborhood information
         """
         pass
-    
+
     @abstractmethod
     def neighbors_unweighted(self, v) -> List[int]:
         """
@@ -78,6 +81,24 @@ class LocalGraph(stag_internal.LocalGraph, ABC):
         :return: an int vector giving the neighbors of v
         """
         pass
+
+
+class PythonDefinedLocalGraph(stag_internal.LocalGraph):
+    def __init__(self, python_local_graph: LocalGraph):
+        super().__init__()
+        self.python_graph = python_local_graph
+
+    def degree(self, v: int):
+        return self.python_graph.degree(v)
+
+    def degree_unweighted(self, v: int):
+        return self.python_graph.degree_unweighted(v)
+
+    def neighbors(self, v: int):
+        return [e.internal_edge for e in self.python_graph.neighbors(v)]
+
+    def neighbors_unweighted(self, v: int):
+        return self.python_graph.neighbors_unweighted(v)
 
 
 class Graph(LocalGraph):

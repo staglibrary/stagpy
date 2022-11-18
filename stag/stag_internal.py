@@ -442,6 +442,112 @@ class vectord(object):
 # Register vectord in _stag_internal:
 _stag_internal.vectord_swigregister(vectord)
 
+class vectore(object):
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
+    __repr__ = _swig_repr
+
+    def iterator(self):
+        return _stag_internal.vectore_iterator(self)
+    def __iter__(self):
+        return self.iterator()
+
+    def __nonzero__(self):
+        return _stag_internal.vectore___nonzero__(self)
+
+    def __bool__(self):
+        return _stag_internal.vectore___bool__(self)
+
+    def __len__(self):
+        return _stag_internal.vectore___len__(self)
+
+    def __getslice__(self, i, j):
+        return _stag_internal.vectore___getslice__(self, i, j)
+
+    def __setslice__(self, *args):
+        return _stag_internal.vectore___setslice__(self, *args)
+
+    def __delslice__(self, i, j):
+        return _stag_internal.vectore___delslice__(self, i, j)
+
+    def __delitem__(self, *args):
+        return _stag_internal.vectore___delitem__(self, *args)
+
+    def __getitem__(self, *args):
+        return _stag_internal.vectore___getitem__(self, *args)
+
+    def __setitem__(self, *args):
+        return _stag_internal.vectore___setitem__(self, *args)
+
+    def pop(self):
+        return _stag_internal.vectore_pop(self)
+
+    def append(self, x):
+        return _stag_internal.vectore_append(self, x)
+
+    def empty(self):
+        return _stag_internal.vectore_empty(self)
+
+    def size(self):
+        return _stag_internal.vectore_size(self)
+
+    def swap(self, v):
+        return _stag_internal.vectore_swap(self, v)
+
+    def begin(self):
+        return _stag_internal.vectore_begin(self)
+
+    def end(self):
+        return _stag_internal.vectore_end(self)
+
+    def rbegin(self):
+        return _stag_internal.vectore_rbegin(self)
+
+    def rend(self):
+        return _stag_internal.vectore_rend(self)
+
+    def clear(self):
+        return _stag_internal.vectore_clear(self)
+
+    def get_allocator(self):
+        return _stag_internal.vectore_get_allocator(self)
+
+    def pop_back(self):
+        return _stag_internal.vectore_pop_back(self)
+
+    def erase(self, *args):
+        return _stag_internal.vectore_erase(self, *args)
+
+    def __init__(self, *args):
+        _stag_internal.vectore_swiginit(self, _stag_internal.new_vectore(*args))
+
+    def push_back(self, x):
+        return _stag_internal.vectore_push_back(self, x)
+
+    def front(self):
+        return _stag_internal.vectore_front(self)
+
+    def back(self):
+        return _stag_internal.vectore_back(self)
+
+    def assign(self, n, x):
+        return _stag_internal.vectore_assign(self, n, x)
+
+    def resize(self, *args):
+        return _stag_internal.vectore_resize(self, *args)
+
+    def insert(self, *args):
+        return _stag_internal.vectore_insert(self, *args)
+
+    def reserve(self, n):
+        return _stag_internal.vectore_reserve(self, n)
+
+    def capacity(self):
+        return _stag_internal.vectore_capacity(self)
+    __swig_destroy__ = _stag_internal.delete_vectore
+
+# Register vectore in _stag_internal:
+_stag_internal.vectore_swigregister(vectore)
+
 class TupleMM(object):
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
     __repr__ = _swig_repr
@@ -497,9 +603,6 @@ VERSION_PATCH = cvar.VERSION_PATCH
 
 class LocalGraph(object):
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
-
-    def __init__(self, *args, **kwargs):
-        raise AttributeError("No constructor defined - class is abstract")
     __repr__ = _swig_repr
 
     def degree(self, v):
@@ -514,6 +617,17 @@ class LocalGraph(object):
     def neighbors_unweighted(self, v):
         return _stag_internal.LocalGraph_neighbors_unweighted(self, v)
     __swig_destroy__ = _stag_internal.delete_LocalGraph
+
+    def __init__(self):
+        if self.__class__ == LocalGraph:
+            _self = None
+        else:
+            _self = self
+        _stag_internal.LocalGraph_swiginit(self, _stag_internal.new_LocalGraph(_self, ))
+    def __disown__(self):
+        self.this.disown()
+        _stag_internal.disown_LocalGraph(self)
+        return weakref.proxy(self)
 
 # Register LocalGraph in _stag_internal:
 _stag_internal.LocalGraph_swigregister(LocalGraph)

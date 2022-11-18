@@ -14,7 +14,7 @@
 #include <cluster.h>
 #include <utility.h>
 
-std::vector<stag_int> stag::local_cluster(stag::LocalGraph *graph, stag_int seed_vertex, stag_int target_volume) {
+std::vector<stag_int> stag::local_cluster(stag::LocalGraph& graph, stag_int seed_vertex, stag_int target_volume) {
   // The 'locality' parameter should essentially be a constant if we expect the conductance
   // of the target cluster to be a constant. Set it to 0.01.
   // The error parameter should decrease as the inverse of the target volume.
@@ -27,13 +27,13 @@ std::vector<stag_int> stag::local_cluster(stag::LocalGraph *graph, stag_int seed
 //------------------------------------------------------------------------------
 // Implementation of ACL Local Clustering Algorithm based on PageRank vectors
 //------------------------------------------------------------------------------
-std::vector<stag_int> stag::local_cluster_acl(stag::LocalGraph* graph,
+std::vector<stag_int> stag::local_cluster_acl(stag::LocalGraph& graph,
                                               stag_int seed_vertex,
                                               double locality) {
   return stag::local_cluster_acl(graph, seed_vertex, locality, 0.001);
 }
 
-std::vector<stag_int> stag::local_cluster_acl(stag::LocalGraph *graph,
+std::vector<stag_int> stag::local_cluster_acl(stag::LocalGraph& graph,
                                               stag_int seed_vertex,
                                               double locality,
                                               double error) {
@@ -46,7 +46,7 @@ std::vector<stag_int> stag::local_cluster_acl(stag::LocalGraph *graph,
   // Normalise the values in p by their degree
   double deg;
   for (SprsMat::InnerIterator it(p, 0); it; ++it) {
-    deg = graph->degree(it.row());
+    deg = graph.degree(it.row());
     it.valueRef() = it.value() / deg;
   }
 
@@ -74,7 +74,7 @@ std::vector<stag_int> stag::local_cluster_acl(stag::LocalGraph *graph,
  * @param alpha
  * @param u
  */
-void push(stag::LocalGraph *graph, SprsMat *p, SprsMat *r, double alpha, stag_int u) {
+void push(stag::LocalGraph& graph, SprsMat *p, SprsMat *r, double alpha, stag_int u) {
   // First, make sure that the vector p is large enough.
   if (u >= p->rows()) {
     p->conservativeResize(u + 1, 1);
@@ -84,9 +84,9 @@ void push(stag::LocalGraph *graph, SprsMat *p, SprsMat *r, double alpha, stag_in
   p->coeffRef(u, 0) = p->coeff(u, 0) + alpha * r->coeff(u, 0);
 
   // Iterate through the neighbors of u
-  double deg = graph->degree(u);
+  double deg = graph.degree(u);
   stag_int v;
-  for (stag::edge e : graph->neighbors(u)) {
+  for (stag::edge e : graph.neighbors(u)) {
     v = e.v2;
     assert(v != u);
 
@@ -104,7 +104,7 @@ void push(stag::LocalGraph *graph, SprsMat *p, SprsMat *r, double alpha, stag_in
   r->coeffRef(u, 0) = (1 - alpha) * r->coeff(u, 0) / 2;
 }
 
-std::tuple<SprsMat, SprsMat> stag::approximate_pagerank(stag::LocalGraph *graph,
+std::tuple<SprsMat, SprsMat> stag::approximate_pagerank(stag::LocalGraph& graph,
                                                         SprsMat &seed_vector,
                                                         double alpha,
                                                         double epsilon) {
@@ -127,7 +127,7 @@ std::tuple<SprsMat, SprsMat> stag::approximate_pagerank(stag::LocalGraph *graph,
   std::unordered_set<stag_int> queue_members;
   for (SprsMat::InnerIterator it(seed_vector, 0); it; ++it) {
     u = it.row();
-    deg = graph->degree(u);
+    deg = graph.degree(u);
     if (r.coeff(u, 0) >= epsilon * deg) {
       vertex_queue.push(u);
       queue_members.insert(u);
@@ -146,7 +146,7 @@ std::tuple<SprsMat, SprsMat> stag::approximate_pagerank(stag::LocalGraph *graph,
     push(graph, &p, &r, alpha, u);
 
     // Check u to see if it should be added back to the queue
-    deg = graph->degree(u);
+    deg = graph.degree(u);
     if (r.coeff(u, 0) >= epsilon * deg) {
       vertex_queue.push(u);
       queue_members.insert(u);
@@ -155,9 +155,9 @@ std::tuple<SprsMat, SprsMat> stag::approximate_pagerank(stag::LocalGraph *graph,
     // Check the neighbors of u to see if they should be added back to the queue
     // Skip any neighbors which are already in the queue.
     stag_int v;
-    for (stag::edge e : graph->neighbors(u)) {
+    for (stag::edge e : graph.neighbors(u)) {
       v = e.v2;
-      deg = graph->degree(v);
+      deg = graph.degree(v);
       if (r.coeff(e.v2, 0) >= epsilon * deg && !queue_members.contains(v)) {
         vertex_queue.push(v);
         queue_members.insert(v);
@@ -174,7 +174,7 @@ std::tuple<SprsMat, SprsMat> stag::approximate_pagerank(stag::LocalGraph *graph,
 //------------------------------------------------------------------------------
 // Sweep set implementation
 //------------------------------------------------------------------------------
-std::vector<stag_int> stag::sweep_set_conductance(stag::LocalGraph* graph,
+std::vector<stag_int> stag::sweep_set_conductance(stag::LocalGraph& graph,
                                                   SprsMat& vec) {
   // The given vector must be one dimensional
   assert(vec.cols() == 1);
@@ -202,12 +202,12 @@ std::vector<stag_int> stag::sweep_set_conductance(stag::LocalGraph* graph,
     vertex_set.insert(v);
 
     // Update the vertex set volume
-    set_volume += graph->degree(v);
+    set_volume += graph.degree(v);
 
     // Update the cut weight. We need to add the total degree of the node v,
     // and then remove any edges from v to the rest of the vertex set.
-    cut_weight += graph->degree(v);
-    for (stag::edge e : graph->neighbors(v)) {
+    cut_weight += graph.degree(v);
+    for (stag::edge e : graph.neighbors(v)) {
       if (vertex_set.contains(e.v2)) cut_weight -= 2 * e.weight;
     }
 

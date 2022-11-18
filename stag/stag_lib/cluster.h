@@ -28,7 +28,7 @@ namespace stag {
    * @return a vector containing the indices of vectors considered to be in the
    *         same cluster as the seed_vertex.
    */
-  std::vector<stag_int> local_cluster(stag::LocalGraph* graph, stag_int seed_vertex, stag_int target_volume);
+  std::vector<stag_int> local_cluster(stag::LocalGraph& graph, stag_int seed_vertex, stag_int target_volume);
 
   /**
    * The ACL local clustering algorithm. Given a graph and starting vertex,
@@ -51,8 +51,8 @@ namespace stag {
    * @return a vector containing the indices of vectors considered to be in the
    *         same cluster as the seed_vertex.
    */
-  std::vector<stag_int> local_cluster_acl(stag::LocalGraph* graph, stag_int seed_vertex, double locality);
-  std::vector<stag_int> local_cluster_acl(stag::LocalGraph* graph, stag_int seed_vertex, double locality, double error);
+  std::vector<stag_int> local_cluster_acl(stag::LocalGraph& graph, stag_int seed_vertex, double locality);
+  std::vector<stag_int> local_cluster_acl(stag::LocalGraph& graph, stag_int seed_vertex, double locality, double error);
 
   /**
    * Compute the approximate pagerank vector as described in ACL:
@@ -79,7 +79,7 @@ namespace stag {
    *
    * @raises ArgumentError if the provided seed_vector is not a column vector.
    */
-  std::tuple<SprsMat, SprsMat> approximate_pagerank(stag::LocalGraph* graph,
+  std::tuple<SprsMat, SprsMat> approximate_pagerank(stag::LocalGraph& graph,
                                                     SprsMat &seed_vector,
                                                     double alpha,
                                                     double epsilon);
@@ -102,7 +102,7 @@ namespace stag {
    * @return a vector containing the indices of vec which give the minimum
    *         conductance in the given graph.
    */
-  std::vector<stag_int> sweep_set_conductance(stag::LocalGraph* graph,
+  std::vector<stag_int> sweep_set_conductance(stag::LocalGraph& graph,
                                               SprsMat& vec);
 }
 

@@ -5,7 +5,7 @@ from . import graph
 from . import utility
 
 
-def local_cluster(g: graph.Graph, seed_vertex: int, target_volume: int):
+def local_cluster(g: graph.LocalGraph, seed_vertex: int, target_volume: int):
     """
     Default local clustering algorithm. Given a graph and starting vertex,
     return a cluster which is close to the starting vertex.
@@ -25,7 +25,7 @@ def local_cluster(g: graph.Graph, seed_vertex: int, target_volume: int):
     return stag_internal.local_cluster(g.internal_graph, seed_vertex, target_volume)
 
 
-def local_cluster_acl(g: graph.Graph, seed_vertex: int, locality: float, error=0.001):
+def local_cluster_acl(g: graph.LocalGraph, seed_vertex: int, locality: float, error=0.001):
     """
     The ACL local clustering algorithm. Given a graph and starting vertex,
     returns a cluster close to the starting vertex, constructed in a local way.
@@ -50,7 +50,7 @@ def local_cluster_acl(g: graph.Graph, seed_vertex: int, locality: float, error=0
     return stag_internal.local_cluster_acl(g.internal_graph, seed_vertex, locality, error)
 
 
-def approximate_pagerank(g: graph.Graph, seed_vector: scipy.sparse.csc_matrix, alpha: float, epsilon: float):
+def approximate_pagerank(g: graph.LocalGraph, seed_vector: scipy.sparse.csc_matrix, alpha: float, epsilon: float):
     """
     Compute the approximate pagerank vector as described in ACL:
 
@@ -83,7 +83,7 @@ def approximate_pagerank(g: graph.Graph, seed_vector: scipy.sparse.csc_matrix, a
     return utility.swig_sprs_to_scipy(apr[0]), utility.swig_sprs_to_scipy(apr[1])
 
 
-def sweep_set_conductance(g: graph.Graph, vec: scipy.sparse.csc_matrix):
+def sweep_set_conductance(g: graph.LocalGraph, vec: scipy.sparse.csc_matrix):
     """
     Find the sweep set of the given vector with the minimum conductance.
    

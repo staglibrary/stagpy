@@ -8,3 +8,5 @@ neo4j
 twine
 auditwheel
 pytest
+python3-sphinx
+furo

@@ -70,7 +70,17 @@ class LocalGraph(ABC):
 
     @abstractmethod
     def degree(self, v: int) -> float:
-        """Given a vertex v, return its weighted degree."""
+        """
+        Given a vertex v, return its weighted degree.
+
+        Given a graph :math:`G = (V, E, w)`, the degree ov vertex :math:`v` is
+        defined by
+
+        .. math::
+
+            \mathrm{deg}(v) = \sum_{u \in V} w(v, u).
+
+        """
         pass
 
     @abstractmethod
@@ -105,9 +115,8 @@ class LocalGraph(ABC):
         """
         Given a list of vertices, return a list of their weighted degrees.
 
-        This base class provides a default implementation of this
-        method which makes repeated calls to ``self.degree``.
-        Providing a more efficient method of returning a list of degrees will
+        When developing implementations of the :class:`LocalGraph` class,
+        providing an efficient method of returning a list of degrees will
         improve the performance of local clustering algorithms.
         """
         return [self.degree(v) for v in vertices]
@@ -116,9 +125,8 @@ class LocalGraph(ABC):
         """
         Given a list of vertices, return a list of their unweighted degrees.
 
-        This base class provides a default implementation of this
-        method which makes repeated calls to ``self.degree_unweighted``.
-        Providing a more efficient method of returning a list of degrees will
+        When developing implementations of the :class:`LocalGraph` class,
+        providing an efficient method of returning a list of degrees will
         improve the performance of local clustering algorithms.
         """
         return [self.degree_unweighted(v) for v in vertices]
@@ -268,11 +276,22 @@ class Graph(LocalGraph):
         """
         The inverse degree matrix of the graph.
 
-        The inverse degree matrix is an n x n matrix such that each diagonal entry is
-        the inverse of the degree of the corresponding node, or 0 if the node
-        has degree 0.
+        The degree matrix :math:`D^{-1} \in \mathbb{R}^{n \\times n}`
+        is a diagonal matrix such that
 
-        :return: the sparse inverse degree matrix
+        .. math::
+
+            D(i, i) =  \\left\\{
+                    \\begin{array}{lll}
+                        \\mathrm{deg}(i) & \\mbox{if } \\mathrm{deg}(i) > 0 \\\\
+                        0 & \\mbox{otherwise}
+                    \\end{array}
+                \\right.
+
+        where :math:`\mathrm{deg}(i)` is the degree of vertex :math:`i` and
+        :math:`n` is the number of vertices in the graph.
+
+        :return: a ``scipy.sparse.csc_matrix`` representing the inverse degree matrix
         """
         return self.internal_graph.inverse_degree_matrix()
     
@@ -281,50 +300,59 @@ class Graph(LocalGraph):
         """
         The lazy random walk matrix of the graph.
 
-        The lazy random walk matrix is defined to be
+        The lazy random walk matrix is defined by
 
-        1/2 I + 1/2 A D^{-1}
+        .. math::
 
-        where I is the identity matrix, A is the graph adjacency matrix and
-        D is the degree matrix of the graph.
+            W = \\frac 1 2 I + \\frac 1 2 A D^{-1}
 
-        :return: the sparse lazy random walk matrix
+        where :math:`I` is the identity matrix, :math:`A` is the graph adjacency
+        matrix and :math:`D` is the degree matrix of the graph.
+
+        :return: a ``scipy.sparse.csc_matrix`` representing the lazy random walk
+                 matrix
+
         """
         return self.internal_graph.lazy_random_walk_matrix()
 
-    def total_volume(self):
+    def total_volume(self) -> float:
         """
         The volume of the graph.
 
-        The volume is defined as the sum of the node degrees.
+        The volume of a graph :math:`G = (V, E, w)` is defined by
 
-        :return: the graph's volume.
+        .. math::
+
+            \mathrm{vol}(G) = \sum_{u \in V} \mathrm{deg}(u),
+
+        where :math:`\mathrm{deg}(u)` is the degree of vertex :math:`u`.
+
+        :return: the graph's volume, :math:`\mathrm{vol}(G)`
         """
         return self.internal_graph.total_volume()
 
-    def number_of_vertices(self):
+    def number_of_vertices(self) -> int:
         """The number of vertices in the graph."""
         return self.internal_graph.number_of_vertices()
 
-    def number_of_edges(self):
+    def number_of_edges(self) -> int:
         """
         The number of edges in the graph.
 
-        This is defined based on the number of non-zero elements in the adjacency
-        matrix, and ignores the weights of the edges.
+        This method ignores the weights of the edges.
         """
         return self.internal_graph.number_of_edges()
 
-    def degree(self, vertex: int):
+    def degree(self, v: int) -> float:
         return self.internal_graph.degree(vertex)
 
-    def degree_unweighted(self, vertex: int):
+    def degree_unweighted(self, v: int) -> int:
         return self.internal_graph.degree_unweighted(vertex)
 
-    def neighbors(self, vertex: int):
+    def neighbors(self, v: int) -> List[Edge]:
         return self.internal_graph.neighbors(vertex)
 
-    def neighbors_unweighted(self, vertex: int):
+    def neighbors_unweighted(self, v: int) -> List[int]:
         return self.internal_graph.neighbors_unweighted(vertex)
 
     def __eq__(self, other):
@@ -358,6 +386,9 @@ class Graph(LocalGraph):
     def to_networkx(self):
         """
         Construct a networkx graph object which is equivalent to this STAG graph.
+
+        See the
+        `networkx documentation <https://networkx.org/documentation/stable/reference/classes/graph.html>`_.
         """
         return networkx.Graph(self.adjacency())
 

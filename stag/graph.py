@@ -11,15 +11,19 @@ from . import utility
 
 
 class Edge(object):
-    """An object representing a weighted edge in a graph."""
+    """
+    An object representing a weighted edge in a graph.
+
+    Instances of this class have the following members:
+
+    * ``v1: int`` : the first vertex in the edge
+    * ``v2: int`` : the second vertex in the edge
+    * ``weight: float`` : the weight of the edge
+    """
 
     def __init__(self, v1: int, v2: int, weight: float):
         """
         Create an edge from two node ids and a weight.
-
-        :param v1: The first vertex in the edge.
-        :param v2: The second vertex in the edge.
-        :param weight: The weight of the edge.
         """
         self.v1 = v1
         self.v2 = v2
@@ -47,15 +51,30 @@ class LocalGraph(ABC):
     """
 
     def __init__(self):
+        """
+        Base constructor.
+
+        The constructor of any classes inheriting from this base class should
+        call this constructor. For example:
+
+        .. code-block:: python
+
+            class MyLocalGraph(stag.graph.LocalGraph):
+              def __init__(self):
+                super().__init__()
+
+                # Add custom initialisation for MyLocalGraph
+
+        """
         self.internal_graph = _PythonDefinedLocalGraph(self)
 
     @abstractmethod
-    def degree(self, v) -> float:
+    def degree(self, v: int) -> float:
         """Given a vertex v, return its weighted degree."""
         pass
 
     @abstractmethod
-    def degree_unweighted(self, v) -> int:
+    def degree_unweighted(self, v: int) -> int:
         """
         Given a vertex v, return its unweighted degree. That is, the number of
         neighbors of v, ignoring the edge weights.
@@ -63,36 +82,46 @@ class LocalGraph(ABC):
         pass
 
     @abstractmethod
-    def neighbors(self, v) -> List[Edge]:
+    def neighbors(self, v: int) -> List[Edge]:
         """
-        Given a vertex v, return a vector of edges representing the
-        neighborhood of v.
+        Given a vertex v, return a list of edges representing the
+        neighbors of v.
 
-        The returned edges will all have the ordering (v, x) such that
-        edge.v = v.
-
-        :param v: an int representing some vertex in the graph
-        :return: a list of Edge objects containing the neighborhood information
+        The returned edge objects will all have the ordering ``(v1, v2)`` such that
+        ``edge.v1 = v`` and ``edge.v2`` is a neighbor of ``v``.
         """
         pass
 
     @abstractmethod
-    def neighbors_unweighted(self, v) -> List[int]:
+    def neighbors_unweighted(self, v: int) -> List[int]:
         """
-        Given a vertex v, return a vector containing the neighbors of v.
+        Given a vertex v, return a list of neighbors of v.
 
         The weights of edges to the neighbors are not returned by this method.
-
-        :param v: an int representing some vertex in the graph
-        :return: an int vector giving the neighbors of v
         """
         pass
 
-    def degrees_unweighted(self, vertices: List[int]) -> List[int]:
-        return [self.degree_unweighted(v) for v in vertices]
-
     def degrees(self, vertices: List[int]) -> List[float]:
+        """
+        Given a list of vertices, return a list of their weighted degrees.
+
+        This base class provides a default implementation of this
+        method which makes repeated calls to ``self.degree``.
+        Providing a more efficient method of returning a list of degrees will
+        improve the performance of local clustering algorithms.
+        """
         return [self.degree(v) for v in vertices]
+
+    def degrees_unweighted(self, vertices: List[int]) -> List[int]:
+        """
+        Given a list of vertices, return a list of their unweighted degrees.
+
+        This base class provides a default implementation of this
+        method which makes repeated calls to ``self.degree_unweighted``.
+        Providing a more efficient method of returning a list of degrees will
+        improve the performance of local clustering algorithms.
+        """
+        return [self.degree_unweighted(v) for v in vertices]
 
 
 class _PythonDefinedLocalGraph(stag_internal.LocalGraph):
@@ -121,17 +150,19 @@ class _PythonDefinedLocalGraph(stag_internal.LocalGraph):
 
 class Graph(LocalGraph):
     """
-    Represents a graph. We keep things very simple - a graph is represented by its sparse adjacency matrix.
+    Core graph object.
 
-    In the general case, this allows for
-      - directed and undirected graphs
-      - self-loops
+    We keep things simple - a graph is represented by its sparse adjacency
+    matrix.
+    Throughout the library, we use the scipy sparse matrix
+    object. It may be useful to refer to the
+    `scipy.sparse documentation <https://docs.scipy.org/doc/scipy/reference/sparse.html>`_.
+    Matrices returned by STAG methods will be instances of the
+    ``scipy.sparse.csr_matrix`` class.
 
-    If you'd like to store meta-data about the graph, such as node or edge labels, you should implement a subclass of
-    this one, and add that information yourself.
-
-    This graph cannot be dynamically updated. It must be initialised with the complete adjacency matrix.
-    Vertices are referred to by their index in the adjacency matrix.
+    This graph object cannot be dynamically updated.
+    It is initialised with an adjacency matrix.
+    Vertices are always referred to by their index in the adjacency matrix.
     """
 
     def __init__(self, adj_mat, internal_graph=None):

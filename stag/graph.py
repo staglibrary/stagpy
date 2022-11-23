@@ -152,13 +152,14 @@ class Graph(LocalGraph):
     """
     Core graph object.
 
-    We keep things simple - a graph is represented by its sparse adjacency
-    matrix.
+    The graph object is initialised with a sparse adjacency matrix and this
+    is used directly as the internal representation of the graph.
+
     Throughout the library, we use the scipy sparse matrix
     object. It may be useful to refer to the
     `scipy.sparse documentation <https://docs.scipy.org/doc/scipy/reference/sparse.html>`_.
     Matrices returned by STAG methods will be instances of the
-    ``scipy.sparse.csr_matrix`` class.
+    ``scipy.sparse.csc_matrix`` class.
 
     This graph object cannot be dynamically updated.
     It is initialised with an adjacency matrix.
@@ -167,11 +168,24 @@ class Graph(LocalGraph):
 
     def __init__(self, adj_mat, internal_graph=None):
         """
-        Initialise the graph with an adjacency matrix.
+        __init__(adj_mat)
 
-        :param adj_mat: A sparse scipy matrix.
-        :param internal_graph: (optional) provide an internal STAG graph object with
-                               which to initialise the python wrapper
+        Initialise the graph with an adjacency matrix.
+        
+        For example:
+        
+        .. code-block:: python
+        
+            import stag.graph
+            import scipy.sparse
+            
+            adj_mat = sp.sparse.csc_matrix([[0, 1, 1, 1],
+                                            [1, 0, 1, 1],
+                                            [1, 1, 0, 1],
+                                            [1, 1, 1, 0]])
+            g = stag.graph.Graph(adj_mat)
+
+        :param adj_mat: A sparse scipy matrix, such as ``scipy.sparse.csc_matrix``.
         """
         # Call the LocalGraph initialisation method - it is important that this
         # is called first. This is because we override the internal_graph
@@ -195,7 +209,7 @@ class Graph(LocalGraph):
         """
         Return the sparse adjacency matrix of the graph.
 
-        :return: a sparse matrix representing the graph adjacency matrix
+        :return: a ``scipy.sparse.csc_matrix`` representing the graph adjacency matrix
         """
         return self.internal_graph.adjacency()
 
@@ -206,12 +220,14 @@ class Graph(LocalGraph):
 
         The Laplacian matrix is defined by
 
-        L = D - A
+        .. math::
 
-        where D is the diagonal matrix of vertex degrees and A is the adjacency
-        matrix of the graph.
+            L = D - A
 
-        :return: a sparse matrix representing the graph Laplacian
+        where :math:`D` is the diagonal matrix of vertex degrees
+        and :math:`A` is the adjacency matrix of the graph.
+
+        :return: a ``scipy.sparse.csc_matrix`` representing the graph Laplacian
         """
         return self.internal_graph.laplacian()
 
@@ -222,12 +238,14 @@ class Graph(LocalGraph):
 
         The normalised Laplacian matrix is defined by
 
-        Ln = D^{-1/2} L D^{-1/2}
+        .. math::
 
-        where D is the diagonal matrix of vertex degrees and L is the Laplacian
-        matrix of the graph
+            \mathcal{L} = D^{-1/2} L D^{-1/2}
 
-        :return: a sparse matrix representing the normalised Laplacian
+        where :math:`D` is the diagonal matrix of vertex degrees and :math:`L`
+        is the Laplacian matrix of the graph.
+
+        :return: a ``scipy.sparse.csc_matrix`` representing the normalised Laplacian
         """
         return self.internal_graph.normalised_laplacian()
 
@@ -236,10 +254,12 @@ class Graph(LocalGraph):
         """
         The degree matrix of the graph.
 
-        The degree matrix is an n x n matrix such that each diagonal entry is the degree
-        of the corresponding node.
+        The degree matrix :math:`D \in \mathbb{R}^{n \\times n}`
+        is a diagonal matrix such that :math:`D(i, i) = \mathrm{deg}(i)`
+        where :math:`\mathrm{deg}(i)` is the degree of vertex :math:`i` and
+        :math:`n` is the number of vertices in the graph.
 
-        :return: the sparse degree matrix
+        :return: a ``scipy.sparse.csc_matrix`` representing the degree matrix
         """
         return self.internal_graph.degree_matrix()
     

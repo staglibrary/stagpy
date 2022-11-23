@@ -8,7 +8,9 @@ on:
 jobs:
   Publish_Docs:
     runs-on: ubuntu-latest
-    python-version: [ "3.8" ]
+    strategy:
+      matrix:
+        python-version: [ "3.8" ]
     steps:
       - name: Check out repository code
         uses: actions/checkout@v3

@@ -410,62 +410,54 @@ def return_graph(func):
 
 
 @return_graph
-def cycle_graph(n):
+def cycle_graph(n) -> Graph:
     """
-    Construct a cycle graph on n vertices.
-
-    :param n: the number of vertices in the cycle
-    :return: a graph object representing the n-cycle
+    Construct a cycle graph on :math:`n` vertices.
     """
     return stag_internal.cycle_graph(n)
 
 
 @return_graph
-def complete_graph(n):
+def complete_graph(n) -> Graph:
     """
-    Construct a complete graph on n vertices.
-
-    :param n:
-    :return: a graph object representing the complete graph
+    Construct a complete graph on :math:`n` vertices.
     """
     return stag_internal.complete_graph(n)
 
 
 @return_graph
-def barbell_graph(n):
+def barbell_graph(n) -> Graph:
     """
-    Construct a barbell graph. The barbell graph consists of 2 cliques on n vertices,
-    connected by a single edge.
+    Construct a barbell graph on :math:`2n` vertices.
 
-    :param n:
-    :return:
+    The barbell graph consists of 2 cliques on :math:`n` vertices,
+    connected by a single edge.
     """
     return stag_internal.barbell_graph(n)
 
 
 @return_graph
-def star_graph(n):
+def star_graph(n) -> Graph:
     """
-    Construct a star graph. The star graph consists of one central vertex connected
-    by an edge to (n-1) surrounding vertices.
+    Construct a star graph on :math:`n` vertices.
 
-    :param n:
-    :return:
+    The star graph consists of one central vertex connected
+    by an edge to :math:`(n-1)` surrounding vertices.
     """
     return stag_internal.star_graph(n)
 
 
 def from_networkx(netx_graph, edge_weight_attribute="weight"):
     """
-    Given a networkx graph, convert it to a STAG graph object.
+    Given a networkx graph, convert it to a STAG :class:`Graph` object.
 
     Unless otherwise specified, this method will use the 'weight' attribute on the
     networkx edges to assign the weight of the edges. If no such attribute is present,
-    the edges will be added with weight 1.
+    the edges will be added with weight :math:`1`.
 
     :param netx_graph: The networkx graph object to be converted.
     :param edge_weight_attribute: (default 'weight') the edge attribute to be used to
                                   generate the weights
-    :return: A STAG graph object which is equivalent to the networkx graph.
+    :return: A STAG :class:`Graph` object which is equivalent to the networkx graph.
     """
     return Graph(networkx.adjacency_matrix(netx_graph, weight=edge_weight_attribute))

@@ -1,3 +1,4 @@
+"""Algorithms for finding clusters in graphs."""
 import scipy.sparse
 
 from . import stag_internal
@@ -37,13 +38,14 @@ def local_cluster_acl(g: graph.LocalGraph, seed_vertex: int, locality: float, er
     "Local graph partitioning using pagerank vectors." 2006
     47th Annual IEEE Symposium on Foundations of Computer Science (FOCS'06). IEEE, 2006.
 
-    :param g: - a graph object implementing the LocalGraph interface
-    :param seed_vertex: - the starting vertex in the graph
-    :param locality: - a value in [0, 1] indicating how 'local' the cluster should
-                      be. A value of '1' will return the return only the seed vertex
-                      and a value of '0' will explore the whole graph.
-    :param error: (optional) - the acceptable error in the calculation of the approximate
-                              pagerank. Default 0.001.
+    :param g: a graph object implementing the LocalGraph interface
+    :param seed_vertex: the starting vertex in the graph
+    :param locality:
+      a value in [0, 1] indicating how 'local' the cluster should
+      be. A value of '1' will return the return only the seed vertex
+      and a value of '0' will explore the whole graph.
+    :param error: (optional) the acceptable error in the calculation of the approximate
+                             pagerank. Default 0.001.
     :return: a vector containing the indices of vectors considered to be in the
             same cluster as the seed_vertex.
     """

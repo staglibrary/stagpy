@@ -38,6 +38,7 @@ def main():
 
     # Display the found cluster
     print(f"Found cluster:")
+    print(cluster)
     for id in cluster:
         print(f"  - {get_wikipedia_title(g, id)}")
 

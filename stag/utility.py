@@ -1,6 +1,6 @@
 from . import stag_internal
-import stag.graph
 import scipy.sparse
+import inspect
 
 
 def swig_sprs_to_scipy(swig_mat):
@@ -26,31 +26,16 @@ def scipy_to_swig_sprs(scipy_mat: scipy.sparse.csc_matrix):
 
 
 def return_sparse_matrix(func):
-    """
-    A decorator which transforms a sparse matrix returned from the C++ library to a sparse scipy matrix for use within
-    python. Note that this transformation incurs some overhead in terms of both time and space.
-
-    :param func: the function whose output we would like to wrap
-    :return: the decorated function
-    """
     def decorated_function(*args, **kwargs):
         swig_sparse_matrix = func(*args, **kwargs)
         sp_sparse = swig_sprs_to_scipy(swig_sparse_matrix)
         del swig_sparse_matrix
         return sp_sparse
 
-    return decorated_function
-
-
-def return_graph(func):
-    """
-    A decorator which transforms a graph returned from the C++ library to the python version.
-
-    :param func: the function whose output we would like to wrap
-    :return: the decorated function
-    """
-    def decorated_function(*args, **kwargs):
-        swig_graph = func(*args, **kwargs)
-        return stag.graph.Graph(None, internal_graph=swig_graph)
+    # Set the metadata of the returned function to match the original.
+    # This is used when generating the documentation
+    decorated_function.__doc__ = func.__doc__
+    decorated_function.__module__ = func.__module__
+    decorated_function.__signature__ = inspect.signature(func)
 
     return decorated_function

@@ -1,8 +1,11 @@
+"""
+Construct graphs from random models.
+"""
 from . import stag_internal
-from . import utility
+from . import graph
 
 
-@utility.return_graph
+@graph.return_graph
 def sbm(n: int, k: int, p: float, q: float, exact=False):
     """
     Generate a graph from the symmetric stochastic block model.
@@ -28,7 +31,7 @@ def sbm(n: int, k: int, p: float, q: float, exact=False):
     return stag_internal.sbm(n, k, p, q, exact)
 
 
-@utility.return_graph
+@graph.return_graph
 def erdos_renyi(n: int, p: float, exact=False):
     """
     Generate a graph from the Erdos-Renyi model.

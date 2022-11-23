@@ -1,6 +1,10 @@
+"""
+Graph object definitions and standard constructors.
+"""
 import networkx
 from abc import ABC, abstractmethod
 from typing import List
+import inspect
 
 from . import stag_internal
 from . import utility
@@ -9,8 +13,10 @@ from . import utility
 class Edge(object):
     """An object representing a weighted edge in a graph."""
 
-    def __init__(self, v1, v2, weight):
+    def __init__(self, v1: int, v2: int, weight: float):
         """
+        Create an edge from two node ids and a weight.
+
         :param v1: The first vertex in the edge.
         :param v2: The second vertex in the edge.
         :param weight: The weight of the edge.
@@ -41,7 +47,7 @@ class LocalGraph(ABC):
     """
 
     def __init__(self):
-        self.internal_graph = PythonDefinedLocalGraph(self)
+        self.internal_graph = _PythonDefinedLocalGraph(self)
 
     @abstractmethod
     def degree(self, v) -> float:
@@ -89,7 +95,7 @@ class LocalGraph(ABC):
         return [self.degree(v) for v in vertices]
 
 
-class PythonDefinedLocalGraph(stag_internal.LocalGraph):
+class _PythonDefinedLocalGraph(stag_internal.LocalGraph):
     def __init__(self, python_local_graph: LocalGraph):
         super().__init__()
         self.python_graph = python_local_graph
@@ -153,7 +159,6 @@ class Graph(LocalGraph):
             # The initialiser was called with an internal graph object.
             self.internal_graph: stag_internal.Graph = internal_graph
 
-
     @utility.return_sparse_matrix
     def adjacency(self):
         """
@@ -169,7 +174,9 @@ class Graph(LocalGraph):
         Construct the Laplacian matrix of the graph.
 
         The Laplacian matrix is defined by
-          L = D - A
+
+        L = D - A
+
         where D is the diagonal matrix of vertex degrees and A is the adjacency
         matrix of the graph.
 
@@ -183,7 +190,9 @@ class Graph(LocalGraph):
         Construct the normalised Laplacian matrix of the graph.
 
         The normalised Laplacian matrix is defined by
-          Ln = D^{-1/2} L D^{-1/2}
+
+        Ln = D^{-1/2} L D^{-1/2}
+
         where D is the diagonal matrix of vertex degrees and L is the Laplacian
         matrix of the graph
 
@@ -222,7 +231,9 @@ class Graph(LocalGraph):
         The lazy random walk matrix of the graph.
 
         The lazy random walk matrix is defined to be
-           1/2 I + 1/2 A D^{-1}
+
+        1/2 I + 1/2 A D^{-1}
+
         where I is the identity matrix, A is the graph adjacency matrix and
         D is the degree matrix of the graph.
 
@@ -300,7 +311,23 @@ class Graph(LocalGraph):
         return networkx.Graph(self.adjacency())
 
 
-@utility.return_graph
+# A decorator which transforms a graph returned from the C++ library to the
+# python Graph object.
+def return_graph(func):
+    def decorated_function(*args, **kwargs):
+        swig_graph = func(*args, **kwargs)
+        return Graph(None, internal_graph=swig_graph)
+
+    # Set the metadata of the returned function to match the original.
+    # This is used when generating the documentation
+    decorated_function.__doc__ = func.__doc__
+    decorated_function.__module__ = func.__module__
+    decorated_function.__signature__ = inspect.signature(func)
+
+    return decorated_function
+
+
+@return_graph
 def cycle_graph(n):
     """
     Construct a cycle graph on n vertices.
@@ -311,7 +338,7 @@ def cycle_graph(n):
     return stag_internal.cycle_graph(n)
 
 
-@utility.return_graph
+@return_graph
 def complete_graph(n):
     """
     Construct a complete graph on n vertices.
@@ -322,7 +349,7 @@ def complete_graph(n):
     return stag_internal.complete_graph(n)
 
 
-@utility.return_graph
+@return_graph
 def barbell_graph(n):
     """
     Construct a barbell graph. The barbell graph consists of 2 cliques on n vertices,
@@ -334,7 +361,7 @@ def barbell_graph(n):
     return stag_internal.barbell_graph(n)
 
 
-@utility.return_graph
+@return_graph
 def star_graph(n):
     """
     Construct a star graph. The star graph consists of one central vertex connected

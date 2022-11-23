@@ -29,6 +29,7 @@ class Neo4jGraph(graph.LocalGraph):
 
     @lru_cache(maxsize=1024)
     def degree_unweighted(self, v) -> int:
+        """Query the degree of the node with the given ID."""
         with self.driver.session() as session:
             result = session.execute_read(self._degree_query, v)
         return result

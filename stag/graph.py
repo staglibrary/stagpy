@@ -332,7 +332,7 @@ def cycle_graph(n):
     """
     Construct a cycle graph on n vertices.
 
-    :param n:
+    :param n: the number of vertices in the cycle
     :return: a graph object representing the n-cycle
     """
     return stag_internal.cycle_graph(n)

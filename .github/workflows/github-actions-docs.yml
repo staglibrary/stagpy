@@ -45,5 +45,5 @@ jobs:
           destination-github-username: 'staglibrary'
           destination-repository-name: 'stagorg.github.io'
           user-email: macgregor.pr@gmail.com
-          target-branch: main
+          target-branch: master
           target-directory: docs/python

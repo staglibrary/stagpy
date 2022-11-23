@@ -15,6 +15,7 @@ stag.graph.Graph
    .. rubric:: Methods
 
    .. autosummary::
+      :nosignatures:
    
       ~Graph.__init__
       ~Graph.adjacency

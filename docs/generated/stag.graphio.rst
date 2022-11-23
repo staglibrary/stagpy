@@ -20,6 +20,7 @@
    .. rubric:: Functions
 
    .. autosummary::
+      :nosignatures:
    
    
       load_edgelist

@@ -15,6 +15,7 @@ stag.neo4j.Neo4jGraph
    .. rubric:: Methods
 
    .. autosummary::
+      :nosignatures:
    
       ~Neo4jGraph.__init__
       ~Neo4jGraph.degree

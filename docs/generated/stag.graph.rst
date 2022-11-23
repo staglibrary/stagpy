@@ -17,6 +17,7 @@
 
    .. autosummary::
       :toctree:
+      :nosignatures:
       :template: custom-class-template.rst
    
       Edge
@@ -30,6 +31,7 @@
    .. rubric:: Functions
 
    .. autosummary::
+      :nosignatures:
    
    
       barbell_graph

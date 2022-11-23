@@ -23,6 +23,7 @@
 
    .. autosummary::
       :toctree:
+      :nosignatures:
       :template: custom-class-template.rst
    {% for item in classes %}
       {{ item }}
@@ -35,6 +36,7 @@
    .. rubric:: {{ _('Functions') }}
 
    .. autosummary::
+      :nosignatures:
    {% for item in functions %}
    {% if item not in undocumented %}
       {{ item }}

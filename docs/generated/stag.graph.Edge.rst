@@ -15,6 +15,7 @@ stag.graph.Edge
    .. rubric:: Methods
 
    .. autosummary::
+      :nosignatures:
    
       ~Edge.__init__
    

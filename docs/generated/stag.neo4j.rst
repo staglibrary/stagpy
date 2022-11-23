@@ -17,6 +17,7 @@
 
    .. autosummary::
       :toctree:
+      :nosignatures:
       :template: custom-class-template.rst
    
       Neo4jGraph

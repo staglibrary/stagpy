@@ -15,6 +15,7 @@ stag.graph.LocalGraph
    .. rubric:: Methods
 
    .. autosummary::
+      :nosignatures:
    
       ~LocalGraph.__init__
       ~LocalGraph.degree

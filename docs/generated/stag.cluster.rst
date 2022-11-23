@@ -20,6 +20,7 @@
    .. rubric:: Functions
 
    .. autosummary::
+      :nosignatures:
    
    
       approximate_pagerank

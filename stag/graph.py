@@ -158,6 +158,8 @@ class _PythonDefinedLocalGraph(stag_internal.LocalGraph):
 
 class Graph(LocalGraph):
     """
+    Graph(adj_mat)
+
     Core graph object.
 
     The graph object is initialised with a sparse adjacency matrix and this

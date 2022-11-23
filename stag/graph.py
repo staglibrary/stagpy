@@ -344,16 +344,16 @@ class Graph(LocalGraph):
         return self.internal_graph.number_of_edges()
 
     def degree(self, v: int) -> float:
-        return self.internal_graph.degree(vertex)
+        return self.internal_graph.degree(v)
 
     def degree_unweighted(self, v: int) -> int:
-        return self.internal_graph.degree_unweighted(vertex)
+        return self.internal_graph.degree_unweighted(v)
 
     def neighbors(self, v: int) -> List[Edge]:
-        return self.internal_graph.neighbors(vertex)
+        return self.internal_graph.neighbors(v)
 
     def neighbors_unweighted(self, v: int) -> List[int]:
-        return self.internal_graph.neighbors_unweighted(vertex)
+        return self.internal_graph.neighbors_unweighted(v)
 
     def __eq__(self, other):
         #

@@ -31,3 +31,9 @@ jobs:
           cd test
           python -m pytest .
           cd ..
+      - name: Build docs
+        run: |
+          cd docs
+          make html
+          cd ..
+      

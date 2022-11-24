@@ -8,11 +8,20 @@ STAG |release| documentation
 
 Welcome to the STAG library documentation.
 This is documentation for the Python library.
+If you are looking for the C++ library documentation, it can be found
+`here <https://staglibrary.io/docs/cpp/index.html>`_.
+
+If you are new to the STAG library, see :doc:`getting-started` for instructions
+on getting up and running.
+
+Alternatively, the :doc:`reference` page contains the complete documentation of the
+library methods.
 
 .. toctree::
-   :maxdepth: 1
+   :maxdepth: 2
    :caption: Contents:
 
    getting-started
+   neo4j
    reference
 

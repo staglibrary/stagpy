@@ -3,7 +3,26 @@ var light_background = "rgb(248, 249, 251)";
 var dark_color= "#9ca0a5";
 var light_color= "#000";
 
-window.onload = () => {
+var dom_event_fired = false;
+
+document.addEventListener("DOMContentLoaded", function (){
+    console.log("DOM");
+
+    // If this is the first dom event fired, add html to the window
+    if (!dom_event_fired) {
+        dom_event_fired = true;
+
+        update_header();
+
+        // Fire another DOM event
+        window.document.dispatchEvent(new Event("DOMContentLoaded", {
+            bubbles: true,
+            cancelable: true
+        }));
+    }
+});
+
+function update_header() {
     // Add custom html to the documentation pages.
     var target = document.body;
     var newElement = document.createElement("div");
@@ -62,7 +81,9 @@ window.onload = () => {
             "<meta name=\"msapplication-TileColor\" content=\"#2b5797\">\n" +
             "<meta name=\"theme-color\" content=\"#ffffff\">";
     }
+}
 
+window.onload = () => {
     // Set the header background to the side-bar background color
     $("#header").css('background', $(".sidebar-drawer").css('background'));
 
@@ -74,13 +95,6 @@ window.onload = () => {
     } else {
         $(".navbar a").css('color', light_color);
     }
-
-    // Re-initialise the scrollspy from the furo sphinx theme now we've added
-    // the header
-    window.document.dispatchEvent(new Event("DOMContentLoaded", {
-        bubbles: true,
-        cancelable: true
-    }));
 }
 
 function cycleHeaderThemeOnce() {

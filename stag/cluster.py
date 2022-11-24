@@ -33,10 +33,13 @@ def local_cluster(g: graph.LocalGraph, seed_vertex: int, target_volume) -> List[
     :param target_volume: the approximate volume of the target cluster
     :return: a list of vertices in the same cluster as the seed vertex
     """
-    return stag_internal.local_cluster(g.internal_graph, seed_vertex, target_volume)
+    return list(stag_internal.local_cluster(g.internal_graph, seed_vertex, target_volume))
 
 
-def local_cluster_acl(g: graph.LocalGraph, seed_vertex: int, locality: float, error=0.001):
+def local_cluster_acl(g: graph.LocalGraph,
+                      seed_vertex: int,
+                      locality: float,
+                      error=0.001) -> List[int]:
     """
     The ACL local clustering algorithm.
 
@@ -54,19 +57,23 @@ def local_cluster_acl(g: graph.LocalGraph, seed_vertex: int, locality: float, er
     :param error: (optional) the acceptable error in the calculation of the approximate
                   pagerank. A smaller error will result in longer running time and
                   higher quality cluster.
-    :return: a vector containing the indices of vectors considered to be in the
+    :return: a list containing the indices of vertices considered to be in the
              same cluster as the seed_vertex.
     :reference:
         [ACL] Andersen, Reid, Fan Chung, and Kevin Lang.
         "Local graph partitioning using pagerank vectors." FOCS'06.
     """
-    return stag_internal.local_cluster_acl(g.internal_graph, seed_vertex, locality, error)
+    return list(stag_internal.local_cluster_acl(g.internal_graph,
+                                                seed_vertex,
+                                                locality,
+                                                error))
 
 
 def approximate_pagerank(g: graph.LocalGraph,
                          seed_vector: scipy.sparse.csc_matrix,
                          alpha: float,
-                         epsilon: float) -> Tuple[scipy.sparse.csc_matrix, scipy.sparse.csc_matrix]:
+                         epsilon: float) -> Tuple[scipy.sparse.csc_matrix,
+                                                  scipy.sparse.csc_matrix]:
     """
     Compute the approximate pagerank vector.
 

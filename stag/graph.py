@@ -189,10 +189,10 @@ class Graph(LocalGraph):
             import stag.graph
             import scipy.sparse
             
-            adj_mat = sp.sparse.csc_matrix([[0, 1, 1, 1],
-                                            [1, 0, 1, 1],
-                                            [1, 1, 0, 1],
-                                            [1, 1, 1, 0]])
+            adj_mat = scipy.sparse.csc_matrix([[0, 1, 1, 1],
+                                               [1, 0, 1, 1],
+                                               [1, 1, 0, 1],
+                                               [1, 1, 1, 0]])
             g = stag.graph.Graph(adj_mat)
 
         :param adj_mat: A sparse scipy matrix, such as ``scipy.sparse.csc_matrix``.

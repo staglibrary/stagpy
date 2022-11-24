@@ -131,6 +131,38 @@ class Neo4jGraph(graph.LocalGraph):
                         "RETURN DISTINCT id(n2)", node_id=node_id)
         return list(result.values())
 
+    @lru_cache(maxsize=1024)
+    def query_node_labels(self, node_id: int) -> List[str]:
+        """
+        Query the labels of the given node.
+
+        For example, using the Neo4j movie database example, you can query
+        whether a given node represents a person or a movie as follows.
+
+            >>> import stag.neo4j
+            >>> g = stag.neo4j.Neo4jGraph("bolt://localhost:7687", "neo4j", "password")
+            >>> labels = g.query_node_labels(0)
+            ['Movie']
+            >>> labels = g.query_node_labels(1)
+            ['Person']
+
+        """
+        with self.driver.session() as session:
+            result = session.execute_read(self._labels_query, node_id)
+        return [x[0] for x in result]
+
+    @staticmethod
+    def _labels_query(tx, node_id):
+        # To get the neighbors of the given node, we will execute the following
+        # Cypher command:
+        #    MATCH (n1)-[]-(n2) WHERE id(n1) = v return id(n2)
+        # which finds the nodes which are a single step from the node
+        # with the given node ID.
+        result = tx.run("MATCH (n1) "
+                        "WHERE id(n1) = $node_id "
+                        "RETURN DISTINCT labels(n1)", node_id=node_id)
+        return result.values()[0]
+
     def query_id(self, property_name: str, property_value: str) -> int:
         """
         Find the Neo4j ID of a node with the given property.

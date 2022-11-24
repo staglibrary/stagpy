@@ -26,7 +26,7 @@ def test_sbm():
     # The approximate version should give approximately the same number of edges
     graphapx = stag.random.sbm(n, 4, p, q)
     assert graphapx.number_of_vertices() == n
-    assert abs((graphapx.number_of_edges() / graph.number_of_edges()) - 1) <= 0.2
+    assert abs((graphapx.number_of_edges() / graph.number_of_edges()) - 1) <= 0.5
 
 
 def test_erdos_renyi():

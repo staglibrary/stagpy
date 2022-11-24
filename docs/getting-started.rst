@@ -14,8 +14,20 @@ Begin by installing STAG via pip, the python package manager.
 
 Creating Graphs
 ---------------
+The core graph object is :class:`stag.graph.Graph` which can be created using
+a sparse adjacency matrix.
 
-You can create a variety of standard graphs using the :mod:`stag.graph` module.
+.. code-block:: python
+
+    import stag.graph
+    import scipy.sparse
+    adj_mat = scipy.sparse.csc_matrix([[0, 1, 1, 1],
+                                       [1, 0, 1, 1],
+                                       [1, 1, 0, 1],
+                                       [1, 1, 1, 0]])
+    g = stag.graph.Graph(adj_mat)
+
+You can also create a variety of standard graphs using the :mod:`stag.graph` module.
 For example, to create a complete graph on :math:`5` vertices, use the following
 code.
 
@@ -91,4 +103,31 @@ every edge.
 Finding Clusters
 ----------------
 
+The :mod:`stag.cluster` module provides methods for finding clusters in graphs
+using local clustering algorithms.
+The main method provided by this module is :meth:`stag.cluster.local_cluster` .
+This method takes three arguments:
+
+- **g** - a STAG graph object;
+- **seed_vertex** - the ID of a vertex in the graph;
+- **target_volume** - an estimate of the volume of the cluster to find.
+  To estimate the target volume, you could first estimate the number of vertices
+  in the cluster you would like to find, and then multiply by the degree of the
+  seed vertex.
+
+Given these arguments, :meth:`stag.cluster.local_cluster` will return a list
+of vertices which form a cluster around the seed vertex, and whose total volume
+is close to the target volume.
+
+For example, to find the clusters in a barbell graph:
+
+.. code-block:: python
+
+    import stag.graph
+    import stag.cluster
+    g = stag.graph.barbell_graph(5)
+    cluster = stag.cluster.local_cluster(g, 0, 20)
+    print(cluster)
+    cluster = stag.cluster.local_cluster(g, 9, 20)
+    print(cluster)
 

@@ -25,6 +25,7 @@ stag.neo4j.Neo4jGraph
       ~Neo4jGraph.neighbors
       ~Neo4jGraph.neighbors_unweighted
       ~Neo4jGraph.query_id
+      ~Neo4jGraph.query_node_labels
       ~Neo4jGraph.query_property
    
    

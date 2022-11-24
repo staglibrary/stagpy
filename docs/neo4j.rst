@@ -1,7 +1,7 @@
 STAG and Neo4j
 ==============
 
-The STAG Python library provides a convenient interface with Neo4j,
+The :mod:`stag.neo4j` module provides a convenient interface with Neo4j,
 a popular graph database.
 This allows graph algorithms to be executed directly on a graph stored in
 the database.
@@ -45,4 +45,26 @@ This command will return the degree of the node with ID 0.
 .. code-block:: python
 
     print(g.degree(0))
+
+Finding Clusters in the Graph
+-----------------------------
+Once we have connected successfully to the database, we can find a cluster in
+the data.
+
+.. code-block:: python
+
+    import stag.cluster
+    cluster = stag.cluster.local_cluster(g, 0, 100)
+
+Then, assuming we are testing against the Neo4j movies dataset, we can display
+the cluster as follows.
+
+.. code-block:: python
+
+    for node in cluster:
+        labels = g.query_node_labels(node)
+        if 'Movie' in labels:
+            print(g.query_property(node, 'title'))
+        elif 'Person' in labels:
+            print(g.query_property(node, 'name'))
 

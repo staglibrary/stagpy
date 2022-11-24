@@ -1,7 +1,7 @@
 STAG and Neo4j
 ==============
 
-The STAG Python library provides a convenient interface with Neo4j,
+The :mod:`stag.neo4j` module provides a convenient interface with Neo4j,
 a popular graph database.
 This allows graph algorithms to be executed directly on a graph stored in
 the database.

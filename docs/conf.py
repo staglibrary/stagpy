@@ -26,7 +26,7 @@ import stag.utility
 project = 'STAG'
 copyright = '2022, The STAG Team'
 author = 'The STAG Team'
-release = '0.3.0'
+release = '0.3.1'
 
 # -- General configuration ---------------------------------------------------
 

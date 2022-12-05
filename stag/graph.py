@@ -61,7 +61,7 @@ class LocalGraph(ABC):
 
             class MyLocalGraph(stag.graph.LocalGraph):
               def __init__(self):
-                super().__init__(self)
+                super().__init__()
 
                 # Add custom initialisation for MyLocalGraph
 

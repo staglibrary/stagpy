@@ -31,6 +31,7 @@ jobs:
       - name: Build docs
         run: |
           cd docs
+          chmod +x py_filter
           doxygen
           cd ..
       - name: Publish docs

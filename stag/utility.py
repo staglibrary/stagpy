@@ -2,6 +2,11 @@ from . import stag_internal
 import scipy.sparse
 import inspect
 
+##
+# \cond
+# This file is currently listed as an explicit exception in the doxyfile.
+# It will not be processed for documentation at all.
+##
 
 def swig_sprs_to_scipy(swig_mat):
     """
@@ -39,3 +44,7 @@ def return_sparse_matrix(func):
     decorated_function.__signature__ = inspect.signature(func)
 
     return decorated_function
+
+##
+# \endcond
+##

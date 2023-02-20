@@ -7,31 +7,24 @@ from . import graph
 from . import utility
 
 
-def local_cluster(g: graph.LocalGraph, seed_vertex: int, target_volume) -> List[int]:
+def local_cluster(g: graph.LocalGraph, seed_vertex: int, target_volume: float) -> List[int]:
     """
-    Default local clustering algorithm.
+    Local clustering algorithm based on personalised Pagerank.
 
     Given a graph and starting vertex, return a cluster which is close to the
-    starting vertex. The ``target_volume`` parameter controls the size of the
-    returned cluster.
+    starting vertex.
 
-    You should set ``target_volume`` to be your best guess for the volume of the
-    cluster you would like to find. For example, the following code will find
-    one of the 'clusters' in a barbell graph.
+    This method uses the ACL local clustering algorithm.
 
-    .. code-block:: python
+    @param g a graph object implementing the LocalGraph interface
+    @param seed_vertex the starting vertex in the graph
+    @param target_volume the approximate volume of the cluster you would like to find
+    @return a vector containing the indices of vectors considered to be in the
+            same cluster as the seed_vertex.
 
-        import stag.graph
-        import stag.cluster
-        graph = stag.graph.barbell_graph(5)
-        cluster = stag.cluster.local_cluster(graph, 1, 21)
-
-    This method calls through to the :meth:`local_cluster_acl` method.
-
-    :param g: a :class:`stag.graph.LocalGraph` object
-    :param seed_vertex: the starting vertex in the graph
-    :param target_volume: the approximate volume of the target cluster
-    :return: a list of vertices in the same cluster as the seed vertex
+    \par References
+    R. Andersen, F. Chung, K. Lang.
+    Local graph partitioning using pagerank vectors. FOCS'06
     """
     return list(stag_internal.local_cluster(g.internal_graph, seed_vertex, target_volume))
 
@@ -39,29 +32,27 @@ def local_cluster(g: graph.LocalGraph, seed_vertex: int, target_volume) -> List[
 def local_cluster_acl(g: graph.LocalGraph,
                       seed_vertex: int,
                       locality: float,
-                      error=0.001) -> List[int]:
+                      error: float = 0.001) -> List[int]:
     """
-    The ACL local clustering algorithm.
+    The ACL local clustering algorithm. Given a graph and starting vertex,
+    returns a cluster close to the starting vertex, constructed in a local way.
 
-    Given a graph and starting vertex, returns a cluster close to the starting vertex.
+    The locality parameter is passed as the alpha parameter in the personalised
+    pagerank calculation.
 
-    The ``locality`` and ``error`` parameters correspond to the :math:`\\alpha`
-    and :math:`\\epsilon` parameters of the ACL algorithm.
+    @param g a graph object implementing the LocalGraph interface
+    @param seed_vertex the starting vertex in the graph
+    @param locality a value in \f$[0, 1]\f$ indicating how 'local' the cluster should
+                    be. A value of \f$1\f$ will return the return only the seed vertex
+                    and a value of \f$0\f$ will explore the whole graph.
+    @param error (optional) - the acceptable error in the calculation of the approximate
+                              pagerank. Default \f$0.001\f$.
+    @return a vector containing the indices of vectors considered to be in the
+            same cluster as the seed_vertex.
 
-    :param g: a graph object implementing the LocalGraph interface
-    :param seed_vertex: the starting vertex in the graph
-    :param locality:
-      a value in :math:`(0, 1]` indicating how 'local' the cluster should
-      be. A value of :math:`1` will return only the seed vertex
-      and a value of :math:`0` will explore the whole graph.
-    :param error: (optional) the acceptable error in the calculation of the approximate
-                  pagerank. A smaller error will result in longer running time and
-                  higher quality cluster.
-    :return: a list containing the indices of vertices considered to be in the
-             same cluster as the seed_vertex.
-    :reference:
-        [ACL] Andersen, Reid, Fan Chung, and Kevin Lang.
-        "Local graph partitioning using pagerank vectors." FOCS'06.
+    \par References
+    R. Andersen, F. Chung, K. Lang.
+    Local graph partitioning using pagerank vectors. FOCS'06
     """
     return list(stag_internal.local_cluster_acl(g.internal_graph,
                                                 seed_vertex,
@@ -77,33 +68,28 @@ def approximate_pagerank(g: graph.LocalGraph,
     """
     Compute the approximate pagerank vector.
 
-    The approximate pagerank vector :math:`\mathrm{apr}_G(s, \\alpha, \\epsilon)`
-    is defined in [ACL] and this method implements their proposed algorithm
-    for computing it.
-
-    This method forms an important part of the :meth:`local_cluster_acl`
-    algorithm.
+    The parameters s, alpha, and epsilon are used as described in the ACL paper.
 
     Note that the dimension of the returned vectors may not match the true
     number of vertices in the graph provided since the approximate
     pagerank is computed locally.
 
-    :param g: a :class:`stag.graph.LocalGraph`
-    :param seed_vector: a sparse column matrix defining the starting
-                        distribution on the graph. Although this is a matrix type,
-                        it should have exactly one column.
-    :param alpha: a value in :math:`(0, 1]` controlling the teleportation parameter
-                  of the personalised Pagerank.
-    :param epsilon: a value in :math:`(0, 1]` controlling the approximation
-                    guarantee.
-    :return:
-        - :math:`p` : the approximate pagerank vector
-        - :math:`r` : the residual vector
+    @param g a stag.graph.LocalGraph object
+    @param seed_vector the seed vector of the personalised pagerank
+    @param alpha the locality parameter of the personalised pagerank
+    @param epsilon the error parameter of the personalised pagerank
+    @return A tuple of sparse column vectors corresponding to
+             - p: the approximate pagerank vector
+             - r: the residual vector
 
-    :raises ArgumentError: if the provided ``seed_vector`` is not a column vector.
-    :reference:
-        [ACL] Andersen, Reid, Fan Chung, and Kevin Lang.
-        "Local graph partitioning using pagerank vectors." FOCS'06.
+            By the definition of approximate pagerank, it is the case that
+               p + ppr(r, alpha) = ppr(s, alpha).
+
+    @throws argument_error if the provided seed_vector is not a column vector.
+
+    \par References
+    R. Andersen, F. Chung, K. Lang.
+    Local graph partitioning using pagerank vectors. FOCS'06
     """
     apr = stag_internal.approximate_pagerank(g.internal_graph,
                                               utility.scipy_to_swig_sprs(seed_vector),
@@ -115,36 +101,33 @@ def approximate_pagerank(g: graph.LocalGraph,
 def sweep_set_conductance(g: graph.LocalGraph, v: scipy.sparse.csc_matrix) -> List[int]:
     """
     Find the sweep set of the given vector with the minimum conductance.
-   
-    First, sort the vertices such that :math:`v(1) \leq v(2) \leq \ldots \leq v(n)` .
-    Then, let
 
-    .. math::
+    First, sort the vector such that \f$v_1, \ldots, v_n\f$. Then let
 
-        S_i = \\{j : j <= i\\}
+    \f[
+        S_i = \{v_j : j <= i\}
+    \f]
 
-    and return the set of original vertex indices that correspond to
+    and return the set of original indices corresponding to
 
-    .. math::
+    \f[
+        \mathrm{argmin}_i \phi(S_i)
+    \f]
 
-        \\mathrm{argmin}_i \\quad \\phi(S_i),
-
-    where
-
-    .. math::
-
-        \\phi(S_i) = \\frac{w(S_i, \overline{S_i})}{\mathrm{vol}(S_i)}
-
-    is the conductance of :math:`S_i` .
+    where \f$\phi(S)\f$ is the conductance of \f$S\f$.
 
     This method is expected to be run on vectors whose support is much less
-    than the total size of the graph. If the total volume of the support of ``v``
-    is larger than half of the volume of the total graph, then this method is
-    likely to return the total support of ``v``.
-   
-    :param g: the :class:`stag.graph.LocalGraph` on which to operate
-    :param v: a sparse column vector
-    :return: a list of the indices of v which give the minimum
-            conductance
+    than the total size of the graph. If the total volume of the support of vec
+    is larger than half of the volume of the total graph, then this method may
+    return unexpected results.
+
+    Note that the caller is responsible for any required normalisation of the
+    input vector. In particular, this method does not normalise the vector by
+    the node degrees.
+
+    @param g a stag.graph.LocalGraph object
+    @param v the vector to sweep over
+    @return a vector containing the indices of vec which give the minimum
+            conductance in the given graph
     """
     return stag_internal.sweep_set_conductance(g.internal_graph, utility.scipy_to_swig_sprs(v))

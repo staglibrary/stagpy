@@ -71,7 +71,7 @@ class LocalGraph(ABC):
     """
 
     def __init__(self):
-        """
+        r"""
         Default LocalGraph constructor.
 
         The constructor of any classes inheriting from this base class should
@@ -207,7 +207,7 @@ class Graph(LocalGraph):
 
     def __init__(self, adj_mat: scipy.sparse.spmatrix,
                  internal_graph: stag_internal.Graph = None):
-        """
+        r"""
         Initialise the graph with an adjacency matrix.
         
         For example:
@@ -283,7 +283,7 @@ class Graph(LocalGraph):
 
     @utility.return_sparse_matrix
     def normalised_laplacian(self) -> scipy.sparse.csc_matrix:
-        """
+        r"""
         Construct the normalised Laplacian matrix of the graph.
 
         The normalised Laplacian matrix is defined by
@@ -301,7 +301,7 @@ class Graph(LocalGraph):
 
     @utility.return_sparse_matrix
     def degree_matrix(self) -> scipy.sparse.csc_matrix:
-        """
+        r"""
         The degree matrix of the graph.
 
         The degree matrix \f$D \in \mathbb{R}^{n \\times n}\f$
@@ -315,7 +315,7 @@ class Graph(LocalGraph):
     
     @utility.return_sparse_matrix
     def inverse_degree_matrix(self) -> scipy.sparse.csc_matrix:
-        """
+        r"""
         The inverse degree matrix of the graph.
 
         The degree matrix \f$D^{-1} \in \mathbb{R}^{n \times n}\f$
@@ -357,7 +357,7 @@ class Graph(LocalGraph):
         return self.internal_graph.lazy_random_walk_matrix()
 
     def total_volume(self) -> float:
-        """
+        r"""
         The volume of the graph.
 
         The volume of a graph \f$G = (V, E, w)\f$ is defined by

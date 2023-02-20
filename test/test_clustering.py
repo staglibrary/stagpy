@@ -64,11 +64,11 @@ def test_approximate_pagerank():
     graph = stag.graph.Graph(adj)
 
     # Construct seed matrix.
-    s = scipy.sparse.csc_matrix((4, 1))
+    s = scipy.sparse.lil_matrix((4, 1))
     s[0, 0] = 1
 
     # Run the personalised pagerank and check that we get the right result
-    p, r = stag.cluster.approximate_pagerank(graph, s, 1./3, 1./8)
+    p, r = stag.cluster.approximate_pagerank(graph, s.tocsc(), 1./3, 1./8)
     expected_p = [41./81, 2./27, 0, 2./27]
     expected_r = [5./81, 2./27 + 5./162, 2./27, 2./27 + 5./162]
     np.testing.assert_almost_equal(p.todense().transpose().tolist()[0], expected_p)
@@ -80,7 +80,7 @@ def test_sweep_set():
     graph = stag.graph.barbell_graph(4)
 
     # Create the vector to test. The optimal conductance will be the first 4 vertices
-    s = scipy.sparse.csc_matrix((8, 1))
+    s = scipy.sparse.lil_matrix((8, 1))
     s[0, 0] = 0.1
     s[1, 0] = 0.25
     s[2, 0] = 0.2
@@ -88,5 +88,5 @@ def test_sweep_set():
     s[4, 0] = 0.05
     
     # Compute the sweep set
-    sweep_set = stag.cluster.sweep_set_conductance(graph, s)
+    sweep_set = stag.cluster.sweep_set_conductance(graph, s.tocsc())
     assert set(sweep_set) == {0, 1, 2, 3}

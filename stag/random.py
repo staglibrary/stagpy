@@ -1,13 +1,14 @@
 """
 Construct graphs from random models.
 """
+from typing import List
 from . import stag_internal
 from . import graph
 
 
 @graph.return_graph
 def sbm(n: int, k: int, p: float, q: float, exact: bool = False) -> graph.Graph:
-    """
+    r"""
     Generate a graph from the symmetric stochastic block model.
 
     Every cluster has the same number of vertices. For large enough values of
@@ -33,7 +34,7 @@ def sbm(n: int, k: int, p: float, q: float, exact: bool = False) -> graph.Graph:
 
 @graph.return_graph
 def erdos_renyi(n: int, p: float, exact: bool = False) -> graph.Graph:
-    """
+    r"""
     Generate a graph from the Erdos-Renyi model.
 
     For large values of \f$n\f$, this method will use an approximate version of the
@@ -49,3 +50,30 @@ def erdos_renyi(n: int, p: float, exact: bool = False) -> graph.Graph:
     @return the randomly generated stag.graph.Graph
     """
     return stag_internal.erdos_renyi(n, p, exact)
+
+def sbm_gt_labels(n: int, k: int) -> List[int]:
+    r"""
+    Construct a vector with the ground truth labels for a graph drawn from the
+    symmetric stochastic block model.
+
+    \par Example
+
+    \code{python}
+    import stag.graph
+    import stag.random
+
+    n = 6
+    k = 3
+    myGraph = stag.random.sbm(n, k, 0.8, 0.1)
+
+    gt_labels = stag.random.sbm_gt_labels(n, k)
+
+    # gt_labels is the list [0, 0, 1, 1, 2, 2].
+    \endcode
+
+    @param n the number of vertices in the graph
+    @param k the number of clusters
+    @return a list of integers containing the ground truth labels for the
+            vertices in the graph.
+    """
+    return list(stag_internal.sbm_gt_labels(n, k))

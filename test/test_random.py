@@ -37,3 +37,9 @@ def test_erdos_renyi():
     # Check that the graph has the expected number of vertices and edges.
     assert graph.number_of_vertices() == n
     assert abs((graph.total_volume() / (int(2 * 0.1 * (n * (n - 1)) / 2) + n)) - 1) <= 0.1
+
+def test_sbm_gt_labels():
+    n = 6
+    k = 3
+    labels = stag.random.sbm_gt_labels(n, k)
+    assert labels == [0, 0, 1, 1, 2, 2]

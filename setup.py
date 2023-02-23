@@ -27,8 +27,16 @@ ext_modules = [Extension(name='stag._stag_internal',
                                   "stag/stag_lib/random.cpp",
                                   "stag/stag_lib/graphio.cpp",
                                   "stag/stag_lib/cluster.cpp",
-                                  "stag/stag_lib/utility.cpp"],
-                         include_dirs=["stag/eigen-3.3.9", "stag/stag_lib"],
+                                  "stag/stag_lib/utility.cpp",
+                                  "stag/stag_lib/spectrum.cpp",
+                                  "stag/stag_lib/KMeansRex/KMeansRexCore.cpp",
+                                  "stag/stag_lib/KMeansRex/mersenneTwister2002.c",
+                                  ],
+                         include_dirs=["stag/eigen-3.3.9",
+                                       "stag/Spectra",
+                                       "stag/stag_lib",
+                                       "stag/stag_lib/KMeansRex"
+                                       ],
                          extra_compile_args=compile_args)]
 
 # Setting up

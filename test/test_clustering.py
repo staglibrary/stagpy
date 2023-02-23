@@ -5,6 +5,7 @@ import numpy as np
 from context import stag
 import stag.graph
 import stag.cluster
+import stag.random
 
 # Define the adjacency matrices of some useful graphs.
 C4_ADJ_MAT = scipy.sparse.csc_matrix([[0, 1, 0, 1], [1, 0, 1, 0], [0, 1, 0, 1], [1, 0, 1, 0]])
@@ -22,6 +23,10 @@ BARBELL5_ADJ_MAT = scipy.sparse.csc_matrix([[0, 1, 1, 1, 1, 0, 0, 0, 0, 0],
                                             [0, 0, 0, 0, 0, 1, 1, 1, 1, 0],
                                             ])
 
+def test_spectral_clustering():
+    graph = stag.graph.barbell_graph(10)
+    labels = stag.cluster.spectral_cluster(graph, 2)
+    print(labels)
 
 def test_default_local_clustering():
     # Construct a graph object with the barbell adjacency matrix

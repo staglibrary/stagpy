@@ -4,6 +4,35 @@ All notable changes to the library are documented here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.0] - 2023-02-23
+### Added
+- [Issue #70](https://github.com/staglibrary/stag/issues/70): Add general stochastic block model method
+- [Issue #69](https://github.com/staglibrary/stag/issues/69): Add methods to get the ground truth labels for SBM graphs
+- [Issue #71](https://github.com/staglibrary/stag/issues/71): Add stag::adjusted_rand_index method
+- [Issue #68](https://github.com/staglibrary/stag/issues/68): Add the power method function
+
+## [1.0.0] - 2023-02-16
+### Changed
+- [Issue #28](https://github.com/staglibrary/stag/issues/28): Requesting the degree of a non-existant vertex now results
+in an error.
+
+### Fixed
+- [Issue #56](https://github.com/staglibrary/stag/issues/56): Increase convergence speed of eigenvalue calculation
+- [Issue #49](https://github.com/staglibrary/stag/issues/49): Add assertion to pagerank calculation that LocalGraph.degrees
+returns a vector with the correct length.
+
+### Added
+- [Issue #28](https://github.com/staglibrary/stag/issues/28): Add argument error checking
+- [Issue #50](https://github.com/staglibrary/stag/issues/50): Add stag::Graph::average_degree method on stag::Graph object.
+- Add stag::LocalGraph::vertex_exists method to stag::LocalGraph object
+
+## [0.4.0] - 2023-01-16
+### Fixed
+- [Issue #45](https://github.com/staglibrary/stag/issues/45): Make the stag::LocalGraph class pure virtual
+
+### Added
+- [Issue #51](https://github.com/staglibrary/stag/issues/51): Add a simple spectral clustering method
+
 ## [0.3.0] - 2022-11-18
 ### Fixed
 - [Issue #37](https://github.com/staglibrary/stag/issues/37): Allow float type as target volume in local clustering method

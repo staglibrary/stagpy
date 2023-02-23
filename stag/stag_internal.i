@@ -9,6 +9,7 @@
     #include "stag_lib/cluster.h"
     #include "stag_lib/graphio.h"
     #include "stag_lib/random.h"
+    #include "stag_lib/spectrum.h"
 %}
 
 %include <std_vector.i>

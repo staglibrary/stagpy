@@ -7,8 +7,40 @@ from . import graph
 from . import utility
 
 
-def local_cluster(g: graph.LocalGraph, seed_vertex: int, target_volume: float) -> List[int]:
+def spectral_cluster(g: graph.Graph, k: int) -> List[int]:
+    r"""
+    Spectral clustering algorithm.
+
+    This is a simple graph clustering method, which provides a clustering of the entire graph.
+    To use spectral clustering, simply pass a `stag.graph.Graph` object
+    and the number of clusters you would like to find.
+
+    \code{python}
+    import stag.graph
+    import stag.cluster
+
+    myGraph = stag.graph.Graph.barbell_graph(10)
+    labels = stag.cluster.spectral_cluster(myGraph, 2)
+    print(labels)
+    \endcode
+
+    The spectral clustering algorithm has the following steps.
+      - Compute the \f$k\f$ smallest eigenvectors of the normalised Laplacian matrix.
+      - Embed the vertices into \f$\mathbb{R}^k\f$ according to the eigenvectors.
+      - Cluster the vertices into \f$k\f$ clusters using a \f$k\f$-means clustering algorithm.
+
+    @param g the graph object to be clustered
+    @param k the number of clusters to find. Should be less than \f$n/2\f$.
+    @return a list of ints giving the cluster membership for each vertex in the graph
+
+    \par References
+    A. Ng, M. Jordan, Y. Weiss.
+    On spectral clustering: Analysis and an algorithm. NeurIPS'01
     """
+    return list(stag_internal.spectral_cluster(g.internal_graph, k))
+
+def local_cluster(g: graph.LocalGraph, seed_vertex: int, target_volume: float) -> List[int]:
+    r"""
     Local clustering algorithm based on personalised Pagerank.
 
     Given a graph and starting vertex, return a cluster which is close to the
@@ -33,7 +65,7 @@ def local_cluster_acl(g: graph.LocalGraph,
                       seed_vertex: int,
                       locality: float,
                       error: float = 0.001) -> List[int]:
-    """
+    r"""
     The ACL local clustering algorithm. Given a graph and starting vertex,
     returns a cluster close to the starting vertex, constructed in a local way.
 
@@ -65,7 +97,7 @@ def approximate_pagerank(g: graph.LocalGraph,
                          alpha: float,
                          epsilon: float) -> Tuple[scipy.sparse.csc_matrix,
                                                   scipy.sparse.csc_matrix]:
-    """
+    r"""
     Compute the approximate pagerank vector.
 
     The parameters s, alpha, and epsilon are used as described in the ACL paper.
@@ -99,7 +131,7 @@ def approximate_pagerank(g: graph.LocalGraph,
 
 
 def sweep_set_conductance(g: graph.LocalGraph, v: scipy.sparse.csc_matrix) -> List[int]:
-    """
+    r"""
     Find the sweep set of the given vector with the minimum conductance.
 
     First, sort the vector such that \f$v_1, \ldots, v_n\f$. Then let

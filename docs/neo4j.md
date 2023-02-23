@@ -6,9 +6,9 @@ a popular graph database.
 This allows graph algorithms to be executed directly on a graph stored in
 the database.
 
-This tutorial will give a quick introduction to Neo4j and demonstrate how to
+This article will give a quick introduction to Neo4j and demonstrate how to
 run your first graph algorithms on a graph stored in Neo4j.
-In this tutorial, we will connect to a Neo4j database running in the AuraDB
+In this aricle, we will connect to a Neo4j database running in the AuraDB
 cloud service.
 The STAG library can also connect to a database running locally.
 

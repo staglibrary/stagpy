@@ -386,6 +386,16 @@ class Graph(LocalGraph):
         """
         return self.internal_graph.total_volume()
 
+    def average_degree(self) -> float:
+        r"""
+        The average degree of the graph.
+
+        This is defined as the sum of the node degrees divided by the number of nodes.
+
+        @return the graph's average degree.
+        """
+        return self.internal_graph.average_degree()
+
     def number_of_vertices(self) -> int:
         """The number of vertices in the graph."""
         return self.internal_graph.number_of_vertices()

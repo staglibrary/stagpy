@@ -163,3 +163,20 @@ def sweep_set_conductance(g: graph.LocalGraph, v: scipy.sparse.csc_matrix) -> Li
             conductance in the given graph
     """
     return stag_internal.sweep_set_conductance(g.internal_graph, utility.scipy_to_swig_sprs(v))
+
+
+def adjusted_rand_index(gt_labels: List[int], labels: List[int]) -> float:
+    r"""
+    Compute the Adjusted Rand Index between two label vectors.
+
+    @param gt_labels the ground truth labels for the dataset
+    @param labels the candidate labels whose ARI should be calculated
+    @return the ARI between the two labels vectors
+
+    \par References
+    W. M. Rand.
+    Objective criteria for the evaluation of clustering methods.
+    Journal of the American Statistical Association. 66 (336): 846–850. 1971.
+    """
+    return stag_internal.adjusted_rand_index(stag_internal.vectorl(gt_labels),
+                                             stag_internal.vectorl(labels))

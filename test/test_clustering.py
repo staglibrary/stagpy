@@ -26,7 +26,8 @@ BARBELL5_ADJ_MAT = scipy.sparse.csc_matrix([[0, 1, 1, 1, 1, 0, 0, 0, 0, 0],
 def test_spectral_clustering():
     graph = stag.graph.barbell_graph(10)
     labels = stag.cluster.spectral_cluster(graph, 2)
-    print(labels)
+    gt_labels = stag.random.sbm_gt_labels(20, 2)
+    assert stag.cluster.adjusted_rand_index(gt_labels, labels) == 1
 
 def test_default_local_clustering():
     # Construct a graph object with the barbell adjacency matrix

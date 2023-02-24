@@ -213,7 +213,9 @@ class Neo4jGraph(graph.LocalGraph):
 
         @param property_name the node property to query
         @param property_value the value of the node property to search for
-        @return the Neo4j node ID of a node with the given property value
+        @return the Neo4j node ID of a node with the given property value.
+                Returns None if there is no node in the dataabase with the
+                requested property.
         """
         with self.driver.session() as session:
             result = session.execute_read(self._id_query, property_name, property_value)
@@ -227,7 +229,11 @@ class Neo4jGraph(graph.LocalGraph):
         result = tx.run(f'MATCH (n1 {{{property_name}: "{property_value}"}}) '
                         "RETURN id(n1) "
                         "LIMIT 1")
-        return result.single()[0]
+        result = result.single()
+        if result is None:
+            return None
+        else:
+            return result[0]
     ##
     # \endcond
     ##
@@ -247,11 +253,37 @@ class Neo4jGraph(graph.LocalGraph):
 
         @param id the Neo4j node ID to query
         @param property_name the name of the property to query
-        @return the value of the requested property on the given node
+        @return the value of the requested property on the given node. Returns
+                None if the requested property is not set on the requested node,
+                or if the node id does not exist.
         """
         with self.driver.session() as session:
             result = session.execute_read(self._property_query, id, property_name)
         return result
+
+    @lru_cache(maxsize=1024)
+    def vertex_exists(self, v: int) -> bool:
+        with self.driver.session() as session:
+            result = session.execute_read(self._exists_query, v)
+        return result
+
+    ##
+    # \cond
+    ##
+    @staticmethod
+    def _exists_query(tx, id: int):
+        result = tx.run('MATCH (n1) '
+                        f"WHERE id(n1) = {id} "
+                        "RETURN n1 "
+                        "LIMIT 1")
+        result = result.single()
+        if result is None:
+            return False
+        else:
+            return True
+    ##
+    # \endcond
+    ##
 
     ##
     # \cond
@@ -262,7 +294,11 @@ class Neo4jGraph(graph.LocalGraph):
                         f"WHERE id(n1) = {node_id} "
                         f"RETURN (n1.{property_name}) "
                         "LIMIT 1")
-        return result.single()[0]
+        result = result.single()
+        if result is None:
+            return None
+        else:
+            return result[0]
 
     def __del__(self):
         # When the graph object it destroyed, close the connection to the backing

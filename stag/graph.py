@@ -162,6 +162,17 @@ class LocalGraph(ABC):
         """
         return [self.degree_unweighted(v) for v in vertices]
 
+    @abstractmethod
+    def vertex_exists(self, v: int) -> bool:
+        r"""
+        Given a vertex ID, returns true or false to indicate whether the vertex exists
+        in the graph.
+
+        @param v the vertex index to check
+        @return a boolean indicating whether there exists a vertex with the given index
+        """
+        pass
+
 ##
 # \cond
 # Do not document python defined local graph
@@ -189,6 +200,9 @@ class _PythonDefinedLocalGraph(stag_internal.LocalGraph):
 
     def degrees_unweighted(self, vertices):
         return self.python_graph.degrees_unweighted(vertices)
+
+    def vertex_exists(self, v: int):
+        return self.python_graph.vertex_exists(v)
 
 ##
 # \endcond
@@ -395,6 +409,9 @@ class Graph(LocalGraph):
 
     def neighbors_unweighted(self, v: int) -> List[int]:
         return self.internal_graph.neighbors_unweighted(v)
+
+    def vertex_exists(self, v: int) -> bool:
+        return self.internal_graph.vertex_exists(v)
 
     ##
     # \cond

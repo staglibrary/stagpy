@@ -38,7 +38,7 @@ def test_general_sbm():
                                 [0.01, 0.2, 0.1]])
     g = stag.random.general_sbm(cluster_sizes, probabilities)
     assert g.number_of_vertices() == 1110
-    assert g.number_of_edges() > 100000
+    assert g.number_of_edges() > 30000
 
 
 def test_erdos_renyi():

@@ -39,7 +39,7 @@ ext_modules = [Extension(name='stag._stag_internal',
                                   "stag/stag_lib/KMeansRex/mersenneTwister2002.c",
                                   ],
                          include_dirs=["stag/eigen-3.3.9",
-                                       "stag/Spectra",
+                                       "stag/spectra-1.0.1",
                                        "stag/stag_lib",
                                        "stag/stag_lib/KMeansRex",
                                        numpy_path

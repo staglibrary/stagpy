@@ -6,7 +6,7 @@ from distutils.core import setup, Extension
 
 import numpy
 
-VERSION = '0.3.1'
+VERSION = '1.1.0'
 DESCRIPTION = 'STAG: Spectral Toolkit of Algorithms for Graphs'
 LONG_DESCRIPTION =\
     "This library provides several methods and algorithms relating to spectral graph theory in python."
@@ -63,11 +63,11 @@ setup(
 
     keywords=['python', 'spectral', 'graph', 'algorithms', 'clustering', 'cheeger'],
     classifiers=[
-        "Development Status :: 3 - Alpha",
+        "Development Status :: 5 - Production/Stable",
         "Intended Audience :: Education",
         "Programming Language :: Python :: 3",
-        # "Operating System :: MacOS :: MacOS X",
-        # "Operating System :: Microsoft :: Windows",
+        "Operating System :: MacOS :: MacOS X",
+        "Operating System :: Microsoft :: Windows",
         'Operating System :: POSIX :: Linux'
     ]
 )

@@ -23,7 +23,7 @@ elif platform.system() == 'Windows':
     numpy_path = os.path.join(numpy.__path__[0], 'core\\include')
 else:
     # Compile with clang on MacOS
-    compile_args = ['-std=c++20']
+    compile_args = ['-std=c++2a']
     numpy_path = os.path.join(numpy.__path__[0], 'core/include')
 
 # specify the name of the extension and source files
@@ -36,8 +36,7 @@ ext_modules = [Extension(name='stag._stag_internal',
                                   "stag/stag_lib/cluster.cpp",
                                   "stag/stag_lib/utility.cpp",
                                   "stag/stag_lib/spectrum.cpp",
-                                  "stag/stag_lib/KMeansRex/KMeansRexCore.cpp",
-                                  "stag/stag_lib/KMeansRex/mersenneTwister2002.c",
+                                  "stag/stag_lib/KMeansRex/KMeansRexCore.cpp"
                                   ],
                          include_dirs=["stag/eigen-3.3.9",
                                        "stag/spectra-1.0.1",

@@ -468,6 +468,26 @@ class Graph(LocalGraph):
         """
         return networkx.Graph(self.adjacency())
 
+    def draw(self, **kwargs):
+        """
+        Plot the graph with matplotlib.
+
+        This uses the networkx draw method and accepts any the keyword arguments
+        will be passed through directly.
+
+        \par Example
+
+        \code{python}
+        import matplotlib.pyplot as plt
+        import stag.graph
+        myGraph = stag.graph.star_graph(10)
+        myGraph.draw()
+        plt.show()
+        \endcode
+        """
+        netx_graph = self.to_networkx()
+        networkx.draw(netx_graph, **kwargs)
+
 ##
 # \cond
 # A decorator which transforms a graph returned from the C++ library to the

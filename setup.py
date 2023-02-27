@@ -22,7 +22,8 @@ elif platform.system() == 'Windows':
     compile_args = ['/std:c++20']
     numpy_path = os.path.join(numpy.__path__[0], 'core\\include')
 else:
-    compile_args = ['-std=c++2a']
+    # Compile with clang on MacOS
+    compile_args = ['-std=c++20']
     numpy_path = os.path.join(numpy.__path__[0], 'core/include')
 
 # specify the name of the extension and source files

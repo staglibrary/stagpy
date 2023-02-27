@@ -375,6 +375,10 @@
     $1 = is_array((PyObject *) $input) ? 1 : 0;
 }
 
+%typemap(typecheck, precedence=SWIG_TYPECHECK_COMPLEX) CLASS & {
+    $1 = is_array((PyObject *) $input) ? 1 : 0;
+}
+
 %typemap(typecheck, precedence=SWIG_TYPECHECK_COMPLEX) CLASS const {
     $1 = is_array((PyObject *) $input) ? 1 : 0;
 }

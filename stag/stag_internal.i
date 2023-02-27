@@ -23,6 +23,7 @@
 %}
 %eigen_typemaps(Eigen::VectorXd)
 %eigen_typemaps(Eigen::MatrixXd)
+%eigen_typemaps(DenseMat)
 
 %include <std_vector.i>
 namespace std {

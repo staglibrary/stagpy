@@ -3100,35 +3100,34 @@ namespace Swig {
 #define SWIGTYPE_p_Eigen__MatrixXd swig_types[0]
 #define SWIGTYPE_p_Eigen__SparseMatrixT_double_Eigen__ColMajor_stag_int_t swig_types[1]
 #define SWIGTYPE_p_Eigen__TripletT_double_stag_int_t swig_types[2]
-#define SWIGTYPE_p_Eigen__VectorXd swig_types[3]
-#define SWIGTYPE_p_Spectra__SortRule swig_types[4]
-#define SWIGTYPE_p_Spectra__SparseSymMatProdT_double_Eigen__Upper_Eigen__ColMajor_stag_int_t swig_types[5]
-#define SWIGTYPE_p_allocator_type swig_types[6]
-#define SWIGTYPE_p_char swig_types[7]
-#define SWIGTYPE_p_difference_type swig_types[8]
-#define SWIGTYPE_p_long_long swig_types[9]
-#define SWIGTYPE_p_p_PyObject swig_types[10]
-#define SWIGTYPE_p_size_type swig_types[11]
-#define SWIGTYPE_p_stag__Graph swig_types[12]
-#define SWIGTYPE_p_stag__LocalGraph swig_types[13]
-#define SWIGTYPE_p_stag__edge swig_types[14]
-#define SWIGTYPE_p_std__allocatorT_double_t swig_types[15]
-#define SWIGTYPE_p_std__allocatorT_int_t swig_types[16]
-#define SWIGTYPE_p_std__allocatorT_long_long_t swig_types[17]
-#define SWIGTYPE_p_std__allocatorT_stag__edge_t swig_types[18]
-#define SWIGTYPE_p_std__invalid_argument swig_types[19]
-#define SWIGTYPE_p_std__istream swig_types[20]
-#define SWIGTYPE_p_std__string swig_types[21]
-#define SWIGTYPE_p_std__tupleT_Eigen__VectorXd_Eigen__MatrixXd_t swig_types[22]
-#define SWIGTYPE_p_std__tupleT_SprsMat_SprsMat_t swig_types[23]
-#define SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t swig_types[24]
-#define SWIGTYPE_p_std__vectorT_int_std__allocatorT_int_t_t swig_types[25]
-#define SWIGTYPE_p_std__vectorT_long_long_std__allocatorT_long_long_t_t swig_types[26]
-#define SWIGTYPE_p_std__vectorT_stag__edge_std__allocatorT_stag__edge_t_t swig_types[27]
-#define SWIGTYPE_p_swig__SwigPyIterator swig_types[28]
-#define SWIGTYPE_p_value_type swig_types[29]
-static swig_type_info *swig_types[31];
-static swig_module_info swig_module = {swig_types, 30, 0, 0, 0, 0};
+#define SWIGTYPE_p_Spectra__SortRule swig_types[3]
+#define SWIGTYPE_p_Spectra__SparseSymMatProdT_double_Eigen__Upper_Eigen__ColMajor_stag_int_t swig_types[4]
+#define SWIGTYPE_p_allocator_type swig_types[5]
+#define SWIGTYPE_p_char swig_types[6]
+#define SWIGTYPE_p_difference_type swig_types[7]
+#define SWIGTYPE_p_long_long swig_types[8]
+#define SWIGTYPE_p_p_PyObject swig_types[9]
+#define SWIGTYPE_p_size_type swig_types[10]
+#define SWIGTYPE_p_stag__Graph swig_types[11]
+#define SWIGTYPE_p_stag__LocalGraph swig_types[12]
+#define SWIGTYPE_p_stag__edge swig_types[13]
+#define SWIGTYPE_p_std__allocatorT_double_t swig_types[14]
+#define SWIGTYPE_p_std__allocatorT_int_t swig_types[15]
+#define SWIGTYPE_p_std__allocatorT_long_long_t swig_types[16]
+#define SWIGTYPE_p_std__allocatorT_stag__edge_t swig_types[17]
+#define SWIGTYPE_p_std__invalid_argument swig_types[18]
+#define SWIGTYPE_p_std__istream swig_types[19]
+#define SWIGTYPE_p_std__string swig_types[20]
+#define SWIGTYPE_p_std__tupleT_Eigen__VectorXd_Eigen__MatrixXd_t swig_types[21]
+#define SWIGTYPE_p_std__tupleT_SprsMat_SprsMat_t swig_types[22]
+#define SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t swig_types[23]
+#define SWIGTYPE_p_std__vectorT_int_std__allocatorT_int_t_t swig_types[24]
+#define SWIGTYPE_p_std__vectorT_long_long_std__allocatorT_long_long_t_t swig_types[25]
+#define SWIGTYPE_p_std__vectorT_stag__edge_std__allocatorT_stag__edge_t_t swig_types[26]
+#define SWIGTYPE_p_swig__SwigPyIterator swig_types[27]
+#define SWIGTYPE_p_value_type swig_types[28]
+static swig_type_info *swig_types[30];
+static swig_module_info swig_module = {swig_types, 29, 0, 0, 0, 0};
 #define SWIG_TypeQuery(name) SWIG_TypeQueryModule(&swig_module, &swig_module, name)
 #define SWIG_MangledTypeQuery(name) SWIG_MangledTypeQueryModule(&swig_module, &swig_module, name)
 
@@ -6191,7 +6190,6 @@ SWIG_AsPtr_std_string (PyObject * obj, std::string **val)
     }
     else if (array_numdims(in) == 2)
     {
-//         PyErr_SetString(PyExc_ValueError, "Column dimension mismatch between NumPy and Eigen objects (1D).");
       rows = array_size(in,0);
       cols = array_size(in,1);
       if ((Derived::RowsAtCompileTime != Eigen::Dynamic) && (Derived::RowsAtCompileTime != array_size(in,0)))
@@ -17727,7 +17725,7 @@ SWIGINTERN PyObject *_wrap_general_sbm__SWIG_0(PyObject *SWIGUNUSEDPARM(self), P
   bool arg3 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-  Eigen::MatrixXd temp2 ;
+  DenseMat temp2 ;
   bool val3 ;
   int ecode3 = 0 ;
   SwigValueWrapper< stag::Graph > result;
@@ -17743,7 +17741,7 @@ SWIGINTERN PyObject *_wrap_general_sbm__SWIG_0(PyObject *SWIGUNUSEDPARM(self), P
   arg1 = reinterpret_cast< std::vector< stag_int,std::allocator< stag_int > > * >(argp1);
   {
     // In: non-const&
-    int res = ConvertFromNumpyToEigenMatrix<Eigen::MatrixXd>(&temp2, swig_obj[1]);
+    int res = ConvertFromNumpyToEigenMatrix<DenseMat>(&temp2, swig_obj[1]);
     if (res < 0) return NULL;
     arg2 = &temp2;
   }
@@ -17763,7 +17761,7 @@ SWIGINTERN PyObject *_wrap_general_sbm__SWIG_0(PyObject *SWIGUNUSEDPARM(self), P
   resultobj = SWIG_NewPointerObj((new stag::Graph(static_cast< const stag::Graph& >(result))), SWIGTYPE_p_stag__Graph, SWIG_POINTER_OWN |  0 );
   {
     // Argout: &
-    CopyFromEigenToNumPyMatrix<Eigen::MatrixXd>(swig_obj[1], arg2);
+    CopyFromEigenToNumPyMatrix<DenseMat>(swig_obj[1], arg2);
   }
   return resultobj;
 fail:
@@ -17777,7 +17775,7 @@ SWIGINTERN PyObject *_wrap_general_sbm__SWIG_1(PyObject *SWIGUNUSEDPARM(self), P
   DenseMat *arg2 = 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-  Eigen::MatrixXd temp2 ;
+  DenseMat temp2 ;
   SwigValueWrapper< stag::Graph > result;
   
   if ((nobjs < 2) || (nobjs > 2)) SWIG_fail;
@@ -17791,7 +17789,7 @@ SWIGINTERN PyObject *_wrap_general_sbm__SWIG_1(PyObject *SWIGUNUSEDPARM(self), P
   arg1 = reinterpret_cast< std::vector< stag_int,std::allocator< stag_int > > * >(argp1);
   {
     // In: non-const&
-    int res = ConvertFromNumpyToEigenMatrix<Eigen::MatrixXd>(&temp2, swig_obj[1]);
+    int res = ConvertFromNumpyToEigenMatrix<DenseMat>(&temp2, swig_obj[1]);
     if (res < 0) return NULL;
     arg2 = &temp2;
   }
@@ -17806,7 +17804,7 @@ SWIGINTERN PyObject *_wrap_general_sbm__SWIG_1(PyObject *SWIGUNUSEDPARM(self), P
   resultobj = SWIG_NewPointerObj((new stag::Graph(static_cast< const stag::Graph& >(result))), SWIGTYPE_p_stag__Graph, SWIG_POINTER_OWN |  0 );
   {
     // Argout: &
-    CopyFromEigenToNumPyMatrix<Eigen::MatrixXd>(swig_obj[1], arg2);
+    CopyFromEigenToNumPyMatrix<DenseMat>(swig_obj[1], arg2);
   }
   return resultobj;
 fail:
@@ -17828,9 +17826,9 @@ SWIGINTERN PyObject *_wrap_general_sbm(PyObject *self, PyObject *args) {
     int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_std__vectorT_long_long_std__allocatorT_long_long_t_t, SWIG_POINTER_NO_NULL);
     _v = SWIG_CheckState(res);
     if (_v) {
-      void *vptr = 0;
-      int res = SWIG_ConvertPtr(argv[1], &vptr, SWIGTYPE_p_Eigen__MatrixXd, SWIG_POINTER_NO_NULL);
-      _v = SWIG_CheckState(res);
+      {
+        _v = is_array((PyObject *) argv[1]) ? 1 : 0;
+      }
       if (_v) {
         return _wrap_general_sbm__SWIG_1(self, argc, argv);
       }
@@ -17842,9 +17840,9 @@ SWIGINTERN PyObject *_wrap_general_sbm(PyObject *self, PyObject *args) {
     int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_std__vectorT_long_long_std__allocatorT_long_long_t_t, SWIG_POINTER_NO_NULL);
     _v = SWIG_CheckState(res);
     if (_v) {
-      void *vptr = 0;
-      int res = SWIG_ConvertPtr(argv[1], &vptr, SWIGTYPE_p_Eigen__MatrixXd, SWIG_POINTER_NO_NULL);
-      _v = SWIG_CheckState(res);
+      {
+        _v = is_array((PyObject *) argv[1]) ? 1 : 0;
+      }
       if (_v) {
         {
           int res = SWIG_AsVal_bool(argv[2], NULL);
@@ -19100,7 +19098,6 @@ static void *_p_stag__GraphTo_p_stag__LocalGraph(void *x, int *SWIGUNUSEDPARM(ne
 static swig_type_info _swigt__p_Eigen__MatrixXd = {"_p_Eigen__MatrixXd", "Eigen::MatrixXd *|DenseMat *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_Eigen__SparseMatrixT_double_Eigen__ColMajor_stag_int_t = {"_p_Eigen__SparseMatrixT_double_Eigen__ColMajor_stag_int_t", "Eigen::SparseMatrix< double,Eigen::ColMajor,stag_int > *|SprsMat *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_Eigen__TripletT_double_stag_int_t = {"_p_Eigen__TripletT_double_stag_int_t", "EdgeTriplet *|Eigen::Triplet< double,stag_int > *", 0, 0, (void*)0, 0};
-static swig_type_info _swigt__p_Eigen__VectorXd = {"_p_Eigen__VectorXd", "Eigen::VectorXd *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_Spectra__SortRule = {"_p_Spectra__SortRule", "Spectra::SortRule *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_Spectra__SparseSymMatProdT_double_Eigen__Upper_Eigen__ColMajor_stag_int_t = {"_p_Spectra__SparseSymMatProdT_double_Eigen__Upper_Eigen__ColMajor_stag_int_t", "stag::SprsMatOp *|Spectra::SparseSymMatProd< double,Eigen::Upper,Eigen::ColMajor,stag_int > *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_allocator_type = {"_p_allocator_type", "allocator_type *", 0, 0, (void*)0, 0};
@@ -19132,7 +19129,6 @@ static swig_type_info *swig_type_initial[] = {
   &_swigt__p_Eigen__MatrixXd,
   &_swigt__p_Eigen__SparseMatrixT_double_Eigen__ColMajor_stag_int_t,
   &_swigt__p_Eigen__TripletT_double_stag_int_t,
-  &_swigt__p_Eigen__VectorXd,
   &_swigt__p_Spectra__SortRule,
   &_swigt__p_Spectra__SparseSymMatProdT_double_Eigen__Upper_Eigen__ColMajor_stag_int_t,
   &_swigt__p_allocator_type,
@@ -19164,7 +19160,6 @@ static swig_type_info *swig_type_initial[] = {
 static swig_cast_info _swigc__p_Eigen__MatrixXd[] = {  {&_swigt__p_Eigen__MatrixXd, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_Eigen__SparseMatrixT_double_Eigen__ColMajor_stag_int_t[] = {  {&_swigt__p_Eigen__SparseMatrixT_double_Eigen__ColMajor_stag_int_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_Eigen__TripletT_double_stag_int_t[] = {  {&_swigt__p_Eigen__TripletT_double_stag_int_t, 0, 0, 0},{0, 0, 0, 0}};
-static swig_cast_info _swigc__p_Eigen__VectorXd[] = {  {&_swigt__p_Eigen__VectorXd, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_Spectra__SortRule[] = {  {&_swigt__p_Spectra__SortRule, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_Spectra__SparseSymMatProdT_double_Eigen__Upper_Eigen__ColMajor_stag_int_t[] = {  {&_swigt__p_Spectra__SparseSymMatProdT_double_Eigen__Upper_Eigen__ColMajor_stag_int_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_allocator_type[] = {  {&_swigt__p_allocator_type, 0, 0, 0},{0, 0, 0, 0}};
@@ -19196,7 +19191,6 @@ static swig_cast_info *swig_cast_initial[] = {
   _swigc__p_Eigen__MatrixXd,
   _swigc__p_Eigen__SparseMatrixT_double_Eigen__ColMajor_stag_int_t,
   _swigc__p_Eigen__TripletT_double_stag_int_t,
-  _swigc__p_Eigen__VectorXd,
   _swigc__p_Spectra__SortRule,
   _swigc__p_Spectra__SparseSymMatProdT_double_Eigen__Upper_Eigen__ColMajor_stag_int_t,
   _swigc__p_allocator_type,

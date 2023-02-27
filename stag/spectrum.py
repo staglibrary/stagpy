@@ -4,9 +4,92 @@ Methods for computing eigenvalues and eigenvectors of sparse matrices.
 import numpy as np
 import scipy as sp
 import scipy.sparse
+from typing import Tuple
 
 from . import utility
 from . import stag_internal
+
+
+def compute_eigensystem(mat: scipy.sparse.spmatrix,
+                        num: int,
+                        which: str = 'SM') -> Tuple[np.ndarray, np.ndarray]:
+    r"""
+    Compute the eigenvalues and eigenvectors of a given matrix.
+
+    By default, this will compute the eigenvalues of smallest magnitude.
+    This default can be overridden by the `which `parameter which takes a
+    string and should take one of the following values.
+      - `SM` will return the eigenvalues with smallest magnitude
+      - `LM` will return the eigenvalues with largest magnitude
+
+    The following example demonstrates how to compute the 3 largest eigenvectors
+    and eigenvalues of a cycle graph.
+
+    \code{.py}
+        #import stag.graph
+        #import stag.spectrum
+
+        myGraph = stag.graph.cycle_graph(10)
+        lap = myGraph.normalised_laplacian()
+        eigenvalues, eigenvectors = stag.spectrum.compute_eigensystem(
+            lap, 3, 'LM')
+    \endcode
+
+    @param mat the matrix on which to operate
+    @param num the number of eigenvalues and eigenvectors to compute
+    @param which (optional) a string indicating which eigenvectors to calculate
+    @returns a tuple containing the computed eigenvalues and eigenvectors
+    """
+    return sp.sparse.linalg.eigs(mat, k=num, which=which)
+
+
+def compute_eigenvalues(mat: scipy.sparse.spmatrix,
+                        num: int,
+                        which: str = 'SM') -> np.ndarray:
+    r"""
+    Compute the eigenvalues of a given matrix.
+
+    By default, this will compute the eigenvalues of smallest magnitude.
+    This default can be overridden by the which parameter which takes a string
+    and should be one of the following.
+      - `SM` will return the eigenvalues with smallest magnitude
+      - `LM` will return the eigenvalues with largest magnitude
+
+    If you would like to calculate the eigenvectors and eigenvalues together, then
+    you should instead use stag.spectrum.compute_eigensystem.
+
+    @param mat the matrix on which to operate
+    @param num the number of eigenvalues to compute
+    @param which (optional) a string indicating which eigenvalues to calculate
+    @returns a numpy array containing the computed eigenvalues
+    """
+    eigs, _ = compute_eigensystem(mat, num, which=which)
+    return eigs
+
+def compute_eigenvectors(mat: scipy.sparse.spmatrix,
+                         num: int,
+                         which: str = 'SM') -> np.ndarray:
+    r"""
+    Compute the eigenvectors of a given matrix.
+
+    By default, this will compute the eigenvectors corresponding to the
+    eigenvalues of smallest magnitude.
+    This default can be overridden by the which parameter which takes a string
+    and should be one of the following.
+      - `SM` will return the vectors corresponding to eigenvalues with smallest magnitude
+      - `LM` will return the vectors corresponding to eigenvalues with largest magnitude
+
+    If you would like to calculate the eigenvectors and eigenvalues together, then
+    you should instead use stag.spectrum.compute_eigensystem.
+
+    @param mat the matrix on which to operate
+    @param num the number of eigenvectors to compute
+    @param which (optional) a string indicating which eigenvectors to calculate
+    @returns a numpy array containing the computed eigenvectors as columns
+    """
+    _, eigvecs = compute_eigensystem(mat, num, which=which)
+    return eigvecs
+
 
 def power_method(mat: scipy.sparse.spmatrix,
                  num_iterations: int = None,

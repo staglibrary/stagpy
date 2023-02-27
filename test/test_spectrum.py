@@ -28,3 +28,11 @@ def test_power_method():
     lap = g.normalised_laplacian()
     dominant_eigvec = stag.spectrum.power_method(lap, num_iterations=1000)
     assert abs(2 - stag.spectrum.rayleigh_quotient(lap, dominant_eigvec)) < 0.0001
+
+
+def test_eigensystem():
+    g = stag.graph.complete_graph(4)
+    lap = g.laplacian()
+    eigval, eigvec = stag.spectrum.compute_eigensystem(lap, 1)
+    assert np.allclose(eigval, np.asarray([0]))
+    assert np.allclose(eigvec, np.asarray([[1/2, 1/2, 1/2, 1/2]]).T)

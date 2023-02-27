@@ -781,6 +781,21 @@ def sbm_gt_labels(n, k):
 
 def general_sbm_gt_labels(cluster_sizes):
     return _stag_internal.general_sbm_gt_labels(cluster_sizes)
+
+def compute_eigensystem(*args):
+    return _stag_internal.compute_eigensystem(*args)
+
+def compute_eigenvalues(*args):
+    return _stag_internal.compute_eigenvalues(*args)
+
+def compute_eigenvectors(*args):
+    return _stag_internal.compute_eigenvectors(*args)
+
+def power_method(*args):
+    return _stag_internal.power_method(*args)
+
+def rayleigh_quotient(mat, vec):
+    return _stag_internal.rayleigh_quotient(mat, vec)
 class SprsMat(object):
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
     __repr__ = _swig_repr

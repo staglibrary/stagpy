@@ -4,6 +4,8 @@ import platform
 from setuptools import setup, find_packages
 from distutils.core import setup, Extension
 
+import numpy
+
 VERSION = '0.3.1'
 DESCRIPTION = 'STAG: Spectral Toolkit of Algorithms for Graphs'
 LONG_DESCRIPTION =\
@@ -12,12 +14,16 @@ URL = "https://staglibrary.io"
 
 # Depending on the build platform, the required compiler flags are slightly
 # different.
+numpy_path = ""
 if platform.system() == 'Linux':
     compile_args = ['-std=c++2a']
+    numpy_path = os.path.join(numpy.__path__[0], 'core/include')
 elif platform.system() == 'Windows':
     compile_args = ['/std:c++20']
+    numpy_path = os.path.join(numpy.__path__[0], 'core\\include')
 else:
     compile_args = ['-std=c++2a']
+    numpy_path = os.path.join(numpy.__path__[0], 'core/include')
 
 # specify the name of the extension and source files
 # required to compile this
@@ -35,7 +41,8 @@ ext_modules = [Extension(name='stag._stag_internal',
                          include_dirs=["stag/eigen-3.3.9",
                                        "stag/Spectra",
                                        "stag/stag_lib",
-                                       "stag/stag_lib/KMeansRex"
+                                       "stag/stag_lib/KMeansRex",
+                                       numpy_path
                                        ],
                          extra_compile_args=compile_args)]
 

@@ -2,6 +2,7 @@
 Tests for the random module.
 """
 import pytest
+import numpy as np
 from context import stag
 import stag.random
 
@@ -29,6 +30,17 @@ def test_sbm():
     assert abs((graphapx.number_of_edges() / graph.number_of_edges()) - 1) <= 0.5
 
 
+def test_general_sbm():
+    # Key thing to test is that the parameters go through to C++
+    cluster_sizes = [10, 100, 1000]
+    probabilities = np.asarray([[0.9, 0.1, 0.01],
+                                [0.1, 0.9, 0.2],
+                                [0.01, 0.2, 0.1]])
+    g = stag.random.general_sbm(cluster_sizes, probabilities)
+    assert g.number_of_vertices() == 1110
+    assert g.number_of_edges() > 30000
+
+
 def test_erdos_renyi():
     # Generate a graph
     n = 1000
@@ -37,3 +49,14 @@ def test_erdos_renyi():
     # Check that the graph has the expected number of vertices and edges.
     assert graph.number_of_vertices() == n
     assert abs((graph.total_volume() / (int(2 * 0.1 * (n * (n - 1)) / 2) + n)) - 1) <= 0.1
+
+def test_sbm_gt_labels():
+    n = 6
+    k = 3
+    labels = stag.random.sbm_gt_labels(n, k)
+    assert labels == [0, 0, 1, 1, 2, 2]
+
+def test_general_sbm_gt_labels():
+    cluster_sizes = [4, 2]
+    gt_labels = stag.random.general_sbm_gt_labels(cluster_sizes)
+    assert gt_labels == [0, 0, 0, 0, 1, 1]

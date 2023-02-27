@@ -1,9 +1,7 @@
-/**
-* Implementations of the clustering algorithms defined in cluster.h.
- *
- * This file is provided as part of the STAG library and released under the MIT
- * license.
-*/
+//
+// This file is provided as part of the STAG library and released under the MIT
+// license.
+//
 #include <vector>
 #include <deque>
 #include <unordered_set>
@@ -13,8 +11,42 @@
 #include <graph.h>
 #include <cluster.h>
 #include <utility.h>
+#include <spectrum.h>
+#include <KMeansRex/KMeansRexCoreInterface.h>
+
+std::vector<stag_int> stag::spectral_cluster(stag::Graph *graph, stag_int k) {
+  // Check that the number of clusters is valid.
+  if (k < 1 || k > graph->number_of_vertices() /2) {
+    throw std::invalid_argument("Number of clusters must be between 1 and n/2.");
+  }
+
+  // Start by computing the 'first' k eigenvalues of the normalised graph
+  // laplacian matrix.
+  const SprsMat* lap = graph->normalised_laplacian();
+  Eigen::MatrixXd eigvecs = stag::compute_eigenvectors(lap, k);
+
+  // Run k-means clustering on the spectral embedding of the vertices
+  Eigen::MatrixXd centres = Eigen::MatrixXd::Zero(k, k);
+  Eigen::VectorXd clusters = Eigen::VectorXd::Zero(eigvecs.rows());
+  char initialisation[9] = "plusplus";
+  RunKMeans(eigvecs.data(),
+            eigvecs.rows(),
+            k,
+            k,
+            k * 100,
+            42,
+            initialisation,
+            centres.data(),
+            clusters.data()
+            );
+
+  // Move the eigen data into the vector to return
+  return {clusters.data(), clusters.data() + clusters.rows()};
+}
 
 std::vector<stag_int> stag::local_cluster(stag::LocalGraph *graph, stag_int seed_vertex, double target_volume) {
+  if (target_volume <= 0) throw std::invalid_argument("Target volume must be positive.");
+
   // The 'locality' parameter should essentially be a constant if we expect the conductance
   // of the target cluster to be a constant. Set it to 0.01.
   // The error parameter should decrease as the inverse of the target volume.
@@ -37,6 +69,17 @@ std::vector<stag_int> stag::local_cluster_acl(stag::LocalGraph *graph,
                                               stag_int seed_vertex,
                                               double locality,
                                               double error) {
+  // Check that the arguments are valid.
+  if (!graph->vertex_exists(seed_vertex)) {
+    throw std::invalid_argument("Seed vertex does not exist.");
+  }
+  if (locality < 0 || locality > 1) {
+    throw std::invalid_argument("Locality parameter must be between 0 and 1.");
+  }
+  if (error <= 0) {
+    throw std::invalid_argument("Error parameter must be greater than 0.");
+  }
+
   // Compute the approximate pagerank vector
   SprsMat seedDist(seed_vertex + 1, 1);
   seedDist.coeffRef(seed_vertex, 0) = 1;
@@ -110,8 +153,17 @@ std::tuple<SprsMat, SprsMat> stag::approximate_pagerank(stag::LocalGraph *graph,
                                                         SprsMat &seed_vector,
                                                         double alpha,
                                                         double epsilon) {
-  // Check that the provided seed vector is a column vector
+  // Check that the arguments are valid
   if (seed_vector.cols() > 1) throw std::invalid_argument("Seed vector must be a column vector.");
+  if (!graph->vertex_exists(seed_vector.rows() - 1)) {
+    throw std::invalid_argument("Seed vector dimension must be less than the number of vertices in the graph");
+  }
+  if (alpha < 0 || alpha > 1) {
+    throw std::invalid_argument("Alpha parameter must be between 0 and 1.");
+  }
+  if (epsilon <= 0) {
+    throw std::invalid_argument("Epsilon parameter must be greater than 0.");
+  }
 
   // Initialise p to be the all-zeros vector.
   SprsMat p(seed_vector.rows(), 1);
@@ -164,6 +216,11 @@ std::tuple<SprsMat, SprsMat> stag::approximate_pagerank(stag::LocalGraph *graph,
     // Skip any neighbors which are already in the queue.
     std::vector<stag_int> neighbors = graph->neighbors_unweighted(u);
     std::vector<double> neighbor_degrees = graph->degrees(neighbors);
+
+    // The length of neighbors and neighbor_degrees should always be equal.
+    // If they are not, there must be a bug in the implementation of graph->degrees.
+    assert(neighbors.size() == neighbor_degrees.size());
+
     degree_index = 0;
     stag_int v;
     for (stag::edge e : graph->neighbors(u)) {
@@ -235,4 +292,79 @@ std::vector<stag_int> stag::sweep_set_conductance(stag::LocalGraph* graph,
 
   // Return the best cut
   return {sorted_indices.begin(), sorted_indices.begin() + best_idx};
+}
+
+//------------------------------------------------------------------------------
+// Clustering metrics
+//------------------------------------------------------------------------------
+stag_int nChoose2(stag_int n)
+{
+  if (n < 0) throw std::invalid_argument("n must be non-negative.");
+  if (n < 2) return 0;
+
+  return n * (n-1) / 2;
+}
+
+double stag::adjusted_rand_index(std::vector<stag_int>& gt_labels,
+                                 std::vector<stag_int>& labels) {
+  stag_int n = gt_labels.size();
+  if (labels.size() != n) {
+    throw std::invalid_argument("Label vectors must be the same size.");
+  }
+
+  // Find the number of clusters
+  stag_int k = 1;
+  for (auto label : gt_labels) {
+    if (label < 0) throw std::invalid_argument("Cluster labels must be non-negative.");
+    if (label > k - 1) {
+      k = label + 1;
+    }
+  }
+  for (auto label: labels) {
+    if (label < 0) throw std::invalid_argument("Cluster labels must be non-negative.");
+    if (label > k - 1) {
+      k = label + 1;
+    }
+  }
+
+  // Start by constructing the k by k contingency table
+  // and the sizes of every cluster
+  Eigen::VectorXi gt_sizes(k);
+  Eigen::VectorXi label_sizes(k);
+  Eigen::MatrixXi contingency(k, k);
+
+  // Initialize everything to 0
+  for (auto i = 0; i < k; i++) {
+    gt_sizes(i) = 0;
+    label_sizes(i) = 0;
+    for (auto j = 0; j < k; j++) {
+      contingency(i, j) = 0;
+    }
+  }
+
+  for (auto i = 0; i < n; i++) {
+    contingency(gt_labels.at(i), labels.at(i))++;
+    gt_sizes(gt_labels.at(i))++;
+    label_sizes(labels.at(i))++;
+  }
+
+  // Now compute three components of the ARI
+  // See https://stats.stackexchange.com/questions/207366/calculating-the-adjusted-rand-index.
+  stag_int c1 = 0;
+  for (auto i = 0; i < k; i++) {
+    for (auto j = 0; j < k; j++) {
+      c1 += nChoose2(contingency(i, j));
+    }
+  }
+
+  stag_int c2 = 0;
+  stag_int c3 = 0;
+  for (auto i = 0; i < k; i++) {
+    c2 += nChoose2(gt_sizes(i));
+    c3 += nChoose2(label_sizes(i));
+  }
+
+  stag_int nC2 = nChoose2(n);
+
+  return (c1 - ((double) (c2 * c3) / nC2)) / (((double) (c2 + c3)/2) - ((double) (c2 * c3)/nC2));
 }

@@ -162,6 +162,17 @@ class LocalGraph(ABC):
         """
         return [self.degree_unweighted(v) for v in vertices]
 
+    @abstractmethod
+    def vertex_exists(self, v: int) -> bool:
+        r"""
+        Given a vertex ID, returns true or false to indicate whether the vertex exists
+        in the graph.
+
+        @param v the vertex index to check
+        @return a boolean indicating whether there exists a vertex with the given index
+        """
+        pass
+
 ##
 # \cond
 # Do not document python defined local graph
@@ -189,6 +200,9 @@ class _PythonDefinedLocalGraph(stag_internal.LocalGraph):
 
     def degrees_unweighted(self, vertices):
         return self.python_graph.degrees_unweighted(vertices)
+
+    def vertex_exists(self, v: int):
+        return self.python_graph.vertex_exists(v)
 
 ##
 # \endcond
@@ -372,6 +386,16 @@ class Graph(LocalGraph):
         """
         return self.internal_graph.total_volume()
 
+    def average_degree(self) -> float:
+        r"""
+        The average degree of the graph.
+
+        This is defined as the sum of the node degrees divided by the number of nodes.
+
+        @return the graph's average degree.
+        """
+        return self.internal_graph.average_degree()
+
     def number_of_vertices(self) -> int:
         """The number of vertices in the graph."""
         return self.internal_graph.number_of_vertices()
@@ -395,6 +419,9 @@ class Graph(LocalGraph):
 
     def neighbors_unweighted(self, v: int) -> List[int]:
         return self.internal_graph.neighbors_unweighted(v)
+
+    def vertex_exists(self, v: int) -> bool:
+        return self.internal_graph.vertex_exists(v)
 
     ##
     # \cond
@@ -440,6 +467,26 @@ class Graph(LocalGraph):
         [networkx documentation](https://networkx.org/documentation/stable/reference/classes/graph.html).
         """
         return networkx.Graph(self.adjacency())
+
+    def draw(self, **kwargs):
+        """
+        Plot the graph with matplotlib.
+
+        This uses the networkx draw method and accepts any the keyword arguments
+        will be passed through directly.
+
+        \par Example
+
+        \code{python}
+        import matplotlib.pyplot as plt
+        import stag.graph
+        myGraph = stag.graph.star_graph(10)
+        myGraph.draw()
+        plt.show()
+        \endcode
+        """
+        netx_graph = self.to_networkx()
+        networkx.draw(netx_graph, **kwargs)
 
 ##
 # \cond

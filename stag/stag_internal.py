@@ -622,6 +622,9 @@ class LocalGraph(object):
 
     def degrees_unweighted(self, vertices):
         return _stag_internal.LocalGraph_degrees_unweighted(self, vertices)
+
+    def vertex_exists(self, v):
+        return _stag_internal.LocalGraph_vertex_exists(self, v)
     __swig_destroy__ = _stag_internal.delete_LocalGraph
 
     def __init__(self):
@@ -666,6 +669,9 @@ class Graph(LocalGraph):
     def total_volume(self):
         return _stag_internal.Graph_total_volume(self)
 
+    def average_degree(self):
+        return _stag_internal.Graph_average_degree(self)
+
     def number_of_vertices(self):
         return _stag_internal.Graph_number_of_vertices(self)
 
@@ -689,6 +695,9 @@ class Graph(LocalGraph):
 
     def degrees_unweighted(self, vertices):
         return _stag_internal.Graph_degrees_unweighted(self, vertices)
+
+    def vertex_exists(self, v):
+        return _stag_internal.Graph_vertex_exists(self, v)
     __swig_destroy__ = _stag_internal.delete_Graph
 
 # Register Graph in _stag_internal:
@@ -731,6 +740,12 @@ def sprsMatFromVectors(column_starts, row_indices, values):
 def isSymmetric(matrix):
     return _stag_internal.isSymmetric(matrix)
 
+def safeGetline(_is, t):
+    return _stag_internal.safeGetline(_is, t)
+
+def spectral_cluster(graph, k):
+    return _stag_internal.spectral_cluster(graph, k)
+
 def local_cluster(graph, seed_vertex, target_volume):
     return _stag_internal.local_cluster(graph, seed_vertex, target_volume)
 
@@ -743,6 +758,9 @@ def approximate_pagerank(graph, seed_vector, alpha, epsilon):
 def sweep_set_conductance(graph, vec):
     return _stag_internal.sweep_set_conductance(graph, vec)
 
+def adjusted_rand_index(gt_labels, labels):
+    return _stag_internal.adjusted_rand_index(gt_labels, labels)
+
 def load_edgelist(filename):
     return _stag_internal.load_edgelist(filename)
 
@@ -752,8 +770,32 @@ def save_edgelist(graph, filename):
 def sbm(*args):
     return _stag_internal.sbm(*args)
 
+def general_sbm(*args):
+    return _stag_internal.general_sbm(*args)
+
 def erdos_renyi(*args):
     return _stag_internal.erdos_renyi(*args)
+
+def sbm_gt_labels(n, k):
+    return _stag_internal.sbm_gt_labels(n, k)
+
+def general_sbm_gt_labels(cluster_sizes):
+    return _stag_internal.general_sbm_gt_labels(cluster_sizes)
+
+def compute_eigensystem(*args):
+    return _stag_internal.compute_eigensystem(*args)
+
+def compute_eigenvalues(*args):
+    return _stag_internal.compute_eigenvalues(*args)
+
+def compute_eigenvectors(*args):
+    return _stag_internal.compute_eigenvectors(*args)
+
+def power_method(*args):
+    return _stag_internal.power_method(*args)
+
+def rayleigh_quotient(mat, vec):
+    return _stag_internal.rayleigh_quotient(mat, vec)
 class SprsMat(object):
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
     __repr__ = _swig_repr

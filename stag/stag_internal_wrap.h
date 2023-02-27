@@ -25,6 +25,7 @@ public:
     virtual std::vector< stag_int, std::allocator< stag_int > > neighbors_unweighted(stag_int v);
     virtual std::vector< double, std::allocator< double > > degrees(std::vector< stag_int, std::allocator< stag_int > > vertices);
     virtual std::vector< stag_int, std::allocator< stag_int > > degrees_unweighted(std::vector< stag_int, std::allocator< stag_int > > vertices);
+    virtual bool vertex_exists(stag_int v);
     virtual ~SwigDirector_LocalGraph();
 
 /* Internal director utilities */
@@ -56,7 +57,7 @@ private:
       return method;
     }
 private:
-    mutable swig::SwigVar_PyObject vtable[6];
+    mutable swig::SwigVar_PyObject vtable[7];
 #endif
 
 };

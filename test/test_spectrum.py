@@ -23,3 +23,8 @@ def test_power_method():
     assert np.allclose(newvec, np.asarray([[-1/math.sqrt(6),
                                              2/math.sqrt(6),
                                             -1/math.sqrt(6)]]).T, atol=0.00001)
+
+    g = stag.graph.cycle_graph(10)
+    lap = g.normalised_laplacian()
+    dominant_eigvec = stag.spectrum.power_method(lap, num_iterations=1000)
+    assert abs(2 - stag.spectrum.rayleigh_quotient(lap, dominant_eigvec)) < 0.0001

@@ -3,6 +3,7 @@ scipy
 networkx
 matplotlib
 neo4j
+numpy
 
 # Needed for development only
 twine

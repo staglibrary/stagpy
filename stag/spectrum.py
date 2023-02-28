@@ -26,8 +26,8 @@ def compute_eigensystem(mat: scipy.sparse.spmatrix,
     and eigenvalues of a cycle graph.
 
     \code{.py}
-        #import stag.graph
-        #import stag.spectrum
+        import stag.graph
+        import stag.spectrum
 
         myGraph = stag.graph.cycle_graph(10)
         lap = myGraph.normalised_laplacian()

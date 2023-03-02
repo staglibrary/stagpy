@@ -15856,6 +15856,66 @@ fail:
 }
 
 
+SWIGINTERN PyObject *_wrap_Graph_signless_laplacian(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  stag::Graph *arg1 = (stag::Graph *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject *swig_obj[1] ;
+  SprsMat *result = 0 ;
+  
+  if (!args) SWIG_fail;
+  swig_obj[0] = args;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_stag__Graph, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Graph_signless_laplacian" "', argument " "1"" of type '" "stag::Graph *""'"); 
+  }
+  arg1 = reinterpret_cast< stag::Graph * >(argp1);
+  {
+    try {
+      result = (SprsMat *)(arg1)->signless_laplacian();
+    } catch (std::invalid_argument &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    }
+  }
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_Eigen__SparseMatrixT_double_Eigen__ColMajor_stag_int_t, 0 |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_Graph_normalised_signless_laplacian(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  stag::Graph *arg1 = (stag::Graph *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject *swig_obj[1] ;
+  SprsMat *result = 0 ;
+  
+  if (!args) SWIG_fail;
+  swig_obj[0] = args;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_stag__Graph, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Graph_normalised_signless_laplacian" "', argument " "1"" of type '" "stag::Graph *""'"); 
+  }
+  arg1 = reinterpret_cast< stag::Graph * >(argp1);
+  {
+    try {
+      result = (SprsMat *)(arg1)->normalised_signless_laplacian();
+    } catch (std::invalid_argument &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    }
+  }
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_Eigen__SparseMatrixT_double_Eigen__ColMajor_stag_int_t, 0 |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
 SWIGINTERN PyObject *_wrap_Graph_degree_matrix(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   stag::Graph *arg1 = (stag::Graph *) 0 ;
@@ -19030,6 +19090,8 @@ static PyMethodDef SwigMethods[] = {
 	 { "Graph_adjacency", _wrap_Graph_adjacency, METH_O, NULL},
 	 { "Graph_laplacian", _wrap_Graph_laplacian, METH_O, NULL},
 	 { "Graph_normalised_laplacian", _wrap_Graph_normalised_laplacian, METH_O, NULL},
+	 { "Graph_signless_laplacian", _wrap_Graph_signless_laplacian, METH_O, NULL},
+	 { "Graph_normalised_signless_laplacian", _wrap_Graph_normalised_signless_laplacian, METH_O, NULL},
 	 { "Graph_degree_matrix", _wrap_Graph_degree_matrix, METH_O, NULL},
 	 { "Graph_inverse_degree_matrix", _wrap_Graph_inverse_degree_matrix, METH_O, NULL},
 	 { "Graph_lazy_random_walk_matrix", _wrap_Graph_lazy_random_walk_matrix, METH_O, NULL},

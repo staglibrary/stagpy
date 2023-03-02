@@ -314,6 +314,60 @@ class Graph(LocalGraph):
         return self.internal_graph.normalised_laplacian()
 
     @utility.return_sparse_matrix
+    def normalised_laplacian(self) -> scipy.sparse.csc_matrix:
+        r"""
+        Construct the normalised Laplacian matrix of the graph.
+
+        The normalised Laplacian matrix is defined by
+
+        \f[
+            \mathcal{L} = D^{-1/2} L D^{-1/2}
+        \f]
+
+        where \f$D\f$ is the diagonal matrix of vertex degrees and \f$L\f$
+        is the Laplacian matrix of the graph.
+
+        :return: a ``scipy.sparse.csc_matrix`` representing the normalised Laplacian
+        """
+        return self.internal_graph.normalised_laplacian()
+
+    @utility.return_sparse_matrix
+    def signless_laplacian(self) -> scipy.sparse.csc_matrix:
+        """
+        Construct the signless Laplacian matrix of the graph.
+
+        The signless Laplacian matrix is defined by
+
+        \f[
+            J = D + A
+        \f]
+
+        where \f$D\f$ is the diagonal matrix of vertex degrees
+        and \f$A\f$ is the adjacency matrix of the graph.
+
+        :return: a ``scipy.sparse.csc_matrix`` representing the signless graph Laplacian
+        """
+        return self.internal_graph.signless_laplacian()
+
+    @utility.return_sparse_matrix
+    def normalised_signless_laplacian(self) -> scipy.sparse.csc_matrix:
+        r"""
+        Construct the normalised signless Laplacian matrix of the graph.
+
+        The normalised signless Laplacian matrix is defined by
+
+        \f[
+            \mathcal{J} = D^{-1/2} J D^{-1/2}
+        \f]
+
+        where \f$D\f$ is the diagonal matrix of vertex degrees and \f$J\f$
+        is the signless Laplacian matrix of the graph.
+
+        :return: a ``scipy.sparse.csc_matrix`` representing the normalised signless Laplacian
+        """
+        return self.internal_graph.normalised_signless_laplacian()
+
+    @utility.return_sparse_matrix
     def degree_matrix(self) -> scipy.sparse.csc_matrix:
         r"""
         The degree matrix of the graph.

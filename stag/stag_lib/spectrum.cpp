@@ -4,8 +4,6 @@
 //
 #include "spectrum.h"
 
-#include <memory>
-#include <string>
 #include <Spectra/SymEigsSolver.h>
 #include <stdexcept>
 #include <algorithm>
@@ -88,27 +86,11 @@ Eigen::VectorXd random_unit_vector(stag_int dimension) {
   return random_vector;
 }
 
-template<typename ... Args>
-std::string string_format( const std::string& format, Args ... args )
-{
-    int size_s = std::snprintf( nullptr, 0, format.c_str(), args ... ) + 1; // Extra space for '\0'
-    if( size_s <= 0 ){ throw std::runtime_error( "Error during formatting." ); }
-    auto size = static_cast<size_t>( size_s );
-    std::unique_ptr<char[]> buf( new char[ size ] );
-    std::snprintf( buf.get(), size, format.c_str(), args ... );
-    return std::string( buf.get(), buf.get() + size - 1 ); // We don't want the '\0' inside
-}
-
 Eigen::VectorXd stag::power_method(const SprsMat *mat, stag_int num_iterations,
                                    Eigen::VectorXd initial_vector) {
   if (num_iterations < 0) throw std::invalid_argument("Number of iterations must be non-negative.");
   if (mat->rows() != mat->cols()) throw std::invalid_argument("Matrix must be square.");
-  if (initial_vector.size() != mat->rows()) {
-    throw std::invalid_argument(
-        string_format("Vector and matrix must have the same dimension %d %d",
-        mat->rows(),
-        initial_vector.size()));
-  }
+  if (initial_vector.size() != mat->rows()) throw std::invalid_argument("Vector and matrix must have the same dimension");
 
   for (auto t = 0; t < num_iterations; t++) {
     initial_vector = *mat * initial_vector;

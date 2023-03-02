@@ -657,6 +657,12 @@ class Graph(LocalGraph):
     def normalised_laplacian(self):
         return _stag_internal.Graph_normalised_laplacian(self)
 
+    def signless_laplacian(self):
+        return _stag_internal.Graph_signless_laplacian(self)
+
+    def normalised_signless_laplacian(self):
+        return _stag_internal.Graph_normalised_signless_laplacian(self)
+
     def degree_matrix(self):
         return _stag_internal.Graph_degree_matrix(self)
 

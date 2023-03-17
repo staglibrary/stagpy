@@ -181,3 +181,27 @@ def adjusted_rand_index(gt_labels: List[int], labels: List[int]) -> float:
     """
     return stag_internal.adjusted_rand_index(stag_internal.vectorl(gt_labels),
                                              stag_internal.vectorl(labels))
+
+
+@utility.convert_ndarrays
+def conductance(g: graph.LocalGraph, cluster: List[int]) -> float:
+    r"""
+     Compute the conductance of the given cluster in a graph.
+
+    Given a graph \f$G = (V, E)\f$, the conductance of \f$S \subseteq V\f$
+    is defined to be
+
+    \f[
+       \phi(S) = \frac{w(S, V \setminus S)}{\mathrm{vol}(S)},
+    \f]
+
+    where \f$\mathrm{vol}(S) = \sum_{v \in S} \mathrm{deg}(v)\f$ is the volume
+    of \f$S\f$ and \f$w(S, V \setminus S)\f$ is the total weight of edges crossing
+    the cut between \f$S\f$ and \f$V \setminus S\f$.
+
+    @param g a stag.graph.LocalGraph object representing \f$G\f$.
+    @param cluster a list of node IDs in \f$S\f$.
+    @return the conductance \f$\phi_G(S)\f$.
+    """
+    return stag_internal.conductance(g.internal_graph,
+                                     stag_internal.vectorl(cluster))

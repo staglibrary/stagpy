@@ -1,6 +1,7 @@
 from . import stag_internal
 import scipy.sparse
 import inspect
+import numpy as np
 
 ##
 # \cond
@@ -36,6 +37,35 @@ def return_sparse_matrix(func):
         sp_sparse = swig_sprs_to_scipy(swig_sparse_matrix)
         del swig_sparse_matrix
         return sp_sparse
+
+    # Set the metadata of the returned function to match the original.
+    # This is used when generating the documentation
+    decorated_function.__doc__ = func.__doc__
+    decorated_function.__module__ = func.__module__
+    decorated_function.__signature__ = inspect.signature(func)
+
+    return decorated_function
+
+
+def possibly_convert_ndarray(argument):
+    """
+    Check whether argument is a numpy ndarray.
+    If it is, convert it to a list. Otherwise return it as-is.
+    """
+    if isinstance(argument, np.ndarray):
+        return argument.tolist()
+    else:
+        return argument
+
+
+def convert_ndarrays(func):
+    """A decorator for methods which take lists as arguments.
+    Converts *all* ndarrays in the arguments to lists."""
+    def decorated_function(*args, **kwargs):
+        new_args = [possibly_convert_ndarray(arg) for arg in args]
+        new_kwargs = {k: possibly_convert_ndarray(v) for k, v in kwargs.items()}
+        return func(*new_args, **new_kwargs)
+
 
     # Set the metadata of the returned function to match the original.
     # This is used when generating the documentation

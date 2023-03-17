@@ -165,6 +165,7 @@ def sweep_set_conductance(g: graph.LocalGraph, v: scipy.sparse.csc_matrix) -> Li
     return stag_internal.sweep_set_conductance(g.internal_graph, utility.scipy_to_swig_sprs(v))
 
 
+@utility.convert_ndarrays
 def adjusted_rand_index(gt_labels: List[int], labels: List[int]) -> float:
     r"""
     Compute the Adjusted Rand Index between two label vectors.

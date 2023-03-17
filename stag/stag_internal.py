@@ -715,6 +715,38 @@ def __eq__(*args):
 
 def __ne__(*args):
     return _stag_internal.__ne__(*args)
+class AdjacencyListLocalGraph(LocalGraph):
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
+    __repr__ = _swig_repr
+
+    def __init__(self, filename):
+        _stag_internal.AdjacencyListLocalGraph_swiginit(self, _stag_internal.new_AdjacencyListLocalGraph(filename))
+
+    def degree(self, v):
+        return _stag_internal.AdjacencyListLocalGraph_degree(self, v)
+
+    def degree_unweighted(self, v):
+        return _stag_internal.AdjacencyListLocalGraph_degree_unweighted(self, v)
+
+    def neighbors(self, v):
+        return _stag_internal.AdjacencyListLocalGraph_neighbors(self, v)
+
+    def neighbors_unweighted(self, v):
+        return _stag_internal.AdjacencyListLocalGraph_neighbors_unweighted(self, v)
+
+    def degrees(self, vertices):
+        return _stag_internal.AdjacencyListLocalGraph_degrees(self, vertices)
+
+    def degrees_unweighted(self, vertices):
+        return _stag_internal.AdjacencyListLocalGraph_degrees_unweighted(self, vertices)
+
+    def vertex_exists(self, v):
+        return _stag_internal.AdjacencyListLocalGraph_vertex_exists(self, v)
+    __swig_destroy__ = _stag_internal.delete_AdjacencyListLocalGraph
+
+# Register AdjacencyListLocalGraph in _stag_internal:
+_stag_internal.AdjacencyListLocalGraph_swigregister(AdjacencyListLocalGraph)
+
 
 def cycle_graph(n):
     return _stag_internal.cycle_graph(n)
@@ -749,6 +781,12 @@ def isSymmetric(matrix):
 def safeGetline(_is, t):
     return _stag_internal.safeGetline(_is, t)
 
+def getTempFilename():
+    return _stag_internal.getTempFilename()
+
+def openTempFile(os):
+    return _stag_internal.openTempFile(os)
+
 def spectral_cluster(graph, k):
     return _stag_internal.spectral_cluster(graph, k)
 
@@ -767,17 +805,44 @@ def sweep_set_conductance(graph, vec):
 def adjusted_rand_index(gt_labels, labels):
     return _stag_internal.adjusted_rand_index(gt_labels, labels)
 
+def conductance(graph, cluster):
+    return _stag_internal.conductance(graph, cluster)
+
 def load_edgelist(filename):
     return _stag_internal.load_edgelist(filename)
 
 def save_edgelist(graph, filename):
     return _stag_internal.save_edgelist(graph, filename)
 
+def parse_adjacencylist_content_line(line):
+    return _stag_internal.parse_adjacencylist_content_line(line)
+
+def sort_edgelist(filename):
+    return _stag_internal.sort_edgelist(filename)
+
+def copy_edgelist_duplicate_edges(infile, outfile):
+    return _stag_internal.copy_edgelist_duplicate_edges(infile, outfile)
+
+def load_adjacencylist(filename):
+    return _stag_internal.load_adjacencylist(filename)
+
+def save_adjacencylist(graph, filename):
+    return _stag_internal.save_adjacencylist(graph, filename)
+
+def edgelist_to_adjacencylist(edgelist_fname, adjacencylist_fname):
+    return _stag_internal.edgelist_to_adjacencylist(edgelist_fname, adjacencylist_fname)
+
+def adjacencylist_to_edgelist(adjacencylist_fname, edgelist_fname):
+    return _stag_internal.adjacencylist_to_edgelist(adjacencylist_fname, edgelist_fname)
+
 def sbm(*args):
     return _stag_internal.sbm(*args)
 
 def general_sbm(*args):
     return _stag_internal.general_sbm(*args)
+
+def general_sbm_edgelist(*args):
+    return _stag_internal.general_sbm_edgelist(*args)
 
 def erdos_renyi(*args):
     return _stag_internal.erdos_renyi(*args)

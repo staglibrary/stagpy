@@ -1,5 +1,8 @@
 Getting Started {#getting-started}
 ===============
+
+[TOC]
+
 The STAG library is an easy-to-use Python library providing several spectral
 algorithms for graphs.
 The library is based on the STAG C++ library.

@@ -208,6 +208,73 @@ class _PythonDefinedLocalGraph(stag_internal.LocalGraph):
 # \endcond
 ##
 
+
+class AdjacencyListLocalGraph(LocalGraph):
+    """
+    \brief A local graph backed by an adjacency list file on disk.
+
+    The graph is loaded into memory in a local way only. That is, an adjacency
+    list data structure is constructed in memory as node neighbours are queried.
+    If a node is not found in the cached adjacency list, then the neighbours of
+    the node are queried from the adjacency list on disk. This allows for local
+    algorithms to be executed on very large graphs stored on disk without
+    loading the whole graph into memory.
+
+    See [Graph File Formats](@ref file-formats) for more information about the
+    adjacency list file format.
+
+    \note
+    It is important that the adjacency list on disk is stored with sorted node
+    indices. This allows us to query the neighbours of a given node in
+    \f$O(\mathrm{log}(n))\f$ time using binary search.
+    """
+
+    def __init__(self, filename: str):
+        r"""
+        Construct a local graph backed by an adjacency list file.
+
+        The adjacency list file must not be modified externally while it is in
+        use by this object.
+
+        @param filename the name of the adjacency list file which defines the
+                        graph.
+        """
+        # Call the LocalGraph initialisation method - it is important that this
+        # is called first. This is because we override the internal_graph
+        # object in the current constructor.
+        super().__init__()
+
+        ##
+        # \cond
+        # Do not document the internal implementation of the object
+        ##
+
+        # This class is a thin wrapper around the stag_internal library, written in C++.
+        # Initialise the internal graph object.
+        self.internal_graph: stag_internal.AdjacencyListLocalGraph = \
+            stag_internal.AdjacencyListLocalGraph(filename)
+
+        ##
+        # \endcond
+        ##
+
+    def degree(self, v: int) -> float:
+        return self.internal_graph.degree(v)
+
+    def degree_unweighted(self, v: int) -> int:
+        return self.internal_graph.degree_unweighted(v)
+
+    def neighbors(self, v: int) -> List[Edge]:
+        return self.internal_graph.neighbors(v)
+
+    def neighbors_unweighted(self, v: int) -> List[int]:
+        return self.internal_graph.neighbors_unweighted(v)
+
+    def vertex_exists(self, v: int) -> bool:
+        return self.internal_graph.vertex_exists(v)
+
+
+
 class Graph(LocalGraph):
     """
     \brief The core object used to represent graphs for use with the library.
@@ -237,10 +304,10 @@ class Graph(LocalGraph):
         >>> g = stag.graph.Graph(adj_mat)
         \endcode
 
-        :param adj_mat: A sparse scipy matrix, such as ``scipy.sparse.csc_matrix``.
-        :param internal_graph: (optional) specify a STAG C++ graph object to
-                                initialise with. Use this only if you understand
-                                the internal workings of the STAG library.
+        @param adj_mat A sparse scipy matrix, such as ``scipy.sparse.csc_matrix``.
+        @param internal_graph (optional) specify a STAG C++ graph object to
+                              initialise with. Use this only if you understand
+                              the internal workings of the STAG library.
         """
         # Call the LocalGraph initialisation method - it is important that this
         # is called first. This is because we override the internal_graph

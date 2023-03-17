@@ -911,6 +911,7 @@ WARN_LOGFILE           =
 
 INPUT = "./index.md" \
         "./getting-started.md" \
+        "./file-formats.md" \
         "./neo4j.md" \
         "../stag/"
 

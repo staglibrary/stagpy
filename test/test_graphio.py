@@ -100,3 +100,22 @@ def test_edgelist():
     adj_mat_diff = (graph.adjacency() - expected_adj_mat)
     adj_mat_diff.eliminate_zeros()
     assert adj_mat_diff.nnz == 0
+
+
+def test_adjacencylist():
+    edgelist_fname = "data/test3.edgelist"
+    adjlist_fname = "data/temp.al"
+    temp_edgelist_fname = "data/temp.el"
+
+    # Start by converting the edgelist to an adjacencylist
+    stag.graphio.edgelist_to_adjacencylist(edgelist_fname, adjlist_fname)
+
+    # Then read both graphs and make sure they are equivalent.
+    edge_g = stag.graphio.load_edgelist(edgelist_fname)
+    adj_g = stag.graphio.load_adjacencylist(adjlist_fname)
+    assert edge_g == adj_g
+
+    # Then, convert the adjacency list back to an edgelist
+    stag.graphio.adjacencylist_to_edgelist(adjlist_fname, temp_edgelist_fname)
+    edge_g = stag.graphio.load_edgelist(temp_edgelist_fname)
+    assert edge_g == adj_g

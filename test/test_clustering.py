@@ -96,3 +96,20 @@ def test_sweep_set():
     # Compute the sweep set
     sweep_set = stag.cluster.sweep_set_conductance(graph, s.tocsc())
     assert set(sweep_set) == {0, 1, 2, 3}
+
+def test_ari():
+    gt_labels = [0, 0, 1, 1, 1, 1, 2, 2, 2, 2]
+    labels = [0, 1, 0, 1, 1, 2, 2, 2, 2, 2]
+    expected_ari = 0.31257344
+    actual_ari = stag.cluster.adjusted_rand_index(gt_labels, labels)
+    assert actual_ari == pytest.approx(expected_ari, 0.0001)
+
+    # Check that we can pass numpy ndarray to the adjusted rand index
+    # method
+    labels = np.asarray(labels)
+    actual_ari = stag.cluster.adjusted_rand_index(gt_labels, labels)
+    assert actual_ari == pytest.approx(expected_ari, 0.0001)
+
+    gt_labels = np.asarray(gt_labels)
+    actual_ari = stag.cluster.adjusted_rand_index(gt_labels, labels)
+    assert actual_ari == pytest.approx(expected_ari, 0.0001)

@@ -5,6 +5,7 @@ import pytest
 import numpy as np
 from context import stag
 import stag.random
+import stag.graphio
 
 
 def test_sbm():
@@ -60,3 +61,16 @@ def test_general_sbm_gt_labels():
     cluster_sizes = [4, 2]
     gt_labels = stag.random.general_sbm_gt_labels(cluster_sizes)
     assert gt_labels == [0, 0, 0, 0, 1, 1]
+
+
+def test_edgelist_sbm():
+    edgelist_filename = "data/temp.el"
+    cluster_sizes = [10, 100]
+    probabilities = np.asarray([[0.9, 0.1],
+                                [0.1, 0.9]])
+    stag.random.general_sbm_edgelist(
+        edgelist_filename, cluster_sizes, probabilities)
+
+    # Load the graph
+    g = stag.graphio.load_edgelist(edgelist_filename)
+    assert g.number_of_vertices() == 110

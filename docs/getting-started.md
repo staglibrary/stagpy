@@ -102,6 +102,9 @@ every edge.
     0 4 1
 ~~~~~~
 
+See [Graph File Formats](@ref file-formats) for more information on the file
+formats supported by the STAG library.
+
 Finding Clusters
 ----------------
 

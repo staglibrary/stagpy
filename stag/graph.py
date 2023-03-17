@@ -340,7 +340,7 @@ class Graph(LocalGraph):
         """
         Return the sparse adjacency matrix of the graph.
 
-        :return: a ``scipy.sparse.csc_matrix`` representing the graph adjacency matrix
+        @return a ``scipy.sparse.csc_matrix`` representing the graph adjacency matrix
         """
         return self.internal_graph.adjacency()
 
@@ -358,7 +358,7 @@ class Graph(LocalGraph):
         where \f$D\f$ is the diagonal matrix of vertex degrees
         and \f$A\f$ is the adjacency matrix of the graph.
 
-        :return: a ``scipy.sparse.csc_matrix`` representing the graph Laplacian
+        @return a ``scipy.sparse.csc_matrix`` representing the graph Laplacian
         """
         return self.internal_graph.laplacian()
 
@@ -376,7 +376,7 @@ class Graph(LocalGraph):
         where \f$D\f$ is the diagonal matrix of vertex degrees and \f$L\f$
         is the Laplacian matrix of the graph.
 
-        :return: a ``scipy.sparse.csc_matrix`` representing the normalised Laplacian
+        @return a ``scipy.sparse.csc_matrix`` representing the normalised Laplacian
         """
         return self.internal_graph.normalised_laplacian()
 
@@ -394,7 +394,7 @@ class Graph(LocalGraph):
         where \f$D\f$ is the diagonal matrix of vertex degrees and \f$L\f$
         is the Laplacian matrix of the graph.
 
-        :return: a ``scipy.sparse.csc_matrix`` representing the normalised Laplacian
+        @return a ``scipy.sparse.csc_matrix`` representing the normalised Laplacian
         """
         return self.internal_graph.normalised_laplacian()
 
@@ -412,7 +412,7 @@ class Graph(LocalGraph):
         where \f$D\f$ is the diagonal matrix of vertex degrees
         and \f$A\f$ is the adjacency matrix of the graph.
 
-        :return: a ``scipy.sparse.csc_matrix`` representing the signless graph Laplacian
+        @return a ``scipy.sparse.csc_matrix`` representing the signless graph Laplacian
         """
         return self.internal_graph.signless_laplacian()
 
@@ -430,7 +430,7 @@ class Graph(LocalGraph):
         where \f$D\f$ is the diagonal matrix of vertex degrees and \f$J\f$
         is the signless Laplacian matrix of the graph.
 
-        :return: a ``scipy.sparse.csc_matrix`` representing the normalised signless Laplacian
+        @return a ``scipy.sparse.csc_matrix`` representing the normalised signless Laplacian
         """
         return self.internal_graph.normalised_signless_laplacian()
 
@@ -444,7 +444,7 @@ class Graph(LocalGraph):
         where \f$\mathrm{deg}(i)\f$ is the degree of vertex \f$i\f$ and
         \f$n\f$ is the number of vertices in the graph.
 
-        :return: a ``scipy.sparse.csc_matrix`` representing the degree matrix
+        @return a ``scipy.sparse.csc_matrix`` representing the degree matrix
         """
         return self.internal_graph.degree_matrix()
     
@@ -468,7 +468,7 @@ class Graph(LocalGraph):
         where \f$\mathrm{deg}(i)\f$ is the degree of vertex \f$i\f$ and
         \f$n\f$ is the number of vertices in the graph.
 
-        :return: a ``scipy.sparse.csc_matrix`` representing the inverse degree matrix
+        @return a ``scipy.sparse.csc_matrix`` representing the inverse degree matrix
         """
         return self.internal_graph.inverse_degree_matrix()
     
@@ -503,7 +503,7 @@ class Graph(LocalGraph):
 
         where \f$\mathrm{deg}(u)\f$ is the degree of vertex \f$u\f$.
 
-        :return: the graph's volume, \f$\mathrm{vol}(G)\f$
+        @return the graph's volume, \f$\mathrm{vol}(G)\f$
         """
         return self.internal_graph.total_volume()
 

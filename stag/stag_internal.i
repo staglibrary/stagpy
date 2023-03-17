@@ -41,15 +41,20 @@ namespace std {
 // Define typemaps for passing by reference
 %include <std_string.i>
 %apply std::string& INPUT {std::string& filename};
+%apply std::string& INPUT {std::string& edgelist_fname};
+%apply std::string& INPUT {std::string& adjacencylist_fname};
 
 // Add a director for the local graph object
 %feature("director") LocalGraph;
 
-// Handle C++ invalid argument exceptions
+// Handle C++ exceptions
 %exception {
     try {
         $action
     } catch (std::invalid_argument &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::domain_error &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
     }

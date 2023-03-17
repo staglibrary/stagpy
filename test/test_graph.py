@@ -283,3 +283,10 @@ def test_graph_average_degree():
     g = stag.graph.barbell_graph(4)
     avg_degree = g.average_degree()
     assert avg_degree == 26/8
+
+
+def test_adjacencylist_graph():
+    file = "data/test1.adjlist"
+    g = stag.graph.AdjacencyListLocalGraph(file)
+    assert g.vertex_exists(1)
+    assert not g.vertex_exists(10)

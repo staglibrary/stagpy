@@ -5,6 +5,7 @@ import numpy as np
 from typing import List
 from . import stag_internal
 from . import graph
+from . import utility
 
 
 @graph.return_graph
@@ -75,12 +76,39 @@ def general_sbm(cluster_sizes: List[int],
                          in each cluster.
     @param probabilities a \f$k \times k\f$ numpy matrix with the inter-cluster
                          probabilities.
-    @param exact (optional) whether to use the exact probability distribution. Default: false.
+    @param exact (optional) whether to use the exact probability distribution.
+                 Default: false.
     @return the randomly generated graph
     """
     return stag_internal.general_sbm(stag_internal.vectorl(cluster_sizes),
                                      probabilities.astype(float),
                                      exact)
+
+
+def general_sbm_edgelist(filename: str,
+                         cluster_sizes: List[int],
+                         probabilities: np.ndarray,
+                         exact: bool = False):
+    r"""
+    Generate a graph from the general stochastic block model and save the
+    resulting graph as an edgelist file.
+
+    This method uses only constant memory since the graph can be streamed to
+    disk while it is being generated.
+
+    @param filename the edgelist file to save the graph to
+    @param cluster_sizes a list of length \f$k\f$ with the number of vertices in
+                         each cluster.
+    @param probabilities a \f$k \times k\f$ matrix with the inter-cluster
+                         probabilities.
+    @param exact (optional) whether to use the exact probability distribution.
+                 Default: false.
+    """
+    cluster_sizes = utility.possibly_convert_ndarray(cluster_sizes)
+    return stag_internal.general_sbm_edgelist(filename,
+                                              stag_internal.vectorl(cluster_sizes),
+                                              probabilities.astype(float),
+                                              exact)
 
 
 @graph.return_graph

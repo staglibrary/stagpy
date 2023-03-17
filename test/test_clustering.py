@@ -113,3 +113,16 @@ def test_ari():
     gt_labels = np.asarray(gt_labels)
     actual_ari = stag.cluster.adjusted_rand_index(gt_labels, labels)
     assert actual_ari == pytest.approx(expected_ari, 0.0001)
+
+
+def test_conductance():
+    g = stag.graph.Graph(BARBELL5_ADJ_MAT)
+    cluster = [0, 1, 2, 3, 4]
+    expected_cond = 1/21
+    cond = stag.cluster.conductance(g, cluster)
+    assert cond == pytest.approx(expected_cond, 0.0001)
+
+    # Try with an ndarray cluster
+    cluster = np.asarray(cluster)
+    cond = stag.cluster.conductance(g, cluster)
+    assert cond == pytest.approx(expected_cond, 0.0001)

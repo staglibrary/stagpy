@@ -405,7 +405,8 @@ void stag::sort_edgelist(std::string &filename) {
       }
     }
 
-    // Bug patch
+    // If the final interval does not include the last lines of the file, we
+    // need to output them verbatim.
     while (current_input_line < num_lines - 1) {
       stag::safeGetline(ifs, line);
       current_input_line++;

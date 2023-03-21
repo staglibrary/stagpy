@@ -55,7 +55,6 @@ class Neo4jGraph(graph.LocalGraph):
         # so far.
         ##
         self.adjacency_list = {}
-        self.degrees_cache = {}
         self.labels_cache = {}
         ##
         # \endcond
@@ -69,29 +68,9 @@ class Neo4jGraph(graph.LocalGraph):
 
     def degree_unweighted(self, v: int) -> int:
         """Query the degree of the node with the given neo4j ID."""
-        if v not in self.degrees_cache:
-            with self.driver.session() as session:
-                result = session.execute_read(self._degree_query, v)
-            self.degrees_cache[v] = result
-        return self.degrees_cache[v]
-
-    ##
-    # \cond
-    ##
-    @staticmethod
-    def _degree_query(tx, node_id: int):
-        # To get the degree of the given node, we will execute the following
-        # Cypher command:
-        #    MATCH (n1)-[]-(n2) WHERE id(n1) = v return count(n2)
-        # which finds the nodes which are a single step from the node
-        # with the given node ID.
-        result = tx.run("MATCH (n1)-[]-(n2) "
-                        "WHERE id(n1) = $node_id "
-                        "RETURN count(n2)", node_id=node_id)
-        return result.single()[0]
-    ##
-    # \endcond
-    ##
+        # The degree of a node is the length of its list of neighbours
+        ns = self.neighbors_unweighted(v)
+        return len(ns)
 
     def degrees(self, vertices: List[int]) -> List[float]:
         """
@@ -106,38 +85,7 @@ class Neo4jGraph(graph.LocalGraph):
         This method makes a single query to the database to return all the
         node degrees.
         """
-        # Get the list of degrees we don't already know
-        to_query = [v for v in vertices if v not in self.degrees_cache]
-
-        # Update the degree cache with any degrees we don't know
-        if len(to_query) > 0:
-            queried_degrees = self._get_degrees_from_database(to_query)
-            for i in range(len(to_query)):
-                self.degrees_cache[to_query[i]] = queried_degrees[i]
-
-        # Return the degrees
-        return [self.degrees_cache[v] for v in vertices]
-
-    ##
-    # \cond
-    ##
-    def _get_degrees_from_database(self, vertices: List[int]) -> List[int]:
-        with self.driver.session() as session:
-            result = session.execute_read(self._degrees_query, vertices)
-        return [x[0] for x in result]
-
-    @staticmethod
-    def _degrees_query(tx, node_ids: List[int]):
-        # To get the degree of the given nodes, we will execute the following
-        # Cypher command:
-        #    MATCH (n1) WHERE id(n1) in [node_ids] return size([p = (n1)--() | p]) as degree
-        result = tx.run("MATCH (n1) "
-                        f"WHERE id(n1) in {[x for x in node_ids]} "
-                        "RETURN size([p = (n1)--() | p]) as degree")
-        return list(result.values())
-    ##
-    # \endcond
-    ##
+        return [self.degree_unweighted(v) for v in vertices]
 
     def neighbors(self, v: int) -> List[graph.Edge]:
         """

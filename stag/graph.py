@@ -182,7 +182,6 @@ class _PythonDefinedLocalGraph(stag_internal.LocalGraph):
     def __init__(self, python_local_graph: LocalGraph):
         super().__init__()
         self.python_graph = python_local_graph
-        self.adjacency_list = {}
 
     def degree(self, v: int):
         return self.python_graph.degree(v)

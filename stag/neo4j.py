@@ -49,18 +49,31 @@ class Neo4jGraph(graph.LocalGraph):
         # database.
         self.driver = neo4j.GraphDatabase.driver(uri, auth=(username, password))
 
+        ##
+        # \cond
+        # The partially-constructed adjacency list of all nodes we've queried
+        # so far.
+        ##
+        self.adjacency_list = {}
+        self.degrees_cache = {}
+        self.labels_cache = {}
+        ##
+        # \endcond
+        ##
+
     def degree(self, v):
         """
         Equivalent to stag.neo4j.Neo4jGraph.degree_unweighted.
         """
         return self.degree_unweighted(v)
 
-    @lru_cache(maxsize=1024)
     def degree_unweighted(self, v: int) -> int:
         """Query the degree of the node with the given neo4j ID."""
-        with self.driver.session() as session:
-            result = session.execute_read(self._degree_query, v)
-        return result
+        if v not in self.degrees_cache:
+            with self.driver.session() as session:
+                result = session.execute_read(self._degree_query, v)
+            self.degrees_cache[v] = result
+        return self.degrees_cache[v]
 
     ##
     # \cond
@@ -86,7 +99,6 @@ class Neo4jGraph(graph.LocalGraph):
         """
         return self.degrees_unweighted(vertices)
 
-    @lru_cache(maxsize=1024)
     def degrees_unweighted(self, vertices: List[int]) -> List[int]:
         """
         Query the degrees of the nodes with the given neo4j IDs.
@@ -94,13 +106,26 @@ class Neo4jGraph(graph.LocalGraph):
         This method makes a single query to the database to return all the
         node degrees.
         """
-        with self.driver.session() as session:
-            result = session.execute_read(self._degrees_query, vertices)
-        return [x[0] for x in result]
+        # Get the list of degrees we don't already know
+        to_query = [v for v in vertices if v not in self.degrees_cache]
+
+        # Update the degree cache with any degrees we don't know
+        if len(to_query) > 0:
+            queried_degrees = self._get_degrees_from_database(to_query)
+            for i in range(len(to_query)):
+                self.degrees_cache[to_query[i]] = queried_degrees[i]
+
+        # Return the degrees
+        return [self.degrees_cache[v] for v in vertices]
 
     ##
     # \cond
     ##
+    def _get_degrees_from_database(self, vertices: List[int]) -> List[int]:
+        with self.driver.session() as session:
+            result = session.execute_read(self._degrees_query, vertices)
+        return [x[0] for x in result]
+
     @staticmethod
     def _degrees_query(tx, node_ids: List[int]):
         # To get the degree of the given nodes, we will execute the following
@@ -122,16 +147,17 @@ class Neo4jGraph(graph.LocalGraph):
         """
         return [graph.Edge(v, u, 1) for u in self.neighbors_unweighted(v)]
 
-    @lru_cache(maxsize=1024)
     def neighbors_unweighted(self, v: int) -> List[int]:
         """
         Fetch the neighbors of the node with the given Neo4j node ID.
 
         Returns the Neo4j node IDs of the neighboring nodes.
         """
-        with self.driver.session() as session:
-            result = session.execute_read(self._neighbors_query, v)
-        return [x[0] for x in result]
+        if v not in self.adjacency_list:
+            with self.driver.session() as session:
+                result = session.execute_read(self._neighbors_query, v)
+            self.adjacency_list[v] =  [x[0] for x in result]
+        return self.adjacency_list[v]
 
     ##
     # \cond
@@ -151,7 +177,6 @@ class Neo4jGraph(graph.LocalGraph):
     # \endcond
     ##
 
-    @lru_cache(maxsize=1024)
     def query_node_labels(self, node_id: int) -> List[str]:
         """
         Query the labels of the given node.
@@ -169,9 +194,11 @@ class Neo4jGraph(graph.LocalGraph):
         \endcode
 
         """
-        with self.driver.session() as session:
-            result = session.execute_read(self._labels_query, node_id)
-        return [x[0] for x in result]
+        if node_id not in self.labels_cache:
+            with self.driver.session() as session:
+                result = session.execute_read(self._labels_query, node_id)
+            self.labels_cache[node_id] = [x[0] for x in result]
+        return self.labels_cache[node_id]
 
     ##
     # \cond

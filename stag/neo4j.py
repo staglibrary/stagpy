@@ -72,21 +72,6 @@ class Neo4jGraph(graph.LocalGraph):
         ns = self.neighbors_unweighted(v)
         return len(ns)
 
-    def degrees(self, vertices: List[int]) -> List[float]:
-        """
-        Equivalent to stag.neo4j.Neo4jGraph.degrees_unweighted.
-        """
-        return self.degrees_unweighted(vertices)
-
-    def degrees_unweighted(self, vertices: List[int]) -> List[int]:
-        """
-        Query the degrees of the nodes with the given neo4j IDs.
-
-        This method makes a single query to the database to return all the
-        node degrees.
-        """
-        return [self.degree_unweighted(v) for v in vertices]
-
     def neighbors(self, v: int) -> List[graph.Edge]:
         """
         Fetch the neighbors of the node with the given Neo4j node ID.

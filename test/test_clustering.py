@@ -95,7 +95,17 @@ def test_sweep_set():
     
     # Compute the sweep set
     sweep_set = stag.cluster.sweep_set_conductance(graph, s.tocsc())
+    assert type(sweep_set) == type([1])
     assert set(sweep_set) == {0, 1, 2, 3}
+
+
+def test_connected_component():
+    # Construct a graph with two connected components.
+    graph = stag.random.sbm(10, 2, 1, 0)
+    cc = stag.cluster.connected_component(graph, 0)
+    assert type(cc) == type([1])
+    assert set(cc) == {0, 1, 2, 3, 4}
+
 
 def test_ari():
     gt_labels = [0, 0, 1, 1, 1, 1, 2, 2, 2, 2]

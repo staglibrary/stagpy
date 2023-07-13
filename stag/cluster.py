@@ -162,7 +162,25 @@ def sweep_set_conductance(g: graph.LocalGraph, v: scipy.sparse.csc_matrix) -> Li
     @return a vector containing the indices of vec which give the minimum
             conductance in the given graph
     """
-    return stag_internal.sweep_set_conductance(g.internal_graph, utility.scipy_to_swig_sprs(v))
+    return list(stag_internal.sweep_set_conductance(g.internal_graph, utility.scipy_to_swig_sprs(v)))
+
+
+def connected_component(g: graph.LocalGraph, v: int) -> List[int]:
+    r"""
+    Return the vertex indices of every vertex in the same connected component
+    as the specified vertex.
+
+    The running time of this method is proportional to the size of the returned
+    connected component.
+
+    The returned list is not sorted.
+
+    @param g a stag.graph.LocalGraph object
+    @param v a vertex of the graph
+    @return a list containing the vertex ids of every vertex in the connected
+            component corresponding to v
+    """
+    return list(stag_internal.connected_component(g.internal_graph, v))
 
 
 @utility.convert_ndarrays

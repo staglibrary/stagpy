@@ -390,3 +390,38 @@ def test_connected():
 
     g4 = stag.random.sbm(100, 1, 0.7, 0)
     assert g4.is_connected()
+
+
+def test_add_graphs():
+    g1 = stag.graph.complete_graph(4)
+    g2 = stag.graph.cycle_graph(4)
+    g3 = g1 + g2
+    expected_adj_mat = sp.sparse.csc_matrix([[0, 2, 1, 2],
+                                             [2, 0, 2, 1],
+                                             [1, 2, 0, 2],
+                                             [2, 1, 2, 0]])
+    mat_diff = g3.adjacency() - expected_adj_mat
+    assert (np.all(mat_diff.todense() == pytest.approx(0)))
+
+    g4 = stag.graph.cycle_graph(5)
+    try:
+        g = g1 + g4
+
+        # We should not reach this point
+        assert False
+    except ValueError as error:
+        assert True
+
+
+def test_scalar_multiplication():
+    g1 = stag.graph.cycle_graph(4)
+    g2 = 2 * g1
+    g3 = g1 * 2
+    assert g2 == g3
+
+    expected_adj_mat = sp.sparse.csc_matrix([[0, 2, 0, 2],
+                                             [2, 0, 2, 0],
+                                             [0, 2, 0, 2],
+                                             [2, 0, 2, 0]])
+    mat_diff = g3.adjacency() - expected_adj_mat
+    assert (np.all(mat_diff.todense() == pytest.approx(0)))

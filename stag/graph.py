@@ -624,6 +624,23 @@ class Graph(LocalGraph):
     def __ne__(self, other):
         return not self.__eq__(other)
 
+    def __add__(self, other):
+        if isinstance(other, Graph):
+            if other.number_of_vertices() != self.number_of_vertices():
+                raise ValueError("Number of vertices must be equal.")
+            return Graph(self.adjacency() + other.adjacency())
+        else:
+            return NotImplemented
+
+    def __mul__(self, other):
+        if isinstance(other, (int, float)):
+            return Graph(other * self.adjacency())
+        else:
+            return NotImplemented
+
+    def __rmul__(self, other):
+        return self.__mul__(other)
+
     ##
     # \endcond
     ##

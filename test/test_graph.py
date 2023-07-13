@@ -307,3 +307,17 @@ def test_subgraph():
     # Check that numpy arrays also work
     g3 = g1.subgraph(np.asarray(vertices))
     assert g2 == g3
+
+
+def test_union():
+    g1 = stag.graph.complete_graph(3)
+    g2 = stag.graph.cycle_graph(3)
+    g3 = g1.disjoint_union(g2)
+    expected_adj_mat = sp.sparse.csc_matrix([[0, 1, 1, 0, 0, 0],
+                                             [1, 0, 1, 0, 0, 0],
+                                             [1, 1, 0, 0, 0, 0],
+                                             [0, 0, 0, 0, 1, 1],
+                                             [0, 0, 0, 1, 0, 1],
+                                             [0, 0, 0, 1, 1, 0]])
+    mat_diff = g3.adjacency() - expected_adj_mat
+    assert (np.all(mat_diff.todense() == pytest.approx(0)))

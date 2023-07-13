@@ -543,6 +543,20 @@ class Graph(LocalGraph):
         new_int_graph = self.internal_graph.subgraph(stag_internal.vectorl(vertices))
         return Graph(None, internal_graph=new_int_graph)
 
+    def disjoint_union(self, other: 'Graph') -> 'Graph':
+        r"""
+        Construct and return the disjoint union of this graph and another.
+
+        The disjoint union of two graphs \f$G\f$ and \f$H\f$ is a graph
+        containing \f$G\f$ and \f$H\f$ as disconnected subgraphs.
+
+        @param other the other graph to be combined with this one
+        @return a new stag.graph.Graph object representing the union of this
+                graph with the other one
+        """
+        new_int_graph = self.internal_graph.disjoint_union(other.internal_graph)
+        return Graph(None, internal_graph=new_int_graph)
+
     def degree(self, v: int) -> float:
         return self.internal_graph.degree(v)
 

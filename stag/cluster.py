@@ -212,6 +212,39 @@ def adjusted_rand_index(gt_labels: List[int], labels: List[int]) -> float:
 
 
 @utility.convert_ndarrays
+def mutual_information(gt_labels: List[int], labels: List[int]) -> float:
+    r"""
+    Compute the Mutual Information between two label vectors.
+
+    @param gt_labels the ground truth labels for the dataset
+    @param labels the candidate labels whose MI should be calculated
+    @return the MI between the two labels vectors
+    """
+    return stag_internal.mutual_information(stag_internal.vectorl(gt_labels),
+                                            stag_internal.vectorl(labels))
+
+
+
+@utility.convert_ndarrays
+def normalised_mutual_information(gt_labels: List[int],
+                                  labels: List[int]) -> float:
+    r"""
+    Compute the Normalised Mutual Information between two label vectors.
+
+    @param gt_labels the ground truth labels for the dataset
+    @param labels the candidate labels whose NMI should be calculated
+    @return the NMI between the two labels vectors
+
+    \par References
+    Vinh, Epps, and Bailey, (2009). Information theoretic measures for
+    clusterings comparison. 26th Annual International Conference on Machine
+    Learning (ICML ‘09).
+    """
+    return stag_internal.normalised_mutual_information(
+        stag_internal.vectorl(gt_labels), stag_internal.vectorl(labels))
+
+
+@utility.convert_ndarrays
 def conductance(g: graph.LocalGraph, cluster: List[int]) -> float:
     r"""
      Compute the conductance of the given cluster in a graph.

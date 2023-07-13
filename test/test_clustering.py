@@ -135,6 +135,24 @@ def test_ari():
     assert actual_ari == pytest.approx(expected_ari, 0.0001)
 
 
+def test_nmi():
+    gt_labels = [0, 0, 1, 1, 1, 1, 2, 2, 2, 2]
+    labels    = [0, 1, 0, 1, 1, 2, 2, 2, 2, 2]
+    expected_nmi = 0.4558585
+    actual_nmi = stag.cluster.normalised_mutual_information(gt_labels, labels)
+    assert actual_nmi == pytest.approx(expected_nmi, 0.0001)
+
+    # Check that we can call with numpy arrays
+    actual_nmi = stag.cluster.normalised_mutual_information(np.asarray(gt_labels),
+                                                            np.asarray(labels))
+    assert actual_nmi == pytest.approx(expected_nmi, 0.0001)
+
+    # Check the exact clustering
+    labels = [1, 1, 2, 2, 2, 2, 0, 0, 0, 0]
+    actual_nmi = stag.cluster.normalised_mutual_information(gt_labels, labels)
+    assert actual_nmi == 1
+
+
 def test_conductance():
     g = stag.graph.Graph(BARBELL5_ADJ_MAT)
     cluster = [0, 1, 2, 3, 4]

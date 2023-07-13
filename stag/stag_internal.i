@@ -2,6 +2,14 @@
 %module stag_internal
 %module(directors="1") stag_internal
 
+// This block allows numpy arrays to be cast to C++ vectors
+// using the vector template maps (e.g. vectorl).
+//
+// See stagpy Issue #33.
+%begin %{
+#define SWIG_PYTHON_CAST_MODE
+%}
+
 // Eigen / numpy stuff
 %include <typemaps.i>
 %include eigen.i
@@ -77,4 +85,4 @@ public:
 };
 
 // Metadata about the python interface
-#define VERSION "0.1.6"
+#define VERSION "1.2.1"

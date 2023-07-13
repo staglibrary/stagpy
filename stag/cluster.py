@@ -41,7 +41,7 @@ def spectral_cluster(g: graph.Graph, k: int) -> List[int]:
 
 
 def cheeger_cut(g: graph.Graph) -> List[int]:
-    """
+    r"""
     Find the Cheeger cut in a graph.
 
     Let \f$G = (V, E)\f$ be a graph and \f$\mathcal{L}\f$ be its normalised Laplacian

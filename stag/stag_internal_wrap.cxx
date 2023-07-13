@@ -8,6 +8,9 @@
  * interface file instead.
  * ----------------------------------------------------------------------------- */
 
+#define SWIG_PYTHON_CAST_MODE
+
+
 
 #ifndef SWIGPYTHON
 #define SWIGPYTHON
@@ -23860,7 +23863,7 @@ SWIG_init(void) {
   SWIG_addvarlink(globals, "VERSION_MINOR", Swig_var_VERSION_MINOR_get, Swig_var_VERSION_MINOR_set);
   SWIG_addvarlink(globals, "VERSION_PATCH", Swig_var_VERSION_PATCH_get, Swig_var_VERSION_PATCH_set);
   SWIG_Python_SetConstant(d, "EPSILON",SWIG_From_double(static_cast< double >(0.0000000001)));
-  SWIG_Python_SetConstant(d, "VERSION",SWIG_FromCharPtr("0.1.6"));
+  SWIG_Python_SetConstant(d, "VERSION",SWIG_FromCharPtr("1.2.1"));
 #if PY_VERSION_HEX >= 0x03000000
   return m;
 #else

@@ -29,6 +29,8 @@ The following changes were released in the STAG C++ 1.3.0 release.
 
 ## [1.2.1] - 2023-03-22
 
+**Documentation for this release is available [here](https://staglibrary.io/docs/python/docs-1.2.1/).**
+
 ### Fixed
 - [Issue #30](https://github.com/staglibrary/stagpy/issues/30): Improve the caching behaviour of the Neo4jGraph object
 

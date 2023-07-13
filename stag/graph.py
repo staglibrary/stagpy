@@ -726,6 +726,21 @@ def star_graph(n) -> Graph:
     return stag_internal.star_graph(n)
 
 
+@return_graph
+def identity_graph(n) -> Graph:
+    r"""
+    Construct the identity graph. The identity graph consists of \f$n\f$
+    vertices, each with a self-loop of weight \f$1\f$.
+
+    Both the adjacency matrix and Laplacian matrix of the identity graph are
+    equal to the identity matrix.
+
+    @param n the number of vertices in the constructed graph
+    @return a stag.graph.Graph object representing the identity graph
+    """
+    return stag_internal.identity_graph(n)
+
+
 def from_networkx(netx_graph: networkx.Graph,
                   edge_weight_attribute: str = "weight"):
     """

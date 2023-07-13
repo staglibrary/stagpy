@@ -143,6 +143,24 @@ def test_cycle_graph():
     assert lap_diff.nnz == 0
 
 
+def test_identity_graph():
+    # Create an identity graph
+    n = 5
+    graph = stag.graph.identity_graph(n)
+    expected_mat = sp.sparse.csc_matrix([[1, 0, 0, 0, 0],
+                                         [0, 1, 0, 0, 0],
+                                         [0, 0, 1, 0, 0],
+                                         [0, 0, 0, 1, 0],
+                                         [0, 0, 0, 0, 1]])
+    adj_mat_diff = graph.adjacency() - expected_mat
+    adj_mat_diff.eliminate_zeros()
+    assert adj_mat_diff.nnz == 0
+
+    lap_mat_diff = graph.laplacian() - expected_mat
+    lap_mat_diff.eliminate_zeros()
+    assert lap_mat_diff.nnz == 0
+
+
 def test_adjacency_matrix():
     graph = stag.graph.Graph(BARBELL5_ADJ_MAT)
     adj_mat_diff = (graph.adjacency() - BARBELL5_ADJ_MAT)

@@ -38,10 +38,11 @@ jobs:
         uses: cpina/github-action-push-to-another-repository@main
         env:
           SSH_DEPLOY_KEY: ${{ secrets.WEBSITE_SSH_DEPLOY_KEY }}
+          BRANCH_NAME: ${{ github.head_ref || github.ref_name }}
         with:
           source-directory: 'docs/docs/html'
           destination-github-username: 'staglibrary'
           destination-repository-name: 'stagorg.github.io'
           user-email: macgregor.pr@gmail.com
           target-branch: master
-          target-directory: docs/python
+          target-directory: ${{ format('docs/python/{0}', env.BRANCH_NAME) }}

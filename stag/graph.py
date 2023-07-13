@@ -529,6 +529,10 @@ class Graph(LocalGraph):
         """
         return self.internal_graph.number_of_edges()
 
+    def has_self_loops(self) -> bool:
+        """Returns a boolean indicating whether this graph contains self loops."""
+        return self.internal_graph.has_self_loops()
+
     @utility.convert_ndarrays
     def subgraph(self, vertices: List[int]) -> 'Graph':
         r"""

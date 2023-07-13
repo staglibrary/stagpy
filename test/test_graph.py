@@ -321,3 +321,14 @@ def test_union():
                                              [0, 0, 0, 1, 1, 0]])
     mat_diff = g3.adjacency() - expected_adj_mat
     assert (np.all(mat_diff.todense() == pytest.approx(0)))
+
+
+def test_self_loops():
+    adj_mat = sp.sparse.csc_matrix([[1, 1, 1],
+                                    [1, 0, 0],
+                                    [1, 0, 1]])
+    graph = stag.graph.Graph(adj_mat)
+    assert graph.has_self_loops()
+
+    graph = stag.graph.complete_graph(5)
+    assert not graph.has_self_loops()

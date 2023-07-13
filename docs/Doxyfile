@@ -1335,6 +1335,7 @@ HTML_EXTRA_STYLESHEET  = "./doxygen-awesome-css/doxygen-awesome.css" \
 
 HTML_EXTRA_FILES = "./doxygen-awesome-css/doxygen-awesome-darkmode-toggle.js" \
                    "./doxygen-awesome-css/doxygen-awesome-interactive-toc.js" \
+                   "./_static/js/version.js"
 
 # The HTML_COLORSTYLE tag can be used to specify if the generated HTML output
 # should be rendered with a dark or light theme. Default setting AUTO_LIGHT

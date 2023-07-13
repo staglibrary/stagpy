@@ -529,6 +529,20 @@ class Graph(LocalGraph):
         """
         return self.internal_graph.number_of_edges()
 
+    @utility.convert_ndarrays
+    def subgraph(self, vertices: List[int]) -> 'Graph':
+        r"""
+        Construct and return a subgraph of this graph.
+
+        Note that the vertex indices will be changed in the subgraph.
+
+        @param vertices the vertices in the induced subgraph
+        @return a new stag.graph.Graph object representing the subgraph induced
+                by the given vertices
+        """
+        new_int_graph = self.internal_graph.subgraph(stag_internal.vectorl(vertices))
+        return Graph(None, internal_graph=new_int_graph)
+
     def degree(self, v: int) -> float:
         return self.internal_graph.degree(v)
 

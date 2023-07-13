@@ -290,3 +290,20 @@ def test_adjacencylist_graph():
     g = stag.graph.AdjacencyListLocalGraph(file)
     assert g.vertex_exists(1)
     assert not g.vertex_exists(10)
+
+
+def test_subgraph():
+    g1 = stag.graph.Graph(BARBELL5_ADJ_MAT)
+
+    vertices = [3, 4, 5, 6]
+    g2 = g1.subgraph(vertices)
+    expected_adj_mat = sp.sparse.csc_matrix([[0, 1, 0, 0],
+                                             [1, 0, 1, 0],
+                                             [0, 1, 0, 1],
+                                             [0, 0, 1, 0]])
+    mat_diff = g2.adjacency() - expected_adj_mat
+    assert(np.all(mat_diff.todense() == pytest.approx(0)))
+
+    # Check that numpy arrays also work
+    g3 = g1.subgraph(np.asarray(vertices))
+    assert g2 == g3

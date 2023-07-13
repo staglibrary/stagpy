@@ -210,7 +210,7 @@ class _PythonDefinedLocalGraph(stag_internal.LocalGraph):
 
 
 class AdjacencyListLocalGraph(LocalGraph):
-    """
+    r"""
     \brief A local graph backed by an adjacency list file on disk.
 
     The graph is loaded into memory in a local way only. That is, an adjacency
@@ -590,7 +590,7 @@ class Graph(LocalGraph):
         return networkx.Graph(self.adjacency())
 
     def draw(self, **kwargs):
-        """
+        r"""
         Plot the graph with matplotlib.
 
         This uses the networkx draw method and accepts any the keyword arguments

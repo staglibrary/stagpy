@@ -284,12 +284,19 @@ class Graph(LocalGraph):
     Vertices of the graph are always referred to by their unique integer index.
     This index corresponds to the position of the vertex in the stored adjacency
     matrix of the graph.
+
+    This class supports graphs with positive edge weights. Self-loops are
+    permitted.
     """
 
-    def __init__(self, adj_mat: scipy.sparse.spmatrix,
+    def __init__(self, mat: scipy.sparse.spmatrix,
                  internal_graph: stag_internal.Graph = None):
         r"""
-        Initialise the graph with an adjacency matrix.
+        Initialise the graph with a scipy sparse matrix.
+
+        The provided matrix should correspond either to the adjacency matrix or
+        Laplacian matrix of the graph. STAG will automatically detect whether
+        the provided matrix is an adjacency matrix or a Laplacian matrix.
         
         For example:
 
@@ -304,7 +311,7 @@ class Graph(LocalGraph):
         >>> g = stag.graph.Graph(adj_mat)
         \endcode
 
-        @param adj_mat A sparse scipy matrix, such as ``scipy.sparse.csc_matrix``.
+        @param mat A sparse scipy matrix, such as ``scipy.sparse.csc_matrix``.
         @param internal_graph (optional) specify a STAG C++ graph object to
                               initialise with. Use this only if you understand
                               the internal workings of the STAG library.
@@ -321,11 +328,11 @@ class Graph(LocalGraph):
 
         # This class is essentially a thin wrapper around the stag_internal library, written in C++.
         if internal_graph is None:
-            # Initialise the internal graph object with the provided adjacency matrix.
-            adj_mat_csr = adj_mat.tocsr()
-            outer_starts = stag_internal.vectorl(adj_mat_csr.indptr.tolist())
-            inner_indices = stag_internal.vectorl(adj_mat_csr.indices.tolist())
-            values = stag_internal.vectord(adj_mat_csr.data.tolist())
+            # Initialise the internal graph object with the provided matrix.
+            mat_csr = mat.tocsr()
+            outer_starts = stag_internal.vectorl(mat_csr.indptr.tolist())
+            inner_indices = stag_internal.vectorl(mat_csr.indices.tolist())
+            values = stag_internal.vectord(mat_csr.data.tolist())
             self.internal_graph: stag_internal.Graph = stag_internal.Graph(outer_starts, inner_indices, values)
         else:
             # The initialiser was called with an internal graph object.

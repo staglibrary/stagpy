@@ -11,10 +11,27 @@ import stag.graph
 import stag.random
 import stag.graphio
 
-# Define the adjacency matrices of some useful graphs.
-C4_ADJ_MAT = scipy.sparse.csc_matrix([[0, 1, 0, 1], [1, 0, 1, 0], [0, 1, 0, 1], [1, 0, 1, 0]])
-K6_ADJ_MAT = scipy.sparse.csc_matrix([[0, 1, 1, 1, 1, 1], [1, 0, 1, 1, 1, 1], [1, 1, 0, 1, 1, 1],
-                                      [1, 1, 1, 0, 1, 1], [1, 1, 1, 1, 0, 1], [1, 1, 1, 1, 1, 0]])
+# Define the matrices of some useful graphs.
+C4_ADJ_MAT = scipy.sparse.csc_matrix([[0, 1, 0, 1],
+                                      [1, 0, 1, 0],
+                                      [0, 1, 0, 1],
+                                      [1, 0, 1, 0]])
+C4_LAP_MAT = scipy.sparse.csc_matrix([[2, -1, 0, -1],
+                                      [-1, 2, -1, 0],
+                                      [0, -1, 2, -1],
+                                      [-1, 0, -1, 2]])
+K6_ADJ_MAT = scipy.sparse.csc_matrix([[0, 1, 1, 1, 1, 1],
+                                      [1, 0, 1, 1, 1, 1],
+                                      [1, 1, 0, 1, 1, 1],
+                                      [1, 1, 1, 0, 1, 1],
+                                      [1, 1, 1, 1, 0, 1],
+                                      [1, 1, 1, 1, 1, 0]])
+K6_LAP_MAT = scipy.sparse.csc_matrix([[5, -1, -1, -1, -1, -1],
+                                      [-1, 5, -1, -1, -1, -1],
+                                      [-1, -1, 5, -1, -1, -1],
+                                      [-1, -1, -1, 5, -1, -1],
+                                      [-1, -1, -1, -1, 5, -1],
+                                      [-1, -1, -1, -1, -1, 5]])
 BARBELL5_ADJ_MAT = scipy.sparse.csc_matrix([[0, 1, 1, 1, 1, 0, 0, 0, 0, 0],
                                             [1, 0, 1, 1, 1, 0, 0, 0, 0, 0],
                                             [1, 1, 0, 1, 1, 0, 0, 0, 0, 0],
@@ -53,6 +70,15 @@ def test_graph_constructor():
     assert graph.number_of_edges() == 21
     assert graph.degree(2) == 4
     assert graph.degree(4) == 5
+
+    # Check that initialising with the Laplacian matrices gives the same result
+    g1 = stag.graph.Graph(C4_ADJ_MAT)
+    g2 = stag.graph.Graph(C4_LAP_MAT)
+    assert g1 == g2
+
+    g1 = stag.graph.Graph(K6_ADJ_MAT)
+    g2 = stag.graph.Graph(K6_LAP_MAT)
+    assert g1 == g2
 
 
 def test_complete_graph():

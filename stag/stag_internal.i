@@ -2,6 +2,10 @@
 %module stag_internal
 %module(directors="1") stag_internal
 
+%begin %{
+#define SWIG_PYTHON_CAST_MODE
+%}
+
 // Eigen / numpy stuff
 %include <typemaps.i>
 %include eigen.i
@@ -77,4 +81,4 @@ public:
 };
 
 // Metadata about the python interface
-#define VERSION "0.1.6"
+#define VERSION "1.2.1"

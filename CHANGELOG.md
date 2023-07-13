@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 See also the release notes for the [STAG C++ 1.3.0 release](https://github.com/staglibrary/stag/releases/tag/v1.3.0).
 
 ### Added
+The following changes were released in the STAG C++ 1.3.0 release.
+
 - Add method for calculating the symmetric difference between sets
 - Compute the connected components of a graph
 - Add a subgraph method to stag Graph class

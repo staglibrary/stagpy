@@ -29,6 +29,14 @@ def test_spectral_clustering():
     gt_labels = stag.random.sbm_gt_labels(20, 2)
     assert stag.cluster.adjusted_rand_index(gt_labels, labels) == 1
 
+
+def test_cheeger_cut():
+    graph = stag.graph.barbell_graph(10)
+    labels = stag.cluster.cheeger_cut(graph)
+    gt_labels = stag.random.sbm_gt_labels(20, 2)
+    assert stag.cluster.adjusted_rand_index(gt_labels, labels) == 1
+
+
 def test_default_local_clustering():
     # Construct a graph object with the barbell adjacency matrix
     graph = stag.graph.Graph(BARBELL5_ADJ_MAT)

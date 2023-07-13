@@ -107,6 +107,16 @@ def test_connected_component():
     assert set(cc) == {0, 1, 2, 3, 4}
 
 
+def test_connected_components():
+    # Construct a graph with two connected components
+    graph = stag.random.sbm(10, 2, 1, 0)
+    ccs = stag.cluster.connected_components(graph)
+    assert type(ccs) == type([[1]])
+    assert type(ccs[0]) == type([0])
+    assert set(ccs[0]) == {0, 1, 2, 3, 4}
+    assert set(ccs[1]) == {5, 6, 7, 8, 9}
+
+
 def test_ari():
     gt_labels = [0, 0, 1, 1, 1, 1, 2, 2, 2, 2]
     labels = [0, 1, 0, 1, 1, 2, 2, 2, 2, 2]

@@ -183,6 +183,16 @@ def connected_component(g: graph.LocalGraph, v: int) -> List[int]:
     return list(stag_internal.connected_component(g.internal_graph, v))
 
 
+def connected_components(g: graph.Graph) -> List[List[int]]:
+    r"""
+    Return a list of the connected components in the specified graph.
+
+    @param g a stag.graph.Graph object
+    @return a list containing the connected components of the graph
+    """
+    return [list(cc) for cc in stag_internal.connected_components(g.internal_graph)]
+
+
 @utility.convert_ndarrays
 def adjusted_rand_index(gt_labels: List[int], labels: List[int]) -> float:
     r"""

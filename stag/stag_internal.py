@@ -548,6 +548,112 @@ class vectore(object):
 # Register vectore in _stag_internal:
 _stag_internal.vectore_swigregister(vectore)
 
+class vectorvecl(object):
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
+    __repr__ = _swig_repr
+
+    def iterator(self):
+        return _stag_internal.vectorvecl_iterator(self)
+    def __iter__(self):
+        return self.iterator()
+
+    def __nonzero__(self):
+        return _stag_internal.vectorvecl___nonzero__(self)
+
+    def __bool__(self):
+        return _stag_internal.vectorvecl___bool__(self)
+
+    def __len__(self):
+        return _stag_internal.vectorvecl___len__(self)
+
+    def __getslice__(self, i, j):
+        return _stag_internal.vectorvecl___getslice__(self, i, j)
+
+    def __setslice__(self, *args):
+        return _stag_internal.vectorvecl___setslice__(self, *args)
+
+    def __delslice__(self, i, j):
+        return _stag_internal.vectorvecl___delslice__(self, i, j)
+
+    def __delitem__(self, *args):
+        return _stag_internal.vectorvecl___delitem__(self, *args)
+
+    def __getitem__(self, *args):
+        return _stag_internal.vectorvecl___getitem__(self, *args)
+
+    def __setitem__(self, *args):
+        return _stag_internal.vectorvecl___setitem__(self, *args)
+
+    def pop(self):
+        return _stag_internal.vectorvecl_pop(self)
+
+    def append(self, x):
+        return _stag_internal.vectorvecl_append(self, x)
+
+    def empty(self):
+        return _stag_internal.vectorvecl_empty(self)
+
+    def size(self):
+        return _stag_internal.vectorvecl_size(self)
+
+    def swap(self, v):
+        return _stag_internal.vectorvecl_swap(self, v)
+
+    def begin(self):
+        return _stag_internal.vectorvecl_begin(self)
+
+    def end(self):
+        return _stag_internal.vectorvecl_end(self)
+
+    def rbegin(self):
+        return _stag_internal.vectorvecl_rbegin(self)
+
+    def rend(self):
+        return _stag_internal.vectorvecl_rend(self)
+
+    def clear(self):
+        return _stag_internal.vectorvecl_clear(self)
+
+    def get_allocator(self):
+        return _stag_internal.vectorvecl_get_allocator(self)
+
+    def pop_back(self):
+        return _stag_internal.vectorvecl_pop_back(self)
+
+    def erase(self, *args):
+        return _stag_internal.vectorvecl_erase(self, *args)
+
+    def __init__(self, *args):
+        _stag_internal.vectorvecl_swiginit(self, _stag_internal.new_vectorvecl(*args))
+
+    def push_back(self, x):
+        return _stag_internal.vectorvecl_push_back(self, x)
+
+    def front(self):
+        return _stag_internal.vectorvecl_front(self)
+
+    def back(self):
+        return _stag_internal.vectorvecl_back(self)
+
+    def assign(self, n, x):
+        return _stag_internal.vectorvecl_assign(self, n, x)
+
+    def resize(self, *args):
+        return _stag_internal.vectorvecl_resize(self, *args)
+
+    def insert(self, *args):
+        return _stag_internal.vectorvecl_insert(self, *args)
+
+    def reserve(self, n):
+        return _stag_internal.vectorvecl_reserve(self, n)
+
+    def capacity(self):
+        return _stag_internal.vectorvecl_capacity(self)
+    __swig_destroy__ = _stag_internal.delete_vectorvecl
+
+# Register vectorvecl in _stag_internal:
+_stag_internal.vectorvecl_swigregister(vectorvecl)
+
 class TupleMM(object):
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
     __repr__ = _swig_repr

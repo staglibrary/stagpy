@@ -32,6 +32,7 @@ namespace std {
     %template(vectorl) vector<long long>;
     %template(vectord) vector<double>;
     %template(vectore) vector<stag::edge>;
+    %template(vectorvecl) vector<vector<long long>>;
 }
 
 // Create bindings for tuples

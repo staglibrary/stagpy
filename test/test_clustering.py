@@ -126,3 +126,16 @@ def test_conductance():
     cluster = np.asarray(cluster)
     cond = stag.cluster.conductance(g, cluster)
     assert cond == pytest.approx(expected_cond, 0.0001)
+
+
+def test_sym_diff():
+    s = [1, 4, 5, 2, 6]
+    t = [1, 5, 3, 7]
+    sym_diff = stag.cluster.symmetric_difference(s, t)
+    assert set(sym_diff) == {2, 3, 4, 6, 7}
+
+    # Check that ndarray arrays work
+    s = np.asarray(s)
+    t = np.asarray(t)
+    sym_diff = stag.cluster.symmetric_difference(s, t)
+    assert set(sym_diff) == {2, 3, 4, 6, 7}

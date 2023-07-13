@@ -205,3 +205,26 @@ def conductance(g: graph.LocalGraph, cluster: List[int]) -> float:
     """
     return stag_internal.conductance(g.internal_graph,
                                      stag_internal.vectorl(cluster))
+
+@utility.convert_ndarrays
+def symmetric_difference(s: List[int], t: List[int]) -> List[int]:
+    r"""
+    Compute the symmetric difference of two sets of integers.
+
+    Given sets \f$S\f$ and \f$T\f$, the symmetric difference \f$S \triangle T\f$
+    is defined to be
+
+    \f[
+        S \triangle T = \{S \setminus T\} \cup \{T \setminus S\}.
+    \f]
+
+    Although \f$S\f$ and \f$T\f$ are provided as lists, they are treated as sets
+    and any duplicates will be ignored.
+
+    @param s a list containing the first set of integers
+    @param t a list containing the second set of integers
+    @return a list containing the integers in the syymmetric difference of
+             \f$S\f$ and \f$T\f$.
+    """
+    return list(stag_internal.symmetric_difference(stag_internal.vectorl(s),
+                                                   stag_internal.vectorl(t)))

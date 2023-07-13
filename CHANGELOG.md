@@ -27,6 +27,11 @@ The following changes were released in the STAG C++ 1.3.0 release.
 ### Fixed
 - [STAG C++ Issue #87](https://github.com/staglibrary/stag/issues/87): Occasional bug with sorting edgelist file
 
+## [1.2.1] - 2023-03-22
+
+### Fixed
+- [Issue #30](https://github.com/staglibrary/stagpy/issues/30): Improve the caching behaviour of the Neo4jGraph object
+
 ## [1.2.0] - 2023-03-16
 
 See also the release notes for the [STAG C++ 1.2.0 release](https://github.com/staglibrary/stag/releases/tag/v1.2.0).

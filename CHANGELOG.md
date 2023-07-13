@@ -38,3 +38,5 @@ The following changes were released in the STAG C++ 1.3.0 release.
 
 See also the release notes for the [STAG C++ 1.2.0 release](https://github.com/staglibrary/stag/releases/tag/v1.2.0).
 This was the release associated with the first STAG technical report.
+
+**Documentation for this release is available [here](https://staglibrary.io/docs/python/docs-1.2.0/).**

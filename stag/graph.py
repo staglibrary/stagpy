@@ -540,6 +540,15 @@ class Graph(LocalGraph):
         """Returns a boolean indicating whether this graph contains self loops."""
         return self.internal_graph.has_self_loops()
 
+    def is_connected(self) -> bool:
+        """
+        Returns a boolean indicating whether the graph is connected.
+
+        The running time of this method is \f$O(m)\f$ where \f$m\f$ is the
+        number of edges in the graph.
+        """
+        return self.internal_graph.is_connected()
+
     @utility.convert_ndarrays
     def subgraph(self, vertices: List[int]) -> 'Graph':
         r"""

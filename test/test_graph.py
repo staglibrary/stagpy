@@ -358,3 +358,17 @@ def test_self_loops():
 
     graph = stag.graph.complete_graph(5)
     assert not graph.has_self_loops()
+
+
+def test_connected():
+    g1 = stag.graph.cycle_graph(100)
+    assert g1.is_connected()
+
+    g2 = stag.random.sbm(100, 2, 0.5, 0)
+    assert not g2.is_connected()
+
+    g3 = g1.disjoint_union(stag.graph.complete_graph(3))
+    assert not g3.is_connected()
+
+    g4 = stag.random.sbm(100, 1, 0.7, 0)
+    assert g4.is_connected()

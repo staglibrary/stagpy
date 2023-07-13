@@ -51,6 +51,9 @@ typedef Eigen::Triplet<double, stag_int> EdgeTriplet;
 // Redefine the eigen index type to be the same as stag_int
 #undef EIGEN_DEFAULT_DENSE_INDEX_TYPE
 #define EIGEN_DEFAULT_DENSE_INDEX_TYPE stag_int
+
+// Define a small epsilon
+#define EPSILON 0.0000000001
 /**
  * \endcond
  */
@@ -89,6 +92,9 @@ namespace stag {
     public:
       /**
        * Given a vertex v, return its weighted degree.
+       *
+       * A self-loop of weight \f$1\f$ contributes \f$2\f$ to the vertex's
+       * degree.
        */
       virtual double degree(stag_int v) = 0;
 
@@ -166,11 +172,19 @@ namespace stag {
    * Vertices of the graph are always referred to by their unique integer index.
    * This index corresponds to the position of the vertex in the stored adjacency
    * matrix of the graph.
+   *
+   * This class supports graphs with positive edge weights. Self-loops are
+   * permitted.
    */
   class Graph : public LocalGraph {
     public:
       /**
        * Create a graph from an Eigen matrix.
+       *
+       * The provided matrix should correspond either to the
+       * adjacency matrix or Laplacian matrix of the graph. STAG will
+       * automatically detect whether the provided matrix is an adjacency matrix
+       * or a Laplacian matrix.
        *
        * \par Example
        *
@@ -200,13 +214,14 @@ namespace stag {
        * }
        * \endcode
        *
-       * The provided adjacency matrix must be symmetric.
+       * The provided matrix must be symmetric, and may include
+       * self-loops.
        *
-       * @param adjacency_matrix the sparse eigen matrix representing the adjacency matrix
-       *               of the graph.
-       * @throws domain_error if the adjacency matrix is not symmetric
+       * @param matrix the sparse eigen matrix representing the adjacency matrix
+       *               or Laplacian matrix of the graph.
+       * @throws domain_error if the provided matrix is not symmetric
        */
-      explicit Graph(const SprsMat& adjacency_matrix);
+      explicit Graph(const SprsMat& matrix);
 
       /**
        * Create a graph from raw arrays describing a CSC sparse matrix.
@@ -373,6 +388,42 @@ namespace stag {
        */
        stag_int number_of_edges() const;
 
+       /**
+        * Returns a boolean indicating whether this graph contains self loops.
+        */
+       bool has_self_loops() const;
+
+       /**
+        * Returns a boolean indicating whether the graph is connected.
+        *
+        * The running time of this method is \f$O(m)\f$, where \f$m\f$ is the
+        * number of edges in the graph.
+        */
+       bool is_connected();
+
+       /**
+        * Construct and return a subgraph of this graph.
+        *
+        * Note that the vertex indices will be changed in the subgraph.
+        *
+        * @param vertices the vertices in the induced subgraph
+        * @return a new stag::Graph object representing the subgraph induced by
+        *         the given vertices
+        */
+       Graph subgraph(std::vector<stag_int>& vertices);
+
+       /**
+        * Construct and return the disjoint union of this graph and another.
+        *
+        * The disjoint union of two graphs \f$G\f$ and \f$H\f$ is a graph
+        * containing \f$G\f$ and \f$H\f$ as disconnected subgraphs.
+        *
+        * @param other the other graph to be combined with this one
+        * @return a new stag::Graph object representing the union of this graph
+        *         with the other one
+        */
+       Graph disjoint_union(Graph& other);
+
        // Override the abstract methods in the LocalGraph base class.
        double degree(stag_int v) override;
        stag_int degree_unweighted(stag_int v) override;
@@ -459,6 +510,9 @@ namespace stag {
       // indicate whether the matrix has been initialised yet.
       SprsMat adjacency_matrix_;
 
+      // Whether the graph has self loops
+      bool has_self_loops_;
+
       // The laplacian matrix of the graph. The lap_init_ variable is used to
       // indicate whether the matrix has been initialised yet.
       bool lap_init_;
@@ -494,27 +548,6 @@ namespace stag {
       SprsMat lazy_random_walk_matrix_;
   };
 
-  /**
-   * \cond
-   * Do not generate documentation for operator definitions.
-   */
-
-  /**
-   * Define equality for two graphs. Two graphs are equal iff their adjacency
-   * matrices are equal
-   */
-  bool operator==(const Graph& lhs, const Graph& rhs);
-  bool operator!=(const Graph& lhs, const Graph& rhs);
-
-  /**
-   * Define equality for edges.
-   */
-  bool operator==(const edge& lhs, const edge& rhs);
-  bool operator!=(const edge& lhs, const edge& rhs);
-
-  /**
-   * \endcond
-   */
 
   /**
    * \brief A local graph backed by an adjacency list file on disk.
@@ -633,6 +666,92 @@ namespace stag {
    */
    stag::Graph star_graph(stag_int n);
 
-}
-#endif //STAG_LIBRARY_H
+  /**
+   * Construct the 'identity graph'. The identity graph consists of \f$n\f$
+   * vertices, each with a self-loop of weight 1.
+   *
+   * Both the adjacency matrix and Laplacian matrix of the identity graph are
+   * equal to the identity matrix.
+   *
+   * @param n the number of vertices in the constructed graph
+   * @return a stag::Graph object representing the identity graph
+   */
+  stag::Graph identity_graph(stag_int n);
 
+  /**
+   * \cond
+   * Do not generate documentation for operator definitions.
+   */
+
+  /**
+   * Define equality for two graphs. Two graphs are equal iff their adjacency
+   * matrices are equal
+   */
+  bool operator==(const Graph& lhs, const Graph& rhs);
+  bool operator!=(const Graph& lhs, const Graph& rhs);
+
+  /**
+   * Define equality for edges.
+   */
+  bool operator==(const edge& lhs, const edge& rhs);
+  bool operator!=(const edge& lhs, const edge& rhs);
+
+  /**
+   * \endcond
+   */
+
+  /**
+   * Multiplying a graph by a scalar is equivalent to multiplying the weight
+   * of each edge by the given value.
+   *
+   * For example, the following code creates a complete graph with edges of
+   * weight 2.
+   *
+   * \code{.cpp}
+   *     #include <stag/graph.h>
+   *
+   *     int main() {
+   *       stag::Graph myGraph = 2 * stag::complete_graph(10);
+   *
+   *       return 0;
+   *     }
+   * \endcode
+   *
+   */
+  template <typename Scalar>
+  stag::Graph operator*(Scalar lhs, const stag::Graph& rhs) {
+    const SprsMat new_adj = lhs * *rhs.adjacency();
+    return stag::Graph(new_adj);
+  }
+
+  /**
+   * \overload
+   */
+  template <typename Scalar>
+  stag::Graph operator*(const stag::Graph& lhs, Scalar rhs) {
+    const SprsMat new_adj = rhs * *lhs.adjacency();
+    return stag::Graph(new_adj);
+  }
+
+  /**
+   * Adding two graphs is equivalent to adding their adjacency matrices.
+   *
+   * The graphs must have the same number of vertices. For example, the following
+   * code adds a complete graph and a cycle graph on \f$5\f$ vertices.
+   *
+   * \code{.cpp}
+   *    #include <stag/graph.h>
+   *
+   *    int main() {
+   *        stag::Graph myGraph = stag::complete_graph(5) + stag::cycle_graph(5);
+   *
+   *        return 0;
+   *    }
+   * \endcode
+   *
+   * @throws std::invalud_argument if the graphs have different sizes.
+   */
+  stag::Graph operator+(const stag::Graph& lhs, const stag::Graph& rhs);
+}
+
+#endif //STAG_LIBRARY_H

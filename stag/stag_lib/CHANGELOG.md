@@ -4,7 +4,24 @@ All notable changes to the library are documented here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [1.3.0] - 2023-07-12
+### Added
+- [Issue #92](https://github.com/staglibrary/stag/issues/92): Method for calculating the symmetric difference
+- [Issue #94](https://github.com/staglibrary/stag/issues/94): Compute the connected components of a graph
+- [Issue #94](https://github.com/staglibrary/stag/issues/94): Add a subgraph method to stag Graph class
+- [Issue #93](https://github.com/staglibrary/stag/issues/93): Add methods to compute mutual information between clusters
+- [Issue #98](https://github.com/staglibrary/stag/issues/98): Add method to construct the graph union
+- [Issue #22](https://github.com/staglibrary/stag/issues/22): Add Cheeger cut method
+- [Issue #107](https://github.com/staglibrary/stag/issues/107): Add support for self-loops in graphs
+- [Issue #108](https://github.com/staglibrary/stag/issues/108): Allow graphs to be initialised with Laplacian matrix
+- [Issue #111](https://github.com/staglibrary/stag/issues/111): Add `is_connected` method to Graph object
+- [Issue #113](https://github.com/staglibrary/stag/issues/113): Construct the identity graph
+- [Issue #114](https://github.com/staglibrary/stag/issues/114): Implement scalar multiplication of graphs
+- [Issue #112](https://github.com/staglibrary/stag/issues/112): Add graph addition operator
+
+### Changed
+- [Issue #86](https://github.com/staglibrary/stag/issues/86): Remove test files from the release source archive
+
 ### Fixed
 - [Issue #87](https://github.com/staglibrary/stag/issues/87): Occasional bug with sorting edgelist file
 

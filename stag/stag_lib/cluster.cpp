@@ -7,6 +7,7 @@
 #include <deque>
 #include <unordered_set>
 #include <stdexcept>
+#include <cmath>
 #include <algorithm>
 #include <Eigen/Sparse>
 #include <graph.h>
@@ -43,6 +44,35 @@ std::vector<stag_int> stag::spectral_cluster(stag::Graph *graph, stag_int k) {
 
   // Move the eigen data into the vector to return
   return {clusters.data(), clusters.data() + clusters.rows()};
+}
+
+std::vector<stag_int> stag::cheeger_cut(stag::Graph* graph) {
+  // First, compute the first 2 eigenvectors of the normalised graph Laplacian
+  // matrix.
+  const SprsMat* lap = graph->normalised_laplacian();
+  stag::EigenSystem eigsys = stag::compute_eigensystem(lap, 2);
+
+  // The vector to pass to the sweep set method is the second eigenvector,
+  // with each entry normalised by the square root of the node degree.
+  SprsMat vec;
+
+  // Check the eigenvalues to ensure we are selecting the second eigenvector
+  if (get<0>(eigsys).coeff(0) > get<0>(eigsys).coeff(1)) {
+    vec = get<1>(eigsys).col(0).sparseView();
+  } else {
+    vec = get<1>(eigsys).col(1).sparseView();
+  }
+
+  // Normalise by the square root of vertex degrees.
+  for (stag_int i = 0; i < graph->number_of_vertices(); i++) {
+    vec.coeffRef(i, 0) = std::sqrt(1 / graph->degree(i)) * vec.coeff(i, 0);
+  }
+
+  // Perform the sweep
+  std::vector<stag_int> clusters (graph->number_of_vertices(), 0);
+  std::vector<stag_int> cut = stag::sweep_set_conductance(graph, vec);
+  for (stag_int i : cut) clusters.at(i) = 1;
+  return clusters;
 }
 
 std::vector<stag_int> stag::local_cluster(stag::LocalGraph *graph, stag_int seed_vertex, double target_volume) {
@@ -244,8 +274,12 @@ std::tuple<SprsMat, SprsMat> stag::approximate_pagerank(stag::LocalGraph *graph,
 //------------------------------------------------------------------------------
 // Sweep set implementation
 //------------------------------------------------------------------------------
-std::vector<stag_int> stag::sweep_set_conductance(stag::LocalGraph* graph,
-                                                  SprsMat& vec) {
+std::vector<stag_int> sweep_set_conductance_inner(stag::LocalGraph* graph,
+                                                  SprsMat& vec,
+                                                  double total_volume) {
+  // If the provided total volume of the graph is not 0, then we use the correct
+  // min(vol(S), vol(V \ S)) on the denominator.
+
   // The given vector must be one dimensional
   assert(vec.cols() == 1);
 
@@ -263,6 +297,7 @@ std::vector<stag_int> stag::sweep_set_conductance(stag::LocalGraph* graph,
   std::unordered_set<stag_int> vertex_set;
   double cut_weight = 0;
   double set_volume = 0;
+  double set_complement_volume = total_volume;
   double best_conductance = 2;
   stag_int best_idx = 0;
   stag_int current_idx = 0;
@@ -276,6 +311,7 @@ std::vector<stag_int> stag::sweep_set_conductance(stag::LocalGraph* graph,
 
     // Update the vertex set volume
     set_volume += degrees.at(current_idx - 1);
+    set_complement_volume = total_volume - set_volume;
 
     // Update the cut weight. We need to add the total degree of the node v,
     // and then remove any edges from v to the rest of the vertex set.
@@ -285,14 +321,35 @@ std::vector<stag_int> stag::sweep_set_conductance(stag::LocalGraph* graph,
     }
 
     // Check whether the current conductance is the best we've seen
-    if (cut_weight / set_volume < best_conductance) {
-      best_conductance = cut_weight / set_volume;
+    double this_denominator;
+    if (total_volume == 0) {
+      this_denominator = set_volume;
+    } else {
+      this_denominator = std::min(set_volume, set_complement_volume);
+    }
+    if (this_denominator > 0 && cut_weight / this_denominator < best_conductance) {
+      best_conductance = cut_weight / this_denominator ;
       best_idx = current_idx;
     }
   }
 
   // Return the best cut
   return {sorted_indices.begin(), sorted_indices.begin() + best_idx};
+}
+
+std::vector<stag_int> sweep_set_conductance_inner(stag::LocalGraph* graph,
+                                                  SprsMat& vec) {
+  return sweep_set_conductance_inner(graph, vec, 0);
+}
+
+std::vector<stag_int> stag::sweep_set_conductance(stag::Graph* graph,
+                                                  SprsMat& vec) {
+  return sweep_set_conductance_inner(graph, vec, graph->total_volume());
+}
+
+std::vector<stag_int> stag::sweep_set_conductance(stag::LocalGraph* graph,
+                                                  SprsMat& vec) {
+  return sweep_set_conductance_inner(graph, vec);
 }
 
 //------------------------------------------------------------------------------
@@ -306,9 +363,9 @@ stag_int nChoose2(stag_int n)
   return n * (n-1) / 2;
 }
 
-double stag::adjusted_rand_index(std::vector<stag_int>& gt_labels,
-                                 std::vector<stag_int>& labels) {
-  stag_int n = gt_labels.size();
+Eigen::MatrixXi contingency_table(std::vector<stag_int>& gt_labels,
+                                  std::vector<stag_int>& labels) {
+  auto n = (stag_int) gt_labels.size();
   if ((stag_int) labels.size() != n) {
     throw std::invalid_argument("Label vectors must be the same size.");
   }
@@ -328,16 +385,11 @@ double stag::adjusted_rand_index(std::vector<stag_int>& gt_labels,
     }
   }
 
-  // Start by constructing the k by k contingency table
-  // and the sizes of every cluster
-  Eigen::VectorXi gt_sizes(k);
-  Eigen::VectorXi label_sizes(k);
+  // Construct the k by k contingency table
   Eigen::MatrixXi contingency(k, k);
 
   // Initialize everything to 0
   for (auto i = 0; i < k; i++) {
-    gt_sizes(i) = 0;
-    label_sizes(i) = 0;
     for (auto j = 0; j < k; j++) {
       contingency(i, j) = 0;
     }
@@ -345,9 +397,30 @@ double stag::adjusted_rand_index(std::vector<stag_int>& gt_labels,
 
   for (auto i = 0; i < n; i++) {
     contingency(gt_labels.at(i), labels.at(i))++;
-    gt_sizes(gt_labels.at(i))++;
-    label_sizes(labels.at(i))++;
   }
+
+  return contingency;
+}
+
+std::unordered_map<stag_int, stag_int> compute_cluster_sizes(
+    std::vector<stag_int>& labels){
+  std::unordered_map<stag_int, stag_int> cluster_sizes;
+  for (stag_int l : labels) {
+    cluster_sizes[l]++;
+  }
+  return cluster_sizes;
+}
+
+double stag::adjusted_rand_index(std::vector<stag_int>& gt_labels,
+                                 std::vector<stag_int>& labels) {
+  auto n = (stag_int) gt_labels.size();
+
+  // Start by constructing the k by k contingency table
+  // and the sizes of every cluster
+  std::unordered_map<stag_int, stag_int> gt_sizes = compute_cluster_sizes(gt_labels);
+  std::unordered_map<stag_int, stag_int> label_sizes = compute_cluster_sizes(labels);
+  Eigen::MatrixXi contingency = contingency_table(gt_labels, labels);
+  stag_int k = contingency.rows();
 
   // Now compute three components of the ARI
   // See https://stats.stackexchange.com/questions/207366/calculating-the-adjusted-rand-index.
@@ -361,13 +434,66 @@ double stag::adjusted_rand_index(std::vector<stag_int>& gt_labels,
   stag_int c2 = 0;
   stag_int c3 = 0;
   for (auto i = 0; i < k; i++) {
-    c2 += nChoose2(gt_sizes(i));
-    c3 += nChoose2(label_sizes(i));
+    c2 += nChoose2(gt_sizes[i]);
+    c3 += nChoose2(label_sizes[i]);
   }
 
   stag_int nC2 = nChoose2(n);
 
   return (c1 - ((double) (c2 * c3) / nC2)) / (((double) (c2 + c3)/2) - ((double) (c2 * c3)/nC2));
+}
+
+double entropy(std::vector<stag_int>& labels){
+  // The entropy of a clustering is defined to be
+  //   H(U) = sum p_i log(p_i)
+  // where p_i = |C_i| / N is the proportion of the items in the ith cluster.
+  auto N = (double) labels.size();
+
+  // We will build a map of cluster IDs to the number of elements in that
+  // cluster
+  std::unordered_map<stag_int, stag_int> cluster_sizes =
+      compute_cluster_sizes(labels);
+
+  // Compute the entropy
+  double entropy = 0;
+  for (auto& it : cluster_sizes) {
+    if (it.second > 0) {
+      entropy += ((double) it.second / N) * std::log2(N / (double) it.second);
+    }
+  }
+  return entropy;
+}
+
+double stag::mutual_information(std::vector<stag_int> &gt_labels,
+                                std::vector<stag_int> &labels) {
+  // Start by constructing the k by k contingency table
+  // and the sizes of every cluster
+  std::unordered_map<stag_int, stag_int> gt_sizes = compute_cluster_sizes(gt_labels);
+  std::unordered_map<stag_int, stag_int> label_sizes = compute_cluster_sizes(labels);
+  Eigen::MatrixXi contingency = contingency_table(gt_labels, labels);
+  stag_int k = contingency.rows();
+  auto N = (double) labels.size();
+
+  // Compute the MI
+  double mi = 0;
+  for (stag_int k1 = 0; k1 < k; k1++) {
+    for (stag_int k2 = 0; k2 < k; k2++) {
+      if (contingency(k1, k2) > 0) {
+        mi += (contingency(k1, k2) / N) * std::log2((N * contingency(k1, k2)) /
+                                                    ((double) gt_sizes[k1] * (double) label_sizes[k2]));
+      }
+    }
+  }
+  return mi;
+}
+
+double stag::normalised_mutual_information(std::vector<stag_int> &gt_labels,
+                                           std::vector<stag_int> &labels) {
+  double mi = mutual_information(gt_labels, labels);
+  double gt_entropy = entropy(gt_labels);
+  double label_entropy = entropy(labels);
+  double mean_entropy = (gt_entropy + label_entropy) / 2;
+  return mi / mean_entropy;
 }
 
 double stag::conductance(stag::LocalGraph* graph, std::vector<stag_int>& cluster) {
@@ -398,4 +524,81 @@ double stag::conductance(stag::LocalGraph* graph, std::vector<stag_int>& cluster
   // 0.
   if (volume == 0) return 0;
   else return cut / volume;
+}
+
+std::vector<stag_int> stag::symmetric_difference(std::vector<stag_int> &S,
+                                                 std::vector<stag_int> &T) {
+  // For the later steps, we assume that the vectors are sorted
+  std::sort(S.begin(), S.end());
+  std::sort(T.begin(), T.end());
+
+  // Remove duplicates from the vectors
+  auto last_idx = std::unique(S.begin(), S.end());
+  S.erase(last_idx, S.end());
+  last_idx = std::unique(T.begin(), T.end());
+  T.erase(last_idx, T.end());
+
+  // Compute and return the symmetric difference
+  std::vector<stag_int> symmetric_difference;
+  std::set_symmetric_difference(S.begin(), S.end(),
+                                T.begin(), T.end(),
+                                std::back_inserter(symmetric_difference));
+  return symmetric_difference;
+}
+
+//------------------------------------------------------------------------------
+// Find connected components
+//------------------------------------------------------------------------------
+std::vector<stag_int> stag::connected_component(stag::LocalGraph* g,
+                                                stag_int v) {
+  // We track the connected component as both a set and a vector for efficient
+  // algorithm.
+  std::unordered_set<stag_int> component_set = {v};
+  std::vector<stag_int> component_vec = {v};
+  std::vector<stag_int> frontier = {v};
+
+  // Perform a breadth-first search from v, adding all discovered nodes to the
+  // connected component to return.
+  while (!frontier.empty()) {
+    // Pop the next vertex to search off the back of the frontier.
+    stag_int this_vertex = frontier.back();
+    frontier.pop_back();
+
+    // Iterate through the neighbours of this vertex
+    for (auto n : g->neighbors_unweighted(this_vertex)) {
+      // If we have not seen the neighbour before, add it to the connected
+      // component, and the frontier of the search.
+      if (component_set.find(n) == component_set.end()) {
+        component_set.insert(n);
+        component_vec.push_back(n);
+        frontier.push_back(n);
+      }
+    }
+  }
+
+  // Return the component that we found
+  return component_vec;
+}
+
+std::vector<std::vector<stag_int>> stag::connected_components(
+    stag::Graph* g) {
+  // The components to be returned
+  std::vector<std::vector<stag_int>> components;
+
+  // Keep track of the vertices which we've already found
+  std::unordered_set<stag_int> found_vertices;
+
+  for (stag_int v = 0; v < g->number_of_vertices(); v++) {
+    // If this vertex has not been returned as part of one of the connected
+    // components yet, then we find the connected component containing it.
+    if (!found_vertices.contains(v)) {
+      std::vector<stag_int> this_component = stag::connected_component(g, v);
+      components.push_back(this_component);
+
+      // Track that we've visited every node in the newly found component.
+      for (auto idx : this_component) found_vertices.insert(idx);
+    }
+  }
+
+  return components;
 }

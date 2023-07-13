@@ -5,22 +5,83 @@
 #include <stdexcept>
 #include <fstream>
 #include <unordered_map>
+#include <unordered_set>
+#include <set>
 #include "graph.h"
 #include "utility.h"
 #include "graphio.h"
+#include "cluster.h"
 
 
 //------------------------------------------------------------------------------
 // Graph Object Constructors
 //------------------------------------------------------------------------------
+/**
+ * Given a matrix, which is either an adjacency matrix OR a Laplacian matrix,
+ * return the adjacency matrix of the graph.
+ */
+SprsMat adjacency_from_adj_or_lap(const SprsMat& matrix) {
+  // Since we support only graphs with positive edge weights,
+  // we can just check for negative entries in the matrix. If the matrix contains
+  // negative entries, then it must be the Laplacian. Otherwise, we take it to
+  // be an adjacency matrix.
+  //
+  // We first assume the given matrix is an adjacency matrix and update this
+  // if we find a negative entry.
+  SprsMat adjacency_matrix(matrix.rows(), matrix.cols());
+  bool found_negative_value = false;
+  for (int k = 0; k < matrix.outerSize() ; ++k) {
+    for (SprsMat::InnerIterator it(matrix, k); it; ++it) {
+      if (it.value() < 0) {
+        found_negative_value = true;
+        break;
+      }
+    }
+    if (found_negative_value) break;
+  }
+  if (found_negative_value) {
+    // The adjacency matrix is D - L
+    // First set it to negative the Laplacian, and then update the diagonal
+    // entries.
+    adjacency_matrix = -matrix;
 
-stag::Graph::Graph(const SprsMat& adjacency_matrix) {
-  // Load the adjacency matrix into this object.
-  adjacency_matrix_ = adjacency_matrix;
-  adjacency_matrix_.makeCompressed();
+    // The self-loop weights are equal to the difference between the diagonal
+    // entry of the Laplacian and the rest of the entries in the row/column
+    Eigen::VectorXd self_loop_weights = matrix * Eigen::VectorXd::Ones(matrix.cols());
+    for (auto i = 0; i < matrix.cols(); i++) {
+      adjacency_matrix.coeffRef(i, i) = self_loop_weights.coeff(i);
+    }
+  } else {
+    adjacency_matrix = matrix;
+  }
+  // Due to floating-point errors, we sometimes see tiny floats showing up
+  // in place of zeros. We don't want to introduce self-loops with tiny weights
+  // so we set these to 0.
+  adjacency_matrix.prune([](const stag_int& row, const stag_int& col, const double& value)
+                          {
+                            (void) row;
+                            (void) col;
+                            return value > EPSILON;
+                          });
+
+  return adjacency_matrix;
+}
+
+stag::Graph::Graph(const SprsMat& matrix) {
+  // Get the adjacency matrix from the provided (adjacency or Laplacian) matrix
+  adjacency_matrix_ = adjacency_from_adj_or_lap(matrix);
 
   // The number of vertices is the dimensions of the adjacency matrix
   number_of_vertices_ = adjacency_matrix_.outerSize();
+
+  // Check whether the graph has any self-loops
+  has_self_loops_ = false;
+  for (auto i = 0; i < number_of_vertices_; i++) {
+    if (adjacency_matrix_.coeff(i, i) != 0) {
+      has_self_loops_ = true;
+      break;
+    }
+  }
 
   // Set the flags to indicate which matrices have been initialised.
   lap_init_ = false;
@@ -38,10 +99,20 @@ stag::Graph::Graph(const SprsMat& adjacency_matrix) {
 stag::Graph::Graph(std::vector<stag_int> &outerStarts, std::vector<stag_int> &innerIndices,
                    std::vector<double> &values) {
   // Map the provided data vectors to the sparse matrix type.
-  adjacency_matrix_ = stag::sprsMatFromVectors(outerStarts, innerIndices, values);
+  SprsMat matrix = stag::sprsMatFromVectors(outerStarts, innerIndices, values);
+  adjacency_matrix_ = adjacency_from_adj_or_lap(matrix);
 
   // The number of vertices is the dimensions of the adjacency matrix
   number_of_vertices_ = adjacency_matrix_.outerSize();
+
+  // Check whether the graph has any self-loops
+  has_self_loops_ = false;
+  for (auto i = 0; i < number_of_vertices_; i++) {
+    if (adjacency_matrix_.coeff(i, i) != 0) {
+      has_self_loops_ = true;
+      break;
+    }
+  }
 
   // Set the flags to indicate which matrices have been initialised.
   lap_init_ = false;
@@ -100,8 +171,17 @@ const SprsMat* stag::Graph::lazy_random_walk_matrix() {
 }
 
 double stag::Graph::total_volume() {
-  Eigen::VectorXd degrees = adjacency_matrix_ * Eigen::VectorXd::Ones(adjacency_matrix_.cols());
-  return degrees.sum();
+  // We will compute the total volume from the degree matrix of the graph.
+  initialise_degree_matrix_();
+
+  double vol = 0;
+  for (int k = 0; k < degree_matrix_.outerSize() ; ++k) {
+    for (SprsMat::InnerIterator it(degree_matrix_, k); it; ++it) {
+      vol += it.value();
+    }
+  }
+
+  return vol;
 }
 
 double stag::Graph::average_degree() {
@@ -113,7 +193,32 @@ stag_int stag::Graph::number_of_vertices() const {
 }
 
 stag_int stag::Graph::number_of_edges() const {
-  return adjacency_matrix_.nonZeros() / 2;
+  stag_int nnz = adjacency_matrix_.nonZeros();
+
+  if (has_self_loops_) {
+    // If there are self loops in the graph, then we need to count the non-zeros
+    // on the diagonal twice.
+    for (auto i = 0; i < number_of_vertices_; i++) {
+      if (adjacency_matrix_.coeff(i, i) != 0) nnz++;
+    }
+
+    // Now, we have counted every edge twice.
+    return nnz / 2;
+  } else {
+    // If there are no self loops in the graph, then the number of edges is
+    // half the number of non-zero elements in the adjacency matrix.
+    return nnz / 2;
+  }
+}
+
+bool stag::Graph::has_self_loops() const {
+  return has_self_loops_;
+}
+
+bool stag::Graph::is_connected() {
+  if ((stag_int) stag::connected_component(this, 0).size()
+        == number_of_vertices_) return true;
+  return false;
 }
 
 void stag::Graph::check_vertex_argument(stag_int v) {
@@ -167,11 +272,14 @@ stag_int stag::Graph::degree_unweighted(stag_int v) {
   check_vertex_argument(v);
 
   // The combinatorical degree of a vertex is equal to the number of non-zero
-  // entries in its adjacency matrix row.
+  // entries in its adjacency matrix row, plus 1 if there is a self-loop.
   const stag_int *indexPtr = adjacency_matrix_.outerIndexPtr();
   stag_int rowStart = *(indexPtr + v);
   stag_int nextRowStart = *(indexPtr + v + 1);
-  return nextRowStart - rowStart;
+  stag_int self_loop = 0;
+  if (adjacency_matrix_.coeff(v, v) != 0) self_loop = 1;
+
+  return nextRowStart - rowStart + self_loop;
 }
 
 std::vector<stag::edge> stag::Graph::neighbors(stag_int v) {
@@ -184,8 +292,13 @@ std::vector<stag::edge> stag::Graph::neighbors(stag_int v) {
   stag_int vRowStart = *(rowStarts + v);
   stag_int degree_unw = degree_unweighted(v);
 
+  // If there is a self-loop, then we have to subtract one from the unweighted
+  // degree.
+  stag_int self_loop = 0;
+  if (adjacency_matrix_.coeff(v, v) != 0) self_loop = 1;
+
   std::vector<stag::edge> edges;
-  for (stag_int i = 0; i < degree_unw; i++) {
+  for (stag_int i = 0; i < degree_unw - self_loop; i++) {
     if (*(weights + vRowStart + i) != 0) {
       edges.push_back({v, *(innerIndices + vRowStart + i), *(weights + vRowStart + i)});
     }
@@ -202,11 +315,87 @@ std::vector<stag_int> stag::Graph::neighbors_unweighted(stag_int v) {
   const stag_int *rowStarts = adjacency_matrix_.outerIndexPtr();
   stag_int vRowStart = *(rowStarts + v);
   stag_int degree = degree_unweighted(v);
-  return {innerIndices + vRowStart, innerIndices + vRowStart + degree};
+
+  // If there is a self-loop, then we have to subtract one from the unweighted
+  // degree.
+  stag_int self_loop = 0;
+  if (adjacency_matrix_.coeff(v, v) != 0) self_loop = 1;
+
+  return {innerIndices + vRowStart, innerIndices + vRowStart + degree - self_loop};
 }
 
 bool stag::Graph::vertex_exists(stag_int v) {
   return v >= 0 && v < number_of_vertices_;
+}
+
+stag::Graph stag::Graph::subgraph(std::vector<stag_int>& vertices) {
+  // Convert the vector of vertices to a set, and construct the map from old
+  // vertex ID to the new one.
+  std::unordered_set<stag_int> vertex_set;
+  std::unordered_map<stag_int, stag_int> old_to_new_id;
+  stag_int next_id = 0;
+  for (stag_int v : vertices) {
+    if (!vertex_set.contains(v)) {
+      vertex_set.insert(v);
+      old_to_new_id.insert({v, next_id});
+      next_id++;
+    }
+  }
+
+  // Construct the non-zero entries in the new adjacency matrix
+  std::vector<EdgeTriplet> non_zero_entries;
+  for (stag_int v : vertex_set) {
+    for (stag::edge e : neighbors(v)) {
+      if (e.v2 >= v && vertex_set.contains(e.v2)) {
+        non_zero_entries.emplace_back(
+            old_to_new_id[v], old_to_new_id[e.v2], e.weight);
+
+        // Add the symmetric entry to the adjacency matrix only if this is
+        // not a self-loop.
+        if (e.v2 > v) {
+          non_zero_entries.emplace_back(
+              old_to_new_id[e.v2], old_to_new_id[v], e.weight);
+        }
+      }
+    }
+  }
+
+  // Construct the final adjacency matrix
+  SprsMat adj_mat((stag_int) vertex_set.size(), (stag_int) vertex_set.size());
+  adj_mat.setFromTriplets(non_zero_entries.begin(), non_zero_entries.end());
+  return stag::Graph(adj_mat);
+}
+
+stag::Graph stag::Graph::disjoint_union(Graph& other) {
+  // Get the adjacency matrix data from this graph
+  std::vector<double> values = stag::sprsMatValues(&adjacency_matrix_);
+  std::vector<stag_int> innerIndices = stag::sprsMatInnerIndices(&adjacency_matrix_);
+  std::vector<stag_int> outerStarts = stag::sprsMatOuterStarts(&adjacency_matrix_);
+
+  // Get the adjacency matrix data from the other graph
+  SprsMat other_adj = *other.adjacency();
+  std::vector<double> other_values = stag::sprsMatValues(&other_adj);
+  std::vector<stag_int> other_innerIndices = stag::sprsMatInnerIndices(&other_adj);
+  std::vector<stag_int> other_outerStarts = stag::sprsMatOuterStarts(&other_adj);
+
+  // We will extend the matrix data vectors with the data from the other graph
+  values.reserve(values.size() + distance(other_values.begin(),
+                                          other_values.end()));
+  values.insert(values.end(), other_values.begin(), other_values.end());
+
+  stag_int start_offset = outerStarts.at(outerStarts.size() - 1);
+  for (stag_int other_start : other_outerStarts) {
+    if (other_start != 0) {
+      outerStarts.push_back(other_start + start_offset);
+    }
+  }
+
+  stag_int inner_offset = number_of_vertices_;
+  for (stag_int other_inner : other_innerIndices) {
+    innerIndices.push_back(other_inner + inner_offset);
+  }
+
+  return {outerStarts, innerIndices, values};
 }
 
 //------------------------------------------------------------------------------
@@ -310,10 +499,12 @@ void stag::Graph::initialise_degree_matrix_() {
   if (deg_init_) return;
 
   // Construct the vertex degrees.
-  Eigen::VectorXd degrees = adjacency_matrix_ * Eigen::VectorXd::Ones(adjacency_matrix_.cols());
+  Eigen::VectorXd simple_degrees = adjacency_matrix_ * Eigen::VectorXd::Ones(adjacency_matrix_.cols());
   degree_matrix_ = SprsMat(adjacency_matrix_.cols(), adjacency_matrix_.cols());
   for (stag_int i = 0; i < adjacency_matrix_.cols(); i++) {
-    degree_matrix_.insert(i, i) = degrees[i];
+    // If there is a self-loop on this vertex, then we count its weight twice
+    // for the vertex degree.
+    degree_matrix_.insert(i, i) = simple_degrees[i] + adjacency_matrix_.coeff(i, i);
   }
 
   // Compress the degree matrix storage, and set the initialised flag
@@ -517,7 +708,9 @@ double stag::AdjacencyListLocalGraph::degree(stag_int v) {
   auto edges = neighbors(v);
   double deg = 0;
   for (stag::edge e : edges) {
-    deg += e.weight;
+    // Self-loops count twice towards the degree
+    if (e.v2 == v) deg += 2 * e.weight;
+    else deg += e.weight;
   }
   return deg;
 }
@@ -627,4 +820,22 @@ stag::Graph stag::star_graph(stag_int n) {
   SprsMat adj_mat(n, n);
   adj_mat.setFromTriplets(non_zero_entries.begin(), non_zero_entries.end());
   return stag::Graph(adj_mat);
+}
+
+stag::Graph stag::identity_graph(stag_int n) {
+  if (n < 1) throw std::invalid_argument("Number of vertices must be at least 1.");
+
+  SprsMat adj_mat(n, n);
+  adj_mat.setIdentity();
+  return stag::Graph(adj_mat);
+}
+
+//------------------------------------------------------------------------------
+// Other operators
+//------------------------------------------------------------------------------
+stag::Graph stag::operator+(const stag::Graph& lhs, const stag::Graph& rhs) {
+  if (lhs.number_of_vertices() != rhs.number_of_vertices())
+    throw std::invalid_argument("Number of vertices must match.");
+
+  return stag::Graph(*lhs.adjacency() + *rhs.adjacency());
 }

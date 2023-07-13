@@ -61,6 +61,35 @@ namespace stag {
    */
   std::vector<stag_int> spectral_cluster(stag::Graph* graph, stag_int k);
 
+  /**
+   * Find the Cheeger cut in a graph.
+   *
+   * Let \f$G = (V, E)\f$ be a graph and \f$\mathcal{L}\f$ be its normalised Laplacian
+   * matrix with eigenvalues \f$0 = \lambda_1 \leq \lambda_2 \leq \ldots \leq \lambda_n\f$.
+   * Then, Cheeger's inequality states that
+   *
+   * \f[
+   *   \frac{\lambda_2}{2} \leq \Phi_G \leq \sqrt{2 \lambda_2},
+   * \f]
+   *
+   * where
+   *
+   * \f[
+   *    \Phi_G = \min_{S \subset V} \phi(S)
+   * \f]
+   *
+   * is the conductance of \f$G\f$. The proof of Cheeger's inequality is
+   * constructive: by computing the eigenvector corresponding to \f$\lambda_2\f$,
+   * and performing the sweep set operation, we are able to find a set \f$S\f$
+   * with conductance close to the optimal. The partition returned by this
+   * algorithm is called the 'Cheeger cut' of the graph.
+   *
+   * @param graph the graph object to be partitioned
+   * @return A vector giving the cluster membership for each vertex in the graph.
+   *         Each entry in the vector is either \f$0\f$ or \f$1\f$ to indicate
+   *         which side of the cut the vertex belongs to.
+   */
+  std::vector<stag_int> cheeger_cut(stag::Graph* graph);
 
   /**
    * Local clustering algorithm based on personalised Pagerank.
@@ -158,22 +187,54 @@ namespace stag {
    *
    * where \f$\phi(S)\f$ is the conductance of \f$S\f$.
    *
-   * This method is expected to be run on vectors whose support is much less
-   * than the total size of the graph. If the total volume of the support of vec
-   * is larger than half of the volume of an entire graph, then this method may
-   * return unexpected results.
+   * When the provided graph is a stag::LocalGraph, the volume of the support of
+   * the provided vector should be less than half the total volume of the graph.
+   * The method does not (and cannot) check this condition.
+   *
+   * When the provided graph is a stag::Graph, there is no restriction on the
+   * volume of the support of the provided vector.
    *
    * Note that the caller is responsible for any required normalisation of the
    * input vector. In particular, this method does not normalise the vector by
    * the node degrees.
    *
-   * @param graph a stag::LocalGraph object
+   * @param graph a stag::LocalGraph or stag::Graph object
    * @param vec the vector to sweep over
    * @return a vector containing the indices of vec which give the minimum
    *         conductance in the given graph
    */
   std::vector<stag_int> sweep_set_conductance(stag::LocalGraph* graph,
                                               SprsMat& vec);
+
+  /**
+   * @overload
+   */
+  std::vector<stag_int> sweep_set_conductance(stag::Graph* graph,
+                                              SprsMat& vec);
+
+  /**
+   * Return the vertex indices of every vertex in the same connected
+   * component as the specified vertex.
+   *
+   * The running time of this method is proportional to the size of the returned
+   * connected component.
+   *
+   * The returned vector is not sorted.
+   *
+   * @param g a stag::LocalGraph instance
+   * @param v a vertex of the graph
+   * @return a vector containing the vertex ids of every vertex in the
+   *         connected component corresponding to v
+   */
+  std::vector<stag_int> connected_component(stag::LocalGraph* g, stag_int v);
+
+  /**
+   * Return a vector of the connected components in the specified graph.
+   *
+   * @param g a stag::Graph instance
+   * @return a vector containing the connected components of the graph
+   */
+  std::vector<std::vector<stag_int>> connected_components(stag::Graph* g);
 
   /**
    * Compute the Adjusted Rand Index between two label vectors.
@@ -189,6 +250,31 @@ namespace stag {
    */
   double adjusted_rand_index(std::vector<stag_int>& gt_labels,
                              std::vector<stag_int>& labels);
+
+  /**
+   * Compute the Mutual Information between two label vectors.
+   *
+   * @param gt_labels the ground truth labels for the dataset
+   * @param labels the candidate labels whose MI should be calculated
+   * @return the MI between the two labels vectors
+   */
+  double mutual_information(std::vector<stag_int>& gt_labels,
+                            std::vector<stag_int>& labels);
+
+  /**
+   * Compute the Normalised Mutual Information between two label vectors.
+   *
+   * @param gt_labels the ground truth labels for the dataset
+   * @param labels the candidate labels whose NMI should be calculated
+   * @return the NMI between the two labels vectors
+   *
+   * \par References
+   * Vinh, Epps, and Bailey, (2009).
+   * Information theoretic measures for clusterings comparison.
+   * 26th Annual International Conference on Machine Learning (ICML ‘09).
+   */
+  double normalised_mutual_information(std::vector<stag_int>& gt_labels,
+                                       std::vector<stag_int>& labels);
 
   /**
    * Compute the conductance of the given cluster in a graph.
@@ -210,6 +296,27 @@ namespace stag {
    */
   double conductance(stag::LocalGraph* graph,
                      std::vector<stag_int>& cluster);
+
+  /**
+   * Compute the symmetric difference of two sets of integers.
+   *
+   * Given sets \f$S\f$ and \f$T\f$, the symmetric difference
+   * \f$S \triangle T\f$ is defined to be
+   *
+   * \f[
+   *    S \triangle T = \{S \setminus T\} \cup \{T \setminus S\}.
+   * \f]
+   *
+   * Although \f$S\f$ and \f$T\f$ are provided as vectors, they are treated
+   * as sets and any duplicates will be ignored.
+   *
+   * @param S a vector containing the first set of integers
+   * @param T a vector containina the second set of integers
+   * @return a vector containing the integers in the symmetric difference of S
+   *         and T.
+   */
+  std::vector<stag_int> symmetric_difference(std::vector<stag_int>& S,
+                                             std::vector<stag_int>& T);
 }
 
 #endif //STAG_TEST_CLUSTER_H

@@ -29,6 +29,14 @@ def test_spectral_clustering():
     gt_labels = stag.random.sbm_gt_labels(20, 2)
     assert stag.cluster.adjusted_rand_index(gt_labels, labels) == 1
 
+
+def test_cheeger_cut():
+    graph = stag.graph.barbell_graph(10)
+    labels = stag.cluster.cheeger_cut(graph)
+    gt_labels = stag.random.sbm_gt_labels(20, 2)
+    assert stag.cluster.adjusted_rand_index(gt_labels, labels) == 1
+
+
 def test_default_local_clustering():
     # Construct a graph object with the barbell adjacency matrix
     graph = stag.graph.Graph(BARBELL5_ADJ_MAT)
@@ -95,7 +103,27 @@ def test_sweep_set():
     
     # Compute the sweep set
     sweep_set = stag.cluster.sweep_set_conductance(graph, s.tocsc())
+    assert type(sweep_set) == type([1])
     assert set(sweep_set) == {0, 1, 2, 3}
+
+
+def test_connected_component():
+    # Construct a graph with two connected components.
+    graph = stag.random.sbm(10, 2, 1, 0)
+    cc = stag.cluster.connected_component(graph, 0)
+    assert type(cc) == type([1])
+    assert set(cc) == {0, 1, 2, 3, 4}
+
+
+def test_connected_components():
+    # Construct a graph with two connected components
+    graph = stag.random.sbm(10, 2, 1, 0)
+    ccs = stag.cluster.connected_components(graph)
+    assert type(ccs) == type([[1]])
+    assert type(ccs[0]) == type([0])
+    assert set(ccs[0]) == {0, 1, 2, 3, 4}
+    assert set(ccs[1]) == {5, 6, 7, 8, 9}
+
 
 def test_ari():
     gt_labels = [0, 0, 1, 1, 1, 1, 2, 2, 2, 2]
@@ -115,6 +143,24 @@ def test_ari():
     assert actual_ari == pytest.approx(expected_ari, 0.0001)
 
 
+def test_nmi():
+    gt_labels = [0, 0, 1, 1, 1, 1, 2, 2, 2, 2]
+    labels    = [0, 1, 0, 1, 1, 2, 2, 2, 2, 2]
+    expected_nmi = 0.4558585
+    actual_nmi = stag.cluster.normalised_mutual_information(gt_labels, labels)
+    assert actual_nmi == pytest.approx(expected_nmi, 0.0001)
+
+    # Check that we can call with numpy arrays
+    actual_nmi = stag.cluster.normalised_mutual_information(np.asarray(gt_labels),
+                                                            np.asarray(labels))
+    assert actual_nmi == pytest.approx(expected_nmi, 0.0001)
+
+    # Check the exact clustering
+    labels = [1, 1, 2, 2, 2, 2, 0, 0, 0, 0]
+    actual_nmi = stag.cluster.normalised_mutual_information(gt_labels, labels)
+    assert actual_nmi == 1
+
+
 def test_conductance():
     g = stag.graph.Graph(BARBELL5_ADJ_MAT)
     cluster = [0, 1, 2, 3, 4]
@@ -126,3 +172,16 @@ def test_conductance():
     cluster = np.asarray(cluster)
     cond = stag.cluster.conductance(g, cluster)
     assert cond == pytest.approx(expected_cond, 0.0001)
+
+
+def test_sym_diff():
+    s = [1, 4, 5, 2, 6]
+    t = [1, 5, 3, 7]
+    sym_diff = stag.cluster.symmetric_difference(s, t)
+    assert set(sym_diff) == {2, 3, 4, 6, 7}
+
+    # Check that ndarray arrays work
+    s = np.asarray(s)
+    t = np.asarray(t)
+    sym_diff = stag.cluster.symmetric_difference(s, t)
+    assert set(sym_diff) == {2, 3, 4, 6, 7}

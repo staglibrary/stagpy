@@ -39,6 +39,39 @@ def spectral_cluster(g: graph.Graph, k: int) -> List[int]:
     """
     return list(stag_internal.spectral_cluster(g.internal_graph, k))
 
+
+def cheeger_cut(g: graph.Graph) -> List[int]:
+    """
+    Find the Cheeger cut in a graph.
+
+    Let \f$G = (V, E)\f$ be a graph and \f$\mathcal{L}\f$ be its normalised Laplacian
+    matrix with eigenvalues \f$0 = \lambda_1 \leq \lambda_2 \leq \ldots \leq \lambda_n\f$.
+    Then, Cheeger's inequality states that
+
+    \f[
+      \frac{\lambda_2}{2} \leq \Phi_G \leq \sqrt{2 \lambda_2},
+    \f]
+
+    where
+
+    \f[
+       \Phi_G = \min_{S \subset V} \phi(S)
+    \f]
+
+    is the conductance of \f$G\f$. The proof of Cheeger's inequality is
+    constructive: by computing the eigenvector corresponding to \f$\lambda_2\f$,
+    and performing the sweep set operation, we are able to find a set \f$S\f$
+    with conductance close to the optimal. The partition returned by this
+    algorithm is called the 'Cheeger cut' of the graph.
+
+    @param g the graph object to be partitioned
+    @return A list giving the cluster membership for each vertex in the graph.
+            Each entry in the list is either \f$0\f$ or \f$1\f$ to indicate
+            which side of the cut the vertex belongs to.
+    """
+    return list(stag_internal.cheeger_cut(g.internal_graph))
+
+
 def local_cluster(g: graph.LocalGraph, seed_vertex: int, target_volume: float) -> List[int]:
     r"""
     Local clustering algorithm based on personalised Pagerank.
@@ -162,7 +195,35 @@ def sweep_set_conductance(g: graph.LocalGraph, v: scipy.sparse.csc_matrix) -> Li
     @return a vector containing the indices of vec which give the minimum
             conductance in the given graph
     """
-    return stag_internal.sweep_set_conductance(g.internal_graph, utility.scipy_to_swig_sprs(v))
+    return list(stag_internal.sweep_set_conductance(g.internal_graph, utility.scipy_to_swig_sprs(v)))
+
+
+def connected_component(g: graph.LocalGraph, v: int) -> List[int]:
+    r"""
+    Return the vertex indices of every vertex in the same connected component
+    as the specified vertex.
+
+    The running time of this method is proportional to the size of the returned
+    connected component.
+
+    The returned list is not sorted.
+
+    @param g a stag.graph.LocalGraph object
+    @param v a vertex of the graph
+    @return a list containing the vertex ids of every vertex in the connected
+            component corresponding to v
+    """
+    return list(stag_internal.connected_component(g.internal_graph, v))
+
+
+def connected_components(g: graph.Graph) -> List[List[int]]:
+    r"""
+    Return a list of the connected components in the specified graph.
+
+    @param g a stag.graph.Graph object
+    @return a list containing the connected components of the graph
+    """
+    return [list(cc) for cc in stag_internal.connected_components(g.internal_graph)]
 
 
 @utility.convert_ndarrays
@@ -181,6 +242,39 @@ def adjusted_rand_index(gt_labels: List[int], labels: List[int]) -> float:
     """
     return stag_internal.adjusted_rand_index(stag_internal.vectorl(gt_labels),
                                              stag_internal.vectorl(labels))
+
+
+@utility.convert_ndarrays
+def mutual_information(gt_labels: List[int], labels: List[int]) -> float:
+    r"""
+    Compute the Mutual Information between two label vectors.
+
+    @param gt_labels the ground truth labels for the dataset
+    @param labels the candidate labels whose MI should be calculated
+    @return the MI between the two labels vectors
+    """
+    return stag_internal.mutual_information(stag_internal.vectorl(gt_labels),
+                                            stag_internal.vectorl(labels))
+
+
+
+@utility.convert_ndarrays
+def normalised_mutual_information(gt_labels: List[int],
+                                  labels: List[int]) -> float:
+    r"""
+    Compute the Normalised Mutual Information between two label vectors.
+
+    @param gt_labels the ground truth labels for the dataset
+    @param labels the candidate labels whose NMI should be calculated
+    @return the NMI between the two labels vectors
+
+    \par References
+    Vinh, Epps, and Bailey, (2009). Information theoretic measures for
+    clusterings comparison. 26th Annual International Conference on Machine
+    Learning (ICML ‘09).
+    """
+    return stag_internal.normalised_mutual_information(
+        stag_internal.vectorl(gt_labels), stag_internal.vectorl(labels))
 
 
 @utility.convert_ndarrays
@@ -205,3 +299,26 @@ def conductance(g: graph.LocalGraph, cluster: List[int]) -> float:
     """
     return stag_internal.conductance(g.internal_graph,
                                      stag_internal.vectorl(cluster))
+
+@utility.convert_ndarrays
+def symmetric_difference(s: List[int], t: List[int]) -> List[int]:
+    r"""
+    Compute the symmetric difference of two sets of integers.
+
+    Given sets \f$S\f$ and \f$T\f$, the symmetric difference \f$S \triangle T\f$
+    is defined to be
+
+    \f[
+        S \triangle T = \{S \setminus T\} \cup \{T \setminus S\}.
+    \f]
+
+    Although \f$S\f$ and \f$T\f$ are provided as lists, they are treated as sets
+    and any duplicates will be ignored.
+
+    @param s a list containing the first set of integers
+    @param t a list containing the second set of integers
+    @return a list containing the integers in the syymmetric difference of
+             \f$S\f$ and \f$T\f$.
+    """
+    return list(stag_internal.symmetric_difference(stag_internal.vectorl(s),
+                                                   stag_internal.vectorl(t)))

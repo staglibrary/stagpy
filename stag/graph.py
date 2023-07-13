@@ -210,7 +210,7 @@ class _PythonDefinedLocalGraph(stag_internal.LocalGraph):
 
 
 class AdjacencyListLocalGraph(LocalGraph):
-    """
+    r"""
     \brief A local graph backed by an adjacency list file on disk.
 
     The graph is loaded into memory in a local way only. That is, an adjacency
@@ -284,12 +284,19 @@ class Graph(LocalGraph):
     Vertices of the graph are always referred to by their unique integer index.
     This index corresponds to the position of the vertex in the stored adjacency
     matrix of the graph.
+
+    This class supports graphs with positive edge weights. Self-loops are
+    permitted.
     """
 
-    def __init__(self, adj_mat: scipy.sparse.spmatrix,
+    def __init__(self, mat: scipy.sparse.spmatrix,
                  internal_graph: stag_internal.Graph = None):
         r"""
-        Initialise the graph with an adjacency matrix.
+        Initialise the graph with a scipy sparse matrix.
+
+        The provided matrix should correspond either to the adjacency matrix or
+        Laplacian matrix of the graph. STAG will automatically detect whether
+        the provided matrix is an adjacency matrix or a Laplacian matrix.
         
         For example:
 
@@ -304,7 +311,7 @@ class Graph(LocalGraph):
         >>> g = stag.graph.Graph(adj_mat)
         \endcode
 
-        @param adj_mat A sparse scipy matrix, such as ``scipy.sparse.csc_matrix``.
+        @param mat A sparse scipy matrix, such as ``scipy.sparse.csc_matrix``.
         @param internal_graph (optional) specify a STAG C++ graph object to
                               initialise with. Use this only if you understand
                               the internal workings of the STAG library.
@@ -321,11 +328,11 @@ class Graph(LocalGraph):
 
         # This class is essentially a thin wrapper around the stag_internal library, written in C++.
         if internal_graph is None:
-            # Initialise the internal graph object with the provided adjacency matrix.
-            adj_mat_csr = adj_mat.tocsr()
-            outer_starts = stag_internal.vectorl(adj_mat_csr.indptr.tolist())
-            inner_indices = stag_internal.vectorl(adj_mat_csr.indices.tolist())
-            values = stag_internal.vectord(adj_mat_csr.data.tolist())
+            # Initialise the internal graph object with the provided matrix.
+            mat_csr = mat.tocsr()
+            outer_starts = stag_internal.vectorl(mat_csr.indptr.tolist())
+            inner_indices = stag_internal.vectorl(mat_csr.indices.tolist())
+            values = stag_internal.vectord(mat_csr.data.tolist())
             self.internal_graph: stag_internal.Graph = stag_internal.Graph(outer_starts, inner_indices, values)
         else:
             # The initialiser was called with an internal graph object.
@@ -529,6 +536,47 @@ class Graph(LocalGraph):
         """
         return self.internal_graph.number_of_edges()
 
+    def has_self_loops(self) -> bool:
+        """Returns a boolean indicating whether this graph contains self loops."""
+        return self.internal_graph.has_self_loops()
+
+    def is_connected(self) -> bool:
+        """
+        Returns a boolean indicating whether the graph is connected.
+
+        The running time of this method is \f$O(m)\f$ where \f$m\f$ is the
+        number of edges in the graph.
+        """
+        return self.internal_graph.is_connected()
+
+    @utility.convert_ndarrays
+    def subgraph(self, vertices: List[int]) -> 'Graph':
+        r"""
+        Construct and return a subgraph of this graph.
+
+        Note that the vertex indices will be changed in the subgraph.
+
+        @param vertices the vertices in the induced subgraph
+        @return a new stag.graph.Graph object representing the subgraph induced
+                by the given vertices
+        """
+        new_int_graph = self.internal_graph.subgraph(stag_internal.vectorl(vertices))
+        return Graph(None, internal_graph=new_int_graph)
+
+    def disjoint_union(self, other: 'Graph') -> 'Graph':
+        r"""
+        Construct and return the disjoint union of this graph and another.
+
+        The disjoint union of two graphs \f$G\f$ and \f$H\f$ is a graph
+        containing \f$G\f$ and \f$H\f$ as disconnected subgraphs.
+
+        @param other the other graph to be combined with this one
+        @return a new stag.graph.Graph object representing the union of this
+                graph with the other one
+        """
+        new_int_graph = self.internal_graph.disjoint_union(other.internal_graph)
+        return Graph(None, internal_graph=new_int_graph)
+
     def degree(self, v: int) -> float:
         return self.internal_graph.degree(v)
 
@@ -576,6 +624,23 @@ class Graph(LocalGraph):
     def __ne__(self, other):
         return not self.__eq__(other)
 
+    def __add__(self, other):
+        if isinstance(other, Graph):
+            if other.number_of_vertices() != self.number_of_vertices():
+                raise ValueError("Number of vertices must be equal.")
+            return Graph(self.adjacency() + other.adjacency())
+        else:
+            return NotImplemented
+
+    def __mul__(self, other):
+        if isinstance(other, (int, float)):
+            return Graph(other * self.adjacency())
+        else:
+            return NotImplemented
+
+    def __rmul__(self, other):
+        return self.__mul__(other)
+
     ##
     # \endcond
     ##
@@ -590,7 +655,7 @@ class Graph(LocalGraph):
         return networkx.Graph(self.adjacency())
 
     def draw(self, **kwargs):
-        """
+        r"""
         Plot the graph with matplotlib.
 
         This uses the networkx draw method and accepts any the keyword arguments
@@ -676,6 +741,21 @@ def star_graph(n) -> Graph:
     @return a stag.graph.Graph object representing the star graph
     """
     return stag_internal.star_graph(n)
+
+
+@return_graph
+def identity_graph(n) -> Graph:
+    r"""
+    Construct the identity graph. The identity graph consists of \f$n\f$
+    vertices, each with a self-loop of weight \f$1\f$.
+
+    Both the adjacency matrix and Laplacian matrix of the identity graph are
+    equal to the identity matrix.
+
+    @param n the number of vertices in the constructed graph
+    @return a stag.graph.Graph object representing the identity graph
+    """
+    return stag_internal.identity_graph(n)
 
 
 def from_networkx(netx_graph: networkx.Graph,

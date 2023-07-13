@@ -11,10 +11,27 @@ import stag.graph
 import stag.random
 import stag.graphio
 
-# Define the adjacency matrices of some useful graphs.
-C4_ADJ_MAT = scipy.sparse.csc_matrix([[0, 1, 0, 1], [1, 0, 1, 0], [0, 1, 0, 1], [1, 0, 1, 0]])
-K6_ADJ_MAT = scipy.sparse.csc_matrix([[0, 1, 1, 1, 1, 1], [1, 0, 1, 1, 1, 1], [1, 1, 0, 1, 1, 1],
-                                      [1, 1, 1, 0, 1, 1], [1, 1, 1, 1, 0, 1], [1, 1, 1, 1, 1, 0]])
+# Define the matrices of some useful graphs.
+C4_ADJ_MAT = scipy.sparse.csc_matrix([[0, 1, 0, 1],
+                                      [1, 0, 1, 0],
+                                      [0, 1, 0, 1],
+                                      [1, 0, 1, 0]])
+C4_LAP_MAT = scipy.sparse.csc_matrix([[2, -1, 0, -1],
+                                      [-1, 2, -1, 0],
+                                      [0, -1, 2, -1],
+                                      [-1, 0, -1, 2]])
+K6_ADJ_MAT = scipy.sparse.csc_matrix([[0, 1, 1, 1, 1, 1],
+                                      [1, 0, 1, 1, 1, 1],
+                                      [1, 1, 0, 1, 1, 1],
+                                      [1, 1, 1, 0, 1, 1],
+                                      [1, 1, 1, 1, 0, 1],
+                                      [1, 1, 1, 1, 1, 0]])
+K6_LAP_MAT = scipy.sparse.csc_matrix([[5, -1, -1, -1, -1, -1],
+                                      [-1, 5, -1, -1, -1, -1],
+                                      [-1, -1, 5, -1, -1, -1],
+                                      [-1, -1, -1, 5, -1, -1],
+                                      [-1, -1, -1, -1, 5, -1],
+                                      [-1, -1, -1, -1, -1, 5]])
 BARBELL5_ADJ_MAT = scipy.sparse.csc_matrix([[0, 1, 1, 1, 1, 0, 0, 0, 0, 0],
                                             [1, 0, 1, 1, 1, 0, 0, 0, 0, 0],
                                             [1, 1, 0, 1, 1, 0, 0, 0, 0, 0],
@@ -53,6 +70,15 @@ def test_graph_constructor():
     assert graph.number_of_edges() == 21
     assert graph.degree(2) == 4
     assert graph.degree(4) == 5
+
+    # Check that initialising with the Laplacian matrices gives the same result
+    g1 = stag.graph.Graph(C4_ADJ_MAT)
+    g2 = stag.graph.Graph(C4_LAP_MAT)
+    assert g1 == g2
+
+    g1 = stag.graph.Graph(K6_ADJ_MAT)
+    g2 = stag.graph.Graph(K6_LAP_MAT)
+    assert g1 == g2
 
 
 def test_complete_graph():
@@ -115,6 +141,24 @@ def test_cycle_graph():
     lap_diff = (graph.laplacian() - expected_laplacian_matrix)
     lap_diff.eliminate_zeros()
     assert lap_diff.nnz == 0
+
+
+def test_identity_graph():
+    # Create an identity graph
+    n = 5
+    graph = stag.graph.identity_graph(n)
+    expected_mat = sp.sparse.csc_matrix([[1, 0, 0, 0, 0],
+                                         [0, 1, 0, 0, 0],
+                                         [0, 0, 1, 0, 0],
+                                         [0, 0, 0, 1, 0],
+                                         [0, 0, 0, 0, 1]])
+    adj_mat_diff = graph.adjacency() - expected_mat
+    adj_mat_diff.eliminate_zeros()
+    assert adj_mat_diff.nnz == 0
+
+    lap_mat_diff = graph.laplacian() - expected_mat
+    lap_mat_diff.eliminate_zeros()
+    assert lap_mat_diff.nnz == 0
 
 
 def test_adjacency_matrix():
@@ -290,3 +334,94 @@ def test_adjacencylist_graph():
     g = stag.graph.AdjacencyListLocalGraph(file)
     assert g.vertex_exists(1)
     assert not g.vertex_exists(10)
+
+
+def test_subgraph():
+    g1 = stag.graph.Graph(BARBELL5_ADJ_MAT)
+
+    vertices = [3, 4, 5, 6]
+    g2 = g1.subgraph(vertices)
+    expected_adj_mat = sp.sparse.csc_matrix([[0, 1, 0, 0],
+                                             [1, 0, 1, 0],
+                                             [0, 1, 0, 1],
+                                             [0, 0, 1, 0]])
+    mat_diff = g2.adjacency() - expected_adj_mat
+    assert(np.all(mat_diff.todense() == pytest.approx(0)))
+
+    # Check that numpy arrays also work
+    g3 = g1.subgraph(np.asarray(vertices))
+    assert g2 == g3
+
+
+def test_union():
+    g1 = stag.graph.complete_graph(3)
+    g2 = stag.graph.cycle_graph(3)
+    g3 = g1.disjoint_union(g2)
+    expected_adj_mat = sp.sparse.csc_matrix([[0, 1, 1, 0, 0, 0],
+                                             [1, 0, 1, 0, 0, 0],
+                                             [1, 1, 0, 0, 0, 0],
+                                             [0, 0, 0, 0, 1, 1],
+                                             [0, 0, 0, 1, 0, 1],
+                                             [0, 0, 0, 1, 1, 0]])
+    mat_diff = g3.adjacency() - expected_adj_mat
+    assert (np.all(mat_diff.todense() == pytest.approx(0)))
+
+
+def test_self_loops():
+    adj_mat = sp.sparse.csc_matrix([[1, 1, 1],
+                                    [1, 0, 0],
+                                    [1, 0, 1]])
+    graph = stag.graph.Graph(adj_mat)
+    assert graph.has_self_loops()
+
+    graph = stag.graph.complete_graph(5)
+    assert not graph.has_self_loops()
+
+
+def test_connected():
+    g1 = stag.graph.cycle_graph(100)
+    assert g1.is_connected()
+
+    g2 = stag.random.sbm(100, 2, 0.5, 0)
+    assert not g2.is_connected()
+
+    g3 = g1.disjoint_union(stag.graph.complete_graph(3))
+    assert not g3.is_connected()
+
+    g4 = stag.random.sbm(100, 1, 0.7, 0)
+    assert g4.is_connected()
+
+
+def test_add_graphs():
+    g1 = stag.graph.complete_graph(4)
+    g2 = stag.graph.cycle_graph(4)
+    g3 = g1 + g2
+    expected_adj_mat = sp.sparse.csc_matrix([[0, 2, 1, 2],
+                                             [2, 0, 2, 1],
+                                             [1, 2, 0, 2],
+                                             [2, 1, 2, 0]])
+    mat_diff = g3.adjacency() - expected_adj_mat
+    assert (np.all(mat_diff.todense() == pytest.approx(0)))
+
+    g4 = stag.graph.cycle_graph(5)
+    try:
+        g = g1 + g4
+
+        # We should not reach this point
+        assert False
+    except ValueError as error:
+        assert True
+
+
+def test_scalar_multiplication():
+    g1 = stag.graph.cycle_graph(4)
+    g2 = 2 * g1
+    g3 = g1 * 2
+    assert g2 == g3
+
+    expected_adj_mat = sp.sparse.csc_matrix([[0, 2, 0, 2],
+                                             [2, 0, 2, 0],
+                                             [0, 2, 0, 2],
+                                             [2, 0, 2, 0]])
+    mat_diff = g3.adjacency() - expected_adj_mat
+    assert (np.all(mat_diff.todense() == pytest.approx(0)))

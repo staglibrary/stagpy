@@ -3,7 +3,7 @@ on:
   push:
     branches:
       - master
-      - performance-tests
+      - main
 jobs:
   benchmark:
     runs-on: ubuntu-latest

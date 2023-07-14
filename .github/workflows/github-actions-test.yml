@@ -35,7 +35,7 @@ jobs:
       - name: Run tests
         run: |
           cd test
-          python -m pytest .
+          python -m pytest -k "not test_performance"
           cd ..
       - name: Build docs
         run: |

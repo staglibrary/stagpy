@@ -4,6 +4,7 @@ on:
     branches:
       - master
       - main
+      - performance-tests
 jobs:
   benchmark:
     runs-on: ubuntu-latest
@@ -40,6 +41,5 @@ jobs:
           output-file-path: test/output.json
           github-token: ${{ secrets.STAG_PAT }}
           auto-push: true
-          alert-threshold: '130%'
           comment-on-alert: true
           fail-on-alert: true

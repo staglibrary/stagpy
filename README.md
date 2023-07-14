@@ -3,6 +3,7 @@
 [![Test](https://github.com/staglibrary/stagpy/actions/workflows/github-actions-test.yml/badge.svg?branch=main)](https://github.com/staglibrary/stagpy/actions/workflows/github-actions-test.yml)
 [![Build](https://github.com/staglibrary/stagpy/actions/workflows/github-actions-release.yml/badge.svg)](https://github.com/staglibrary/stagpy/actions/workflows/github-actions-release.yml)
 [![Docs](https://github.com/staglibrary/stagpy/actions/workflows/github-actions-docs.yml/badge.svg)](https://github.com/staglibrary/stagpy/actions/workflows/github-actions-docs.yml)
+[![Performance](https://github.com/staglibrary/stagpy/actions/workflows/github-actions-benchmark.yml/badge.svg)](https://staglibrary.github.io/stagpy/dev/bench/)
 
 STAG is a library providing efficient spectral algorithms for the analysis of massive graphs. STAGPy is a python wrapper around the underlying C++ library which provides convenient methods for learning on graphs in python.
 

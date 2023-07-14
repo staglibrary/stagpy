@@ -8,6 +8,7 @@ import inspect
 
 import scipy.sparse
 
+import stag.utility
 from . import stag_internal
 from . import utility
 
@@ -342,17 +343,18 @@ class Graph(LocalGraph):
         # \endcond
         ##
 
-    @utility.return_sparse_matrix
-    def adjacency(self) -> scipy.sparse.csc_matrix:
+    def adjacency(self) -> stag.utility.SprsMat:
         """
         Return the sparse adjacency matrix of the graph.
 
-        @return a ``scipy.sparse.csc_matrix`` representing the graph adjacency matrix
+        @return a ``stag.utility.SprsMat`` representing the graph adjacency matrix
         """
-        return self.internal_graph.adjacency()
+        adj = utility.SprsMat(None,
+                              internal_sprsmat=self.internal_graph.adjacency())
+        adj.__parent = self
+        return adj
 
-    @utility.return_sparse_matrix
-    def laplacian(self) -> scipy.sparse.csc_matrix:
+    def laplacian(self) -> stag.utility.SprsMat:
         """
         Construct the Laplacian matrix of the graph.
 
@@ -365,12 +367,14 @@ class Graph(LocalGraph):
         where \f$D\f$ is the diagonal matrix of vertex degrees
         and \f$A\f$ is the adjacency matrix of the graph.
 
-        @return a ``scipy.sparse.csc_matrix`` representing the graph Laplacian
+        @return a ``stag.utility.SprsMat`` representing the graph Laplacian
         """
-        return self.internal_graph.laplacian()
+        lap = utility.SprsMat(None,
+                              internal_sprsmat=self.internal_graph.laplacian())
+        lap.__parent = self
+        return lap
 
-    @utility.return_sparse_matrix
-    def normalised_laplacian(self) -> scipy.sparse.csc_matrix:
+    def normalised_laplacian(self) -> stag.utility.SprsMat:
         r"""
         Construct the normalised Laplacian matrix of the graph.
 
@@ -383,30 +387,14 @@ class Graph(LocalGraph):
         where \f$D\f$ is the diagonal matrix of vertex degrees and \f$L\f$
         is the Laplacian matrix of the graph.
 
-        @return a ``scipy.sparse.csc_matrix`` representing the normalised Laplacian
+        @return a ``stag.utility.SprsMat`` representing the normalised Laplacian
         """
-        return self.internal_graph.normalised_laplacian()
+        lap = utility.SprsMat(
+            None, internal_sprsmat=self.internal_graph.normalised_laplacian())
+        lap.__parent = self
+        return lap
 
-    @utility.return_sparse_matrix
-    def normalised_laplacian(self) -> scipy.sparse.csc_matrix:
-        r"""
-        Construct the normalised Laplacian matrix of the graph.
-
-        The normalised Laplacian matrix is defined by
-
-        \f[
-            \mathcal{L} = D^{-1/2} L D^{-1/2}
-        \f]
-
-        where \f$D\f$ is the diagonal matrix of vertex degrees and \f$L\f$
-        is the Laplacian matrix of the graph.
-
-        @return a ``scipy.sparse.csc_matrix`` representing the normalised Laplacian
-        """
-        return self.internal_graph.normalised_laplacian()
-
-    @utility.return_sparse_matrix
-    def signless_laplacian(self) -> scipy.sparse.csc_matrix:
+    def signless_laplacian(self) -> stag.utility.SprsMat:
         """
         Construct the signless Laplacian matrix of the graph.
 
@@ -419,12 +407,14 @@ class Graph(LocalGraph):
         where \f$D\f$ is the diagonal matrix of vertex degrees
         and \f$A\f$ is the adjacency matrix of the graph.
 
-        @return a ``scipy.sparse.csc_matrix`` representing the signless graph Laplacian
+        @return a ``stag.utility.SprsMat`` representing the signless graph Laplacian
         """
-        return self.internal_graph.signless_laplacian()
+        signless_lap = utility.SprsMat(
+            None, internal_sprsmat=self.internal_graph.signless_laplacian())
+        signless_lap.__parent = self
+        return signless_lap
 
-    @utility.return_sparse_matrix
-    def normalised_signless_laplacian(self) -> scipy.sparse.csc_matrix:
+    def normalised_signless_laplacian(self) -> stag.utility.SprsMat:
         r"""
         Construct the normalised signless Laplacian matrix of the graph.
 
@@ -437,12 +427,14 @@ class Graph(LocalGraph):
         where \f$D\f$ is the diagonal matrix of vertex degrees and \f$J\f$
         is the signless Laplacian matrix of the graph.
 
-        @return a ``scipy.sparse.csc_matrix`` representing the normalised signless Laplacian
+        @return a ``stag.utility.SprsMat`` representing the normalised signless Laplacian
         """
-        return self.internal_graph.normalised_signless_laplacian()
+        signless_lap = utility.SprsMat(
+            None, internal_sprsmat=self.internal_graph.normalised_signless_laplacian())
+        signless_lap.__parent = self
+        return signless_lap
 
-    @utility.return_sparse_matrix
-    def degree_matrix(self) -> scipy.sparse.csc_matrix:
+    def degree_matrix(self) -> stag.utility.SprsMat:
         r"""
         The degree matrix of the graph.
 
@@ -451,12 +443,14 @@ class Graph(LocalGraph):
         where \f$\mathrm{deg}(i)\f$ is the degree of vertex \f$i\f$ and
         \f$n\f$ is the number of vertices in the graph.
 
-        @return a ``scipy.sparse.csc_matrix`` representing the degree matrix
+        @return a ``stag.utility.SprsMat`` representing the degree matrix
         """
-        return self.internal_graph.degree_matrix()
+        deg_mat = utility.SprsMat(
+            None, internal_sprsmat=self.internal_graph.degree_matrix())
+        deg_mat.__parent = self
+        return deg_mat
     
-    @utility.return_sparse_matrix
-    def inverse_degree_matrix(self) -> scipy.sparse.csc_matrix:
+    def inverse_degree_matrix(self) -> stag.utility.SprsMat:
         r"""
         The inverse degree matrix of the graph.
 
@@ -475,12 +469,14 @@ class Graph(LocalGraph):
         where \f$\mathrm{deg}(i)\f$ is the degree of vertex \f$i\f$ and
         \f$n\f$ is the number of vertices in the graph.
 
-        @return a ``scipy.sparse.csc_matrix`` representing the inverse degree matrix
+        @return a ``stag.utility.SprsMat`` representing the inverse degree matrix
         """
-        return self.internal_graph.inverse_degree_matrix()
-    
-    @utility.return_sparse_matrix
-    def lazy_random_walk_matrix(self) -> scipy.sparse.csc_matrix:
+        inv_deg_mat = utility.SprsMat(
+            None, internal_sprsmat=self.internal_graph.inverse_degree_matrix())
+        inv_deg_mat.__parent = self
+        return inv_deg_mat
+
+    def lazy_random_walk_matrix(self) -> stag.utility.SprsMat:
         """
         The lazy random walk matrix of the graph.
 
@@ -493,10 +489,13 @@ class Graph(LocalGraph):
         where \f$I\f$ is the identity matrix, \f$A\f$ is the graph adjacency
         matrix and \f$D\f$ is the degree matrix of the graph.
 
-        @return a ``scipy.sparse.csc_matrix`` representing the lazy random walk
+        @return a ``stag.utility.SprsMat`` representing the lazy random walk
                 matrix
         """
-        return self.internal_graph.lazy_random_walk_matrix()
+        rw_mat = utility.SprsMat(
+            None, internal_sprsmat=self.internal_graph.lazy_random_walk_matrix())
+        rw_mat.__parent = self
+        return rw_mat
 
     def total_volume(self) -> float:
         r"""
@@ -652,7 +651,7 @@ class Graph(LocalGraph):
         See the
         [networkx documentation](https://networkx.org/documentation/stable/reference/classes/graph.html).
         """
-        return networkx.Graph(self.adjacency())
+        return networkx.Graph(self.adjacency().to_scipy())
 
     def draw(self, **kwargs):
         r"""

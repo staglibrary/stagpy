@@ -48,7 +48,7 @@ PROJECT_NAME           = "STAG Python"
 # could be handy for archiving the generated documentation or if some version
 # control system is used.
 
-PROJECT_NUMBER         = 1.2.0
+PROJECT_NUMBER         = dev
 
 # Using the PROJECT_BRIEF tag one can provide an optional one line description
 # for a project that appears at the top of each page and should give viewer a
@@ -972,8 +972,7 @@ RECURSIVE              = NO
 # Note that relative paths are relative to the directory from which doxygen is
 # run.
 
-EXCLUDE = ../stag/stag_internal.py \
-          ../stag/utility.py
+EXCLUDE = ../stag/stag_internal.py
 
 # The EXCLUDE_SYMLINKS tag can be used to select whether or not files or
 # directories that are symbolic links (a Unix file system feature) are excluded

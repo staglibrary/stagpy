@@ -17,7 +17,7 @@ def test_sbm():
     assert graph.number_of_vertices() == 2000
 
     # The adjacency matrix should be symmetric
-    sym_diff = (graph.adjacency() - graph.adjacency().transpose())
+    sym_diff = (graph.adjacency() - graph.adjacency().to_scipy().transpose())
     sym_diff.eliminate_zeros()
     assert sym_diff.nnz == 0
 

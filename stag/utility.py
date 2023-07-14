@@ -1,12 +1,113 @@
+"""
+Some objects used for interoperability between C++ and Python.
+"""
 from . import stag_internal
 import scipy.sparse
 import inspect
 import numpy as np
 
+class SprsMat(object):
+    """
+    An object representing a sparse matrix for use by the STAG library.
+    The data is stored natively on the 'C++' side of the library, allowing
+    for fast computation.
+
+    The object is designed for easy interoperability with scipy sparse matrix
+    objects. When combining SprsMat objects together (such as adding,
+    subtracting, multiplying...), they will be converted to scipy matrices (at
+    the cost of copying the data to the 'python side' of the library).
+
+    If they are only used as arguments to STAG library methods, they will be very
+    efficient since the data will stay on the C++ side of the library.
+    """
+
+    def __init__(self, scipy_mat: scipy.sparse.csc_matrix,
+                 internal_sprsmat: stag_internal.SprsMat = None):
+        """
+        Construct a STAG SprsMat from a scipy sparse matrix.
+
+        The optional internal_sprsmat parameter is included for use by the
+        library developers or advanced users.
+        """
+        ##
+        # \cond
+        # Do not document the internal workings of the SprsMat object
+        ##
+        if internal_sprsmat is not None:
+            self.internal_sprsmat = internal_sprsmat
+        else:
+            col_starts = stag_internal.vectorl(scipy_mat.indptr.tolist())
+            row_indices = stag_internal.vectorl(scipy_mat.indices.tolist())
+            values = stag_internal.vectord(scipy_mat.data.tolist())
+            self.internal_sprsmat = stag_internal.sprsMatFromVectors(col_starts,
+                                                                     row_indices,
+                                                                     values)
+        ##
+        # \endcond
+        ##
+
+    def to_scipy(self) -> scipy.sparse.csc_matrix:
+        """
+        Convert the STAG SprsMat object to a scipy sparse matrix.
+        """
+        outer_starts = stag_internal.sprsMatOuterStarts(self.internal_sprsmat)
+        inner_indices = stag_internal.sprsMatInnerIndices(self.internal_sprsmat)
+        values = stag_internal.sprsMatValues(self.internal_sprsmat)
+        return scipy.sparse.csc_matrix((values, inner_indices, outer_starts))
+
+    def to_dense(self) -> np.ndarray:
+        """
+        Convert the STAG SprsMat object to a dense numpy matrix.
+        """
+        return self.to_scipy().toarray()
+
+    ##
+    # \cond
+    # Do not document the operator methods
+    ##
+    def __sub__(self, other):
+        if issubclass(type(other), scipy.sparse.spmatrix):
+            return self.to_scipy() - other
+        elif type(other) == SprsMat:
+            return self.to_scipy() - other.to_scipy()
+        else:
+            return NotImplemented
+
+    def __rsub__(self, other):
+        if issubclass(type(other), scipy.sparse.spmatrix):
+            return other - self.to_scipy()
+        elif type(other) == SprsMat:
+            return other.to_scipy() - self.to_scipy()
+        else:
+            return NotImplemented
+
+    def __add__(self, other):
+        if issubclass(type(other), scipy.sparse.spmatrix):
+            return self.to_scipy() + other
+        elif type(other) == SprsMat:
+            return self.to_scipy() + other.to_scipy()
+        else:
+            return NotImplemented
+
+    def __radd__(self, other):
+        return self.__add__(other)
+
+    def __mul__(self, other):
+        if isinstance(other, (int, float)):
+            return other * self.to_scipy()
+        else:
+            return NotImplemented
+
+    def __rmul__(self, other):
+        return self.__mul__(other)
+    ##
+    # \endcond
+    ##
+
+
 ##
 # \cond
-# This file is currently listed as an explicit exception in the doxyfile.
-# It will not be processed for documentation at all.
+# Ignore the remainder of this file in the documentation.
 ##
 
 def swig_sprs_to_scipy(swig_mat):
@@ -29,22 +130,6 @@ def scipy_to_swig_sprs(scipy_mat: scipy.sparse.csc_matrix):
     return stag_internal.sprsMatFromVectors(col_starts,
                                             row_indices,
                                             values)
-
-
-def return_sparse_matrix(func):
-    def decorated_function(*args, **kwargs):
-        swig_sparse_matrix = func(*args, **kwargs)
-        sp_sparse = swig_sprs_to_scipy(swig_sparse_matrix)
-        del swig_sparse_matrix
-        return sp_sparse
-
-    # Set the metadata of the returned function to match the original.
-    # This is used when generating the documentation
-    decorated_function.__doc__ = func.__doc__
-    decorated_function.__module__ = func.__module__
-    decorated_function.__signature__ = inspect.signature(func)
-
-    return decorated_function
 
 
 def possibly_convert_ndarray(argument):

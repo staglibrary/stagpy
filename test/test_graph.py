@@ -173,14 +173,15 @@ def test_symmetry():
     big_graph = stag.random.sbm(1000, 5, 0.8, 0.2)
 
     # Check that all of the graph matrices are truly symmetric
-    assert np.allclose(big_graph.adjacency().toarray(), big_graph.adjacency().toarray().T)
+    assert np.allclose(big_graph.adjacency().to_dense(),
+                       big_graph.adjacency().to_dense().T)
 
     lap_mat = big_graph.normalised_laplacian()
-    lap_mat_dense = lap_mat.toarray()
+    lap_mat_dense = lap_mat.to_dense()
     assert np.allclose(lap_mat_dense, lap_mat_dense.T)
 
     lap_mat = big_graph.laplacian()
-    lap_mat_dense = lap_mat.toarray()
+    lap_mat_dense = lap_mat.to_dense()
     assert np.allclose(lap_mat_dense, lap_mat_dense.T)
 
 

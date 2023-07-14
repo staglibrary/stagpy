@@ -74,7 +74,7 @@ def test_acl_local_clustering():
 
 def test_approximate_pagerank():
     # For easier manual verification, we use a cycle graph with 0.5 weights on the edges
-    adj = 0.5 * stag.graph.cycle_graph(4).adjacency()
+    adj = 0.5 * stag.graph.cycle_graph(4).adjacency().to_scipy()
     graph = stag.graph.Graph(adj)
 
     # Construct seed matrix.

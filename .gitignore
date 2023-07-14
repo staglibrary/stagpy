@@ -131,3 +131,5 @@ dmypy.json
 # Ignore swap files
 *.swp
 
+# Ignore performance test output
+test/output.json

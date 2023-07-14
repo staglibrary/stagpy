@@ -24,6 +24,11 @@ def test_local_cluster(benchmark):
     g = stag.graphio.load_edgelist("data/test6.edgelist")
     benchmark(stag.cluster.local_cluster, g, 0, 1000)
 
+def test_compute_eigensystem(benchmark):
+    g = stag.graphio.load_edgelist("data/test6.edgelist")
+    lap = g.laplacian()
+    benchmark(stag.spectrum.compute_eigensystem, lap, 10)
+
 #-------------------------------------------------------------------------------
 # Multi-step workflows - this is to test the efficiency of passing data back and
 # forth from Python to C++

@@ -4,13 +4,14 @@ Methods for computing eigenvalues and eigenvectors of sparse matrices.
 import numpy as np
 import scipy as sp
 import scipy.sparse
-from typing import Tuple
+from typing import Tuple, Union
 
+import stag.utility
 from . import utility
 from . import stag_internal
 
 
-def compute_eigensystem(mat: scipy.sparse.spmatrix,
+def compute_eigensystem(mat: Union[scipy.sparse.spmatrix, stag.utility.SprsMat],
                         num: int,
                         which: str = 'SM') -> Tuple[np.ndarray, np.ndarray]:
     r"""
@@ -40,7 +41,10 @@ def compute_eigensystem(mat: scipy.sparse.spmatrix,
     @param which (optional) a string indicating which eigenvectors to calculate
     @returns a tuple containing the computed eigenvalues and eigenvectors
     """
-    return sp.sparse.linalg.eigs(mat, k=num, which=which)
+    if issubclass(type(mat), scipy.sparse.spmatrix):
+        return sp.sparse.linalg.eigs(mat, k=num, which=which)
+    else:
+        return sp.sparse.linalg.eigs(mat.to_scipy(), k=num, which=which)
 
 
 def compute_eigenvalues(mat: scipy.sparse.spmatrix,

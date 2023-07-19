@@ -16,7 +16,12 @@ def swig_sprs_to_scipy(swig_mat):
     outer_starts = stag_internal.sprsMatOuterStarts(swig_mat)
     inner_indices = stag_internal.sprsMatInnerIndices(swig_mat)
     values = stag_internal.sprsMatValues(swig_mat)
-    return scipy.sparse.csc_matrix((values, inner_indices, outer_starts))
+
+    # If the last entry in outer_starts is 0, then this is the empty matrix.
+    if outer_starts[-1] == 0:
+        return scipy.sparse.csc_matrix((1, 1))
+    else:
+        return scipy.sparse.csc_matrix((values, inner_indices, outer_starts))
 
 
 def scipy_to_swig_sprs(scipy_mat: scipy.sparse.csc_matrix):

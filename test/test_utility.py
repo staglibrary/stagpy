@@ -89,7 +89,6 @@ def test_unary_negation_sprsmat():
     assert(np.all(mat_diff.todense() == pytest.approx(0)))
 
 
-
 def test_scalar_mul_sprsmat():
     mat1 = scipy.sparse.csc_matrix([[0, 1, 0, 1],
                                     [1, 0, 1, 0],
@@ -107,4 +106,28 @@ def test_scalar_mul_sprsmat():
 
     mat2 = (sprsmat1 * 2).to_scipy()
     mat_diff = (mat2 - expected_mat)
+    assert(np.all(mat_diff.todense() == pytest.approx(0)))
+
+    sprsmat1 *= 2
+    mat_diff = (sprsmat1.to_scipy() - expected_mat)
+    assert(np.all(mat_diff.todense() == pytest.approx(0)))
+
+
+def test_scalar_div_sprsmat():
+    mat1 = scipy.sparse.csc_matrix([[0, 2, 0, 2],
+                                    [2, 0, 2, 0],
+                                    [0, 2, 0, 2],
+                                    [2, 0, 2, 0]])
+    sprsmat1 = stag.utility.SprsMat(mat1)
+    mat2 = (sprsmat1 / 2).to_scipy()
+
+    expected_mat = scipy.sparse.csc_matrix([[0, 1, 0, 1],
+                                            [1, 0, 1, 0],
+                                            [0, 1, 0, 1],
+                                            [1, 0, 1, 0]])
+    mat_diff = (mat2 - expected_mat)
+    assert(np.all(mat_diff.todense() == pytest.approx(0)))
+
+    sprsmat1 /= 2
+    mat_diff = sprsmat1.to_scipy() - expected_mat
     assert(np.all(mat_diff.todense() == pytest.approx(0)))

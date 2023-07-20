@@ -1027,6 +1027,9 @@ class SprsMat(object):
     def __neg__(self):
         return _stag_internal.SprsMat___neg__(self)
 
+    def __truediv__(self, *args):
+        return _stag_internal.SprsMat___truediv__(self, *args)
+
     def __init__(self):
         _stag_internal.SprsMat_swiginit(self, _stag_internal.new_SprsMat())
 

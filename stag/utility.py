@@ -105,6 +105,13 @@ class SprsMat(object):
 
     def __rmul__(self, other):
         return self.__mul__(other)
+
+    def __truediv__(self, other):
+        if isinstance(other, (int, float)):
+            return SprsMat(None, internal_sprsmat=(self.internal_sprsmat / other))
+        else:
+            return NotImplemented
+
     ##
     # \endcond
     ##

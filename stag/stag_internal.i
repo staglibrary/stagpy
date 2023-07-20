@@ -105,6 +105,14 @@ public:
     SprsMat __neg__() {
         return - *$self;
     }
+
+    SprsMat __truediv__(double other) {
+        return *$self / other;
+    }
+
+    SprsMat __truediv__(stag_int other) {
+        return *$self / other;
+    }
 }
 
 // Metadata about the python interface

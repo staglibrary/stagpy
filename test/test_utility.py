@@ -180,3 +180,20 @@ def test_sprsmat_multiplication():
     mat3 = mat2 @ mat1
     mat_diff = mat3 - expected_mat
     assert(np.all(mat_diff.to_dense() == pytest.approx(0)))
+
+    mat2 *= mat1
+    mat_diff = mat2 - expected_mat
+    assert(np.all(mat_diff.to_dense() == pytest.approx(0)))
+
+
+def test_sprsmat_outer_product():
+    vec1 = stag.utility.SprsMat([[1, 2, 0, 1]])
+    vec2 = stag.utility.SprsMat([[0, -2, 1, 0]])
+
+    expected_mat = stag.utility.SprsMat([[0, -2, 1, 0],
+                                         [0, -4, 2, 0],
+                                         [0, 0, 0, 0],
+                                         [0, -2, 1, 0]])
+    mat3 = vec1.transpose() @ vec2
+    mat_diff = mat3 - expected_mat
+    assert(np.all(mat_diff.to_dense() == pytest.approx(0)))

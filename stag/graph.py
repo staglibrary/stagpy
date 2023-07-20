@@ -3,7 +3,7 @@ Graph object definitions and standard constructors.
 """
 import networkx
 from abc import ABC, abstractmethod
-from typing import List
+from typing import List, Union
 import inspect
 
 import scipy.sparse
@@ -290,7 +290,7 @@ class Graph(LocalGraph):
     permitted.
     """
 
-    def __init__(self, mat: scipy.sparse.spmatrix,
+    def __init__(self, mat: Union[scipy.sparse.spmatrix, stag.utility.SprsMat],
                  internal_graph: stag_internal.Graph = None):
         r"""
         Initialise the graph with a scipy sparse matrix.
@@ -330,11 +330,9 @@ class Graph(LocalGraph):
         # This class is essentially a thin wrapper around the stag_internal library, written in C++.
         if internal_graph is None:
             # Initialise the internal graph object with the provided matrix.
-            mat_csr = mat.tocsr()
-            outer_starts = stag_internal.vectorl(mat_csr.indptr.tolist())
-            inner_indices = stag_internal.vectorl(mat_csr.indices.tolist())
-            values = stag_internal.vectord(mat_csr.data.tolist())
-            self.internal_graph: stag_internal.Graph = stag_internal.Graph(outer_starts, inner_indices, values)
+            if type(mat) is not stag.utility.SprsMat:
+                mat = stag.utility.SprsMat(mat)
+            self.internal_graph: stag_internal.Graph = stag_internal.Graph(mat.internal_sprsmat)
         else:
             # The initialiser was called with an internal graph object.
             self.internal_graph: stag_internal.Graph = internal_graph

@@ -6,10 +6,14 @@ import scipy.sparse
 
 
 def main():
-    graph = stag.random.sbm(10, 2, 1, 0)
-    ccs = stag.cluster.connected_components(graph)
-    print(ccs)
-    print(type(ccs))
+    adj_mat = scipy.sparse.csc_matrix([[0, -1, 0, 1],
+                                       [-1, 0, 1, 0],
+                                       [0, 1, 0, 1],
+                                       [1, 0, 1, 0]])
+    g = stag.graph.Graph(adj_mat)
+    cluster = stag.cluster.local_cluster(g, 0, 10)
+    print(g.adjacency().todense())
+    print(cluster)
 
 
 if __name__ == "__main__":

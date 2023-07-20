@@ -1015,6 +1015,18 @@ class SprsMat(object):
     __repr__ = _swig_repr
     __swig_destroy__ = _stag_internal.delete_SprsMat
 
+    def __add__(self, other):
+        return _stag_internal.SprsMat___add__(self, other)
+
+    def __sub__(self, other):
+        return _stag_internal.SprsMat___sub__(self, other)
+
+    def __mul__(self, *args):
+        return _stag_internal.SprsMat___mul__(self, *args)
+
+    def __neg__(self):
+        return _stag_internal.SprsMat___neg__(self)
+
     def __init__(self):
         _stag_internal.SprsMat_swiginit(self, _stag_internal.new_SprsMat())
 

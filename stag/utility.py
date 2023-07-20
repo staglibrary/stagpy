@@ -5,6 +5,7 @@ from . import stag_internal
 import scipy.sparse
 import inspect
 import numpy as np
+from typing import Optional
 
 class SprsMat(object):
     """
@@ -13,15 +14,15 @@ class SprsMat(object):
     for fast computation.
 
     The object is designed for easy interoperability with scipy sparse matrix
-    objects. When combining SprsMat objects together (such as adding,
-    subtracting, multiplying...), they will be converted to scipy matrices (at
-    the cost of copying the data to the 'python side' of the library).
+    objects. The SprsMat object can be constructed directly from a scipy
+    sparse matrix, and the to_scipy() method can be used to convert back
+    to a scipy matrix.
 
     If they are only used as arguments to STAG library methods, they will be very
     efficient since the data will stay on the C++ side of the library.
     """
 
-    def __init__(self, scipy_mat: scipy.sparse.csc_matrix,
+    def __init__(self, scipy_mat: Optional[scipy.sparse.csc_matrix],
                  internal_sprsmat: stag_internal.SprsMat = None):
         """
         Construct a STAG SprsMat from a scipy sparse matrix.
@@ -33,6 +34,7 @@ class SprsMat(object):
         # \cond
         # Do not document the internal workings of the SprsMat object
         ##
+        self.scipy_mat = scipy_mat
         if internal_sprsmat is not None:
             self.internal_sprsmat = internal_sprsmat
         else:
@@ -50,10 +52,13 @@ class SprsMat(object):
         """
         Convert the STAG SprsMat object to a scipy sparse matrix.
         """
-        outer_starts = stag_internal.sprsMatOuterStarts(self.internal_sprsmat)
-        inner_indices = stag_internal.sprsMatInnerIndices(self.internal_sprsmat)
-        values = stag_internal.sprsMatValues(self.internal_sprsmat)
-        return scipy.sparse.csc_matrix((values, inner_indices, outer_starts))
+        if self.scipy_mat is None:
+            outer_starts = stag_internal.sprsMatOuterStarts(self.internal_sprsmat)
+            inner_indices = stag_internal.sprsMatInnerIndices(self.internal_sprsmat)
+            values = stag_internal.sprsMatValues(self.internal_sprsmat)
+            self.scipy_mat = scipy.sparse.csc_matrix(
+                (values, inner_indices, outer_starts))
+        return self.scipy_mat
 
     def to_dense(self) -> np.ndarray:
         """
@@ -66,26 +71,26 @@ class SprsMat(object):
     # Do not document the operator methods
     ##
     def __sub__(self, other):
-        if issubclass(type(other), scipy.sparse.spmatrix):
-            return self.to_scipy() - other
-        elif type(other) == SprsMat:
-            return self.to_scipy() - other.to_scipy()
+        if isinstance(other, SprsMat):
+            return SprsMat(None, internal_sprsmat=
+                                (self.internal_sprsmat - other.internal_sprsmat))
         else:
             return NotImplemented
 
     def __rsub__(self, other):
-        if issubclass(type(other), scipy.sparse.spmatrix):
-            return other - self.to_scipy()
-        elif type(other) == SprsMat:
-            return other.to_scipy() - self.to_scipy()
+        if isinstance(other, SprsMat):
+            return SprsMat(None, internal_sprsmat=
+                                (other.internal_sprsmat - self.internal_sprsmat))
         else:
             return NotImplemented
 
+    def __neg__(self):
+        return SprsMat(None, internal_sprsmat=(-self.internal_sprsmat))
+
     def __add__(self, other):
-        if issubclass(type(other), scipy.sparse.spmatrix):
-            return self.to_scipy() + other
-        elif type(other) == SprsMat:
-            return self.to_scipy() + other.to_scipy()
+        if isinstance(other, SprsMat):
+            return SprsMat(None, internal_sprsmat=
+                                (self.internal_sprsmat + other.internal_sprsmat))
         else:
             return NotImplemented
 
@@ -94,7 +99,7 @@ class SprsMat(object):
 
     def __mul__(self, other):
         if isinstance(other, (int, float)):
-            return other * self.to_scipy()
+            return SprsMat(None, internal_sprsmat=(self.internal_sprsmat * other))
         else:
             return NotImplemented
 

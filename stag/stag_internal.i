@@ -84,5 +84,28 @@ public:
     ~SprsMat();
 };
 
+// Allow use of operators for SprsMat objects
+%extend SprsMat {
+    SprsMat __add__(SprsMat* other) {
+        return *$self + *other;
+    }
+
+    SprsMat __sub__(SprsMat* other) {
+        return *$self - *other;
+    }
+
+    SprsMat __mul__(double other) {
+        return other * *$self;
+    }
+
+    SprsMat __mul__(stag_int other) {
+        return other * *$self;
+    }
+
+    SprsMat __neg__() {
+        return - *$self;
+    }
+}
+
 // Metadata about the python interface
 #define VERSION "1.2.1"

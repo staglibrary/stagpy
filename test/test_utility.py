@@ -146,3 +146,37 @@ def test_sprsmat_transpose():
                                          [2, 0, 2, 0]])
     mat_diff = mat2 - expected_mat
     assert(np.all(mat_diff.to_dense() == pytest.approx(0)))
+
+
+def test_sprsmat_multiplication():
+    mat1 = stag.utility.SprsMat([[0, 1, 0, 1],
+                                 [1, 0, 1, 0],
+                                 [0, 1, 0, 1],
+                                 [1, 0, 1, 0]])
+    mat2 = stag.utility.SprsMat([[0, 3, 1, 1],
+                                 [0, 0, 0, 2],
+                                 [3, 0, 0, 2],
+                                 [1, 1, 1, 1]])
+    expected_mat = stag.utility.SprsMat([[1, 1, 1, 3],
+                                         [3, 3, 1, 3],
+                                         [1, 1, 1, 3],
+                                         [3, 3, 1, 3]])
+    mat3 = mat1 * mat2
+    mat_diff = mat3 - expected_mat
+    assert(np.all(mat_diff.to_dense() == pytest.approx(0)))
+
+    mat3 = mat1 @ mat2
+    mat_diff = mat3 - expected_mat
+    assert(np.all(mat_diff.to_dense() == pytest.approx(0)))
+
+    expected_mat = stag.utility.SprsMat([[4, 1, 4, 1],
+                                         [2, 0, 2, 0],
+                                         [2, 3, 2, 3],
+                                         [2, 2, 2, 2]])
+    mat3 = mat2 * mat1
+    mat_diff = mat3 - expected_mat
+    assert(np.all(mat_diff.to_dense() == pytest.approx(0)))
+
+    mat3 = mat2 @ mat1
+    mat_diff = mat3 - expected_mat
+    assert(np.all(mat_diff.to_dense() == pytest.approx(0)))

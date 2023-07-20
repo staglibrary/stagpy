@@ -94,6 +94,10 @@ public:
         return *$self - *other;
     }
 
+    SprsMat __mul__(SprsMat* other) {
+        return *$self * *other;
+    }
+
     SprsMat __mul__(double other) {
         return other * *$self;
     }

@@ -23,7 +23,7 @@ class SprsMat(object):
     """
 
     def __init__(self, matrix: Union[scipy.sparse.spmatrix, List[List[float]]]):
-        """
+        r"""
         Construct a STAG SprsMat.
 
         Pass either a scipy sparse matrix object or a List of Lists representing
@@ -122,11 +122,22 @@ class SprsMat(object):
     def __mul__(self, other):
         if isinstance(other, (int, float)):
             return SprsMat(self.internal_sprsmat * other)
+        elif isinstance(other, SprsMat):
+            return SprsMat(self.internal_sprsmat * other.internal_sprsmat)
         else:
             return NotImplemented
 
     def __rmul__(self, other):
+        if isinstance(other, SprsMat):
+            return SprsMat(other.internal_sprsmat * self.internal_sprsmat)
+        else:
+            return self.__mul__(other)
+
+    def __matmul__(self, other):
         return self.__mul__(other)
+
+    def __rmatmul__(self, other):
+        return self.__rmul__(other)
 
     def __truediv__(self, other):
         if isinstance(other, (int, float)):

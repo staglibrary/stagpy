@@ -6470,6 +6470,9 @@ SWIGINTERN SprsMat SprsMat___truediv____SWIG_0(SprsMat *self,double other){
 SWIGINTERN SprsMat SprsMat___truediv____SWIG_1(SprsMat *self,stag_int other){
         return *self / other;
     }
+SWIGINTERN SprsMat SprsMat___transpose__(SprsMat *self){
+        return self->transpose();
+    }
 
 SWIGINTERNINLINE PyObject * 
 SWIG_FromCharPtr(const char *cptr)
@@ -22991,6 +22994,39 @@ fail:
 }
 
 
+SWIGINTERN PyObject *_wrap_SprsMat___transpose__(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  SprsMat *arg1 = (SprsMat *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject *swig_obj[1] ;
+  SprsMat result;
+  
+  if (!args) SWIG_fail;
+  swig_obj[0] = args;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_Eigen__SparseMatrixT_double_Eigen__ColMajor_stag_int_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SprsMat___transpose__" "', argument " "1"" of type '" "SprsMat *""'"); 
+  }
+  arg1 = reinterpret_cast< SprsMat * >(argp1);
+  {
+    try {
+      result = SprsMat___transpose__(arg1);
+    } catch (std::invalid_argument &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::domain_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    }
+  }
+  resultobj = SWIG_NewPointerObj((new SprsMat(static_cast< const SprsMat& >(result))), SWIGTYPE_p_Eigen__SparseMatrixT_double_Eigen__ColMajor_stag_int_t, SWIG_POINTER_OWN |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
 SWIGINTERN PyObject *_wrap_new_SprsMat(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   SprsMat *result = 0 ;
@@ -23345,6 +23381,7 @@ static PyMethodDef SwigMethods[] = {
 	 { "SprsMat___mul__", _wrap_SprsMat___mul__, METH_VARARGS, NULL},
 	 { "SprsMat___neg__", _wrap_SprsMat___neg__, METH_O, NULL},
 	 { "SprsMat___truediv__", _wrap_SprsMat___truediv__, METH_VARARGS, NULL},
+	 { "SprsMat___transpose__", _wrap_SprsMat___transpose__, METH_O, NULL},
 	 { "new_SprsMat", _wrap_new_SprsMat, METH_NOARGS, NULL},
 	 { "SprsMat_swigregister", SprsMat_swigregister, METH_O, NULL},
 	 { "SprsMat_swiginit", SprsMat_swiginit, METH_VARARGS, NULL},

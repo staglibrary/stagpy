@@ -1030,6 +1030,9 @@ class SprsMat(object):
     def __truediv__(self, *args):
         return _stag_internal.SprsMat___truediv__(self, *args)
 
+    def __transpose__(self):
+        return _stag_internal.SprsMat___transpose__(self)
+
     def __init__(self):
         _stag_internal.SprsMat_swiginit(self, _stag_internal.new_SprsMat())
 

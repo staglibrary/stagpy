@@ -131,3 +131,18 @@ def test_scalar_div_sprsmat():
     sprsmat1 /= 2
     mat_diff = sprsmat1.to_scipy() - expected_mat
     assert(np.all(mat_diff.todense() == pytest.approx(0)))
+
+
+def test_sprsmat_transpose():
+    mat1 = stag.utility.SprsMat([[0, 2, 0, 2],
+                                 [1, 0, 2, 0],
+                                 [0, 1, 0, 2],
+                                 [1, 0, 1, 0]])
+    mat2 = mat1.transpose()
+
+    expected_mat = stag.utility.SprsMat([[0, 1, 0, 1],
+                                         [2, 0, 1, 0],
+                                         [0, 2, 0, 1],
+                                         [2, 0, 2, 0]])
+    mat_diff = mat2 - expected_mat
+    assert(np.all(mat_diff.to_dense() == pytest.approx(0)))

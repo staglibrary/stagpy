@@ -113,6 +113,12 @@ public:
     SprsMat __truediv__(stag_int other) {
         return *$self / other;
     }
+
+    // This is not a standard Python operator!
+    // We add it for convenience.
+    SprsMat __transpose__() {
+        return $self->transpose();
+    }
 }
 
 // Metadata about the python interface

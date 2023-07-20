@@ -347,8 +347,7 @@ class Graph(LocalGraph):
 
         @return a ``stag.utility.SprsMat`` representing the graph adjacency matrix
         """
-        adj = utility.SprsMat(None,
-                              internal_sprsmat=self.internal_graph.adjacency())
+        adj = utility.SprsMat(self.internal_graph.adjacency())
         adj.__parent = self
         return adj
 
@@ -367,8 +366,7 @@ class Graph(LocalGraph):
 
         @return a ``stag.utility.SprsMat`` representing the graph Laplacian
         """
-        lap = utility.SprsMat(None,
-                              internal_sprsmat=self.internal_graph.laplacian())
+        lap = utility.SprsMat(self.internal_graph.laplacian())
         lap.__parent = self
         return lap
 
@@ -387,8 +385,7 @@ class Graph(LocalGraph):
 
         @return a ``stag.utility.SprsMat`` representing the normalised Laplacian
         """
-        lap = utility.SprsMat(
-            None, internal_sprsmat=self.internal_graph.normalised_laplacian())
+        lap = utility.SprsMat(self.internal_graph.normalised_laplacian())
         lap.__parent = self
         return lap
 
@@ -407,8 +404,7 @@ class Graph(LocalGraph):
 
         @return a ``stag.utility.SprsMat`` representing the signless graph Laplacian
         """
-        signless_lap = utility.SprsMat(
-            None, internal_sprsmat=self.internal_graph.signless_laplacian())
+        signless_lap = utility.SprsMat(self.internal_graph.signless_laplacian())
         signless_lap.__parent = self
         return signless_lap
 
@@ -428,7 +424,7 @@ class Graph(LocalGraph):
         @return a ``stag.utility.SprsMat`` representing the normalised signless Laplacian
         """
         signless_lap = utility.SprsMat(
-            None, internal_sprsmat=self.internal_graph.normalised_signless_laplacian())
+            self.internal_graph.normalised_signless_laplacian())
         signless_lap.__parent = self
         return signless_lap
 
@@ -443,8 +439,7 @@ class Graph(LocalGraph):
 
         @return a ``stag.utility.SprsMat`` representing the degree matrix
         """
-        deg_mat = utility.SprsMat(
-            None, internal_sprsmat=self.internal_graph.degree_matrix())
+        deg_mat = utility.SprsMat(self.internal_graph.degree_matrix())
         deg_mat.__parent = self
         return deg_mat
     
@@ -469,8 +464,7 @@ class Graph(LocalGraph):
 
         @return a ``stag.utility.SprsMat`` representing the inverse degree matrix
         """
-        inv_deg_mat = utility.SprsMat(
-            None, internal_sprsmat=self.internal_graph.inverse_degree_matrix())
+        inv_deg_mat = utility.SprsMat(self.internal_graph.inverse_degree_matrix())
         inv_deg_mat.__parent = self
         return inv_deg_mat
 
@@ -490,8 +484,7 @@ class Graph(LocalGraph):
         @return a ``stag.utility.SprsMat`` representing the lazy random walk
                 matrix
         """
-        rw_mat = utility.SprsMat(
-            None, internal_sprsmat=self.internal_graph.lazy_random_walk_matrix())
+        rw_mat = utility.SprsMat(self.internal_graph.lazy_random_walk_matrix())
         rw_mat.__parent = self
         return rw_mat
 

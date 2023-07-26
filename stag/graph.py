@@ -290,8 +290,7 @@ class Graph(LocalGraph):
     permitted.
     """
 
-    def __init__(self, mat: Union[scipy.sparse.spmatrix, stag.utility.SprsMat],
-                 internal_graph: stag_internal.Graph = None):
+    def __init__(self, mat: Union[scipy.sparse.spmatrix, stag.utility.SprsMat]):
         r"""
         Initialise the graph with a scipy sparse matrix.
 
@@ -313,9 +312,6 @@ class Graph(LocalGraph):
         \endcode
 
         @param mat A sparse scipy matrix, such as ``scipy.sparse.csc_matrix``.
-        @param internal_graph (optional) specify a STAG C++ graph object to
-                              initialise with. Use this only if you understand
-                              the internal workings of the STAG library.
         """
         # Call the LocalGraph initialisation method - it is important that this
         # is called first. This is because we override the internal_graph
@@ -328,14 +324,14 @@ class Graph(LocalGraph):
         ##
 
         # This class is essentially a thin wrapper around the stag_internal library, written in C++.
-        if internal_graph is None:
+        if isinstance(mat, stag_internal.Graph):
+            # The initialiser was called with an internal graph object.
+            self.internal_graph: stag_internal.Graph = mat
+        else:
             # Initialise the internal graph object with the provided matrix.
             if type(mat) is not stag.utility.SprsMat:
                 mat = stag.utility.SprsMat(mat)
             self.internal_graph: stag_internal.Graph = stag_internal.Graph(mat.internal_sprsmat)
-        else:
-            # The initialiser was called with an internal graph object.
-            self.internal_graph: stag_internal.Graph = internal_graph
 
         ##
         # \endcond
@@ -551,7 +547,7 @@ class Graph(LocalGraph):
                 by the given vertices
         """
         new_int_graph = self.internal_graph.subgraph(stag_internal.vectorl(vertices))
-        return Graph(None, internal_graph=new_int_graph)
+        return Graph(new_int_graph)
 
     def disjoint_union(self, other: 'Graph') -> 'Graph':
         r"""
@@ -565,7 +561,7 @@ class Graph(LocalGraph):
                 graph with the other one
         """
         new_int_graph = self.internal_graph.disjoint_union(other.internal_graph)
-        return Graph(None, internal_graph=new_int_graph)
+        return Graph(new_int_graph)
 
     def degree(self, v: int) -> float:
         return self.internal_graph.degree(v)
@@ -664,29 +660,7 @@ class Graph(LocalGraph):
         netx_graph = self.to_networkx()
         networkx.draw(netx_graph, **kwargs)
 
-##
-# \cond
-# A decorator which transforms a graph returned from the C++ library to the
-# python Graph object.
-##
-def return_graph(func):
-    def decorated_function(*args, **kwargs):
-        swig_graph = func(*args, **kwargs)
-        return Graph(None, internal_graph=swig_graph)
 
-    # Set the metadata of the returned function to match the original.
-    # This is used when generating the documentation
-    decorated_function.__doc__ = func.__doc__
-    decorated_function.__module__ = func.__module__
-    decorated_function.__signature__ = inspect.signature(func)
-
-    return decorated_function
-
-##
-# \endcond
-##
-
-@return_graph
 def cycle_graph(n) -> Graph:
     """
     Construct a cycle graph on n vertices.
@@ -694,10 +668,9 @@ def cycle_graph(n) -> Graph:
     @param n the number of vertices in the constructed graph
     @return a stag.graph.Graph object representing a cycle graph
     """
-    return stag_internal.cycle_graph(n)
+    return Graph(stag_internal.cycle_graph(n))
 
 
-@return_graph
 def complete_graph(n) -> Graph:
     """
     Construct a complete graph on n vertices.
@@ -705,10 +678,9 @@ def complete_graph(n) -> Graph:
     @param n the number of vertices in the constructed graph
     @return a stag.graph.Graph object representing a complete graph
     """
-    return stag_internal.complete_graph(n)
+    return Graph(stag_internal.complete_graph(n))
 
 
-@return_graph
 def barbell_graph(n) -> Graph:
     """
     Construct a barbell graph. The barbell graph consists of 2 cliques on n
@@ -718,10 +690,9 @@ def barbell_graph(n) -> Graph:
              The returned graph will have \f$2n\f$ vertices.
     @return a stag.graph.Graph object representing the barbell graph
     """
-    return stag_internal.barbell_graph(n)
+    return Graph(stag_internal.barbell_graph(n))
 
 
-@return_graph
 def star_graph(n) -> Graph:
     """
     Construct a star graph. The star graph consists of one central vertex
@@ -730,10 +701,9 @@ def star_graph(n) -> Graph:
     @param n the number of vertices in the constructed graph
     @return a stag.graph.Graph object representing the star graph
     """
-    return stag_internal.star_graph(n)
+    return Graph(stag_internal.star_graph(n))
 
 
-@return_graph
 def identity_graph(n) -> Graph:
     r"""
     Construct the identity graph. The identity graph consists of \f$n\f$
@@ -745,7 +715,7 @@ def identity_graph(n) -> Graph:
     @param n the number of vertices in the constructed graph
     @return a stag.graph.Graph object representing the identity graph
     """
-    return stag_internal.identity_graph(n)
+    return Graph(stag_internal.identity_graph(n))
 
 
 def from_networkx(netx_graph: networkx.Graph,

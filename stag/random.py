@@ -8,7 +8,6 @@ from . import graph
 from . import utility
 
 
-@graph.return_graph
 def sbm(n: int, k: int, p: float, q: float, exact: bool = False) -> graph.Graph:
     r"""
     Generate a graph from the symmetric stochastic block model.
@@ -31,10 +30,9 @@ def sbm(n: int, k: int, p: float, q: float, exact: bool = False) -> graph.Graph:
                   or an approximation.
     @return the randomly generated stag.graph.Graph
     """
-    return stag_internal.sbm(n, k, p, q, exact)
+    return graph.Graph(stag_internal.sbm(n, k, p, q, exact))
 
 
-@graph.return_graph
 def general_sbm(cluster_sizes: List[int],
                 probabilities: np.ndarray,
                 exact: bool = False) -> graph.Graph:
@@ -80,9 +78,10 @@ def general_sbm(cluster_sizes: List[int],
                  Default: false.
     @return the randomly generated graph
     """
-    return stag_internal.general_sbm(stag_internal.vectorl(cluster_sizes),
-                                     probabilities.astype(float),
-                                     exact)
+    return graph.Graph(stag_internal.general_sbm(
+        stag_internal.vectorl(cluster_sizes),
+        probabilities.astype(float),
+        exact))
 
 
 def general_sbm_edgelist(filename: str,
@@ -111,7 +110,6 @@ def general_sbm_edgelist(filename: str,
                                               exact)
 
 
-@graph.return_graph
 def erdos_renyi(n: int, p: float, exact: bool = False) -> graph.Graph:
     r"""
     Generate a graph from the Erdos-Renyi model.
@@ -128,7 +126,7 @@ def erdos_renyi(n: int, p: float, exact: bool = False) -> graph.Graph:
     @param exact (optional) whether to sample from the exact model.
     @return the randomly generated stag.graph.Graph
     """
-    return stag_internal.erdos_renyi(n, p, exact)
+    return graph.Graph(stag_internal.erdos_renyi(n, p, exact))
 
 
 def sbm_gt_labels(n: int, k: int) -> List[int]:

@@ -4,7 +4,6 @@ Graph object definitions and standard constructors.
 import networkx
 from abc import ABC, abstractmethod
 from typing import List, Union
-import inspect
 
 import scipy.sparse
 import numpy as np
@@ -36,9 +35,9 @@ class Edge(object):
         # \cond
         ##
         self.internal_edge = stag_internal.edge()
-        self.internal_edge.v1 = v1
-        self.internal_edge.v2 = v2
-        self.internal_edge.weight = weight
+        self.internal_edge.__setattr__("v1", v1)
+        self.internal_edge.__setattr__("v2", v2)
+        self.internal_edge.__setattr__("weight", weight)
         ##
         # \endcond
         ##
@@ -335,7 +334,7 @@ class Graph(LocalGraph):
 
         # This class is essentially a thin wrapper around the stag_internal library, written in C++.
         if isinstance(mat, stag_internal.Graph):
-            # The initialiser was called with an internal graph object.
+            # The initializer was called with an internal graph object.
             self.internal_graph: stag_internal.Graph = mat
         else:
             # Initialise the internal graph object with the provided matrix.

@@ -133,7 +133,7 @@ class LocalGraph(ABC):
         The weights of edges to the neighbors are not returned by this method.
 
         @param v the ID of some vertex in the graph
-        @return a list of vertex IDs giving the neighbours of v
+        @return an array of vertex IDs giving the neighbours of v
         """
         pass
 
@@ -147,7 +147,7 @@ class LocalGraph(ABC):
         improve the performance of local clustering algorithms.
 
         @param vertices a list of IDs representing the vertices to be queried
-        @return a list of degrees
+        @return an array of degrees
         """
         pass
 
@@ -161,7 +161,7 @@ class LocalGraph(ABC):
         improve the performance of local clustering algorithms.
 
         @param vertices a list of IDs representing the vertices to be queried
-        @return a list of unweighted degrees
+        @return an array of unweighted degrees
         """
         pass
 
@@ -301,7 +301,7 @@ class Graph(LocalGraph):
 
     def __init__(self, mat: Union[scipy.sparse.spmatrix, stag.utility.SprsMat]):
         r"""
-        Initialise the graph with a scipy sparse matrix.
+        Initialise the graph with a sparse matrix.
 
         The provided matrix should correspond either to the adjacency matrix or
         Laplacian matrix of the graph. STAG will automatically detect whether
@@ -311,16 +311,16 @@ class Graph(LocalGraph):
 
         \code{python}
         >>> import stag.graph
-        >>> import scipy.sparse
+        >>> import stag.utility
         >>>
-        >>> adj_mat = scipy.sparse.csc_matrix([[0, 1, 1, 1],
-        ...                                    [1, 0, 1, 1],
-        ...                                    [1, 1, 0, 1],
-        ...                                    [1, 1, 1, 0]])
+        >>> adj_mat = stag.utility.SprsMat([[0, 1, 1, 1],
+        ...                                 [1, 0, 1, 1],
+        ...                                 [1, 1, 0, 1],
+        ...                                 [1, 1, 1, 0]])
         >>> g = stag.graph.Graph(adj_mat)
         \endcode
 
-        @param mat A sparse scipy matrix, such as ``scipy.sparse.csc_matrix``.
+        @param mat A sparse scipy matrix or a stag.utility.SprsMat object
         """
         # Call the LocalGraph initialisation method - it is important that this
         # is called first. This is because we override the internal_graph

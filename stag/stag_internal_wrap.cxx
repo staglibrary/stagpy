@@ -6052,17 +6052,17 @@ SWIGINTERN PyObject *_wrap_new_Graph(PyObject *self, PyObject *args) {
   }
   if (argc == 3) {
     int _v;
-    void *vptr = 0;
-    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_std__vectorT_long_long_t, SWIG_POINTER_NO_NULL);
-    _v = SWIG_CheckState(res);
+    {
+      _v = is_array((PyObject *) argv[0]) ? 1 : 0;
+    }
     if (_v) {
-      void *vptr = 0;
-      int res = SWIG_ConvertPtr(argv[1], &vptr, SWIGTYPE_p_std__vectorT_long_long_t, SWIG_POINTER_NO_NULL);
-      _v = SWIG_CheckState(res);
+      {
+        _v = is_array((PyObject *) argv[1]) ? 1 : 0;
+      }
       if (_v) {
-        void *vptr = 0;
-        int res = SWIG_ConvertPtr(argv[2], &vptr, SWIGTYPE_p_std__vectorT_double_t, SWIG_POINTER_NO_NULL);
-        _v = SWIG_CheckState(res);
+        {
+          _v = is_array((PyObject *) argv[2]) ? 1 : 0;
+        }
         if (_v) {
           return _wrap_new_Graph__SWIG_1(self, argc, argv);
         }
@@ -10316,9 +10316,9 @@ SWIGINTERN PyObject *_wrap_general_sbm(PyObject *self, PyObject *args) {
   --argc;
   if (argc == 2) {
     int _v;
-    void *vptr = 0;
-    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_std__vectorT_long_long_t, SWIG_POINTER_NO_NULL);
-    _v = SWIG_CheckState(res);
+    {
+      _v = is_array((PyObject *) argv[0]) ? 1 : 0;
+    }
     if (_v) {
       {
         _v = is_array((PyObject *) argv[1]) ? 1 : 0;
@@ -10330,9 +10330,9 @@ SWIGINTERN PyObject *_wrap_general_sbm(PyObject *self, PyObject *args) {
   }
   if (argc == 3) {
     int _v;
-    void *vptr = 0;
-    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_std__vectorT_long_long_t, SWIG_POINTER_NO_NULL);
-    _v = SWIG_CheckState(res);
+    {
+      _v = is_array((PyObject *) argv[0]) ? 1 : 0;
+    }
     if (_v) {
       {
         _v = is_array((PyObject *) argv[1]) ? 1 : 0;
@@ -10525,9 +10525,9 @@ SWIGINTERN PyObject *_wrap_general_sbm_edgelist(PyObject *self, PyObject *args) 
     int res = SWIG_AsPtr_std_string(argv[0], (std::string**)0);
     _v = SWIG_CheckState(res);
     if (_v) {
-      void *vptr = 0;
-      int res = SWIG_ConvertPtr(argv[1], &vptr, SWIGTYPE_p_std__vectorT_long_long_t, SWIG_POINTER_NO_NULL);
-      _v = SWIG_CheckState(res);
+      {
+        _v = is_array((PyObject *) argv[1]) ? 1 : 0;
+      }
       if (_v) {
         {
           _v = is_array((PyObject *) argv[2]) ? 1 : 0;
@@ -10543,9 +10543,9 @@ SWIGINTERN PyObject *_wrap_general_sbm_edgelist(PyObject *self, PyObject *args) 
     int res = SWIG_AsPtr_std_string(argv[0], (std::string**)0);
     _v = SWIG_CheckState(res);
     if (_v) {
-      void *vptr = 0;
-      int res = SWIG_ConvertPtr(argv[1], &vptr, SWIGTYPE_p_std__vectorT_long_long_t, SWIG_POINTER_NO_NULL);
-      _v = SWIG_CheckState(res);
+      {
+        _v = is_array((PyObject *) argv[1]) ? 1 : 0;
+      }
       if (_v) {
         {
           _v = is_array((PyObject *) argv[2]) ? 1 : 0;

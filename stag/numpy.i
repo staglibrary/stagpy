@@ -3121,6 +3121,10 @@
   $1 = &temp_vec;
 }
 
+%typemap(typecheck, precedence=SWIG_TYPECHECK_COMPLEX) std::vector<DATA_TYPE>& {
+    $1 = is_array((PyObject *) $input) ? 1 : 0;
+}
+
 %enddef    /* %numpy_typemaps() macro */
 /* *************************************************************** */
 

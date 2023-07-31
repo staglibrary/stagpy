@@ -56,13 +56,13 @@ def test_sbm_gt_labels():
     n = 6
     k = 3
     labels = stag.random.sbm_gt_labels(n, k)
-    assert labels == [0, 0, 1, 1, 2, 2]
+    assert list(labels) == [0, 0, 1, 1, 2, 2]
 
 
 def test_general_sbm_gt_labels():
     cluster_sizes = [4, 2]
     gt_labels = stag.random.general_sbm_gt_labels(cluster_sizes)
-    assert gt_labels == [0, 0, 0, 0, 1, 1]
+    assert list(gt_labels) == [0, 0, 0, 0, 1, 1]
 
 
 def test_edgelist_sbm():

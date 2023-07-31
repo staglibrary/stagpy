@@ -2,7 +2,6 @@
 Construct graphs from random models.
 """
 import numpy as np
-from typing import List
 from . import stag_internal
 from . import graph
 from . import utility
@@ -33,6 +32,7 @@ def sbm(n: int, k: int, p: float, q: float, exact: bool = False) -> graph.Graph:
     return graph.Graph(stag_internal.sbm(n, k, p, q, exact))
 
 
+@utility.convert_ndarrays
 def general_sbm(cluster_sizes: np.ndarray,
                 probabilities: np.ndarray,
                 exact: bool = False) -> graph.Graph:
@@ -62,7 +62,7 @@ def general_sbm(cluster_sizes: np.ndarray,
     import stag.graph
     import stag.random
 
-    cluster_sizes = [100, 20, 10]
+    cluster_sizes = np.asarray([100, 20, 10])
     prob_mat = np.asarray([[0.4, 0.1, 0.1],
                            [0.1, 0.7, 0],
                            [0.1, 0, 1]])
@@ -76,18 +76,17 @@ def general_sbm(cluster_sizes: np.ndarray,
                          probabilities.
     @param exact (optional) whether to use the exact probability distribution.
                  Default: false.
-    @return the randomly generated graph
+    @return the randomly generated stag.graph.Graph
     """
     return graph.Graph(stag_internal.general_sbm(
-        cluster_sizes,
-        probabilities.astype(float),
-        exact))
+        cluster_sizes, probabilities.astype(float), exact))
 
 
+@utility.convert_ndarrays
 def general_sbm_edgelist(filename: str,
                          cluster_sizes: np.ndarray,
                          probabilities: np.ndarray,
-                         exact: bool = False):
+                         exact: bool = False) -> graph.Graph:
     r"""
     Generate a graph from the general stochastic block model and save the
     resulting graph as an edgelist file.
@@ -102,8 +101,8 @@ def general_sbm_edgelist(filename: str,
                          probabilities.
     @param exact (optional) whether to use the exact probability distribution.
                  Default: false.
+    @return the randomly generated stag.graph.Graph
     """
-    cluster_sizes = utility.possibly_convert_ndarray(cluster_sizes)
     return stag_internal.general_sbm_edgelist(filename,
                                               cluster_sizes,
                                               probabilities.astype(float),
@@ -146,7 +145,7 @@ def sbm_gt_labels(n: int, k: int) -> np.ndarray:
 
     gt_labels = stag.random.sbm_gt_labels(n, k)
 
-    # gt_labels is the list [0, 0, 1, 1, 2, 2].
+    # gt_labels is the numpy array [0, 0, 1, 1, 2, 2].
     \endcode
 
     @param n the number of vertices in the graph
@@ -157,6 +156,7 @@ def sbm_gt_labels(n: int, k: int) -> np.ndarray:
     return stag_internal.sbm_gt_labels(n, k)
 
 
+@utility.convert_ndarrays
 def general_sbm_gt_labels(cluster_sizes: np.ndarray) -> np.ndarray:
     r"""
     Construct a vector with the ground truth labels for a graph drawn from the
@@ -167,16 +167,17 @@ def general_sbm_gt_labels(cluster_sizes: np.ndarray) -> np.ndarray:
     \code{python}
     import stag.graph
     import stag.random
+    import numpy as np
 
-    cluster_sizes = [4, 2]
+    cluster_sizes = np.asarray([4, 2])
     gt_labels = stag.random.general_sbm_gt_labels(cluster_sizes)
 
-    # gt_labels is the list [0, 0, 0, 0, 1, 1]
+    # gt_labels is the numpy array [0, 0, 0, 0, 1, 1]
     \endcode
 
     @param cluster_sizes a list of length \f$k\f$ with the number of vertices
                          in each cluster.
-    @return a vector containing the ground truth labels for the vertices in the
+    @return an array containing the ground truth labels for the vertices in the
             graph.
     """
     return stag_internal.general_sbm_gt_labels(cluster_sizes)

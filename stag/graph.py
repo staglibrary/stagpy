@@ -588,7 +588,7 @@ class Graph(LocalGraph):
         return self.internal_graph.degrees_unweighted(vertices)
 
     def neighbors(self, v: int) -> List[Edge]:
-        return self.internal_graph.neighbors(v)
+        return [Edge(a, b, c) for (a, b, c) in self.internal_graph.neighbors(v)]
 
     def neighbors_unweighted(self, v: int) -> np.ndarray:
         return self.internal_graph.neighbors_unweighted(v)

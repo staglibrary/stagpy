@@ -5489,7 +5489,22 @@ SWIGINTERN PyObject *_wrap_LocalGraph_neighbors(PyObject *SWIGUNUSEDPARM(self), 
   } catch (Swig::DirectorException&) {
     SWIG_fail;
   }
-  resultobj = SWIG_NewPointerObj((new std::vector< stag::edge >(static_cast< const std::vector< stag::edge >& >(result))), SWIGTYPE_p_std__vectorT_stag__edge_t, SWIG_POINTER_OWN |  0 );
+  {
+    // Return a vector of edges as a list of tuples
+    stag_int outer_length = (&result)->size();
+    resultobj = PyList_New(outer_length);
+    
+    // Construct a new 3-tuple for each inner object, and add to the list.
+    for (stag_int i = 0; i < outer_length; i++) {
+      PyObject* new_tuple_object = PyTuple_Pack(
+        3,
+        PyLong_FromLongLong((&result)->at(i).v1),
+        PyLong_FromLongLong((&result)->at(i).v2),
+        PyFloat_FromDouble((&result)->at(i).weight));
+      
+      PyList_SET_ITEM(resultobj, i, new_tuple_object);
+    }
+  }
   return resultobj;
 fail:
   return NULL;
@@ -6741,7 +6756,22 @@ SWIGINTERN PyObject *_wrap_Graph_neighbors(PyObject *SWIGUNUSEDPARM(self), PyObj
       return NULL;
     }
   }
-  resultobj = SWIG_NewPointerObj((new std::vector< stag::edge >(static_cast< const std::vector< stag::edge >& >(result))), SWIGTYPE_p_std__vectorT_stag__edge_t, SWIG_POINTER_OWN |  0 );
+  {
+    // Return a vector of edges as a list of tuples
+    stag_int outer_length = (&result)->size();
+    resultobj = PyList_New(outer_length);
+    
+    // Construct a new 3-tuple for each inner object, and add to the list.
+    for (stag_int i = 0; i < outer_length; i++) {
+      PyObject* new_tuple_object = PyTuple_Pack(
+        3,
+        PyLong_FromLongLong((&result)->at(i).v1),
+        PyLong_FromLongLong((&result)->at(i).v2),
+        PyFloat_FromDouble((&result)->at(i).weight));
+      
+      PyList_SET_ITEM(resultobj, i, new_tuple_object);
+    }
+  }
   return resultobj;
 fail:
   return NULL;
@@ -7220,7 +7250,22 @@ SWIGINTERN PyObject *_wrap_AdjacencyListLocalGraph_neighbors(PyObject *SWIGUNUSE
       return NULL;
     }
   }
-  resultobj = SWIG_NewPointerObj((new std::vector< stag::edge >(static_cast< const std::vector< stag::edge >& >(result))), SWIGTYPE_p_std__vectorT_stag__edge_t, SWIG_POINTER_OWN |  0 );
+  {
+    // Return a vector of edges as a list of tuples
+    stag_int outer_length = (&result)->size();
+    resultobj = PyList_New(outer_length);
+    
+    // Construct a new 3-tuple for each inner object, and add to the list.
+    for (stag_int i = 0; i < outer_length; i++) {
+      PyObject* new_tuple_object = PyTuple_Pack(
+        3,
+        PyLong_FromLongLong((&result)->at(i).v1),
+        PyLong_FromLongLong((&result)->at(i).v2),
+        PyFloat_FromDouble((&result)->at(i).weight));
+      
+      PyList_SET_ITEM(resultobj, i, new_tuple_object);
+    }
+  }
   return resultobj;
 fail:
   return NULL;
@@ -9651,7 +9696,22 @@ SWIGINTERN PyObject *_wrap_parse_adjacencylist_content_line(PyObject *SWIGUNUSED
       return NULL;
     }
   }
-  resultobj = SWIG_NewPointerObj((new std::vector< stag::edge >(static_cast< const std::vector< stag::edge >& >(result))), SWIGTYPE_p_std__vectorT_stag__edge_t, SWIG_POINTER_OWN |  0 );
+  {
+    // Return a vector of edges as a list of tuples
+    stag_int outer_length = (&result)->size();
+    resultobj = PyList_New(outer_length);
+    
+    // Construct a new 3-tuple for each inner object, and add to the list.
+    for (stag_int i = 0; i < outer_length; i++) {
+      PyObject* new_tuple_object = PyTuple_Pack(
+        3,
+        PyLong_FromLongLong((&result)->at(i).v1),
+        PyLong_FromLongLong((&result)->at(i).v2),
+        PyFloat_FromDouble((&result)->at(i).weight));
+      
+      PyList_SET_ITEM(resultobj, i, new_tuple_object);
+    }
+  }
   return resultobj;
 fail:
   return NULL;

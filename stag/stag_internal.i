@@ -62,6 +62,24 @@
     }
 }
 
+// Create a typemap for a vector of Edge objects
+%typemap(out) std::vector<stag::edge> {
+    // Return a vector of edges as a list of tuples
+    stag_int outer_length = $1.size();
+    $result = PyList_New(outer_length);
+
+    // Construct a new 3-tuple for each inner object, and add to the list.
+    for (stag_int i = 0; i < outer_length; i++) {
+        PyObject* new_tuple_object = PyTuple_Pack(
+          3,
+          PyLong_FromLongLong($1.at(i).v1),
+          PyLong_FromLongLong($1.at(i).v2),
+          PyFloat_FromDouble($1.at(i).weight));
+
+        PyList_SET_ITEM($result, i, new_tuple_object);
+    }
+}
+
 // Include the complete STAG library
 %include "stag_lib/stag.h"
 %include "stag_lib/graph.h"

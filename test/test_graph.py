@@ -168,6 +168,16 @@ def test_adjacency_matrix():
     assert adj_mat_diff.nnz == 0
 
 
+def test_neighbors():
+    graph = stag.graph.cycle_graph(10)
+    ns = graph.neighbors(3)
+    vs = [e.v2 for e in ns]
+    assert vs == [2, 4]
+
+    ns2 = graph.neighbors_unweighted(3)
+    assert vs == list(ns2)
+
+
 def test_symmetry():
     # Generate a large graph from the stochastic block model
     big_graph = stag.random.sbm(1000, 5, 0.8, 0.2)

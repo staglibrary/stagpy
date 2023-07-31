@@ -5568,6 +5568,7 @@ SWIGINTERN PyObject *_wrap_LocalGraph_degrees(PyObject *SWIGUNUSEDPARM(self), Py
   int res1 = 0 ;
   PyArrayObject *array2 = NULL ;
   int is_new_object2 = 0 ;
+  std::vector< long long > temp_vec2 ;
   PyObject *swig_obj[2] ;
   Swig::Director *director = 0;
   bool upcall = false;
@@ -5596,10 +5597,11 @@ SWIGINTERN PyObject *_wrap_LocalGraph_degrees(PyObject *SWIGUNUSEDPARM(self), Py
     long long* data_ptr = (long long*) array_data(array2);
     
     // Copy the numpy data into the new vector.
-    std::vector<long long> temp_vec;
-    temp_vec.reserve(size[0]);
-    memcpy(temp_vec.data(), data_ptr, sizeof(long long) * size[0]);
-    arg2 = temp_vec;
+    temp_vec2.reserve(size[0]);
+    for (int i = 0; i < size[0]; i++) {
+      temp_vec2.push_back(data_ptr[i]);
+    }
+    arg2 = temp_vec2;
   }
   director = SWIG_DIRECTOR_CAST(arg1);
   upcall = (director && (director->swig_get_self()==swig_obj[0]));
@@ -5649,6 +5651,7 @@ SWIGINTERN PyObject *_wrap_LocalGraph_degrees_unweighted(PyObject *SWIGUNUSEDPAR
   int res1 = 0 ;
   PyArrayObject *array2 = NULL ;
   int is_new_object2 = 0 ;
+  std::vector< long long > temp_vec2 ;
   PyObject *swig_obj[2] ;
   Swig::Director *director = 0;
   bool upcall = false;
@@ -5677,10 +5680,11 @@ SWIGINTERN PyObject *_wrap_LocalGraph_degrees_unweighted(PyObject *SWIGUNUSEDPAR
     long long* data_ptr = (long long*) array_data(array2);
     
     // Copy the numpy data into the new vector.
-    std::vector<long long> temp_vec;
-    temp_vec.reserve(size[0]);
-    memcpy(temp_vec.data(), data_ptr, sizeof(long long) * size[0]);
-    arg2 = temp_vec;
+    temp_vec2.reserve(size[0]);
+    for (int i = 0; i < size[0]; i++) {
+      temp_vec2.push_back(data_ptr[i]);
+    }
+    arg2 = temp_vec2;
   }
   director = SWIG_DIRECTOR_CAST(arg1);
   upcall = (director && (director->swig_get_self()==swig_obj[0]));
@@ -6804,6 +6808,7 @@ SWIGINTERN PyObject *_wrap_Graph_degrees(PyObject *SWIGUNUSEDPARM(self), PyObjec
   int res1 = 0 ;
   PyArrayObject *array2 = NULL ;
   int is_new_object2 = 0 ;
+  std::vector< long long > temp_vec2 ;
   PyObject *swig_obj[2] ;
   std::vector< double > result;
   
@@ -6830,10 +6835,11 @@ SWIGINTERN PyObject *_wrap_Graph_degrees(PyObject *SWIGUNUSEDPARM(self), PyObjec
     long long* data_ptr = (long long*) array_data(array2);
     
     // Copy the numpy data into the new vector.
-    std::vector<long long> temp_vec;
-    temp_vec.reserve(size[0]);
-    memcpy(temp_vec.data(), data_ptr, sizeof(long long) * size[0]);
-    arg2 = temp_vec;
+    temp_vec2.reserve(size[0]);
+    for (int i = 0; i < size[0]; i++) {
+      temp_vec2.push_back(data_ptr[i]);
+    }
+    arg2 = temp_vec2;
   }
   {
     try {
@@ -6873,6 +6879,7 @@ SWIGINTERN PyObject *_wrap_Graph_degrees_unweighted(PyObject *SWIGUNUSEDPARM(sel
   int res1 = 0 ;
   PyArrayObject *array2 = NULL ;
   int is_new_object2 = 0 ;
+  std::vector< long long > temp_vec2 ;
   PyObject *swig_obj[2] ;
   std::vector< stag_int > result;
   
@@ -6899,10 +6906,11 @@ SWIGINTERN PyObject *_wrap_Graph_degrees_unweighted(PyObject *SWIGUNUSEDPARM(sel
     long long* data_ptr = (long long*) array_data(array2);
     
     // Copy the numpy data into the new vector.
-    std::vector<long long> temp_vec;
-    temp_vec.reserve(size[0]);
-    memcpy(temp_vec.data(), data_ptr, sizeof(long long) * size[0]);
-    arg2 = temp_vec;
+    temp_vec2.reserve(size[0]);
+    for (int i = 0; i < size[0]; i++) {
+      temp_vec2.push_back(data_ptr[i]);
+    }
+    arg2 = temp_vec2;
   }
   {
     try {
@@ -7279,6 +7287,7 @@ SWIGINTERN PyObject *_wrap_AdjacencyListLocalGraph_degrees(PyObject *SWIGUNUSEDP
   int res1 = 0 ;
   PyArrayObject *array2 = NULL ;
   int is_new_object2 = 0 ;
+  std::vector< long long > temp_vec2 ;
   PyObject *swig_obj[2] ;
   std::vector< double > result;
   
@@ -7305,10 +7314,11 @@ SWIGINTERN PyObject *_wrap_AdjacencyListLocalGraph_degrees(PyObject *SWIGUNUSEDP
     long long* data_ptr = (long long*) array_data(array2);
     
     // Copy the numpy data into the new vector.
-    std::vector<long long> temp_vec;
-    temp_vec.reserve(size[0]);
-    memcpy(temp_vec.data(), data_ptr, sizeof(long long) * size[0]);
-    arg2 = temp_vec;
+    temp_vec2.reserve(size[0]);
+    for (int i = 0; i < size[0]; i++) {
+      temp_vec2.push_back(data_ptr[i]);
+    }
+    arg2 = temp_vec2;
   }
   {
     try {
@@ -7348,6 +7358,7 @@ SWIGINTERN PyObject *_wrap_AdjacencyListLocalGraph_degrees_unweighted(PyObject *
   int res1 = 0 ;
   PyArrayObject *array2 = NULL ;
   int is_new_object2 = 0 ;
+  std::vector< long long > temp_vec2 ;
   PyObject *swig_obj[2] ;
   std::vector< stag_int > result;
   
@@ -7374,10 +7385,11 @@ SWIGINTERN PyObject *_wrap_AdjacencyListLocalGraph_degrees_unweighted(PyObject *
     long long* data_ptr = (long long*) array_data(array2);
     
     // Copy the numpy data into the new vector.
-    std::vector<long long> temp_vec;
-    temp_vec.reserve(size[0]);
-    memcpy(temp_vec.data(), data_ptr, sizeof(long long) * size[0]);
-    arg2 = temp_vec;
+    temp_vec2.reserve(size[0]);
+    for (int i = 0; i < size[0]; i++) {
+      temp_vec2.push_back(data_ptr[i]);
+    }
+    arg2 = temp_vec2;
   }
   {
     try {

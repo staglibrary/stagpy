@@ -7,10 +7,9 @@ import numpy as np
 
 
 def main():
-    vec1 = np.asarray([1, 1, 0, 0])
-    vec2 = np.asarray([0, 0, 1, 1])
-    ari = stag.cluster.adjusted_rand_index(vec1, vec2)
-    print(ari)
+    g1 = stag.graph.barbell_graph(4)
+    degrees = g1.degrees_unweighted([0, 1, 2, 3, 4, 5])
+    print(degrees)
 
 
 if __name__ == "__main__":

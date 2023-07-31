@@ -538,6 +538,7 @@ class Graph(LocalGraph):
         """
         return self.internal_graph.is_connected()
 
+    @utility.convert_ndarrays
     def subgraph(self, vertices: np.ndarray) -> 'Graph':
         r"""
         Construct and return a subgraph of this graph.
@@ -571,9 +572,11 @@ class Graph(LocalGraph):
     def degree_unweighted(self, v: int) -> int:
         return self.internal_graph.degree_unweighted(v)
 
+    @utility.convert_ndarrays
     def degrees(self, vertices: np.ndarray) -> np.ndarray:
         return self.internal_graph.degrees(vertices)
 
+    @utility.convert_ndarrays
     def degrees_unweighted(self, vertices: np.ndarray) -> np.ndarray:
         return self.internal_graph.degrees_unweighted(vertices)
 

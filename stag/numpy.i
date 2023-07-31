@@ -3074,7 +3074,7 @@
 }
 
 %typemap(in) std::vector<DATA_TYPE>
-  (PyArrayObject* array=NULL, int is_new_object=0)
+  (PyArrayObject* array=NULL, int is_new_object=0, std::vector<DATA_TYPE> temp_vec)
 {
   // Get the number of elements in the numpy array
   npy_intp size[1] = { PyArray_DIMS((PyArrayObject*) $input)[0] };
@@ -3090,9 +3090,10 @@
   DATA_TYPE* data_ptr = (DATA_TYPE*) array_data(array);
 
   // Copy the numpy data into the new vector.
-  std::vector<DATA_TYPE> temp_vec;
   temp_vec.reserve(size[0]);
-  memcpy(temp_vec.data(), data_ptr, sizeof(DATA_TYPE) * size[0]);
+  for (int i = 0; i < size[0]; i++) {
+    temp_vec.push_back(data_ptr[i]);
+  }
   $1 = temp_vec;
 }
 

@@ -321,7 +321,11 @@ def test_graph_equality():
 def test_graph_degrees():
     g1 = stag.graph.barbell_graph(4)
     degrees = g1.degrees_unweighted([0, 1, 2, 3, 4, 5])
-    assert degrees == [3, 3, 3, 4, 4, 3]
+    assert list(degrees) == [3, 3, 3, 4, 4, 3]
+
+    # Test np.ndarray objects
+    degrees = g1.degrees_unweighted(np.asarray([0, 1, 2, 3, 4, 5]))
+    assert list(degrees) == [3, 3, 3, 4, 4, 3]
 
 
 def test_graph_average_degree():

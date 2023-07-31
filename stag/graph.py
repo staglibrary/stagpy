@@ -277,6 +277,13 @@ class AdjacencyListLocalGraph(LocalGraph):
     def vertex_exists(self, v: int) -> bool:
         return self.internal_graph.vertex_exists(v)
 
+    @utility.convert_ndarrays
+    def degrees(self, vertices: np.ndarray) -> np.ndarray:
+        return self.internal_graph.degrees(vertices)
+
+    @utility.convert_ndarrays
+    def degrees_unweighted(self, vertices: np.ndarray) -> np.ndarray:
+        return self.internal_graph.degrees_unweighted(vertices)
 
 
 class Graph(LocalGraph):

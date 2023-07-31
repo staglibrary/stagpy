@@ -63,597 +63,6 @@ class _SwigNonDynamicMeta(type):
 
 import weakref
 
-class SwigPyIterator(object):
-    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
-
-    def __init__(self, *args, **kwargs):
-        raise AttributeError("No constructor defined - class is abstract")
-    __repr__ = _swig_repr
-    __swig_destroy__ = _stag_internal.delete_SwigPyIterator
-
-    def value(self):
-        return _stag_internal.SwigPyIterator_value(self)
-
-    def incr(self, n=1):
-        return _stag_internal.SwigPyIterator_incr(self, n)
-
-    def decr(self, n=1):
-        return _stag_internal.SwigPyIterator_decr(self, n)
-
-    def distance(self, x):
-        return _stag_internal.SwigPyIterator_distance(self, x)
-
-    def equal(self, x):
-        return _stag_internal.SwigPyIterator_equal(self, x)
-
-    def copy(self):
-        return _stag_internal.SwigPyIterator_copy(self)
-
-    def next(self):
-        return _stag_internal.SwigPyIterator_next(self)
-
-    def __next__(self):
-        return _stag_internal.SwigPyIterator___next__(self)
-
-    def previous(self):
-        return _stag_internal.SwigPyIterator_previous(self)
-
-    def advance(self, n):
-        return _stag_internal.SwigPyIterator_advance(self, n)
-
-    def __eq__(self, x):
-        return _stag_internal.SwigPyIterator___eq__(self, x)
-
-    def __ne__(self, x):
-        return _stag_internal.SwigPyIterator___ne__(self, x)
-
-    def __iadd__(self, n):
-        return _stag_internal.SwigPyIterator___iadd__(self, n)
-
-    def __isub__(self, n):
-        return _stag_internal.SwigPyIterator___isub__(self, n)
-
-    def __add__(self, n):
-        return _stag_internal.SwigPyIterator___add__(self, n)
-
-    def __sub__(self, *args):
-        return _stag_internal.SwigPyIterator___sub__(self, *args)
-    def __iter__(self):
-        return self
-
-# Register SwigPyIterator in _stag_internal:
-_stag_internal.SwigPyIterator_swigregister(SwigPyIterator)
-
-class vectori(object):
-    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
-    __repr__ = _swig_repr
-
-    def iterator(self):
-        return _stag_internal.vectori_iterator(self)
-    def __iter__(self):
-        return self.iterator()
-
-    def __nonzero__(self):
-        return _stag_internal.vectori___nonzero__(self)
-
-    def __bool__(self):
-        return _stag_internal.vectori___bool__(self)
-
-    def __len__(self):
-        return _stag_internal.vectori___len__(self)
-
-    def __getslice__(self, i, j):
-        return _stag_internal.vectori___getslice__(self, i, j)
-
-    def __setslice__(self, *args):
-        return _stag_internal.vectori___setslice__(self, *args)
-
-    def __delslice__(self, i, j):
-        return _stag_internal.vectori___delslice__(self, i, j)
-
-    def __delitem__(self, *args):
-        return _stag_internal.vectori___delitem__(self, *args)
-
-    def __getitem__(self, *args):
-        return _stag_internal.vectori___getitem__(self, *args)
-
-    def __setitem__(self, *args):
-        return _stag_internal.vectori___setitem__(self, *args)
-
-    def pop(self):
-        return _stag_internal.vectori_pop(self)
-
-    def append(self, x):
-        return _stag_internal.vectori_append(self, x)
-
-    def empty(self):
-        return _stag_internal.vectori_empty(self)
-
-    def size(self):
-        return _stag_internal.vectori_size(self)
-
-    def swap(self, v):
-        return _stag_internal.vectori_swap(self, v)
-
-    def begin(self):
-        return _stag_internal.vectori_begin(self)
-
-    def end(self):
-        return _stag_internal.vectori_end(self)
-
-    def rbegin(self):
-        return _stag_internal.vectori_rbegin(self)
-
-    def rend(self):
-        return _stag_internal.vectori_rend(self)
-
-    def clear(self):
-        return _stag_internal.vectori_clear(self)
-
-    def get_allocator(self):
-        return _stag_internal.vectori_get_allocator(self)
-
-    def pop_back(self):
-        return _stag_internal.vectori_pop_back(self)
-
-    def erase(self, *args):
-        return _stag_internal.vectori_erase(self, *args)
-
-    def __init__(self, *args):
-        _stag_internal.vectori_swiginit(self, _stag_internal.new_vectori(*args))
-
-    def push_back(self, x):
-        return _stag_internal.vectori_push_back(self, x)
-
-    def front(self):
-        return _stag_internal.vectori_front(self)
-
-    def back(self):
-        return _stag_internal.vectori_back(self)
-
-    def assign(self, n, x):
-        return _stag_internal.vectori_assign(self, n, x)
-
-    def resize(self, *args):
-        return _stag_internal.vectori_resize(self, *args)
-
-    def insert(self, *args):
-        return _stag_internal.vectori_insert(self, *args)
-
-    def reserve(self, n):
-        return _stag_internal.vectori_reserve(self, n)
-
-    def capacity(self):
-        return _stag_internal.vectori_capacity(self)
-    __swig_destroy__ = _stag_internal.delete_vectori
-
-# Register vectori in _stag_internal:
-_stag_internal.vectori_swigregister(vectori)
-
-class vectorl(object):
-    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
-    __repr__ = _swig_repr
-
-    def iterator(self):
-        return _stag_internal.vectorl_iterator(self)
-    def __iter__(self):
-        return self.iterator()
-
-    def __nonzero__(self):
-        return _stag_internal.vectorl___nonzero__(self)
-
-    def __bool__(self):
-        return _stag_internal.vectorl___bool__(self)
-
-    def __len__(self):
-        return _stag_internal.vectorl___len__(self)
-
-    def __getslice__(self, i, j):
-        return _stag_internal.vectorl___getslice__(self, i, j)
-
-    def __setslice__(self, *args):
-        return _stag_internal.vectorl___setslice__(self, *args)
-
-    def __delslice__(self, i, j):
-        return _stag_internal.vectorl___delslice__(self, i, j)
-
-    def __delitem__(self, *args):
-        return _stag_internal.vectorl___delitem__(self, *args)
-
-    def __getitem__(self, *args):
-        return _stag_internal.vectorl___getitem__(self, *args)
-
-    def __setitem__(self, *args):
-        return _stag_internal.vectorl___setitem__(self, *args)
-
-    def pop(self):
-        return _stag_internal.vectorl_pop(self)
-
-    def append(self, x):
-        return _stag_internal.vectorl_append(self, x)
-
-    def empty(self):
-        return _stag_internal.vectorl_empty(self)
-
-    def size(self):
-        return _stag_internal.vectorl_size(self)
-
-    def swap(self, v):
-        return _stag_internal.vectorl_swap(self, v)
-
-    def begin(self):
-        return _stag_internal.vectorl_begin(self)
-
-    def end(self):
-        return _stag_internal.vectorl_end(self)
-
-    def rbegin(self):
-        return _stag_internal.vectorl_rbegin(self)
-
-    def rend(self):
-        return _stag_internal.vectorl_rend(self)
-
-    def clear(self):
-        return _stag_internal.vectorl_clear(self)
-
-    def get_allocator(self):
-        return _stag_internal.vectorl_get_allocator(self)
-
-    def pop_back(self):
-        return _stag_internal.vectorl_pop_back(self)
-
-    def erase(self, *args):
-        return _stag_internal.vectorl_erase(self, *args)
-
-    def __init__(self, *args):
-        _stag_internal.vectorl_swiginit(self, _stag_internal.new_vectorl(*args))
-
-    def push_back(self, x):
-        return _stag_internal.vectorl_push_back(self, x)
-
-    def front(self):
-        return _stag_internal.vectorl_front(self)
-
-    def back(self):
-        return _stag_internal.vectorl_back(self)
-
-    def assign(self, n, x):
-        return _stag_internal.vectorl_assign(self, n, x)
-
-    def resize(self, *args):
-        return _stag_internal.vectorl_resize(self, *args)
-
-    def insert(self, *args):
-        return _stag_internal.vectorl_insert(self, *args)
-
-    def reserve(self, n):
-        return _stag_internal.vectorl_reserve(self, n)
-
-    def capacity(self):
-        return _stag_internal.vectorl_capacity(self)
-    __swig_destroy__ = _stag_internal.delete_vectorl
-
-# Register vectorl in _stag_internal:
-_stag_internal.vectorl_swigregister(vectorl)
-
-class vectord(object):
-    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
-    __repr__ = _swig_repr
-
-    def iterator(self):
-        return _stag_internal.vectord_iterator(self)
-    def __iter__(self):
-        return self.iterator()
-
-    def __nonzero__(self):
-        return _stag_internal.vectord___nonzero__(self)
-
-    def __bool__(self):
-        return _stag_internal.vectord___bool__(self)
-
-    def __len__(self):
-        return _stag_internal.vectord___len__(self)
-
-    def __getslice__(self, i, j):
-        return _stag_internal.vectord___getslice__(self, i, j)
-
-    def __setslice__(self, *args):
-        return _stag_internal.vectord___setslice__(self, *args)
-
-    def __delslice__(self, i, j):
-        return _stag_internal.vectord___delslice__(self, i, j)
-
-    def __delitem__(self, *args):
-        return _stag_internal.vectord___delitem__(self, *args)
-
-    def __getitem__(self, *args):
-        return _stag_internal.vectord___getitem__(self, *args)
-
-    def __setitem__(self, *args):
-        return _stag_internal.vectord___setitem__(self, *args)
-
-    def pop(self):
-        return _stag_internal.vectord_pop(self)
-
-    def append(self, x):
-        return _stag_internal.vectord_append(self, x)
-
-    def empty(self):
-        return _stag_internal.vectord_empty(self)
-
-    def size(self):
-        return _stag_internal.vectord_size(self)
-
-    def swap(self, v):
-        return _stag_internal.vectord_swap(self, v)
-
-    def begin(self):
-        return _stag_internal.vectord_begin(self)
-
-    def end(self):
-        return _stag_internal.vectord_end(self)
-
-    def rbegin(self):
-        return _stag_internal.vectord_rbegin(self)
-
-    def rend(self):
-        return _stag_internal.vectord_rend(self)
-
-    def clear(self):
-        return _stag_internal.vectord_clear(self)
-
-    def get_allocator(self):
-        return _stag_internal.vectord_get_allocator(self)
-
-    def pop_back(self):
-        return _stag_internal.vectord_pop_back(self)
-
-    def erase(self, *args):
-        return _stag_internal.vectord_erase(self, *args)
-
-    def __init__(self, *args):
-        _stag_internal.vectord_swiginit(self, _stag_internal.new_vectord(*args))
-
-    def push_back(self, x):
-        return _stag_internal.vectord_push_back(self, x)
-
-    def front(self):
-        return _stag_internal.vectord_front(self)
-
-    def back(self):
-        return _stag_internal.vectord_back(self)
-
-    def assign(self, n, x):
-        return _stag_internal.vectord_assign(self, n, x)
-
-    def resize(self, *args):
-        return _stag_internal.vectord_resize(self, *args)
-
-    def insert(self, *args):
-        return _stag_internal.vectord_insert(self, *args)
-
-    def reserve(self, n):
-        return _stag_internal.vectord_reserve(self, n)
-
-    def capacity(self):
-        return _stag_internal.vectord_capacity(self)
-    __swig_destroy__ = _stag_internal.delete_vectord
-
-# Register vectord in _stag_internal:
-_stag_internal.vectord_swigregister(vectord)
-
-class vectore(object):
-    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
-    __repr__ = _swig_repr
-
-    def iterator(self):
-        return _stag_internal.vectore_iterator(self)
-    def __iter__(self):
-        return self.iterator()
-
-    def __nonzero__(self):
-        return _stag_internal.vectore___nonzero__(self)
-
-    def __bool__(self):
-        return _stag_internal.vectore___bool__(self)
-
-    def __len__(self):
-        return _stag_internal.vectore___len__(self)
-
-    def __getslice__(self, i, j):
-        return _stag_internal.vectore___getslice__(self, i, j)
-
-    def __setslice__(self, *args):
-        return _stag_internal.vectore___setslice__(self, *args)
-
-    def __delslice__(self, i, j):
-        return _stag_internal.vectore___delslice__(self, i, j)
-
-    def __delitem__(self, *args):
-        return _stag_internal.vectore___delitem__(self, *args)
-
-    def __getitem__(self, *args):
-        return _stag_internal.vectore___getitem__(self, *args)
-
-    def __setitem__(self, *args):
-        return _stag_internal.vectore___setitem__(self, *args)
-
-    def pop(self):
-        return _stag_internal.vectore_pop(self)
-
-    def append(self, x):
-        return _stag_internal.vectore_append(self, x)
-
-    def empty(self):
-        return _stag_internal.vectore_empty(self)
-
-    def size(self):
-        return _stag_internal.vectore_size(self)
-
-    def swap(self, v):
-        return _stag_internal.vectore_swap(self, v)
-
-    def begin(self):
-        return _stag_internal.vectore_begin(self)
-
-    def end(self):
-        return _stag_internal.vectore_end(self)
-
-    def rbegin(self):
-        return _stag_internal.vectore_rbegin(self)
-
-    def rend(self):
-        return _stag_internal.vectore_rend(self)
-
-    def clear(self):
-        return _stag_internal.vectore_clear(self)
-
-    def get_allocator(self):
-        return _stag_internal.vectore_get_allocator(self)
-
-    def pop_back(self):
-        return _stag_internal.vectore_pop_back(self)
-
-    def erase(self, *args):
-        return _stag_internal.vectore_erase(self, *args)
-
-    def __init__(self, *args):
-        _stag_internal.vectore_swiginit(self, _stag_internal.new_vectore(*args))
-
-    def push_back(self, x):
-        return _stag_internal.vectore_push_back(self, x)
-
-    def front(self):
-        return _stag_internal.vectore_front(self)
-
-    def back(self):
-        return _stag_internal.vectore_back(self)
-
-    def assign(self, n, x):
-        return _stag_internal.vectore_assign(self, n, x)
-
-    def resize(self, *args):
-        return _stag_internal.vectore_resize(self, *args)
-
-    def insert(self, *args):
-        return _stag_internal.vectore_insert(self, *args)
-
-    def reserve(self, n):
-        return _stag_internal.vectore_reserve(self, n)
-
-    def capacity(self):
-        return _stag_internal.vectore_capacity(self)
-    __swig_destroy__ = _stag_internal.delete_vectore
-
-# Register vectore in _stag_internal:
-_stag_internal.vectore_swigregister(vectore)
-
-class vectorvecl(object):
-    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
-    __repr__ = _swig_repr
-
-    def iterator(self):
-        return _stag_internal.vectorvecl_iterator(self)
-    def __iter__(self):
-        return self.iterator()
-
-    def __nonzero__(self):
-        return _stag_internal.vectorvecl___nonzero__(self)
-
-    def __bool__(self):
-        return _stag_internal.vectorvecl___bool__(self)
-
-    def __len__(self):
-        return _stag_internal.vectorvecl___len__(self)
-
-    def __getslice__(self, i, j):
-        return _stag_internal.vectorvecl___getslice__(self, i, j)
-
-    def __setslice__(self, *args):
-        return _stag_internal.vectorvecl___setslice__(self, *args)
-
-    def __delslice__(self, i, j):
-        return _stag_internal.vectorvecl___delslice__(self, i, j)
-
-    def __delitem__(self, *args):
-        return _stag_internal.vectorvecl___delitem__(self, *args)
-
-    def __getitem__(self, *args):
-        return _stag_internal.vectorvecl___getitem__(self, *args)
-
-    def __setitem__(self, *args):
-        return _stag_internal.vectorvecl___setitem__(self, *args)
-
-    def pop(self):
-        return _stag_internal.vectorvecl_pop(self)
-
-    def append(self, x):
-        return _stag_internal.vectorvecl_append(self, x)
-
-    def empty(self):
-        return _stag_internal.vectorvecl_empty(self)
-
-    def size(self):
-        return _stag_internal.vectorvecl_size(self)
-
-    def swap(self, v):
-        return _stag_internal.vectorvecl_swap(self, v)
-
-    def begin(self):
-        return _stag_internal.vectorvecl_begin(self)
-
-    def end(self):
-        return _stag_internal.vectorvecl_end(self)
-
-    def rbegin(self):
-        return _stag_internal.vectorvecl_rbegin(self)
-
-    def rend(self):
-        return _stag_internal.vectorvecl_rend(self)
-
-    def clear(self):
-        return _stag_internal.vectorvecl_clear(self)
-
-    def get_allocator(self):
-        return _stag_internal.vectorvecl_get_allocator(self)
-
-    def pop_back(self):
-        return _stag_internal.vectorvecl_pop_back(self)
-
-    def erase(self, *args):
-        return _stag_internal.vectorvecl_erase(self, *args)
-
-    def __init__(self, *args):
-        _stag_internal.vectorvecl_swiginit(self, _stag_internal.new_vectorvecl(*args))
-
-    def push_back(self, x):
-        return _stag_internal.vectorvecl_push_back(self, x)
-
-    def front(self):
-        return _stag_internal.vectorvecl_front(self)
-
-    def back(self):
-        return _stag_internal.vectorvecl_back(self)
-
-    def assign(self, n, x):
-        return _stag_internal.vectorvecl_assign(self, n, x)
-
-    def resize(self, *args):
-        return _stag_internal.vectorvecl_resize(self, *args)
-
-    def insert(self, *args):
-        return _stag_internal.vectorvecl_insert(self, *args)
-
-    def reserve(self, n):
-        return _stag_internal.vectorvecl_reserve(self, n)
-
-    def capacity(self):
-        return _stag_internal.vectorvecl_capacity(self)
-    __swig_destroy__ = _stag_internal.delete_vectorvecl
-
-# Register vectorvecl in _stag_internal:
-_stag_internal.vectorvecl_swigregister(vectorvecl)
-
 class TupleMM(object):
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
     __repr__ = _swig_repr
@@ -688,6 +97,41 @@ class TupleMM(object):
 
 # Register TupleMM in _stag_internal:
 _stag_internal.TupleMM_swigregister(TupleMM)
+
+class Tupleii(object):
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
+    __repr__ = _swig_repr
+
+    def __init__(self, arg2, arg3):
+        _stag_internal.Tupleii_swiginit(self, _stag_internal.new_Tupleii(arg2, arg3))
+
+    def get0(self):
+        return _stag_internal.Tupleii_get0(self)
+
+    def get1(self):
+        return _stag_internal.Tupleii_get1(self)
+
+    def set0(self, val):
+        return _stag_internal.Tupleii_set0(self, val)
+
+    def set1(self, val):
+        return _stag_internal.Tupleii_set1(self, val)
+
+    def __len__(self):
+        return _stag_internal.Tupleii___len__(self)
+
+    #[7]
+    def __getitem__(self, n):
+        if n >= len(self): raise IndexError()
+        return getattr(self, 'get%d' % n)()
+    def __setitem__(self, n, val):
+        if n >= len(self): raise IndexError()
+        getattr(self, 'set%d' % n)(val)
+
+    __swig_destroy__ = _stag_internal.delete_Tupleii
+
+# Register Tupleii in _stag_internal:
+_stag_internal.Tupleii_swigregister(Tupleii)
 
 EPSILON = _stag_internal.EPSILON
 class edge(object):
@@ -1015,20 +459,35 @@ class SprsMat(object):
     __repr__ = _swig_repr
     __swig_destroy__ = _stag_internal.delete_SprsMat
 
+    def get_rows(self):
+        return _stag_internal.SprsMat_get_rows(self)
+
+    def get_cols(self):
+        return _stag_internal.SprsMat_get_cols(self)
+
     def __add__(self, other):
         return _stag_internal.SprsMat___add__(self, other)
 
     def __sub__(self, other):
         return _stag_internal.SprsMat___sub__(self, other)
 
-    def __mul__(self, *args):
-        return _stag_internal.SprsMat___mul__(self, *args)
+    def __mul__(self, other):
+        return _stag_internal.SprsMat___mul__(self, other)
+
+    def __mulfloat__(self, other):
+        return _stag_internal.SprsMat___mulfloat__(self, other)
+
+    def __mulint__(self, other):
+        return _stag_internal.SprsMat___mulint__(self, other)
 
     def __neg__(self):
         return _stag_internal.SprsMat___neg__(self)
 
-    def __truediv__(self, *args):
-        return _stag_internal.SprsMat___truediv__(self, *args)
+    def __truedivfloat__(self, other):
+        return _stag_internal.SprsMat___truedivfloat__(self, other)
+
+    def __truedivint__(self, other):
+        return _stag_internal.SprsMat___truedivint__(self, other)
 
     def __transpose__(self):
         return _stag_internal.SprsMat___transpose__(self)
@@ -1039,6 +498,9 @@ class SprsMat(object):
 # Register SprsMat in _stag_internal:
 _stag_internal.SprsMat_swigregister(SprsMat)
 
+
+def sprsMatFromVectorsDims(rows, cols, column_starts, row_indices, values):
+    return _stag_internal.sprsMatFromVectorsDims(rows, cols, column_starts, row_indices, values)
 VERSION = _stag_internal.VERSION
 
 

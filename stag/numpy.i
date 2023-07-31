@@ -3038,6 +3038,70 @@
   $result = SWIG_Python_AppendOutput($result,obj);
 }
 
+/***************************************************************** */
+// Convert std::vector objects
+/***************************************************************** */
+%typemap(out) std::vector<DATA_TYPE> {
+    // For non-pointer output vectors, we just copy the data into a numpy array.
+    // The copying at least happens still on the C++ side so will be relatively
+    // fast and optimised by the compiler.
+    //
+    // This adds a small 'constant factor' to the running time of the algorithm
+    // in STAGPy over C++ STAG.
+    npy_intp length = $1.size();
+    $result = PyArray_SimpleNew(1, &length, DATA_TYPECODE);
+    memcpy(PyArray_DATA((PyArrayObject*) $result),
+                        $1.data(),
+                        sizeof(DATA_TYPE) * length);
+}
+
+%typemap(in) std::vector<DATA_TYPE>
+  (PyArrayObject* array=NULL, int is_new_object=0)
+{
+  // Get the number of elements in the numpy array
+  npy_intp size[1] = { PyArray_DIMS((PyArrayObject*) $input)[0] };
+
+  // Check that the dimensions of the array are correct
+  array = obj_to_array_contiguous_allow_conversion($input,
+                                                   DATA_TYPECODE,
+                                                   &is_new_object);
+  if (!array || !require_dimensions(array, 1) ||
+      !require_size(array, size, 1)) SWIG_fail;
+
+  // Get a pointer to the data in the numpy array
+  DATA_TYPE* data_ptr = (DATA_TYPE*) array_data(array);
+
+  // Copy the numpy data into the new vector.
+  std::vector<DATA_TYPE> temp_vec;
+  temp_vec.reserve(size[0]);
+  memcpy(temp_vec.data(), data_ptr, sizeof(DATA_TYPE) * size[0]);
+  $1 = temp_vec;
+}
+
+%typemap(in) std::vector<DATA_TYPE> &
+  (PyArrayObject* array=NULL, int is_new_object=0, std::vector<DATA_TYPE> temp_vec)
+{
+  // Get the number of elements in the numpy array
+  npy_intp size[1] = { PyArray_DIMS((PyArrayObject*) $input)[0] };
+
+  // Check that the dimensions of the array are correct
+  array = obj_to_array_contiguous_allow_conversion($input,
+                                                   DATA_TYPECODE,
+                                                   &is_new_object);
+  if (!array || !require_dimensions(array, 1) ||
+      !require_size(array, size, 1)) SWIG_fail;
+
+  // Get a pointer to the data in the numpy array
+  DATA_TYPE* data_ptr = (DATA_TYPE*) array_data(array);
+
+  // Copy the numpy data into the new vector.
+  temp_vec.reserve(size[0]);
+  for (int i = 0; i < size[0]; i++) {
+    temp_vec.push_back(data_ptr[i]);
+  }
+  $1 = &temp_vec;
+}
+
 %enddef    /* %numpy_typemaps() macro */
 /* *************************************************************** */
 

@@ -7,6 +7,7 @@ from typing import List, Union
 import inspect
 
 import scipy.sparse
+import numpy as np
 
 import stag.utility
 from . import stag_internal
@@ -126,7 +127,7 @@ class LocalGraph(ABC):
         pass
 
     @abstractmethod
-    def neighbors_unweighted(self, v: int) -> List[int]:
+    def neighbors_unweighted(self, v: int) -> np.ndarray:
         """
         Given a vertex v, return a list of neighbors of v.
 
@@ -137,7 +138,8 @@ class LocalGraph(ABC):
         """
         pass
 
-    def degrees(self, vertices: List[int]) -> List[float]:
+    @abstractmethod
+    def degrees(self, vertices: np.ndarray) -> np.ndarray:
         """
         Given a list of vertices, return a list of their weighted degrees.
 
@@ -148,9 +150,10 @@ class LocalGraph(ABC):
         @param vertices a list of IDs representing the vertices to be queried
         @return a list of degrees
         """
-        return [self.degree(v) for v in vertices]
+        pass
 
-    def degrees_unweighted(self, vertices: List[int]) -> List[int]:
+    @abstractmethod
+    def degrees_unweighted(self, vertices: np.ndarray) -> np.ndarray:
         """
         Given a list of vertices, return a list of their unweighted degrees.
 
@@ -161,7 +164,7 @@ class LocalGraph(ABC):
         @param vertices a list of IDs representing the vertices to be queried
         @return a list of unweighted degrees
         """
-        return [self.degree_unweighted(v) for v in vertices]
+        pass
 
     @abstractmethod
     def vertex_exists(self, v: int) -> bool:
@@ -268,7 +271,7 @@ class AdjacencyListLocalGraph(LocalGraph):
     def neighbors(self, v: int) -> List[Edge]:
         return self.internal_graph.neighbors(v)
 
-    def neighbors_unweighted(self, v: int) -> List[int]:
+    def neighbors_unweighted(self, v: int) -> np.ndarray:
         return self.internal_graph.neighbors_unweighted(v)
 
     def vertex_exists(self, v: int) -> bool:
@@ -535,8 +538,7 @@ class Graph(LocalGraph):
         """
         return self.internal_graph.is_connected()
 
-    @utility.convert_ndarrays
-    def subgraph(self, vertices: List[int]) -> 'Graph':
+    def subgraph(self, vertices: np.ndarray) -> 'Graph':
         r"""
         Construct and return a subgraph of this graph.
 
@@ -546,7 +548,7 @@ class Graph(LocalGraph):
         @return a new stag.graph.Graph object representing the subgraph induced
                 by the given vertices
         """
-        new_int_graph = self.internal_graph.subgraph(stag_internal.vectorl(vertices))
+        new_int_graph = self.internal_graph.subgraph(vertices)
         return Graph(new_int_graph)
 
     def disjoint_union(self, other: 'Graph') -> 'Graph':
@@ -569,10 +571,16 @@ class Graph(LocalGraph):
     def degree_unweighted(self, v: int) -> int:
         return self.internal_graph.degree_unweighted(v)
 
+    def degrees(self, vertices: np.ndarray) -> np.ndarray:
+        return self.internal_graph.degrees(vertices)
+
+    def degrees_unweighted(self, vertices: np.ndarray) -> np.ndarray:
+        return self.internal_graph.degrees_unweighted(vertices)
+
     def neighbors(self, v: int) -> List[Edge]:
         return self.internal_graph.neighbors(v)
 
-    def neighbors_unweighted(self, v: int) -> List[int]:
+    def neighbors_unweighted(self, v: int) -> np.ndarray:
         return self.internal_graph.neighbors_unweighted(v)
 
     def vertex_exists(self, v: int) -> bool:

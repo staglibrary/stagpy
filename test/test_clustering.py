@@ -6,6 +6,7 @@ from context import stag
 import stag.graph
 import stag.cluster
 import stag.random
+import stag.utility
 
 # Define the adjacency matrices of some useful graphs.
 C4_ADJ_MAT = scipy.sparse.csc_matrix([[0, 1, 0, 1], [1, 0, 1, 0], [0, 1, 0, 1], [1, 0, 1, 0]])
@@ -74,19 +75,18 @@ def test_acl_local_clustering():
 
 def test_approximate_pagerank():
     # For easier manual verification, we use a cycle graph with 0.5 weights on the edges
-    adj = 0.5 * stag.graph.cycle_graph(4).adjacency().to_scipy()
+    adj = 0.5 * stag.graph.cycle_graph(4).adjacency()
     graph = stag.graph.Graph(adj)
 
     # Construct seed matrix.
-    s = scipy.sparse.lil_matrix((4, 1))
-    s[0, 0] = 1
+    s = stag.utility.SprsMat([[1, 0, 0, 0]]).transpose()
 
     # Run the personalised pagerank and check that we get the right result
-    p, r = stag.cluster.approximate_pagerank(graph, s.tocsc(), 1./3, 1./8)
+    p, r = stag.cluster.approximate_pagerank(graph, s, 1./3, 1./8)
     expected_p = [41./81, 2./27, 0, 2./27]
     expected_r = [5./81, 2./27 + 5./162, 2./27, 2./27 + 5./162]
-    np.testing.assert_almost_equal(p.todense().transpose().tolist()[0], expected_p)
-    np.testing.assert_almost_equal(r.todense().transpose().tolist()[0], expected_r)
+    np.testing.assert_almost_equal(p.to_dense().transpose().tolist()[0], expected_p)
+    np.testing.assert_almost_equal(r.to_dense().transpose().tolist()[0], expected_r)
 
 
 def test_sweep_set():

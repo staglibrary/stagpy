@@ -21,10 +21,10 @@ public:
     SwigDirector_LocalGraph(PyObject *self);
     virtual double degree(stag_int v);
     virtual stag_int degree_unweighted(stag_int v);
-    virtual std::vector< stag::edge, std::allocator< stag::edge > > neighbors(stag_int v);
-    virtual std::vector< stag_int, std::allocator< stag_int > > neighbors_unweighted(stag_int v);
-    virtual std::vector< double, std::allocator< double > > degrees(std::vector< stag_int, std::allocator< stag_int > > vertices);
-    virtual std::vector< stag_int, std::allocator< stag_int > > degrees_unweighted(std::vector< stag_int, std::allocator< stag_int > > vertices);
+    virtual std::vector< stag::edge > neighbors(stag_int v);
+    virtual std::vector< stag_int > neighbors_unweighted(stag_int v);
+    virtual std::vector< double > degrees(std::vector< stag_int > vertices);
+    virtual std::vector< stag_int > degrees_unweighted(std::vector< stag_int > vertices);
     virtual bool vertex_exists(stag_int v);
     virtual ~SwigDirector_LocalGraph();
 

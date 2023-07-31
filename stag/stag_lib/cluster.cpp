@@ -238,7 +238,7 @@ std::tuple<SprsMat, SprsMat> stag::approximate_pagerank(stag::LocalGraph *graph,
     // Check u to see if it should be added back to the queue
     // If so, then we add it back to the start of the queue in order to be as
     // cache-efficient as possible when accessing a graph from disk.
-    if (r.coeff(u, 0) >= epsilon * graph->degree(u)) {
+    if (r.coeff(u, 0) > epsilon * graph->degree(u)) {
       vertex_queue.push_front(u);
       queue_members.insert(u);
     }

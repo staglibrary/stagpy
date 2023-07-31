@@ -26,6 +26,8 @@
 %}
 
 // Eigen / numpy stuff
+// We intend to make C++ vectors interface seamlessly with numpy arrays
+// from the perspective of the end user.
 %init %{
     import_array();
 %}
@@ -33,19 +35,10 @@
 %eigen_typemaps(Eigen::MatrixXd)
 %eigen_typemaps(DenseMat)
 
-%include <std_vector.i>
-namespace std {
-    // Create the bindings for the std::vector types
-    %template(vectori) vector<int>;
-    %template(vectorl) vector<long long>;
-    %template(vectord) vector<double>;
-    %template(vectore) vector<stag::edge>;
-    %template(vectorvecl) vector<vector<long long>>;
-}
-
 // Create bindings for tuples
 %include <std_tuple.i>
 %std_tuple(TupleMM, SprsMat, SprsMat)
+%std_tuple(Tupleii, stag_int, stag_int)
 
 // Define typemaps for passing by reference
 %include <std_string.i>
@@ -86,6 +79,14 @@ public:
 
 // Allow use of operators for SprsMat objects
 %extend SprsMat {
+    stag_int get_rows() {
+        return $self->rows();
+    }
+
+    stag_int get_cols() {
+        return $self->cols();
+    }
+
     SprsMat __add__(SprsMat* other) {
         return *$self + *other;
     }
@@ -98,11 +99,11 @@ public:
         return *$self * *other;
     }
 
-    SprsMat __mul__(double other) {
+    SprsMat __mulfloat__(double other) {
         return other * *$self;
     }
 
-    SprsMat __mul__(stag_int other) {
+    SprsMat __mulint__(stag_int other) {
         return other * *$self;
     }
 
@@ -110,11 +111,11 @@ public:
         return - *$self;
     }
 
-    SprsMat __truediv__(double other) {
+    SprsMat __truedivfloat__(double other) {
         return *$self / other;
     }
 
-    SprsMat __truediv__(stag_int other) {
+    SprsMat __truedivint__(stag_int other) {
         return *$self / other;
     }
 
@@ -124,6 +125,40 @@ public:
         return $self->transpose();
     }
 }
+
+// Add some code for constructing stag SprsMats from vectors.
+%inline %{
+SprsMat sprsMatFromVectorsDims(stag_int rows,
+                               stag_int cols,
+                               std::vector<stag_int>& column_starts,
+                               std::vector<stag_int>& row_indices,
+                               std::vector<double>& values) {
+  // The length of the row_indices and values vectors should be the same
+  if (row_indices.size() != values.size()) {
+    throw std::invalid_argument("Sparse matrix indices and values array length mismatch.");
+  }
+
+  // The last value in the column_starts vector should be equal to the length
+  // of the data vectors.
+  if (column_starts.back() != (stag_int) row_indices.size()) {
+    throw std::invalid_argument("Final column starts entry should equal size of data vectors.");
+  }
+
+  if (column_starts.size() - 1 != cols) {
+    throw std::invalid_argument("Number of columns should match length of column starts.");
+  }
+
+  SprsMat constructed_mat = Eigen::Map<SprsMat>(rows,
+                                                cols,
+                                                (stag_int) values.size(),
+                                                column_starts.data(),
+                                                row_indices.data(),
+                                                values.data());
+  constructed_mat.makeCompressed();
+  return constructed_mat;
+}
+
+%}
 
 // Metadata about the python interface
 #define VERSION "1.2.1"

@@ -95,7 +95,7 @@ def compute_eigenvectors(mat: scipy.sparse.spmatrix,
     return eigvecs
 
 
-def power_method(mat: scipy.sparse.spmatrix,
+def power_method(mat: utility.SprsMat,
                  num_iterations: int = None,
                  initial_vector: np.ndarray = None) -> np.ndarray:
     r"""
@@ -126,19 +126,19 @@ def power_method(mat: scipy.sparse.spmatrix,
     """
     if num_iterations is None:
         if initial_vector is None:
-            return stag_internal.power_method(utility.scipy_to_swig_sprs(mat))
+            return stag_internal.power_method(mat.internal_sprsmat)
         else:
-            return stag_internal.power_method(utility.scipy_to_swig_sprs(mat),
+            return stag_internal.power_method(mat.internal_sprsmat,
                                               initial_vector.astype(float))
     elif initial_vector is None:
-        return stag_internal.power_method(utility.scipy_to_swig_sprs(mat),
+        return stag_internal.power_method(mat.internal_sprsmat,
                                           num_iterations)
     else:
-        return stag_internal.power_method(utility.scipy_to_swig_sprs(mat),
+        return stag_internal.power_method(mat.internal_sprsmat,
                                           num_iterations, initial_vector.astype(float))
 
 
-def rayleigh_quotient(mat: scipy.sparse.spmatrix, vec: np.ndarray) -> float:
+def rayleigh_quotient(mat: utility.SprsMat, vec: np.ndarray) -> float:
     r"""
     Compute the Rayleigh quotient of the given vector and matrix.
 
@@ -152,5 +152,5 @@ def rayleigh_quotient(mat: scipy.sparse.spmatrix, vec: np.ndarray) -> float:
     @param vec a vector \f$v \in \mathbb{R}^n\f$.
     @return the Rayleigh quotient \f$R(M, v)\f$.
     """
-    return stag_internal.rayleigh_quotient(utility.scipy_to_swig_sprs(mat),
+    return stag_internal.rayleigh_quotient(mat.internal_sprsmat,
                                            vec)

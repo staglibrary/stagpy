@@ -73,6 +73,27 @@ def test_sub_sprsmat():
     assert(np.all(mat_diff.todense() == pytest.approx(0)))
 
 
+def test_subtract_bad_shapes():
+    # Subtracting matrices with different shapes should not work
+    mat1 = stag.utility.SprsMat([[1, 2, 3], [2, 3, 4]])
+    mat2 = stag.utility.SprsMat([[1, 2], [3, 2], [4, 2]])
+
+    assert mat1.shape() == (2, 3)
+    assert mat2.shape() == (3, 2)
+
+    with pytest.raises(Exception):
+        mat3 = mat1 - mat2
+
+
+def test_add_bad_shapes():
+    # Adding matrices with different shapes should not work
+    mat1 = stag.utility.SprsMat([[1, 2, 3], [2, 3, 4]])
+    mat2 = stag.utility.SprsMat([[1, 2], [3, 2], [4, 2]])
+
+    with pytest.raises(Exception):
+        mat3 = mat1 + mat2
+
+
 def test_unary_negation_sprsmat():
     mat1 = scipy.sparse.csc_matrix([[0, 1, 0, 1],
                                     [1, 0, 1, 0],
@@ -112,6 +133,10 @@ def test_scalar_mul_sprsmat():
     mat_diff = (sprsmat1.to_scipy() - expected_mat)
     assert(np.all(mat_diff.todense() == pytest.approx(0)))
 
+    mat2 = (0.5 * sprsmat1).to_scipy()
+    mat_diff = mat2 - mat1
+    assert(np.all(mat_diff.todense() == pytest.approx(0)))
+
 
 def test_scalar_div_sprsmat():
     mat1 = scipy.sparse.csc_matrix([[0, 2, 0, 2],
@@ -132,6 +157,10 @@ def test_scalar_div_sprsmat():
     mat_diff = sprsmat1.to_scipy() - expected_mat
     assert(np.all(mat_diff.todense() == pytest.approx(0)))
 
+    mat2 = (sprsmat1 / 0.5).to_scipy()
+    mat_diff = mat2 - mat1
+    assert(np.all(mat_diff.todense() == pytest.approx(0)))
+
 
 def test_sprsmat_transpose():
     mat1 = stag.utility.SprsMat([[0, 2, 0, 2],
@@ -144,6 +173,15 @@ def test_sprsmat_transpose():
                                          [2, 0, 1, 0],
                                          [0, 2, 0, 1],
                                          [2, 0, 2, 0]])
+    mat_diff = mat2 - expected_mat
+    assert(np.all(mat_diff.to_dense() == pytest.approx(0)))
+
+
+def test_sprsmat_transpose_one_dim():
+    mat1 = stag.utility.SprsMat([[1, 0, 0, 0]])
+    mat2 = mat1.transpose()
+
+    expected_mat = stag.utility.SprsMat([[1], [0], [0], [0]])
     mat_diff = mat2 - expected_mat
     assert(np.all(mat_diff.to_dense() == pytest.approx(0)))
 

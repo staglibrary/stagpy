@@ -33,7 +33,7 @@ def sbm(n: int, k: int, p: float, q: float, exact: bool = False) -> graph.Graph:
     return graph.Graph(stag_internal.sbm(n, k, p, q, exact))
 
 
-def general_sbm(cluster_sizes: List[int],
+def general_sbm(cluster_sizes: np.ndarray,
                 probabilities: np.ndarray,
                 exact: bool = False) -> graph.Graph:
     r"""
@@ -70,7 +70,7 @@ def general_sbm(cluster_sizes: List[int],
     print(my_graph.adjacency())
     \endcode
 
-    @param cluster_sizes a list of length \f$k\f$ with the number of vertices
+    @param cluster_sizes an array of length \f$k\f$ with the number of vertices
                          in each cluster.
     @param probabilities a \f$k \times k\f$ numpy matrix with the inter-cluster
                          probabilities.
@@ -79,13 +79,13 @@ def general_sbm(cluster_sizes: List[int],
     @return the randomly generated graph
     """
     return graph.Graph(stag_internal.general_sbm(
-        stag_internal.vectorl(cluster_sizes),
+        cluster_sizes,
         probabilities.astype(float),
         exact))
 
 
 def general_sbm_edgelist(filename: str,
-                         cluster_sizes: List[int],
+                         cluster_sizes: np.ndarray,
                          probabilities: np.ndarray,
                          exact: bool = False):
     r"""
@@ -105,7 +105,7 @@ def general_sbm_edgelist(filename: str,
     """
     cluster_sizes = utility.possibly_convert_ndarray(cluster_sizes)
     return stag_internal.general_sbm_edgelist(filename,
-                                              stag_internal.vectorl(cluster_sizes),
+                                              cluster_sizes,
                                               probabilities.astype(float),
                                               exact)
 
@@ -129,7 +129,7 @@ def erdos_renyi(n: int, p: float, exact: bool = False) -> graph.Graph:
     return graph.Graph(stag_internal.erdos_renyi(n, p, exact))
 
 
-def sbm_gt_labels(n: int, k: int) -> List[int]:
+def sbm_gt_labels(n: int, k: int) -> np.ndarray:
     r"""
     Construct a vector with the ground truth labels for a graph drawn from the
     symmetric stochastic block model.
@@ -151,13 +151,13 @@ def sbm_gt_labels(n: int, k: int) -> List[int]:
 
     @param n the number of vertices in the graph
     @param k the number of clusters
-    @return a list of integers containing the ground truth labels for the
+    @return an array of integers containing the ground truth labels for the
             vertices in the graph.
     """
-    return list(stag_internal.sbm_gt_labels(n, k))
+    return stag_internal.sbm_gt_labels(n, k)
 
 
-def general_sbm_gt_labels(cluster_sizes: List[int]) -> List[int]:
+def general_sbm_gt_labels(cluster_sizes: np.ndarray) -> np.ndarray:
     r"""
     Construct a vector with the ground truth labels for a graph drawn from the
     general stochastic block model.
@@ -179,4 +179,4 @@ def general_sbm_gt_labels(cluster_sizes: List[int]) -> List[int]:
     @return a vector containing the ground truth labels for the vertices in the
             graph.
     """
-    return list(stag_internal.general_sbm_gt_labels(stag_internal.vectorl(cluster_sizes)))
+    return stag_internal.general_sbm_gt_labels(cluster_sizes)

@@ -5,7 +5,7 @@ from . import stag_internal
 import scipy.sparse
 import inspect
 import numpy as np
-from typing import Optional, Union, List
+from typing import Union, List, Tuple
 
 class SprsMat(object):
     """
@@ -57,12 +57,12 @@ class SprsMat(object):
             self.internal_sprsmat = matrix
         else:
             assert self.scipy_mat is not None
-            col_starts = stag_internal.vectorl(self.scipy_mat.indptr.tolist())
-            row_indices = stag_internal.vectorl(self.scipy_mat.indices.tolist())
-            values = stag_internal.vectord(self.scipy_mat.data.tolist())
-            self.internal_sprsmat = stag_internal.sprsMatFromVectors(col_starts,
-                                                                    row_indices,
-                                                                    values)
+            col_starts = self.scipy_mat.indptr
+            row_indices = self.scipy_mat.indices
+            values = self.scipy_mat.data
+            self.internal_sprsmat = stag_internal.sprsMatFromVectorsDims(
+                self.scipy_mat.shape[0], self.scipy_mat.shape[1],
+                col_starts, row_indices, values)
         ##
         # \endcond
         ##
@@ -76,7 +76,8 @@ class SprsMat(object):
             inner_indices = stag_internal.sprsMatInnerIndices(self.internal_sprsmat)
             values = stag_internal.sprsMatValues(self.internal_sprsmat)
             self.scipy_mat = scipy.sparse.csc_matrix(
-                (values, inner_indices, outer_starts))
+                (values, inner_indices, outer_starts),
+                shape=self.shape())
         return self.scipy_mat
 
     def to_dense(self) -> np.ndarray:
@@ -91,18 +92,28 @@ class SprsMat(object):
         """
         return SprsMat(self.internal_sprsmat.__transpose__())
 
+    def shape(self) -> Tuple[int, int]:
+        """
+        Return the shape of the matrix.
+        """
+        return self.internal_sprsmat.get_rows(), self.internal_sprsmat.get_cols()
+
     ##
     # \cond
     # Do not document the operator methods
     ##
     def __sub__(self, other):
         if isinstance(other, SprsMat):
+            if self.shape() != other.shape():
+                raise ValueError("Matrix dimensions must match.")
             return SprsMat(self.internal_sprsmat - other.internal_sprsmat)
         else:
             return NotImplemented
 
     def __rsub__(self, other):
         if isinstance(other, SprsMat):
+            if self.shape() != other.shape():
+                raise ValueError("Matrix dimensions must match.")
             return SprsMat(other.internal_sprsmat - self.internal_sprsmat)
         else:
             return NotImplemented
@@ -112,6 +123,8 @@ class SprsMat(object):
 
     def __add__(self, other):
         if isinstance(other, SprsMat):
+            if self.shape() != other.shape():
+                raise ValueError("Matrix dimensions must match.")
             return SprsMat(self.internal_sprsmat + other.internal_sprsmat)
         else:
             return NotImplemented
@@ -120,8 +133,10 @@ class SprsMat(object):
         return self.__add__(other)
 
     def __mul__(self, other):
-        if isinstance(other, (int, float)):
-            return SprsMat(self.internal_sprsmat * other)
+        if isinstance(other, int):
+            return SprsMat(self.internal_sprsmat.__mulint__(other))
+        elif isinstance(other, float):
+            return SprsMat(self.internal_sprsmat.__mulfloat__(other))
         elif isinstance(other, SprsMat):
             return SprsMat(self.internal_sprsmat * other.internal_sprsmat)
         else:
@@ -140,71 +155,13 @@ class SprsMat(object):
         return self.__rmul__(other)
 
     def __truediv__(self, other):
-        if isinstance(other, (int, float)):
-            return SprsMat(self.internal_sprsmat / other)
+        if isinstance(other, int):
+            return SprsMat(self.internal_sprsmat.__truedivint__(other))
+        elif isinstance(other, float):
+            return SprsMat(self.internal_sprsmat.__truedivfloat__(other))
         else:
             return NotImplemented
 
     ##
     # \endcond
     ##
-
-
-##
-# \cond
-# Ignore the remainder of this file in the documentation.
-##
-
-def swig_sprs_to_scipy(swig_mat):
-    """
-    Take a swig sparse matrix and convert it to a scipy sparse matrix.
-    """
-    outer_starts = stag_internal.sprsMatOuterStarts(swig_mat)
-    inner_indices = stag_internal.sprsMatInnerIndices(swig_mat)
-    values = stag_internal.sprsMatValues(swig_mat)
-    return scipy.sparse.csc_matrix((values, inner_indices, outer_starts))
-
-
-def scipy_to_swig_sprs(scipy_mat: scipy.sparse.csc_matrix):
-    """
-    Take a scipy sparse matrix and convert it to a swig sprs matrix.
-    """
-    col_starts = stag_internal.vectorl(scipy_mat.indptr.tolist())
-    row_indices = stag_internal.vectorl(scipy_mat.indices.tolist())
-    values = stag_internal.vectord(scipy_mat.data.tolist())
-    return stag_internal.sprsMatFromVectors(col_starts,
-                                            row_indices,
-                                            values)
-
-
-def possibly_convert_ndarray(argument):
-    """
-    Check whether argument is a numpy ndarray.
-    If it is, convert it to a list. Otherwise return it as-is.
-    """
-    if isinstance(argument, np.ndarray):
-        return argument.tolist()
-    else:
-        return argument
-
-
-def convert_ndarrays(func):
-    """A decorator for methods which take lists as arguments.
-    Converts *all* ndarrays in the arguments to lists."""
-    def decorated_function(*args, **kwargs):
-        new_args = [possibly_convert_ndarray(arg) for arg in args]
-        new_kwargs = {k: possibly_convert_ndarray(v) for k, v in kwargs.items()}
-        return func(*new_args, **new_kwargs)
-
-
-    # Set the metadata of the returned function to match the original.
-    # This is used when generating the documentation
-    decorated_function.__doc__ = func.__doc__
-    decorated_function.__module__ = func.__module__
-    decorated_function.__signature__ = inspect.signature(func)
-
-    return decorated_function
-
-##
-# \endcond
-##

@@ -3120,9 +3120,8 @@ namespace Swig {
 #define SWIGTYPE_p_std__vectorT_double_t swig_types[17]
 #define SWIGTYPE_p_std__vectorT_long_long_t swig_types[18]
 #define SWIGTYPE_p_std__vectorT_stag__edge_t swig_types[19]
-#define SWIGTYPE_p_std__vectorT_std__vectorT_long_long_t_t swig_types[20]
-static swig_type_info *swig_types[22];
-static swig_module_info swig_module = {swig_types, 21, 0, 0, 0, 0};
+static swig_type_info *swig_types[21];
+static swig_module_info swig_module = {swig_types, 20, 0, 0, 0, 0};
 #define SWIG_TypeQuery(name) SWIG_TypeQueryModule(&swig_module, &swig_module, name)
 #define SWIG_MangledTypeQuery(name) SWIG_MangledTypeQueryModule(&swig_module, &swig_module, name)
 
@@ -9078,7 +9077,23 @@ SWIGINTERN PyObject *_wrap_connected_components(PyObject *SWIGUNUSEDPARM(self), 
       return NULL;
     }
   }
-  resultobj = SWIG_NewPointerObj((new std::vector< std::vector< stag_int > >(static_cast< const std::vector< std::vector< stag_int > >& >(result))), SWIGTYPE_p_std__vectorT_std__vectorT_long_long_t_t, SWIG_POINTER_OWN |  0 );
+  {
+    // For a nested vector, we'd like to return a python list of numpy
+    // arrays.
+    stag_int outer_length = (&result)->size();
+    resultobj = PyList_New(outer_length);
+    
+    // Construct a new numpy array for each inner object, and add to the list.
+    for (stag_int i = 0; i < outer_length; i++) {
+      npy_intp length = (&result)->at(i).size();
+      PyObject* new_numpy_object = PyArray_SimpleNew(1, &length, NPY_LONGLONG);
+      memcpy(PyArray_DATA((PyArrayObject*) new_numpy_object),
+        (&result)->at(i).data(),
+        sizeof(long long) * length);
+      
+      PyList_SET_ITEM(resultobj, i, new_numpy_object);
+    }
+  }
   return resultobj;
 fail:
   return NULL;
@@ -12225,7 +12240,6 @@ static swig_type_info _swigt__p_std__tupleT_stag_int_stag_int_t = {"_p_std__tupl
 static swig_type_info _swigt__p_std__vectorT_double_t = {"_p_std__vectorT_double_t", "std::vector< double > *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_std__vectorT_long_long_t = {"_p_std__vectorT_long_long_t", "std::vector< long long > *|std::vector< stag_int > *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_std__vectorT_stag__edge_t = {"_p_std__vectorT_stag__edge_t", "std::vector< stag::edge > *", 0, 0, (void*)0, 0};
-static swig_type_info _swigt__p_std__vectorT_std__vectorT_long_long_t_t = {"_p_std__vectorT_std__vectorT_long_long_t_t", "std::vector< std::vector< long long > > *|std::vector< std::vector< stag_int > > *", 0, 0, (void*)0, 0};
 
 static swig_type_info *swig_type_initial[] = {
   &_swigt__p_Eigen__MatrixXd,
@@ -12248,7 +12262,6 @@ static swig_type_info *swig_type_initial[] = {
   &_swigt__p_std__vectorT_double_t,
   &_swigt__p_std__vectorT_long_long_t,
   &_swigt__p_std__vectorT_stag__edge_t,
-  &_swigt__p_std__vectorT_std__vectorT_long_long_t_t,
 };
 
 static swig_cast_info _swigc__p_Eigen__MatrixXd[] = {  {&_swigt__p_Eigen__MatrixXd, 0, 0, 0},{0, 0, 0, 0}};
@@ -12271,7 +12284,6 @@ static swig_cast_info _swigc__p_std__tupleT_stag_int_stag_int_t[] = {  {&_swigt_
 static swig_cast_info _swigc__p_std__vectorT_double_t[] = {  {&_swigt__p_std__vectorT_double_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_std__vectorT_long_long_t[] = {  {&_swigt__p_std__vectorT_long_long_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_std__vectorT_stag__edge_t[] = {  {&_swigt__p_std__vectorT_stag__edge_t, 0, 0, 0},{0, 0, 0, 0}};
-static swig_cast_info _swigc__p_std__vectorT_std__vectorT_long_long_t_t[] = {  {&_swigt__p_std__vectorT_std__vectorT_long_long_t_t, 0, 0, 0},{0, 0, 0, 0}};
 
 static swig_cast_info *swig_cast_initial[] = {
   _swigc__p_Eigen__MatrixXd,
@@ -12294,7 +12306,6 @@ static swig_cast_info *swig_cast_initial[] = {
   _swigc__p_std__vectorT_double_t,
   _swigc__p_std__vectorT_long_long_t,
   _swigc__p_std__vectorT_stag__edge_t,
-  _swigc__p_std__vectorT_std__vectorT_long_long_t_t,
 };
 
 

@@ -3055,6 +3055,24 @@
                         sizeof(DATA_TYPE) * length);
 }
 
+%typemap(out) std::vector<std::vector<DATA_TYPE>> {
+    // For a nested vector, we'd like to return a python list of numpy
+    // arrays.
+    stag_int outer_length = $1.size();
+    $result = PyList_New(outer_length);
+
+    // Construct a new numpy array for each inner object, and add to the list.
+    for (stag_int i = 0; i < outer_length; i++) {
+        npy_intp length = $1.at(i).size();
+        PyObject* new_numpy_object = PyArray_SimpleNew(1, &length, DATA_TYPECODE);
+        memcpy(PyArray_DATA((PyArrayObject*) new_numpy_object),
+                            $1.at(i).data(),
+                            sizeof(DATA_TYPE) * length);
+
+        PyList_SET_ITEM($result, i, new_numpy_object);
+    }
+}
+
 %typemap(in) std::vector<DATA_TYPE>
   (PyArrayObject* array=NULL, int is_new_object=0)
 {

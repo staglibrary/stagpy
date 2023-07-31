@@ -126,6 +126,7 @@ def local_cluster_acl(g: graph.LocalGraph,
                                            error)
 
 
+@utility.convert_sprsmats
 def approximate_pagerank(g: graph.LocalGraph,
                          seed_vector: stag.utility.SprsMat,
                          alpha: float,
@@ -230,7 +231,7 @@ def connected_components(g: graph.Graph) -> List[np.ndarray]:
     @param g a stag.graph.Graph object
     @return a list containing the connected components of the graph
     """
-    return list(stag_internal.connected_components(g.internal_graph))
+    return stag_internal.connected_components(g.internal_graph)
 
 
 @utility.convert_ndarrays

@@ -1,5 +1,4 @@
 """Algorithms for finding clusters in graphs."""
-import scipy.sparse
 from typing import List, Tuple
 import numpy as np
 
@@ -312,9 +311,9 @@ def symmetric_difference(s: np.ndarray, t: np.ndarray) -> np.ndarray:
     Although \f$S\f$ and \f$T\f$ are provided as lists, they are treated as sets
     and any duplicates will be ignored.
 
-    @param s a list containing the first set of integers
-    @param t a list containing the second set of integers
-    @return an array containing the vertices in the syymmetric difference of
+    @param s an array containing the first set of integers
+    @param t an array containing the second set of integers
+    @return an array containing the vertices in the symmetric difference of
              \f$S\f$ and \f$T\f$.
     """
     return stag_internal.symmetric_difference(s, t)

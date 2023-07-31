@@ -86,7 +86,7 @@ class SprsMat(object):
         """
         return self.to_scipy().toarray()
 
-    def transpose(self) -> 'stag.utility.SprsMat':
+    def transpose(self) -> 'SprsMat':
         """
         Return the transpose of the matrix.
         """
@@ -165,3 +165,73 @@ class SprsMat(object):
     ##
     # \endcond
     ##
+
+##
+# \cond
+##
+def possibly_convert_list(argument):
+    """
+    Check whether argument is a python list.
+    If it is, convert it to a numpy ndarray.
+    Otherwise, return it as-is.
+    """
+    if isinstance(argument, list):
+        return np.asarray(argument)
+    else:
+        return argument
+
+
+def convert_ndarrays(func):
+    """
+    A decorator for methods which take ndarray objects as arguments.
+    Converts python lists in the argument list to ndarrays.
+    """
+    def decorated_function(*args, **kwargs):
+        new_args = [possibly_convert_list(arg) for arg in args]
+        new_kwargs = {k: possibly_convert_list(v) for k, v in kwargs.items()}
+        return func(*new_args, **new_kwargs)
+
+
+    # Set the metadata of the returned function to match the original.
+    # This is used when generating the documentation
+    decorated_function.__doc__ = func.__doc__
+    decorated_function.__module__ = func.__module__
+    decorated_function.__signature__ = inspect.signature(func)
+
+    return decorated_function
+
+
+def possibly_convert_sprsmat(argument):
+    """
+    Check whether argument is a scipy sparse matrix.
+    If it is, convert it to a stag SprsMat.
+    Otherwise, return it as-is.
+    """
+    if issubclass(type(argument), scipy.sparse.spmatrix):
+        return SprsMat(argument)
+    else:
+        return argument
+
+
+def convert_sprsmats(func):
+    """
+    A decorator for methods which take SprsMat objects as arguments.
+    Converts scipy sparse arrays in the argument list to stag SprsMat objects.
+    """
+    def decorated_function(*args, **kwargs):
+        new_args = [possibly_convert_sprsmat(arg) for arg in args]
+        new_kwargs = {k: possibly_convert_sprsmat(v) for k, v in kwargs.items()}
+        return func(*new_args, **new_kwargs)
+
+
+    # Set the metadata of the returned function to match the original.
+    # This is used when generating the documentation
+    decorated_function.__doc__ = func.__doc__
+    decorated_function.__module__ = func.__module__
+    decorated_function.__signature__ = inspect.signature(func)
+
+    return decorated_function
+
+##
+# \endcond
+##

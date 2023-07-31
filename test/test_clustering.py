@@ -102,8 +102,8 @@ def test_sweep_set():
     s[4, 0] = 0.05
     
     # Compute the sweep set
-    sweep_set = stag.cluster.sweep_set_conductance(graph, s.tocsc())
-    assert type(sweep_set) == type([1])
+    sweep_set = stag.cluster.sweep_set_conductance(graph, s)
+    assert type(sweep_set) == np.ndarray
     assert set(sweep_set) == {0, 1, 2, 3}
 
 
@@ -111,7 +111,7 @@ def test_connected_component():
     # Construct a graph with two connected components.
     graph = stag.random.sbm(10, 2, 1, 0)
     cc = stag.cluster.connected_component(graph, 0)
-    assert type(cc) == type([1])
+    assert type(cc) == np.ndarray
     assert set(cc) == {0, 1, 2, 3, 4}
 
 
@@ -120,7 +120,7 @@ def test_connected_components():
     graph = stag.random.sbm(10, 2, 1, 0)
     ccs = stag.cluster.connected_components(graph)
     assert type(ccs) == type([[1]])
-    assert type(ccs[0]) == type([0])
+    assert type(ccs[0]) == np.ndarray
     assert set(ccs[0]) == {0, 1, 2, 3, 4}
     assert set(ccs[1]) == {5, 6, 7, 8, 9}
 
@@ -162,7 +162,7 @@ def test_nmi():
 
 
 def test_conductance():
-    g = stag.graph.Graph(BARBELL5_ADJ_MAT)
+    g = stag.graph.barbell_graph(5)
     cluster = [0, 1, 2, 3, 4]
     expected_cond = 1/21
     cond = stag.cluster.conductance(g, cluster)

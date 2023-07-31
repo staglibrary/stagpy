@@ -168,6 +168,7 @@ def approximate_pagerank(g: graph.LocalGraph,
     return p, r
 
 
+@utility.convert_sprsmats
 def sweep_set_conductance(g: graph.LocalGraph, v: stag.utility.SprsMat) -> np.ndarray:
     r"""
     Find the sweep set of the given vector with the minimum conductance.
@@ -232,6 +233,7 @@ def connected_components(g: graph.Graph) -> List[np.ndarray]:
     return list(stag_internal.connected_components(g.internal_graph))
 
 
+@utility.convert_ndarrays
 def adjusted_rand_index(gt_labels: np.ndarray, labels: np.ndarray) -> float:
     r"""
     Compute the Adjusted Rand Index between two label vectors.
@@ -248,6 +250,7 @@ def adjusted_rand_index(gt_labels: np.ndarray, labels: np.ndarray) -> float:
     return stag_internal.adjusted_rand_index(gt_labels, labels)
 
 
+@utility.convert_ndarrays
 def mutual_information(gt_labels: np.ndarray, labels: np.ndarray) -> float:
     r"""
     Compute the Mutual Information between two label vectors.
@@ -259,6 +262,7 @@ def mutual_information(gt_labels: np.ndarray, labels: np.ndarray) -> float:
     return stag_internal.mutual_information(gt_labels, labels)
 
 
+@utility.convert_ndarrays
 def normalised_mutual_information(gt_labels: np.ndarray,
                                   labels: np.ndarray) -> float:
     r"""
@@ -276,6 +280,7 @@ def normalised_mutual_information(gt_labels: np.ndarray,
     return stag_internal.normalised_mutual_information(gt_labels, labels)
 
 
+@utility.convert_ndarrays
 def conductance(g: graph.LocalGraph, cluster: np.ndarray) -> float:
     r"""
      Compute the conductance of the given cluster in a graph.
@@ -297,6 +302,8 @@ def conductance(g: graph.LocalGraph, cluster: np.ndarray) -> float:
     """
     return stag_internal.conductance(g.internal_graph, cluster)
 
+
+@utility.convert_ndarrays
 def symmetric_difference(s: np.ndarray, t: np.ndarray) -> np.ndarray:
     r"""
     Compute the symmetric difference of two sets of integers.

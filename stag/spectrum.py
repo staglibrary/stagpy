@@ -95,6 +95,8 @@ def compute_eigenvectors(mat: scipy.sparse.spmatrix,
     return eigvecs
 
 
+@utility.convert_sprsmats
+@utility.convert_ndarrays
 def power_method(mat: utility.SprsMat,
                  num_iterations: int = None,
                  initial_vector: np.ndarray = None) -> np.ndarray:
@@ -138,6 +140,8 @@ def power_method(mat: utility.SprsMat,
                                           num_iterations, initial_vector.astype(float))
 
 
+@utility.convert_ndarrays
+@utility.convert_sprsmats
 def rayleigh_quotient(mat: utility.SprsMat, vec: np.ndarray) -> float:
     r"""
     Compute the Rayleigh quotient of the given vector and matrix.

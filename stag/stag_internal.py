@@ -269,6 +269,9 @@ class Graph(LocalGraph):
         return _stag_internal.Graph_vertex_exists(self, v)
     __swig_destroy__ = _stag_internal.delete_Graph
 
+    def __eq__(self, other):
+        return _stag_internal.Graph___eq__(self, other)
+
 # Register Graph in _stag_internal:
 _stag_internal.Graph_swigregister(Graph)
 

@@ -3522,6 +3522,9 @@ SWIGINTERNINLINE PyObject*
   return PyBool_FromLong(value ? 1 : 0);
 }
 
+SWIGINTERN bool stag_Graph___eq__(stag::Graph *self,stag::Graph *other){
+      return *self == *other;
+    }
 
 SWIGINTERN swig_type_info*
 SWIG_pchar_descriptor(void)
@@ -7000,6 +7003,48 @@ SWIGINTERN PyObject *_wrap_delete_Graph(PyObject *SWIGUNUSEDPARM(self), PyObject
   return resultobj;
 fail:
   return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_Graph___eq__(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  stag::Graph *arg1 = (stag::Graph *) 0 ;
+  stag::Graph *arg2 = (stag::Graph *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  void *argp2 = 0 ;
+  int res2 = 0 ;
+  PyObject *swig_obj[2] ;
+  bool result;
+  
+  if (!SWIG_Python_UnpackTuple(args, "Graph___eq__", 2, 2, swig_obj)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_stag__Graph, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Graph___eq__" "', argument " "1"" of type '" "stag::Graph *""'"); 
+  }
+  arg1 = reinterpret_cast< stag::Graph * >(argp1);
+  res2 = SWIG_ConvertPtr(swig_obj[1], &argp2,SWIGTYPE_p_stag__Graph, 0 |  0 );
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Graph___eq__" "', argument " "2"" of type '" "stag::Graph *""'"); 
+  }
+  arg2 = reinterpret_cast< stag::Graph * >(argp2);
+  {
+    try {
+      result = (bool)stag_Graph___eq__(arg1,arg2);
+    } catch (std::invalid_argument &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::domain_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    }
+  }
+  resultobj = SWIG_From_bool(static_cast< bool >(result));
+  return resultobj;
+fail:
+  PyErr_Clear();
+  Py_INCREF(Py_NotImplemented);
+  return Py_NotImplemented;
 }
 
 
@@ -12125,6 +12170,7 @@ static PyMethodDef SwigMethods[] = {
 	 { "Graph_degrees_unweighted", _wrap_Graph_degrees_unweighted, METH_VARARGS, NULL},
 	 { "Graph_vertex_exists", _wrap_Graph_vertex_exists, METH_VARARGS, NULL},
 	 { "delete_Graph", _wrap_delete_Graph, METH_O, NULL},
+	 { "Graph___eq__", _wrap_Graph___eq__, METH_VARARGS, NULL},
 	 { "Graph_swigregister", Graph_swigregister, METH_O, NULL},
 	 { "Graph_swiginit", Graph_swiginit, METH_VARARGS, NULL},
 	 { "new_AdjacencyListLocalGraph", _wrap_new_AdjacencyListLocalGraph, METH_O, NULL},

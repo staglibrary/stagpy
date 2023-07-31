@@ -126,6 +126,13 @@ public:
     }
 }
 
+// Allow use of operators for graph objects
+%extend stag::Graph {
+    bool __eq__(stag::Graph* other) {
+      return *$self == *other;
+    }
+}
+
 // Add some code for constructing stag SprsMats from vectors.
 %inline %{
 SprsMat sprsMatFromVectorsDims(stag_int rows,

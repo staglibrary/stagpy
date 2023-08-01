@@ -2,7 +2,6 @@
 from typing import List, Tuple
 import numpy as np
 
-import stag.utility
 from . import stag_internal
 from . import graph
 from . import utility
@@ -128,10 +127,10 @@ def local_cluster_acl(g: graph.LocalGraph,
 
 @utility.convert_sprsmats
 def approximate_pagerank(g: graph.LocalGraph,
-                         seed_vector: stag.utility.SprsMat,
+                         seed_vector: utility.SprsMat,
                          alpha: float,
-                         epsilon: float) -> Tuple[stag.utility.SprsMat,
-                                                  stag.utility.SprsMat]:
+                         epsilon: float) -> Tuple[utility.SprsMat,
+                                                  utility.SprsMat]:
     r"""
     Compute the approximate pagerank vector.
 
@@ -170,7 +169,7 @@ def approximate_pagerank(g: graph.LocalGraph,
 
 
 @utility.convert_sprsmats
-def sweep_set_conductance(g: graph.LocalGraph, v: stag.utility.SprsMat) -> np.ndarray:
+def sweep_set_conductance(g: graph.LocalGraph, v: utility.SprsMat) -> np.ndarray:
     r"""
     Find the sweep set of the given vector with the minimum conductance.
 

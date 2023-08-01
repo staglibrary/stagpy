@@ -2,17 +2,14 @@
 Methods for computing eigenvalues and eigenvectors of sparse matrices.
 """
 import numpy as np
-import scipy as sp
-import scipy.sparse
-from typing import Tuple, Union
+from typing import Tuple
 
-import stag.utility
 from . import utility
 from . import stag_internal
 
 
 @utility.convert_sprsmats
-def compute_eigensystem(mat: stag.utility.SprsMat,
+def compute_eigensystem(mat: utility.SprsMat,
                         num: int,
                         which: str = 'SM') -> Tuple[np.ndarray, np.ndarray]:
     r"""
@@ -51,7 +48,7 @@ def compute_eigensystem(mat: stag.utility.SprsMat,
 
 
 @utility.convert_sprsmats
-def compute_eigenvalues(mat: stag.utility.SprsMat,
+def compute_eigenvalues(mat: utility.SprsMat,
                         num: int,
                         which: str = 'SM') -> np.ndarray:
     r"""
@@ -75,8 +72,8 @@ def compute_eigenvalues(mat: stag.utility.SprsMat,
     return eigs
 
 
-@stag.utility.convert_sprsmats
-def compute_eigenvectors(mat: stag.utility.SprsMat,
+@utility.convert_sprsmats
+def compute_eigenvectors(mat: utility.SprsMat,
                          num: int,
                          which: str = 'SM') -> np.ndarray:
     r"""

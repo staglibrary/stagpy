@@ -17,7 +17,7 @@ def test_sbm():
     assert graph.number_of_vertices() == 2000
 
     # The adjacency matrix should be symmetric
-    sym_diff = (graph.adjacency() - graph.adjacency().transpose())
+    sym_diff = (graph.adjacency().to_scipy() - graph.adjacency().to_scipy().transpose())
     sym_diff.eliminate_zeros()
     assert sym_diff.nnz == 0
 
@@ -56,13 +56,13 @@ def test_sbm_gt_labels():
     n = 6
     k = 3
     labels = stag.random.sbm_gt_labels(n, k)
-    assert labels == [0, 0, 1, 1, 2, 2]
+    assert list(labels) == [0, 0, 1, 1, 2, 2]
 
 
 def test_general_sbm_gt_labels():
     cluster_sizes = [4, 2]
     gt_labels = stag.random.general_sbm_gt_labels(cluster_sizes)
-    assert gt_labels == [0, 0, 0, 0, 1, 1]
+    assert list(gt_labels) == [0, 0, 0, 0, 1, 1]
 
 
 def test_edgelist_sbm():

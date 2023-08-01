@@ -3,11 +3,12 @@ Graph object definitions and standard constructors.
 """
 import networkx
 from abc import ABC, abstractmethod
-from typing import List
-import inspect
+from typing import List, Union
 
 import scipy.sparse
+import numpy as np
 
+import stag.utility
 from . import stag_internal
 from . import utility
 
@@ -34,9 +35,9 @@ class Edge(object):
         # \cond
         ##
         self.internal_edge = stag_internal.edge()
-        self.internal_edge.v1 = v1
-        self.internal_edge.v2 = v2
-        self.internal_edge.weight = weight
+        self.internal_edge.__setattr__("v1", v1)
+        self.internal_edge.__setattr__("v2", v2)
+        self.internal_edge.__setattr__("weight", weight)
         ##
         # \endcond
         ##
@@ -125,18 +126,19 @@ class LocalGraph(ABC):
         pass
 
     @abstractmethod
-    def neighbors_unweighted(self, v: int) -> List[int]:
+    def neighbors_unweighted(self, v: int) -> np.ndarray:
         """
         Given a vertex v, return a list of neighbors of v.
 
         The weights of edges to the neighbors are not returned by this method.
 
         @param v the ID of some vertex in the graph
-        @return a list of vertex IDs giving the neighbours of v
+        @return an array of vertex IDs giving the neighbours of v
         """
         pass
 
-    def degrees(self, vertices: List[int]) -> List[float]:
+    @abstractmethod
+    def degrees(self, vertices: np.ndarray) -> np.ndarray:
         """
         Given a list of vertices, return a list of their weighted degrees.
 
@@ -145,11 +147,12 @@ class LocalGraph(ABC):
         improve the performance of local clustering algorithms.
 
         @param vertices a list of IDs representing the vertices to be queried
-        @return a list of degrees
+        @return an array of degrees
         """
-        return [self.degree(v) for v in vertices]
+        pass
 
-    def degrees_unweighted(self, vertices: List[int]) -> List[int]:
+    @abstractmethod
+    def degrees_unweighted(self, vertices: np.ndarray) -> np.ndarray:
         """
         Given a list of vertices, return a list of their unweighted degrees.
 
@@ -158,9 +161,9 @@ class LocalGraph(ABC):
         improve the performance of local clustering algorithms.
 
         @param vertices a list of IDs representing the vertices to be queried
-        @return a list of unweighted degrees
+        @return an array of unweighted degrees
         """
-        return [self.degree_unweighted(v) for v in vertices]
+        pass
 
     @abstractmethod
     def vertex_exists(self, v: int) -> bool:
@@ -267,12 +270,19 @@ class AdjacencyListLocalGraph(LocalGraph):
     def neighbors(self, v: int) -> List[Edge]:
         return self.internal_graph.neighbors(v)
 
-    def neighbors_unweighted(self, v: int) -> List[int]:
+    def neighbors_unweighted(self, v: int) -> np.ndarray:
         return self.internal_graph.neighbors_unweighted(v)
 
     def vertex_exists(self, v: int) -> bool:
         return self.internal_graph.vertex_exists(v)
 
+    @utility.convert_ndarrays
+    def degrees(self, vertices: np.ndarray) -> np.ndarray:
+        return self.internal_graph.degrees(vertices)
+
+    @utility.convert_ndarrays
+    def degrees_unweighted(self, vertices: np.ndarray) -> np.ndarray:
+        return self.internal_graph.degrees_unweighted(vertices)
 
 
 class Graph(LocalGraph):
@@ -289,10 +299,9 @@ class Graph(LocalGraph):
     permitted.
     """
 
-    def __init__(self, mat: scipy.sparse.spmatrix,
-                 internal_graph: stag_internal.Graph = None):
+    def __init__(self, mat: Union[scipy.sparse.spmatrix, stag.utility.SprsMat]):
         r"""
-        Initialise the graph with a scipy sparse matrix.
+        Initialise the graph with a sparse matrix.
 
         The provided matrix should correspond either to the adjacency matrix or
         Laplacian matrix of the graph. STAG will automatically detect whether
@@ -302,19 +311,16 @@ class Graph(LocalGraph):
 
         \code{python}
         >>> import stag.graph
-        >>> import scipy.sparse
+        >>> import stag.utility
         >>>
-        >>> adj_mat = scipy.sparse.csc_matrix([[0, 1, 1, 1],
-        ...                                    [1, 0, 1, 1],
-        ...                                    [1, 1, 0, 1],
-        ...                                    [1, 1, 1, 0]])
+        >>> adj_mat = stag.utility.SprsMat([[0, 1, 1, 1],
+        ...                                 [1, 0, 1, 1],
+        ...                                 [1, 1, 0, 1],
+        ...                                 [1, 1, 1, 0]])
         >>> g = stag.graph.Graph(adj_mat)
         \endcode
 
-        @param mat A sparse scipy matrix, such as ``scipy.sparse.csc_matrix``.
-        @param internal_graph (optional) specify a STAG C++ graph object to
-                              initialise with. Use this only if you understand
-                              the internal workings of the STAG library.
+        @param mat A sparse scipy matrix or a stag.utility.SprsMat object
         """
         # Call the LocalGraph initialisation method - it is important that this
         # is called first. This is because we override the internal_graph
@@ -327,32 +333,30 @@ class Graph(LocalGraph):
         ##
 
         # This class is essentially a thin wrapper around the stag_internal library, written in C++.
-        if internal_graph is None:
-            # Initialise the internal graph object with the provided matrix.
-            mat_csr = mat.tocsr()
-            outer_starts = stag_internal.vectorl(mat_csr.indptr.tolist())
-            inner_indices = stag_internal.vectorl(mat_csr.indices.tolist())
-            values = stag_internal.vectord(mat_csr.data.tolist())
-            self.internal_graph: stag_internal.Graph = stag_internal.Graph(outer_starts, inner_indices, values)
+        if isinstance(mat, stag_internal.Graph):
+            # The initializer was called with an internal graph object.
+            self.internal_graph: stag_internal.Graph = mat
         else:
-            # The initialiser was called with an internal graph object.
-            self.internal_graph: stag_internal.Graph = internal_graph
+            # Initialise the internal graph object with the provided matrix.
+            if type(mat) is not stag.utility.SprsMat:
+                mat = stag.utility.SprsMat(mat)
+            self.internal_graph: stag_internal.Graph = stag_internal.Graph(mat.internal_sprsmat)
 
         ##
         # \endcond
         ##
 
-    @utility.return_sparse_matrix
-    def adjacency(self) -> scipy.sparse.csc_matrix:
+    def adjacency(self) -> stag.utility.SprsMat:
         """
         Return the sparse adjacency matrix of the graph.
 
-        @return a ``scipy.sparse.csc_matrix`` representing the graph adjacency matrix
+        @return a ``stag.utility.SprsMat`` representing the graph adjacency matrix
         """
-        return self.internal_graph.adjacency()
+        adj = utility.SprsMat(self.internal_graph.adjacency())
+        adj.__parent = self
+        return adj
 
-    @utility.return_sparse_matrix
-    def laplacian(self) -> scipy.sparse.csc_matrix:
+    def laplacian(self) -> stag.utility.SprsMat:
         """
         Construct the Laplacian matrix of the graph.
 
@@ -365,12 +369,13 @@ class Graph(LocalGraph):
         where \f$D\f$ is the diagonal matrix of vertex degrees
         and \f$A\f$ is the adjacency matrix of the graph.
 
-        @return a ``scipy.sparse.csc_matrix`` representing the graph Laplacian
+        @return a ``stag.utility.SprsMat`` representing the graph Laplacian
         """
-        return self.internal_graph.laplacian()
+        lap = utility.SprsMat(self.internal_graph.laplacian())
+        lap.__parent = self
+        return lap
 
-    @utility.return_sparse_matrix
-    def normalised_laplacian(self) -> scipy.sparse.csc_matrix:
+    def normalised_laplacian(self) -> stag.utility.SprsMat:
         r"""
         Construct the normalised Laplacian matrix of the graph.
 
@@ -383,30 +388,13 @@ class Graph(LocalGraph):
         where \f$D\f$ is the diagonal matrix of vertex degrees and \f$L\f$
         is the Laplacian matrix of the graph.
 
-        @return a ``scipy.sparse.csc_matrix`` representing the normalised Laplacian
+        @return a ``stag.utility.SprsMat`` representing the normalised Laplacian
         """
-        return self.internal_graph.normalised_laplacian()
+        lap = utility.SprsMat(self.internal_graph.normalised_laplacian())
+        lap.__parent = self
+        return lap
 
-    @utility.return_sparse_matrix
-    def normalised_laplacian(self) -> scipy.sparse.csc_matrix:
-        r"""
-        Construct the normalised Laplacian matrix of the graph.
-
-        The normalised Laplacian matrix is defined by
-
-        \f[
-            \mathcal{L} = D^{-1/2} L D^{-1/2}
-        \f]
-
-        where \f$D\f$ is the diagonal matrix of vertex degrees and \f$L\f$
-        is the Laplacian matrix of the graph.
-
-        @return a ``scipy.sparse.csc_matrix`` representing the normalised Laplacian
-        """
-        return self.internal_graph.normalised_laplacian()
-
-    @utility.return_sparse_matrix
-    def signless_laplacian(self) -> scipy.sparse.csc_matrix:
+    def signless_laplacian(self) -> stag.utility.SprsMat:
         """
         Construct the signless Laplacian matrix of the graph.
 
@@ -419,12 +407,13 @@ class Graph(LocalGraph):
         where \f$D\f$ is the diagonal matrix of vertex degrees
         and \f$A\f$ is the adjacency matrix of the graph.
 
-        @return a ``scipy.sparse.csc_matrix`` representing the signless graph Laplacian
+        @return a ``stag.utility.SprsMat`` representing the signless graph Laplacian
         """
-        return self.internal_graph.signless_laplacian()
+        signless_lap = utility.SprsMat(self.internal_graph.signless_laplacian())
+        signless_lap.__parent = self
+        return signless_lap
 
-    @utility.return_sparse_matrix
-    def normalised_signless_laplacian(self) -> scipy.sparse.csc_matrix:
+    def normalised_signless_laplacian(self) -> stag.utility.SprsMat:
         r"""
         Construct the normalised signless Laplacian matrix of the graph.
 
@@ -437,12 +426,14 @@ class Graph(LocalGraph):
         where \f$D\f$ is the diagonal matrix of vertex degrees and \f$J\f$
         is the signless Laplacian matrix of the graph.
 
-        @return a ``scipy.sparse.csc_matrix`` representing the normalised signless Laplacian
+        @return a ``stag.utility.SprsMat`` representing the normalised signless Laplacian
         """
-        return self.internal_graph.normalised_signless_laplacian()
+        signless_lap = utility.SprsMat(
+            self.internal_graph.normalised_signless_laplacian())
+        signless_lap.__parent = self
+        return signless_lap
 
-    @utility.return_sparse_matrix
-    def degree_matrix(self) -> scipy.sparse.csc_matrix:
+    def degree_matrix(self) -> stag.utility.SprsMat:
         r"""
         The degree matrix of the graph.
 
@@ -451,12 +442,13 @@ class Graph(LocalGraph):
         where \f$\mathrm{deg}(i)\f$ is the degree of vertex \f$i\f$ and
         \f$n\f$ is the number of vertices in the graph.
 
-        @return a ``scipy.sparse.csc_matrix`` representing the degree matrix
+        @return a ``stag.utility.SprsMat`` representing the degree matrix
         """
-        return self.internal_graph.degree_matrix()
+        deg_mat = utility.SprsMat(self.internal_graph.degree_matrix())
+        deg_mat.__parent = self
+        return deg_mat
     
-    @utility.return_sparse_matrix
-    def inverse_degree_matrix(self) -> scipy.sparse.csc_matrix:
+    def inverse_degree_matrix(self) -> stag.utility.SprsMat:
         r"""
         The inverse degree matrix of the graph.
 
@@ -475,12 +467,13 @@ class Graph(LocalGraph):
         where \f$\mathrm{deg}(i)\f$ is the degree of vertex \f$i\f$ and
         \f$n\f$ is the number of vertices in the graph.
 
-        @return a ``scipy.sparse.csc_matrix`` representing the inverse degree matrix
+        @return a ``stag.utility.SprsMat`` representing the inverse degree matrix
         """
-        return self.internal_graph.inverse_degree_matrix()
-    
-    @utility.return_sparse_matrix
-    def lazy_random_walk_matrix(self) -> scipy.sparse.csc_matrix:
+        inv_deg_mat = utility.SprsMat(self.internal_graph.inverse_degree_matrix())
+        inv_deg_mat.__parent = self
+        return inv_deg_mat
+
+    def lazy_random_walk_matrix(self) -> stag.utility.SprsMat:
         """
         The lazy random walk matrix of the graph.
 
@@ -493,10 +486,12 @@ class Graph(LocalGraph):
         where \f$I\f$ is the identity matrix, \f$A\f$ is the graph adjacency
         matrix and \f$D\f$ is the degree matrix of the graph.
 
-        @return a ``scipy.sparse.csc_matrix`` representing the lazy random walk
+        @return a ``stag.utility.SprsMat`` representing the lazy random walk
                 matrix
         """
-        return self.internal_graph.lazy_random_walk_matrix()
+        rw_mat = utility.SprsMat(self.internal_graph.lazy_random_walk_matrix())
+        rw_mat.__parent = self
+        return rw_mat
 
     def total_volume(self) -> float:
         r"""
@@ -550,7 +545,7 @@ class Graph(LocalGraph):
         return self.internal_graph.is_connected()
 
     @utility.convert_ndarrays
-    def subgraph(self, vertices: List[int]) -> 'Graph':
+    def subgraph(self, vertices: np.ndarray) -> 'Graph':
         r"""
         Construct and return a subgraph of this graph.
 
@@ -560,8 +555,8 @@ class Graph(LocalGraph):
         @return a new stag.graph.Graph object representing the subgraph induced
                 by the given vertices
         """
-        new_int_graph = self.internal_graph.subgraph(stag_internal.vectorl(vertices))
-        return Graph(None, internal_graph=new_int_graph)
+        new_int_graph = self.internal_graph.subgraph(vertices)
+        return Graph(new_int_graph)
 
     def disjoint_union(self, other: 'Graph') -> 'Graph':
         r"""
@@ -575,7 +570,7 @@ class Graph(LocalGraph):
                 graph with the other one
         """
         new_int_graph = self.internal_graph.disjoint_union(other.internal_graph)
-        return Graph(None, internal_graph=new_int_graph)
+        return Graph(new_int_graph)
 
     def degree(self, v: int) -> float:
         return self.internal_graph.degree(v)
@@ -583,10 +578,18 @@ class Graph(LocalGraph):
     def degree_unweighted(self, v: int) -> int:
         return self.internal_graph.degree_unweighted(v)
 
-    def neighbors(self, v: int) -> List[Edge]:
-        return self.internal_graph.neighbors(v)
+    @utility.convert_ndarrays
+    def degrees(self, vertices: np.ndarray) -> np.ndarray:
+        return self.internal_graph.degrees(vertices)
 
-    def neighbors_unweighted(self, v: int) -> List[int]:
+    @utility.convert_ndarrays
+    def degrees_unweighted(self, vertices: np.ndarray) -> np.ndarray:
+        return self.internal_graph.degrees_unweighted(vertices)
+
+    def neighbors(self, v: int) -> List[Edge]:
+        return [Edge(a, b, c) for (a, b, c) in self.internal_graph.neighbors(v)]
+
+    def neighbors_unweighted(self, v: int) -> np.ndarray:
         return self.internal_graph.neighbors_unweighted(v)
 
     def vertex_exists(self, v: int) -> bool:
@@ -604,22 +607,10 @@ class Graph(LocalGraph):
         # Rather, we just check that the adjacency matrices are the same. As such, this method
         # should not be relied on to test for graph isomorphism!
         #
-
-        # Check basic size information about the two graphs first
-        if self.number_of_vertices() != other.number_of_vertices():
-            return False
-
-        if self.number_of_edges() != other.number_of_edges():
-            return False
-
-        # Check that the data vectors of the graph adjacency matrices are equal.
-        a1 = self.internal_graph.adjacency()
-        a2 = other.internal_graph.adjacency()
-        if stag_internal.sprsMatOuterStarts(a1) != stag_internal.sprsMatOuterStarts(a2):
-            return False
-        if stag_internal.sprsMatInnerIndices(a1) != stag_internal.sprsMatInnerIndices(a2):
-            return False
-        return stag_internal.sprsMatValues(a1) == stag_internal.sprsMatValues(a2)
+        if type(other) == Graph:
+            return self.internal_graph == other.internal_graph
+        else:
+            return NotImplemented
 
     def __ne__(self, other):
         return not self.__eq__(other)
@@ -652,7 +643,7 @@ class Graph(LocalGraph):
         See the
         [networkx documentation](https://networkx.org/documentation/stable/reference/classes/graph.html).
         """
-        return networkx.Graph(self.adjacency())
+        return networkx.Graph(self.adjacency().to_scipy())
 
     def draw(self, **kwargs):
         r"""
@@ -674,29 +665,7 @@ class Graph(LocalGraph):
         netx_graph = self.to_networkx()
         networkx.draw(netx_graph, **kwargs)
 
-##
-# \cond
-# A decorator which transforms a graph returned from the C++ library to the
-# python Graph object.
-##
-def return_graph(func):
-    def decorated_function(*args, **kwargs):
-        swig_graph = func(*args, **kwargs)
-        return Graph(None, internal_graph=swig_graph)
 
-    # Set the metadata of the returned function to match the original.
-    # This is used when generating the documentation
-    decorated_function.__doc__ = func.__doc__
-    decorated_function.__module__ = func.__module__
-    decorated_function.__signature__ = inspect.signature(func)
-
-    return decorated_function
-
-##
-# \endcond
-##
-
-@return_graph
 def cycle_graph(n) -> Graph:
     """
     Construct a cycle graph on n vertices.
@@ -704,10 +673,9 @@ def cycle_graph(n) -> Graph:
     @param n the number of vertices in the constructed graph
     @return a stag.graph.Graph object representing a cycle graph
     """
-    return stag_internal.cycle_graph(n)
+    return Graph(stag_internal.cycle_graph(n))
 
 
-@return_graph
 def complete_graph(n) -> Graph:
     """
     Construct a complete graph on n vertices.
@@ -715,10 +683,9 @@ def complete_graph(n) -> Graph:
     @param n the number of vertices in the constructed graph
     @return a stag.graph.Graph object representing a complete graph
     """
-    return stag_internal.complete_graph(n)
+    return Graph(stag_internal.complete_graph(n))
 
 
-@return_graph
 def barbell_graph(n) -> Graph:
     """
     Construct a barbell graph. The barbell graph consists of 2 cliques on n
@@ -728,10 +695,9 @@ def barbell_graph(n) -> Graph:
              The returned graph will have \f$2n\f$ vertices.
     @return a stag.graph.Graph object representing the barbell graph
     """
-    return stag_internal.barbell_graph(n)
+    return Graph(stag_internal.barbell_graph(n))
 
 
-@return_graph
 def star_graph(n) -> Graph:
     """
     Construct a star graph. The star graph consists of one central vertex
@@ -740,10 +706,9 @@ def star_graph(n) -> Graph:
     @param n the number of vertices in the constructed graph
     @return a stag.graph.Graph object representing the star graph
     """
-    return stag_internal.star_graph(n)
+    return Graph(stag_internal.star_graph(n))
 
 
-@return_graph
 def identity_graph(n) -> Graph:
     r"""
     Construct the identity graph. The identity graph consists of \f$n\f$
@@ -755,7 +720,7 @@ def identity_graph(n) -> Graph:
     @param n the number of vertices in the constructed graph
     @return a stag.graph.Graph object representing the identity graph
     """
-    return stag_internal.identity_graph(n)
+    return Graph(stag_internal.identity_graph(n))
 
 
 def from_networkx(netx_graph: networkx.Graph,

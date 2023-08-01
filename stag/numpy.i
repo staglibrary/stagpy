@@ -3038,6 +3038,93 @@
   $result = SWIG_Python_AppendOutput($result,obj);
 }
 
+/***************************************************************** */
+// Convert std::vector objects
+/***************************************************************** */
+%typemap(out) std::vector<DATA_TYPE> {
+    // For non-pointer output vectors, we just copy the data into a numpy array.
+    // The copying at least happens still on the C++ side so will be relatively
+    // fast and optimised by the compiler.
+    //
+    // This adds a small 'constant factor' to the running time of the algorithm
+    // in STAGPy over C++ STAG.
+    npy_intp length = $1.size();
+    $result = PyArray_SimpleNew(1, &length, DATA_TYPECODE);
+    memcpy(PyArray_DATA((PyArrayObject*) $result),
+                        $1.data(),
+                        sizeof(DATA_TYPE) * length);
+}
+
+%typemap(out) std::vector<std::vector<DATA_TYPE>> {
+    // For a nested vector, we'd like to return a python list of numpy
+    // arrays.
+    stag_int outer_length = $1.size();
+    $result = PyList_New(outer_length);
+
+    // Construct a new numpy array for each inner object, and add to the list.
+    for (stag_int i = 0; i < outer_length; i++) {
+        npy_intp length = $1.at(i).size();
+        PyObject* new_numpy_object = PyArray_SimpleNew(1, &length, DATA_TYPECODE);
+        memcpy(PyArray_DATA((PyArrayObject*) new_numpy_object),
+                            $1.at(i).data(),
+                            sizeof(DATA_TYPE) * length);
+
+        PyList_SET_ITEM($result, i, new_numpy_object);
+    }
+}
+
+%typemap(in) std::vector<DATA_TYPE>
+  (PyArrayObject* array=NULL, int is_new_object=0, std::vector<DATA_TYPE> temp_vec)
+{
+  // Get the number of elements in the numpy array
+  npy_intp size[1] = { PyArray_DIMS((PyArrayObject*) $input)[0] };
+
+  // Check that the dimensions of the array are correct
+  array = obj_to_array_contiguous_allow_conversion($input,
+                                                   DATA_TYPECODE,
+                                                   &is_new_object);
+  if (!array || !require_dimensions(array, 1) ||
+      !require_size(array, size, 1)) SWIG_fail;
+
+  // Get a pointer to the data in the numpy array
+  DATA_TYPE* data_ptr = (DATA_TYPE*) array_data(array);
+
+  // Copy the numpy data into the new vector.
+  temp_vec.reserve(size[0]);
+  for (int i = 0; i < size[0]; i++) {
+    temp_vec.push_back(data_ptr[i]);
+  }
+  $1 = temp_vec;
+}
+
+%typemap(in) std::vector<DATA_TYPE> &
+  (PyArrayObject* array=NULL, int is_new_object=0, std::vector<DATA_TYPE> temp_vec)
+{
+  // Get the number of elements in the numpy array
+  npy_intp size[1] = { PyArray_DIMS((PyArrayObject*) $input)[0] };
+
+  // Check that the dimensions of the array are correct
+  array = obj_to_array_contiguous_allow_conversion($input,
+                                                   DATA_TYPECODE,
+                                                   &is_new_object);
+  if (!array || !require_dimensions(array, 1) ||
+      !require_size(array, size, 1)) SWIG_fail;
+
+  // Get a pointer to the data in the numpy array
+  DATA_TYPE* data_ptr = (DATA_TYPE*) array_data(array);
+
+  // Copy the numpy data into the new vector.
+  temp_vec.reserve(size[0]);
+  for (int i = 0; i < size[0]; i++) {
+    temp_vec.push_back(data_ptr[i]);
+  }
+  $1 = &temp_vec;
+}
+
+%typemap(typecheck, precedence=SWIG_TYPECHECK_COMPLEX) std::vector<DATA_TYPE>& {
+    $1 = is_array((PyObject *) $input) ? 1 : 0;
+}
+
 %enddef    /* %numpy_typemaps() macro */
 /* *************************************************************** */
 

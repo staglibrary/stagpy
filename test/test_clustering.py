@@ -6,6 +6,7 @@ from context import stag
 import stag.graph
 import stag.cluster
 import stag.random
+import stag.utility
 
 # Define the adjacency matrices of some useful graphs.
 C4_ADJ_MAT = scipy.sparse.csc_matrix([[0, 1, 0, 1], [1, 0, 1, 0], [0, 1, 0, 1], [1, 0, 1, 0]])
@@ -78,31 +79,31 @@ def test_approximate_pagerank():
     graph = stag.graph.Graph(adj)
 
     # Construct seed matrix.
-    s = scipy.sparse.lil_matrix((4, 1))
-    s[0, 0] = 1
+    s = stag.utility.SprsMat([[1, 0, 0, 0]]).transpose()
 
     # Run the personalised pagerank and check that we get the right result
-    p, r = stag.cluster.approximate_pagerank(graph, s.tocsc(), 1./3, 1./8)
+    p, r = stag.cluster.approximate_pagerank(graph, s, 1./3, 1./8)
     expected_p = [41./81, 2./27, 0, 2./27]
     expected_r = [5./81, 2./27 + 5./162, 2./27, 2./27 + 5./162]
-    np.testing.assert_almost_equal(p.todense().transpose().tolist()[0], expected_p)
-    np.testing.assert_almost_equal(r.todense().transpose().tolist()[0], expected_r)
+    np.testing.assert_almost_equal(p.to_dense().transpose().tolist()[0], expected_p)
+    np.testing.assert_almost_equal(r.to_dense().transpose().tolist()[0], expected_r)
 
 
 def test_approximate_pagerank_no_push():
-    # Test the behaviour of the approximate pagerank method when there is no push operation.
+    # Test the behaviour of the approximate pagerank method when there is no
+    # push operation.
     graph = 3 * stag.graph.cycle_graph(4)
 
     # Construct seed matrix.
-    s = scipy.sparse.lil_matrix((4, 1))
+    s = scipy.sparse.lil_matrix((1, 1))
     s[0, 0] = 1
 
     # Run the personalised pagerank and check that we get the right result
     p, r = stag.cluster.approximate_pagerank(graph, s.tocsc(), 1./3, 1./2)
     expected_p = [0]
     expected_r = [1]
-    np.testing.assert_almost_equal(p.todense().transpose().tolist()[0], expected_p)
-    np.testing.assert_almost_equal(r.todense().transpose().tolist()[0], expected_r)
+    np.testing.assert_almost_equal(p.to_dense().transpose().tolist()[0], expected_p)
+    np.testing.assert_almost_equal(r.to_dense().transpose().tolist()[0], expected_r)
 
 
 def test_sweep_set():
@@ -118,8 +119,8 @@ def test_sweep_set():
     s[4, 0] = 0.05
     
     # Compute the sweep set
-    sweep_set = stag.cluster.sweep_set_conductance(graph, s.tocsc())
-    assert type(sweep_set) == type([1])
+    sweep_set = stag.cluster.sweep_set_conductance(graph, s)
+    assert type(sweep_set) == np.ndarray
     assert set(sweep_set) == {0, 1, 2, 3}
 
 
@@ -127,7 +128,7 @@ def test_connected_component():
     # Construct a graph with two connected components.
     graph = stag.random.sbm(10, 2, 1, 0)
     cc = stag.cluster.connected_component(graph, 0)
-    assert type(cc) == type([1])
+    assert type(cc) == np.ndarray
     assert set(cc) == {0, 1, 2, 3, 4}
 
 
@@ -136,7 +137,7 @@ def test_connected_components():
     graph = stag.random.sbm(10, 2, 1, 0)
     ccs = stag.cluster.connected_components(graph)
     assert type(ccs) == type([[1]])
-    assert type(ccs[0]) == type([0])
+    assert type(ccs[0]) == np.ndarray
     assert set(ccs[0]) == {0, 1, 2, 3, 4}
     assert set(ccs[1]) == {5, 6, 7, 8, 9}
 
@@ -178,7 +179,7 @@ def test_nmi():
 
 
 def test_conductance():
-    g = stag.graph.Graph(BARBELL5_ADJ_MAT)
+    g = stag.graph.barbell_graph(5)
     cluster = [0, 1, 2, 3, 4]
     expected_cond = 1/21
     cond = stag.cluster.conductance(g, cluster)

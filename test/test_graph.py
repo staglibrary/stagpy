@@ -91,7 +91,7 @@ def test_complete_graph():
                                                       [1, 1, 1, 0]])
 
     assert graph.number_of_vertices() == 4
-    adj_mat_diff = (graph.adjacency() - expected_adjacency_matrix)
+    adj_mat_diff = (graph.adjacency().to_scipy() - expected_adjacency_matrix)
     adj_mat_diff.eliminate_zeros()
     assert adj_mat_diff.nnz == 0
 
@@ -99,7 +99,7 @@ def test_complete_graph():
                                               [-1/3, 1, -1/3, -1/3],
                                               [-1/3, -1/3, 1, -1/3],
                                               [-1/3, -1/3, -1/3, 1]])
-    norm_lap_diff = (graph.normalised_laplacian() - expected_norm_lap)
+    norm_lap_diff = (graph.normalised_laplacian().to_scipy() - expected_norm_lap)
     assert(np.all(norm_lap_diff.todense() == pytest.approx(0)))
 
 
@@ -113,7 +113,7 @@ def test_star_graph():
                                                       [1, 0, 0, 0, 0],
                                                       [1, 0, 0, 0, 0]])
     assert graph.number_of_vertices() == 5
-    adj_mat_diff = (graph.adjacency() - expected_adjacency_matrix)
+    adj_mat_diff = (graph.adjacency().to_scipy() - expected_adjacency_matrix)
     adj_mat_diff.eliminate_zeros()
     assert adj_mat_diff.nnz == 0
 
@@ -129,7 +129,7 @@ def test_cycle_graph():
                                                       [1, 0, 0, 1, 0]])
 
     assert graph.number_of_vertices() == 5
-    adj_mat_diff = (graph.adjacency() - expected_adjacency_matrix)
+    adj_mat_diff = (graph.adjacency().to_scipy() - expected_adjacency_matrix)
     adj_mat_diff.eliminate_zeros()
     assert adj_mat_diff.nnz == 0
 
@@ -138,7 +138,7 @@ def test_cycle_graph():
                                                       [0, -1, 2, -1, 0],
                                                       [0, 0, -1, 2, -1],
                                                       [-1, 0, 0, -1, 2]])
-    lap_diff = (graph.laplacian() - expected_laplacian_matrix)
+    lap_diff = (graph.laplacian().to_scipy() - expected_laplacian_matrix)
     lap_diff.eliminate_zeros()
     assert lap_diff.nnz == 0
 
@@ -152,20 +152,30 @@ def test_identity_graph():
                                          [0, 0, 1, 0, 0],
                                          [0, 0, 0, 1, 0],
                                          [0, 0, 0, 0, 1]])
-    adj_mat_diff = graph.adjacency() - expected_mat
+    adj_mat_diff = graph.adjacency().to_scipy() - expected_mat
     adj_mat_diff.eliminate_zeros()
     assert adj_mat_diff.nnz == 0
 
-    lap_mat_diff = graph.laplacian() - expected_mat
+    lap_mat_diff = graph.laplacian().to_scipy() - expected_mat
     lap_mat_diff.eliminate_zeros()
     assert lap_mat_diff.nnz == 0
 
 
 def test_adjacency_matrix():
     graph = stag.graph.Graph(BARBELL5_ADJ_MAT)
-    adj_mat_diff = (graph.adjacency() - BARBELL5_ADJ_MAT)
+    adj_mat_diff = (graph.adjacency().to_scipy() - BARBELL5_ADJ_MAT)
     adj_mat_diff.eliminate_zeros()
     assert adj_mat_diff.nnz == 0
+
+
+def test_neighbors():
+    graph = stag.graph.cycle_graph(10)
+    ns = graph.neighbors(3)
+    vs = [e.v2 for e in ns]
+    assert vs == [2, 4]
+
+    ns2 = graph.neighbors_unweighted(3)
+    assert vs == list(ns2)
 
 
 def test_symmetry():
@@ -173,14 +183,15 @@ def test_symmetry():
     big_graph = stag.random.sbm(1000, 5, 0.8, 0.2)
 
     # Check that all of the graph matrices are truly symmetric
-    assert np.allclose(big_graph.adjacency().toarray(), big_graph.adjacency().toarray().T)
+    assert np.allclose(big_graph.adjacency().to_dense(),
+                       big_graph.adjacency().to_dense().T)
 
     lap_mat = big_graph.normalised_laplacian()
-    lap_mat_dense = lap_mat.toarray()
+    lap_mat_dense = lap_mat.to_dense()
     assert np.allclose(lap_mat_dense, lap_mat_dense.T)
 
     lap_mat = big_graph.laplacian()
-    lap_mat_dense = lap_mat.toarray()
+    lap_mat_dense = lap_mat.to_dense()
     assert np.allclose(lap_mat_dense, lap_mat_dense.T)
 
 
@@ -240,7 +251,7 @@ def test_networkx():
                                                       [0, 0, 0, 0, 1, 1, 0, 1, 0],
                                                       [0, 0, 0, 0, 1, 1, 1, 0, 0],
                                                       [0, 0, 0, 1, 1, 0, 0, 0, 0]])
-    adj_mat_diff = (graph.adjacency() - expected_adjacency_matrix)
+    adj_mat_diff = (graph.adjacency().to_scipy() - expected_adjacency_matrix)
     adj_mat_diff.eliminate_zeros()
     assert adj_mat_diff.nnz == 0
 
@@ -261,7 +272,7 @@ def test_degree_matrix():
     # Construct a graph and get its degree matrix
     g = stag.graph.barbell_graph(4)
     expected_degree_mat = sp.sparse.diags([3, 3, 3, 4, 4, 3, 3, 3])
-    deg_mat_diff = g.degree_matrix() - expected_degree_mat
+    deg_mat_diff = g.degree_matrix().to_scipy() - expected_degree_mat
     assert(np.all(deg_mat_diff.todense() == pytest.approx(0)))
 
 
@@ -269,7 +280,7 @@ def test_inverse_degree_matrix():
     # Construct a graph and get its inverse degree matrix
     g = stag.graph.barbell_graph(4)
     expected_inv_degree_mat = sp.sparse.diags([1/3, 1/3, 1/3, 1/4, 1/4, 1/3, 1/3, 1/3])
-    inv_deg_mat_diff = g.inverse_degree_matrix() - expected_inv_degree_mat
+    inv_deg_mat_diff = g.inverse_degree_matrix().to_scipy() - expected_inv_degree_mat
     assert(np.all(inv_deg_mat_diff.todense() == pytest.approx(0)))
 
 
@@ -282,7 +293,7 @@ def test_lazy_random_walk_matrix():
                                             [  0,   0, 1/6, 1/2, 1/4, 1/4],
                                             [  0,   0,   0, 1/6, 1/2, 1/4],
                                             [  0,   0,   0, 1/6, 1/4, 1/2]])
-    rw_mat_diff = g.lazy_random_walk_matrix() - expected_rw_mat
+    rw_mat_diff = g.lazy_random_walk_matrix().to_scipy() - expected_rw_mat
     assert(np.all(rw_mat_diff.todense() == pytest.approx(0)))
 
 
@@ -320,7 +331,11 @@ def test_graph_equality():
 def test_graph_degrees():
     g1 = stag.graph.barbell_graph(4)
     degrees = g1.degrees_unweighted([0, 1, 2, 3, 4, 5])
-    assert degrees == [3, 3, 3, 4, 4, 3]
+    assert list(degrees) == [3, 3, 3, 4, 4, 3]
+
+    # Test np.ndarray objects
+    degrees = g1.degrees_unweighted(np.asarray([0, 1, 2, 3, 4, 5]))
+    assert list(degrees) == [3, 3, 3, 4, 4, 3]
 
 
 def test_graph_average_degree():
@@ -345,7 +360,7 @@ def test_subgraph():
                                              [1, 0, 1, 0],
                                              [0, 1, 0, 1],
                                              [0, 0, 1, 0]])
-    mat_diff = g2.adjacency() - expected_adj_mat
+    mat_diff = g2.adjacency().to_scipy() - expected_adj_mat
     assert(np.all(mat_diff.todense() == pytest.approx(0)))
 
     # Check that numpy arrays also work
@@ -363,7 +378,7 @@ def test_union():
                                              [0, 0, 0, 0, 1, 1],
                                              [0, 0, 0, 1, 0, 1],
                                              [0, 0, 0, 1, 1, 0]])
-    mat_diff = g3.adjacency() - expected_adj_mat
+    mat_diff = g3.adjacency().to_scipy() - expected_adj_mat
     assert (np.all(mat_diff.todense() == pytest.approx(0)))
 
 
@@ -400,7 +415,7 @@ def test_add_graphs():
                                              [2, 0, 2, 1],
                                              [1, 2, 0, 2],
                                              [2, 1, 2, 0]])
-    mat_diff = g3.adjacency() - expected_adj_mat
+    mat_diff = g3.adjacency().to_scipy() - expected_adj_mat
     assert (np.all(mat_diff.todense() == pytest.approx(0)))
 
     g4 = stag.graph.cycle_graph(5)
@@ -423,5 +438,5 @@ def test_scalar_multiplication():
                                              [2, 0, 2, 0],
                                              [0, 2, 0, 2],
                                              [2, 0, 2, 0]])
-    mat_diff = g3.adjacency() - expected_adj_mat
+    mat_diff = g3.adjacency().to_scipy() - expected_adj_mat
     assert (np.all(mat_diff.todense() == pytest.approx(0)))

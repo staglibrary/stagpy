@@ -1,13 +1,13 @@
 """Algorithms for finding clusters in graphs."""
-import scipy.sparse
 from typing import List, Tuple
+import numpy as np
 
 from . import stag_internal
 from . import graph
 from . import utility
 
 
-def spectral_cluster(g: graph.Graph, k: int) -> List[int]:
+def spectral_cluster(g: graph.Graph, k: int) -> np.ndarray:
     r"""
     Spectral clustering algorithm.
 
@@ -31,16 +31,16 @@ def spectral_cluster(g: graph.Graph, k: int) -> List[int]:
 
     @param g the graph object to be clustered
     @param k the number of clusters to find. Should be less than \f$n/2\f$.
-    @return a list of ints giving the cluster membership for each vertex in the graph
+    @return an array ints giving the cluster membership for each vertex in the graph
 
     \par References
     A. Ng, M. Jordan, Y. Weiss.
     On spectral clustering: Analysis and an algorithm. NeurIPS'01
     """
-    return list(stag_internal.spectral_cluster(g.internal_graph, k))
+    return stag_internal.spectral_cluster(g.internal_graph, k)
 
 
-def cheeger_cut(g: graph.Graph) -> List[int]:
+def cheeger_cut(g: graph.Graph) -> np.ndarray:
     r"""
     Find the Cheeger cut in a graph.
 
@@ -65,14 +65,14 @@ def cheeger_cut(g: graph.Graph) -> List[int]:
     algorithm is called the 'Cheeger cut' of the graph.
 
     @param g the graph object to be partitioned
-    @return A list giving the cluster membership for each vertex in the graph.
-            Each entry in the list is either \f$0\f$ or \f$1\f$ to indicate
+    @return An array giving the cluster membership for each vertex in the graph.
+            Each entry in the array is either \f$0\f$ or \f$1\f$ to indicate
             which side of the cut the vertex belongs to.
     """
-    return list(stag_internal.cheeger_cut(g.internal_graph))
+    return stag_internal.cheeger_cut(g.internal_graph)
 
 
-def local_cluster(g: graph.LocalGraph, seed_vertex: int, target_volume: float) -> List[int]:
+def local_cluster(g: graph.LocalGraph, seed_vertex: int, target_volume: float) -> np.ndarray:
     r"""
     Local clustering algorithm based on personalised Pagerank.
 
@@ -84,20 +84,20 @@ def local_cluster(g: graph.LocalGraph, seed_vertex: int, target_volume: float) -
     @param g a graph object implementing the LocalGraph interface
     @param seed_vertex the starting vertex in the graph
     @param target_volume the approximate volume of the cluster you would like to find
-    @return a vector containing the indices of vectors considered to be in the
+    @return an array containing the indices of vertices considered to be in the
             same cluster as the seed_vertex.
 
     \par References
     R. Andersen, F. Chung, K. Lang.
     Local graph partitioning using pagerank vectors. FOCS'06
     """
-    return list(stag_internal.local_cluster(g.internal_graph, seed_vertex, target_volume))
+    return stag_internal.local_cluster(g.internal_graph, seed_vertex, target_volume)
 
 
 def local_cluster_acl(g: graph.LocalGraph,
                       seed_vertex: int,
                       locality: float,
-                      error: float = 0.001) -> List[int]:
+                      error: float = 0.001) -> np.ndarray:
     r"""
     The ACL local clustering algorithm. Given a graph and starting vertex,
     returns a cluster close to the starting vertex, constructed in a local way.
@@ -112,24 +112,25 @@ def local_cluster_acl(g: graph.LocalGraph,
                     and a value of \f$0\f$ will explore the whole graph.
     @param error (optional) - the acceptable error in the calculation of the approximate
                               pagerank. Default \f$0.001\f$.
-    @return a vector containing the indices of vectors considered to be in the
+    @return an array containing the indices of vertices considered to be in the
             same cluster as the seed_vertex.
 
     \par References
     R. Andersen, F. Chung, K. Lang.
     Local graph partitioning using pagerank vectors. FOCS'06
     """
-    return list(stag_internal.local_cluster_acl(g.internal_graph,
-                                                seed_vertex,
-                                                locality,
-                                                error))
+    return stag_internal.local_cluster_acl(g.internal_graph,
+                                           seed_vertex,
+                                           locality,
+                                           error)
 
 
+@utility.convert_sprsmats
 def approximate_pagerank(g: graph.LocalGraph,
-                         seed_vector: scipy.sparse.csc_matrix,
+                         seed_vector: utility.SprsMat,
                          alpha: float,
-                         epsilon: float) -> Tuple[scipy.sparse.csc_matrix,
-                                                  scipy.sparse.csc_matrix]:
+                         epsilon: float) -> Tuple[utility.SprsMat,
+                                                  utility.SprsMat]:
     r"""
     Compute the approximate pagerank vector.
 
@@ -157,13 +158,18 @@ def approximate_pagerank(g: graph.LocalGraph,
     Local graph partitioning using pagerank vectors. FOCS'06
     """
     apr = stag_internal.approximate_pagerank(g.internal_graph,
-                                              utility.scipy_to_swig_sprs(seed_vector),
+                                              seed_vector.internal_sprsmat,
                                               alpha,
                                               epsilon)
-    return utility.swig_sprs_to_scipy(apr[0]), utility.swig_sprs_to_scipy(apr[1])
+    p = utility.SprsMat(apr[0])
+    r = utility.SprsMat(apr[1])
+    p.__parent = apr
+    r.__parent = apr
+    return p, r
 
 
-def sweep_set_conductance(g: graph.LocalGraph, v: scipy.sparse.csc_matrix) -> List[int]:
+@utility.convert_sprsmats
+def sweep_set_conductance(g: graph.LocalGraph, v: utility.SprsMat) -> np.ndarray:
     r"""
     Find the sweep set of the given vector with the minimum conductance.
 
@@ -195,10 +201,11 @@ def sweep_set_conductance(g: graph.LocalGraph, v: scipy.sparse.csc_matrix) -> Li
     @return a vector containing the indices of vec which give the minimum
             conductance in the given graph
     """
-    return list(stag_internal.sweep_set_conductance(g.internal_graph, utility.scipy_to_swig_sprs(v)))
+    return stag_internal.sweep_set_conductance(g.internal_graph,
+                                               v.internal_sprsmat)
 
 
-def connected_component(g: graph.LocalGraph, v: int) -> List[int]:
+def connected_component(g: graph.LocalGraph, v: int) -> np.ndarray:
     r"""
     Return the vertex indices of every vertex in the same connected component
     as the specified vertex.
@@ -206,28 +213,28 @@ def connected_component(g: graph.LocalGraph, v: int) -> List[int]:
     The running time of this method is proportional to the size of the returned
     connected component.
 
-    The returned list is not sorted.
+    The returned array is not sorted.
 
     @param g a stag.graph.LocalGraph object
     @param v a vertex of the graph
-    @return a list containing the vertex ids of every vertex in the connected
+    @return an array containing the vertex ids of every vertex in the connected
             component corresponding to v
     """
-    return list(stag_internal.connected_component(g.internal_graph, v))
+    return stag_internal.connected_component(g.internal_graph, v)
 
 
-def connected_components(g: graph.Graph) -> List[List[int]]:
+def connected_components(g: graph.Graph) -> List[np.ndarray]:
     r"""
     Return a list of the connected components in the specified graph.
 
     @param g a stag.graph.Graph object
     @return a list containing the connected components of the graph
     """
-    return [list(cc) for cc in stag_internal.connected_components(g.internal_graph)]
+    return stag_internal.connected_components(g.internal_graph)
 
 
 @utility.convert_ndarrays
-def adjusted_rand_index(gt_labels: List[int], labels: List[int]) -> float:
+def adjusted_rand_index(gt_labels: np.ndarray, labels: np.ndarray) -> float:
     r"""
     Compute the Adjusted Rand Index between two label vectors.
 
@@ -240,12 +247,11 @@ def adjusted_rand_index(gt_labels: List[int], labels: List[int]) -> float:
     Objective criteria for the evaluation of clustering methods.
     Journal of the American Statistical Association. 66 (336): 846–850. 1971.
     """
-    return stag_internal.adjusted_rand_index(stag_internal.vectorl(gt_labels),
-                                             stag_internal.vectorl(labels))
+    return stag_internal.adjusted_rand_index(gt_labels, labels)
 
 
 @utility.convert_ndarrays
-def mutual_information(gt_labels: List[int], labels: List[int]) -> float:
+def mutual_information(gt_labels: np.ndarray, labels: np.ndarray) -> float:
     r"""
     Compute the Mutual Information between two label vectors.
 
@@ -253,14 +259,12 @@ def mutual_information(gt_labels: List[int], labels: List[int]) -> float:
     @param labels the candidate labels whose MI should be calculated
     @return the MI between the two labels vectors
     """
-    return stag_internal.mutual_information(stag_internal.vectorl(gt_labels),
-                                            stag_internal.vectorl(labels))
-
+    return stag_internal.mutual_information(gt_labels, labels)
 
 
 @utility.convert_ndarrays
-def normalised_mutual_information(gt_labels: List[int],
-                                  labels: List[int]) -> float:
+def normalised_mutual_information(gt_labels: np.ndarray,
+                                  labels: np.ndarray) -> float:
     r"""
     Compute the Normalised Mutual Information between two label vectors.
 
@@ -273,12 +277,11 @@ def normalised_mutual_information(gt_labels: List[int],
     clusterings comparison. 26th Annual International Conference on Machine
     Learning (ICML ‘09).
     """
-    return stag_internal.normalised_mutual_information(
-        stag_internal.vectorl(gt_labels), stag_internal.vectorl(labels))
+    return stag_internal.normalised_mutual_information(gt_labels, labels)
 
 
 @utility.convert_ndarrays
-def conductance(g: graph.LocalGraph, cluster: List[int]) -> float:
+def conductance(g: graph.LocalGraph, cluster: np.ndarray) -> float:
     r"""
      Compute the conductance of the given cluster in a graph.
 
@@ -294,14 +297,14 @@ def conductance(g: graph.LocalGraph, cluster: List[int]) -> float:
     the cut between \f$S\f$ and \f$V \setminus S\f$.
 
     @param g a stag.graph.LocalGraph object representing \f$G\f$.
-    @param cluster a list of node IDs in \f$S\f$.
+    @param cluster an array of node IDs in \f$S\f$.
     @return the conductance \f$\phi_G(S)\f$.
     """
-    return stag_internal.conductance(g.internal_graph,
-                                     stag_internal.vectorl(cluster))
+    return stag_internal.conductance(g.internal_graph, cluster)
+
 
 @utility.convert_ndarrays
-def symmetric_difference(s: List[int], t: List[int]) -> List[int]:
+def symmetric_difference(s: np.ndarray, t: np.ndarray) -> np.ndarray:
     r"""
     Compute the symmetric difference of two sets of integers.
 
@@ -315,10 +318,9 @@ def symmetric_difference(s: List[int], t: List[int]) -> List[int]:
     Although \f$S\f$ and \f$T\f$ are provided as lists, they are treated as sets
     and any duplicates will be ignored.
 
-    @param s a list containing the first set of integers
-    @param t a list containing the second set of integers
-    @return a list containing the integers in the syymmetric difference of
+    @param s an array containing the first set of integers
+    @param t an array containing the second set of integers
+    @return an array containing the vertices in the symmetric difference of
              \f$S\f$ and \f$T\f$.
     """
-    return list(stag_internal.symmetric_difference(stag_internal.vectorl(s),
-                                                   stag_internal.vectorl(t)))
+    return stag_internal.symmetric_difference(s, t)

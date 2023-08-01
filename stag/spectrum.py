@@ -2,15 +2,14 @@
 Methods for computing eigenvalues and eigenvectors of sparse matrices.
 """
 import numpy as np
-import scipy as sp
-import scipy.sparse
 from typing import Tuple
 
 from . import utility
 from . import stag_internal
 
 
-def compute_eigensystem(mat: scipy.sparse.spmatrix,
+@utility.convert_sprsmats
+def compute_eigensystem(mat: utility.SprsMat,
                         num: int,
                         which: str = 'SM') -> Tuple[np.ndarray, np.ndarray]:
     r"""
@@ -40,10 +39,16 @@ def compute_eigensystem(mat: scipy.sparse.spmatrix,
     @param which (optional) a string indicating which eigenvectors to calculate
     @returns a tuple containing the computed eigenvalues and eigenvectors
     """
-    return sp.sparse.linalg.eigs(mat, k=num, which=which)
+    # We have configured compute_eigenstystem to accept a boolean value
+    # for whether we are looking for the largest magnitude.
+    largest = which != 'SM'
+    eigensystem = stag_internal.compute_eigensystem(
+        mat.internal_sprsmat, num, largest)
+    return eigensystem.get0(), eigensystem.get1()
 
 
-def compute_eigenvalues(mat: scipy.sparse.spmatrix,
+@utility.convert_sprsmats
+def compute_eigenvalues(mat: utility.SprsMat,
                         num: int,
                         which: str = 'SM') -> np.ndarray:
     r"""
@@ -66,7 +71,9 @@ def compute_eigenvalues(mat: scipy.sparse.spmatrix,
     eigs, _ = compute_eigensystem(mat, num, which=which)
     return eigs
 
-def compute_eigenvectors(mat: scipy.sparse.spmatrix,
+
+@utility.convert_sprsmats
+def compute_eigenvectors(mat: utility.SprsMat,
                          num: int,
                          which: str = 'SM') -> np.ndarray:
     r"""
@@ -91,7 +98,9 @@ def compute_eigenvectors(mat: scipy.sparse.spmatrix,
     return eigvecs
 
 
-def power_method(mat: scipy.sparse.spmatrix,
+@utility.convert_sprsmats
+@utility.convert_ndarrays
+def power_method(mat: utility.SprsMat,
                  num_iterations: int = None,
                  initial_vector: np.ndarray = None) -> np.ndarray:
     r"""
@@ -122,19 +131,21 @@ def power_method(mat: scipy.sparse.spmatrix,
     """
     if num_iterations is None:
         if initial_vector is None:
-            return stag_internal.power_method(utility.scipy_to_swig_sprs(mat))
+            return stag_internal.power_method(mat.internal_sprsmat)
         else:
-            return stag_internal.power_method(utility.scipy_to_swig_sprs(mat),
+            return stag_internal.power_method(mat.internal_sprsmat,
                                               initial_vector.astype(float))
     elif initial_vector is None:
-        return stag_internal.power_method(utility.scipy_to_swig_sprs(mat),
+        return stag_internal.power_method(mat.internal_sprsmat,
                                           num_iterations)
     else:
-        return stag_internal.power_method(utility.scipy_to_swig_sprs(mat),
+        return stag_internal.power_method(mat.internal_sprsmat,
                                           num_iterations, initial_vector.astype(float))
 
 
-def rayleigh_quotient(mat: scipy.sparse.spmatrix, vec: np.ndarray) -> float:
+@utility.convert_ndarrays
+@utility.convert_sprsmats
+def rayleigh_quotient(mat: utility.SprsMat, vec: np.ndarray) -> float:
     r"""
     Compute the Rayleigh quotient of the given vector and matrix.
 
@@ -148,5 +159,5 @@ def rayleigh_quotient(mat: scipy.sparse.spmatrix, vec: np.ndarray) -> float:
     @param vec a vector \f$v \in \mathbb{R}^n\f$.
     @return the Rayleigh quotient \f$R(M, v)\f$.
     """
-    return stag_internal.rayleigh_quotient(utility.scipy_to_swig_sprs(mat),
+    return stag_internal.rayleigh_quotient(mat.internal_sprsmat,
                                            vec)

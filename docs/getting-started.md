@@ -73,7 +73,7 @@ Then, we can read it as follows.
 ~~~~~~{python}
     >>> import stag.graphio
     >>> g = stag.graphio.load_edgelist("graph.edgelist")
-    >>> print(g.agjacency().todense())
+    >>> print(g.adjacency().to_dense())
     [[0. 1. 1. 0. 0. 0.]
      [1. 0. 1. 0. 0. 0.]
      [1. 1. 0. 1. 0. 0.]

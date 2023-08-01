@@ -18,14 +18,14 @@ def test_edgelist():
                                              [1, 0, 1],
                                              [1, 1, 0]])
     graph = stag.graphio.load_edgelist("data/test1.edgelist")
-    adj_mat_diff = (graph.adjacency() - expected_adj_mat)
+    adj_mat_diff = (graph.adjacency().to_scipy() - expected_adj_mat)
     adj_mat_diff.eliminate_zeros()
     assert adj_mat_diff.nnz == 0
 
     # Now save and reload the graph and check that the adjacency matrix has not changed
     stag.graphio.save_edgelist(graph, "data/temp.edgelist")
     graph = stag.graphio.load_edgelist("data/temp.edgelist")
-    adj_mat_diff = (graph.adjacency() - expected_adj_mat)
+    adj_mat_diff = (graph.adjacency().to_scipy() - expected_adj_mat)
     adj_mat_diff.eliminate_zeros()
     assert adj_mat_diff.nnz == 0
 
@@ -36,14 +36,14 @@ def test_edgelist():
                                              [0.5, 0, 1],
                                              [0.5, 1, 0]])
     graph = stag.graphio.load_edgelist("data/test2.edgelist")
-    adj_mat_diff = (graph.adjacency() - expected_adj_mat)
+    adj_mat_diff = (graph.adjacency().to_scipy() - expected_adj_mat)
     adj_mat_diff.eliminate_zeros()
     assert adj_mat_diff.nnz == 0
 
     # Now save and reload the graph and check that the adjacency matrix has not changed
     stag.graphio.save_edgelist(graph, "data/temp.edgelist")
     graph = stag.graphio.load_edgelist("data/temp.edgelist")
-    adj_mat_diff = (graph.adjacency() - expected_adj_mat)
+    adj_mat_diff = (graph.adjacency().to_scipy() - expected_adj_mat)
     adj_mat_diff.eliminate_zeros()
     assert adj_mat_diff.nnz == 0
 
@@ -54,14 +54,14 @@ def test_edgelist():
                                              [1, 0, 1],
                                              [0.5, 1, 0]])
     graph = stag.graphio.load_edgelist("data/test3.edgelist")
-    adj_mat_diff = (graph.adjacency() - expected_adj_mat)
+    adj_mat_diff = (graph.adjacency().to_scipy() - expected_adj_mat)
     adj_mat_diff.eliminate_zeros()
     assert adj_mat_diff.nnz == 0
 
     # Now save and reload the graph and check that the adjacency matrix has not changed
     stag.graphio.save_edgelist(graph, "data/temp.edgelist")
     graph = stag.graphio.load_edgelist("data/temp.edgelist")
-    adj_mat_diff = (graph.adjacency() - expected_adj_mat)
+    adj_mat_diff = (graph.adjacency().to_scipy() - expected_adj_mat)
     adj_mat_diff.eliminate_zeros()
     assert adj_mat_diff.nnz == 0
 
@@ -72,14 +72,14 @@ def test_edgelist():
                                              [1, 0, 1],
                                              [0.5, 1, 0]])
     graph = stag.graphio.load_edgelist("data/test4.edgelist")
-    adj_mat_diff = (graph.adjacency() - expected_adj_mat)
+    adj_mat_diff = (graph.adjacency().to_scipy() - expected_adj_mat)
     adj_mat_diff.eliminate_zeros()
     assert adj_mat_diff.nnz == 0
 
     # Now save and reload the graph and check that the adjacency matrix has not changed
     stag.graphio.save_edgelist(graph, "data/temp.edgelist")
     graph = stag.graphio.load_edgelist("data/temp.edgelist")
-    adj_mat_diff = (graph.adjacency() - expected_adj_mat)
+    adj_mat_diff = (graph.adjacency().to_scipy() - expected_adj_mat)
     adj_mat_diff.eliminate_zeros()
     assert adj_mat_diff.nnz == 0
 
@@ -90,14 +90,14 @@ def test_edgelist():
                                              [0.5, 0, 1],
                                              [0.5, 1, 0]])
     graph = stag.graphio.load_edgelist("data/test5.edgelist")
-    adj_mat_diff = (graph.adjacency() - expected_adj_mat)
+    adj_mat_diff = (graph.adjacency().to_scipy() - expected_adj_mat)
     adj_mat_diff.eliminate_zeros()
     assert adj_mat_diff.nnz == 0
 
     # Now save and reload the graph and check that the adjacency matrix has not changed
     stag.graphio.save_edgelist(graph, "data/temp.edgelist")
     graph = stag.graphio.load_edgelist("data/temp.edgelist")
-    adj_mat_diff = (graph.adjacency() - expected_adj_mat)
+    adj_mat_diff = (graph.adjacency().to_scipy() - expected_adj_mat)
     adj_mat_diff.eliminate_zeros()
     assert adj_mat_diff.nnz == 0
 

@@ -5,7 +5,6 @@ from . import stag_internal
 from . import graph
 
 
-@graph.return_graph
 def load_edgelist(filename: str) -> graph.Graph:
     """
     Load a graph from an edgelist file.
@@ -35,7 +34,7 @@ def load_edgelist(filename: str) -> graph.Graph:
     @return stag.graph.Graph object
     @throws runtime_error if the file doesn't exist or cannot be parsed as an edgelist
     """
-    return stag_internal.load_edgelist(filename)
+    return graph.Graph(stag_internal.load_edgelist(filename))
 
 
 def save_edgelist(g: graph.Graph, filename: str):
@@ -48,7 +47,6 @@ def save_edgelist(g: graph.Graph, filename: str):
     stag_internal.save_edgelist(g.internal_graph, filename)
 
 
-@graph.return_graph
 def load_adjacencylist(filename: str) -> graph.Graph:
     r"""
      Load a graph from an adjacencylist file.
@@ -88,7 +86,7 @@ def load_adjacencylist(filename: str) -> graph.Graph:
     @throws runtime_error if the file doesn't exist or cannot be parsed as
             an adjacency list
     """
-    return stag_internal.load_adjacencylist(filename)
+    return graph.Graph(stag_internal.load_adjacencylist(filename))
 
 
 def save_adjacencylist(g: graph.Graph, filename: str):

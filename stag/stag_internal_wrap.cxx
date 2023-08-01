@@ -3103,25 +3103,24 @@ namespace Swig {
 #define SWIGTYPE_p_Eigen__MatrixXd swig_types[0]
 #define SWIGTYPE_p_Eigen__SparseMatrixT_double_Eigen__ColMajor_stag_int_t swig_types[1]
 #define SWIGTYPE_p_Eigen__TripletT_double_stag_int_t swig_types[2]
-#define SWIGTYPE_p_Spectra__SortRule swig_types[3]
-#define SWIGTYPE_p_Spectra__SparseSymMatProdT_double_Eigen__Upper_Eigen__ColMajor_stag_int_t swig_types[4]
-#define SWIGTYPE_p_char swig_types[5]
-#define SWIGTYPE_p_long_long swig_types[6]
-#define SWIGTYPE_p_stag__AdjacencyListLocalGraph swig_types[7]
-#define SWIGTYPE_p_stag__Graph swig_types[8]
-#define SWIGTYPE_p_stag__LocalGraph swig_types[9]
-#define SWIGTYPE_p_stag__edge swig_types[10]
-#define SWIGTYPE_p_std__istream swig_types[11]
-#define SWIGTYPE_p_std__ofstream swig_types[12]
-#define SWIGTYPE_p_std__string swig_types[13]
-#define SWIGTYPE_p_std__tupleT_Eigen__VectorXd_Eigen__MatrixXd_t swig_types[14]
-#define SWIGTYPE_p_std__tupleT_SprsMat_SprsMat_t swig_types[15]
-#define SWIGTYPE_p_std__tupleT_stag_int_stag_int_t swig_types[16]
-#define SWIGTYPE_p_std__vectorT_double_t swig_types[17]
-#define SWIGTYPE_p_std__vectorT_long_long_t swig_types[18]
-#define SWIGTYPE_p_std__vectorT_stag__edge_t swig_types[19]
-static swig_type_info *swig_types[21];
-static swig_module_info swig_module = {swig_types, 20, 0, 0, 0, 0};
+#define SWIGTYPE_p_Spectra__SparseSymMatProdT_double_Eigen__Upper_Eigen__ColMajor_stag_int_t swig_types[3]
+#define SWIGTYPE_p_char swig_types[4]
+#define SWIGTYPE_p_long_long swig_types[5]
+#define SWIGTYPE_p_stag__AdjacencyListLocalGraph swig_types[6]
+#define SWIGTYPE_p_stag__Graph swig_types[7]
+#define SWIGTYPE_p_stag__LocalGraph swig_types[8]
+#define SWIGTYPE_p_stag__edge swig_types[9]
+#define SWIGTYPE_p_std__istream swig_types[10]
+#define SWIGTYPE_p_std__ofstream swig_types[11]
+#define SWIGTYPE_p_std__string swig_types[12]
+#define SWIGTYPE_p_std__tupleT_Eigen__VectorXd_Eigen__MatrixXd_t swig_types[13]
+#define SWIGTYPE_p_std__tupleT_SprsMat_SprsMat_t swig_types[14]
+#define SWIGTYPE_p_std__tupleT_stag_int_stag_int_t swig_types[15]
+#define SWIGTYPE_p_std__vectorT_double_t swig_types[16]
+#define SWIGTYPE_p_std__vectorT_long_long_t swig_types[17]
+#define SWIGTYPE_p_std__vectorT_stag__edge_t swig_types[18]
+static swig_type_info *swig_types[20];
+static swig_module_info swig_module = {swig_types, 19, 0, 0, 0, 0};
 #define SWIG_TypeQuery(name) SWIG_TypeQueryModule(&swig_module, &swig_module, name)
 #define SWIG_MangledTypeQuery(name) SWIG_MangledTypeQueryModule(&swig_module, &swig_module, name)
 
@@ -3488,228 +3487,6 @@ SWIGINTERN stag_int const &std_tuple_Sl_stag_int_Sc_stag_int_Sg__get1(std::tuple
 SWIGINTERN void std_tuple_Sl_stag_int_Sc_stag_int_Sg__set0(std::tuple< stag_int,stag_int > *self,stag_int const &val){ std::get<0>(*self) = val; }
 SWIGINTERN void std_tuple_Sl_stag_int_Sc_stag_int_Sg__set1(std::tuple< stag_int,stag_int > *self,stag_int const &val){ std::get<1>(*self) = val; }
 SWIGINTERN size_t std_tuple_Sl_stag_int_Sc_stag_int_Sg____len__(std::tuple< stag_int,stag_int > const *self){ return std::tuple_size<std::decay_t<decltype(*self)>>{}; }
-
-#include <string>
-
-
-SWIGINTERNINLINE PyObject*
-  SWIG_From_unsigned_SS_int  (unsigned int value)
-{
-  return PyInt_FromSize_t((size_t) value);
-}
-
-
-  #define SWIG_From_double   PyFloat_FromDouble 
-
-
-SWIGINTERN int
-SWIG_AsVal_bool (PyObject *obj, bool *val)
-{
-  int r;
-  if (!PyBool_Check(obj))
-    return SWIG_ERROR;
-  r = PyObject_IsTrue(obj);
-  if (r == -1)
-    return SWIG_ERROR;
-  if (val) *val = r ? true : false;
-  return SWIG_OK;
-}
-
-
-SWIGINTERNINLINE PyObject*
-  SWIG_From_bool  (bool value)
-{
-  return PyBool_FromLong(value ? 1 : 0);
-}
-
-SWIGINTERN bool stag_Graph___eq__(stag::Graph *self,stag::Graph *other){
-      return *self == *other;
-    }
-
-SWIGINTERN swig_type_info*
-SWIG_pchar_descriptor(void)
-{
-  static int init = 0;
-  static swig_type_info* info = 0;
-  if (!init) {
-    info = SWIG_TypeQuery("_p_char");
-    init = 1;
-  }
-  return info;
-}
-
-
-SWIGINTERN int
-SWIG_AsCharPtrAndSize(PyObject *obj, char** cptr, size_t* psize, int *alloc)
-{
-#if PY_VERSION_HEX>=0x03000000
-#if defined(SWIG_PYTHON_STRICT_BYTE_CHAR)
-  if (PyBytes_Check(obj))
-#else
-  if (PyUnicode_Check(obj))
-#endif
-#else  
-  if (PyString_Check(obj))
-#endif
-  {
-    char *cstr; Py_ssize_t len;
-    int ret = SWIG_OK;
-#if PY_VERSION_HEX>=0x03000000
-#if !defined(SWIG_PYTHON_STRICT_BYTE_CHAR)
-    if (!alloc && cptr) {
-        /* We can't allow converting without allocation, since the internal
-           representation of string in Python 3 is UCS-2/UCS-4 but we require
-           a UTF-8 representation.
-           TODO(bhy) More detailed explanation */
-        return SWIG_RuntimeError;
-    }
-    obj = PyUnicode_AsUTF8String(obj);
-    if (!obj)
-      return SWIG_TypeError;
-    if (alloc)
-      *alloc = SWIG_NEWOBJ;
-#endif
-    if (PyBytes_AsStringAndSize(obj, &cstr, &len) == -1)
-      return SWIG_TypeError;
-#else
-    if (PyString_AsStringAndSize(obj, &cstr, &len) == -1)
-      return SWIG_TypeError;
-#endif
-    if (cptr) {
-      if (alloc) {
-	if (*alloc == SWIG_NEWOBJ) {
-	  *cptr = reinterpret_cast< char* >(memcpy(new char[len + 1], cstr, sizeof(char)*(len + 1)));
-	  *alloc = SWIG_NEWOBJ;
-	} else {
-	  *cptr = cstr;
-	  *alloc = SWIG_OLDOBJ;
-	}
-      } else {
-#if PY_VERSION_HEX>=0x03000000
-#if defined(SWIG_PYTHON_STRICT_BYTE_CHAR)
-	*cptr = PyBytes_AsString(obj);
-#else
-	assert(0); /* Should never reach here with Unicode strings in Python 3 */
-#endif
-#else
-	*cptr = SWIG_Python_str_AsChar(obj);
-        if (!*cptr)
-          ret = SWIG_TypeError;
-#endif
-      }
-    }
-    if (psize) *psize = len + 1;
-#if PY_VERSION_HEX>=0x03000000 && !defined(SWIG_PYTHON_STRICT_BYTE_CHAR)
-    Py_XDECREF(obj);
-#endif
-    return ret;
-  } else {
-#if defined(SWIG_PYTHON_2_UNICODE)
-#if defined(SWIG_PYTHON_STRICT_BYTE_CHAR)
-#error "Cannot use both SWIG_PYTHON_2_UNICODE and SWIG_PYTHON_STRICT_BYTE_CHAR at once"
-#endif
-#if PY_VERSION_HEX<0x03000000
-    if (PyUnicode_Check(obj)) {
-      char *cstr; Py_ssize_t len;
-      if (!alloc && cptr) {
-        return SWIG_RuntimeError;
-      }
-      obj = PyUnicode_AsUTF8String(obj);
-      if (!obj)
-        return SWIG_TypeError;
-      if (PyString_AsStringAndSize(obj, &cstr, &len) != -1) {
-        if (cptr) {
-          if (alloc) *alloc = SWIG_NEWOBJ;
-          *cptr = reinterpret_cast< char* >(memcpy(new char[len + 1], cstr, sizeof(char)*(len + 1)));
-        }
-        if (psize) *psize = len + 1;
-
-        Py_XDECREF(obj);
-        return SWIG_OK;
-      } else {
-        Py_XDECREF(obj);
-      }
-    }
-#endif
-#endif
-
-    swig_type_info* pchar_descriptor = SWIG_pchar_descriptor();
-    if (pchar_descriptor) {
-      void* vptr = 0;
-      if (SWIG_ConvertPtr(obj, &vptr, pchar_descriptor, 0) == SWIG_OK) {
-	if (cptr) *cptr = (char *) vptr;
-	if (psize) *psize = vptr ? (strlen((char *)vptr) + 1) : 0;
-	if (alloc) *alloc = SWIG_OLDOBJ;
-	return SWIG_OK;
-      }
-    }
-  }
-  return SWIG_TypeError;
-}
-
-
-SWIGINTERN int
-SWIG_AsPtr_std_string (PyObject * obj, std::string **val) 
-{
-  char* buf = 0 ; size_t size = 0; int alloc = SWIG_OLDOBJ;
-  if (SWIG_IsOK((SWIG_AsCharPtrAndSize(obj, &buf, &size, &alloc)))) {
-    if (buf) {
-      if (val) *val = new std::string(buf, size - 1);
-      if (alloc == SWIG_NEWOBJ) delete[] buf;
-      return SWIG_NEWOBJ;
-    } else {
-      if (val) *val = 0;
-      return SWIG_OLDOBJ;
-    }
-  } else {
-    static int init = 0;
-    static swig_type_info* descriptor = 0;
-    if (!init) {
-      descriptor = SWIG_TypeQuery("std::string" " *");
-      init = 1;
-    }
-    if (descriptor) {
-      std::string *vptr;
-      int res = SWIG_ConvertPtr(obj, (void**)&vptr, descriptor, 0);
-      if (SWIG_IsOK(res) && val) *val = vptr;
-      return res;
-    }
-  }
-  return SWIG_ERROR;
-}
-
-
-SWIGINTERNINLINE PyObject *
-SWIG_FromCharPtrAndSize(const char* carray, size_t size)
-{
-  if (carray) {
-    if (size > INT_MAX) {
-      swig_type_info* pchar_descriptor = SWIG_pchar_descriptor();
-      return pchar_descriptor ? 
-	SWIG_InternalNewPointerObj(const_cast< char * >(carray), pchar_descriptor, 0) : SWIG_Py_Void();
-    } else {
-#if PY_VERSION_HEX >= 0x03000000
-#if defined(SWIG_PYTHON_STRICT_BYTE_CHAR)
-      return PyBytes_FromStringAndSize(carray, static_cast< Py_ssize_t >(size));
-#else
-      return PyUnicode_DecodeUTF8(carray, static_cast< Py_ssize_t >(size), "surrogateescape");
-#endif
-#else
-      return PyString_FromStringAndSize(carray, static_cast< Py_ssize_t >(size));
-#endif
-    }
-  } else {
-    return SWIG_Py_Void();
-  }
-}
-
-
-SWIGINTERNINLINE PyObject *
-SWIG_From_std_string  (const std::string& s)
-{
-  return SWIG_FromCharPtrAndSize(s.data(), s.size());
-}
-
 
 #if NPY_API_VERSION < 0x00000007
 #define NPY_ARRAY_DEFAULT NPY_DEFAULT
@@ -4320,6 +4097,233 @@ SWIG_From_std_string  (const std::string& s)
   };
 
   template<> int NumPyType<double>() {return NPY_DOUBLE;};
+
+SWIGINTERN Eigen::VectorXd const &std_tuple_Sl_Eigen_VectorXd_Sc_Eigen_MatrixXd_Sg__get0(std::tuple< Eigen::VectorXd,Eigen::MatrixXd > const *self){ return std::get<0>(*self); }
+SWIGINTERN Eigen::MatrixXd const &std_tuple_Sl_Eigen_VectorXd_Sc_Eigen_MatrixXd_Sg__get1(std::tuple< Eigen::VectorXd,Eigen::MatrixXd > const *self){ return std::get<1>(*self); }
+SWIGINTERN void std_tuple_Sl_Eigen_VectorXd_Sc_Eigen_MatrixXd_Sg__set0(std::tuple< Eigen::VectorXd,Eigen::MatrixXd > *self,Eigen::VectorXd const &val){ std::get<0>(*self) = val; }
+SWIGINTERN void std_tuple_Sl_Eigen_VectorXd_Sc_Eigen_MatrixXd_Sg__set1(std::tuple< Eigen::VectorXd,Eigen::MatrixXd > *self,Eigen::MatrixXd const &val){ std::get<1>(*self) = val; }
+SWIGINTERN size_t std_tuple_Sl_Eigen_VectorXd_Sc_Eigen_MatrixXd_Sg____len__(std::tuple< Eigen::VectorXd,Eigen::MatrixXd > const *self){ return std::tuple_size<std::decay_t<decltype(*self)>>{}; }
+
+#include <string>
+
+
+SWIGINTERNINLINE PyObject*
+  SWIG_From_unsigned_SS_int  (unsigned int value)
+{
+  return PyInt_FromSize_t((size_t) value);
+}
+
+
+  #define SWIG_From_double   PyFloat_FromDouble 
+
+
+SWIGINTERN int
+SWIG_AsVal_bool (PyObject *obj, bool *val)
+{
+  int r;
+  if (!PyBool_Check(obj))
+    return SWIG_ERROR;
+  r = PyObject_IsTrue(obj);
+  if (r == -1)
+    return SWIG_ERROR;
+  if (val) *val = r ? true : false;
+  return SWIG_OK;
+}
+
+
+SWIGINTERNINLINE PyObject*
+  SWIG_From_bool  (bool value)
+{
+  return PyBool_FromLong(value ? 1 : 0);
+}
+
+SWIGINTERN bool stag_Graph___eq__(stag::Graph *self,stag::Graph *other){
+      return *self == *other;
+    }
+
+SWIGINTERN swig_type_info*
+SWIG_pchar_descriptor(void)
+{
+  static int init = 0;
+  static swig_type_info* info = 0;
+  if (!init) {
+    info = SWIG_TypeQuery("_p_char");
+    init = 1;
+  }
+  return info;
+}
+
+
+SWIGINTERN int
+SWIG_AsCharPtrAndSize(PyObject *obj, char** cptr, size_t* psize, int *alloc)
+{
+#if PY_VERSION_HEX>=0x03000000
+#if defined(SWIG_PYTHON_STRICT_BYTE_CHAR)
+  if (PyBytes_Check(obj))
+#else
+  if (PyUnicode_Check(obj))
+#endif
+#else  
+  if (PyString_Check(obj))
+#endif
+  {
+    char *cstr; Py_ssize_t len;
+    int ret = SWIG_OK;
+#if PY_VERSION_HEX>=0x03000000
+#if !defined(SWIG_PYTHON_STRICT_BYTE_CHAR)
+    if (!alloc && cptr) {
+        /* We can't allow converting without allocation, since the internal
+           representation of string in Python 3 is UCS-2/UCS-4 but we require
+           a UTF-8 representation.
+           TODO(bhy) More detailed explanation */
+        return SWIG_RuntimeError;
+    }
+    obj = PyUnicode_AsUTF8String(obj);
+    if (!obj)
+      return SWIG_TypeError;
+    if (alloc)
+      *alloc = SWIG_NEWOBJ;
+#endif
+    if (PyBytes_AsStringAndSize(obj, &cstr, &len) == -1)
+      return SWIG_TypeError;
+#else
+    if (PyString_AsStringAndSize(obj, &cstr, &len) == -1)
+      return SWIG_TypeError;
+#endif
+    if (cptr) {
+      if (alloc) {
+	if (*alloc == SWIG_NEWOBJ) {
+	  *cptr = reinterpret_cast< char* >(memcpy(new char[len + 1], cstr, sizeof(char)*(len + 1)));
+	  *alloc = SWIG_NEWOBJ;
+	} else {
+	  *cptr = cstr;
+	  *alloc = SWIG_OLDOBJ;
+	}
+      } else {
+#if PY_VERSION_HEX>=0x03000000
+#if defined(SWIG_PYTHON_STRICT_BYTE_CHAR)
+	*cptr = PyBytes_AsString(obj);
+#else
+	assert(0); /* Should never reach here with Unicode strings in Python 3 */
+#endif
+#else
+	*cptr = SWIG_Python_str_AsChar(obj);
+        if (!*cptr)
+          ret = SWIG_TypeError;
+#endif
+      }
+    }
+    if (psize) *psize = len + 1;
+#if PY_VERSION_HEX>=0x03000000 && !defined(SWIG_PYTHON_STRICT_BYTE_CHAR)
+    Py_XDECREF(obj);
+#endif
+    return ret;
+  } else {
+#if defined(SWIG_PYTHON_2_UNICODE)
+#if defined(SWIG_PYTHON_STRICT_BYTE_CHAR)
+#error "Cannot use both SWIG_PYTHON_2_UNICODE and SWIG_PYTHON_STRICT_BYTE_CHAR at once"
+#endif
+#if PY_VERSION_HEX<0x03000000
+    if (PyUnicode_Check(obj)) {
+      char *cstr; Py_ssize_t len;
+      if (!alloc && cptr) {
+        return SWIG_RuntimeError;
+      }
+      obj = PyUnicode_AsUTF8String(obj);
+      if (!obj)
+        return SWIG_TypeError;
+      if (PyString_AsStringAndSize(obj, &cstr, &len) != -1) {
+        if (cptr) {
+          if (alloc) *alloc = SWIG_NEWOBJ;
+          *cptr = reinterpret_cast< char* >(memcpy(new char[len + 1], cstr, sizeof(char)*(len + 1)));
+        }
+        if (psize) *psize = len + 1;
+
+        Py_XDECREF(obj);
+        return SWIG_OK;
+      } else {
+        Py_XDECREF(obj);
+      }
+    }
+#endif
+#endif
+
+    swig_type_info* pchar_descriptor = SWIG_pchar_descriptor();
+    if (pchar_descriptor) {
+      void* vptr = 0;
+      if (SWIG_ConvertPtr(obj, &vptr, pchar_descriptor, 0) == SWIG_OK) {
+	if (cptr) *cptr = (char *) vptr;
+	if (psize) *psize = vptr ? (strlen((char *)vptr) + 1) : 0;
+	if (alloc) *alloc = SWIG_OLDOBJ;
+	return SWIG_OK;
+      }
+    }
+  }
+  return SWIG_TypeError;
+}
+
+
+SWIGINTERN int
+SWIG_AsPtr_std_string (PyObject * obj, std::string **val) 
+{
+  char* buf = 0 ; size_t size = 0; int alloc = SWIG_OLDOBJ;
+  if (SWIG_IsOK((SWIG_AsCharPtrAndSize(obj, &buf, &size, &alloc)))) {
+    if (buf) {
+      if (val) *val = new std::string(buf, size - 1);
+      if (alloc == SWIG_NEWOBJ) delete[] buf;
+      return SWIG_NEWOBJ;
+    } else {
+      if (val) *val = 0;
+      return SWIG_OLDOBJ;
+    }
+  } else {
+    static int init = 0;
+    static swig_type_info* descriptor = 0;
+    if (!init) {
+      descriptor = SWIG_TypeQuery("std::string" " *");
+      init = 1;
+    }
+    if (descriptor) {
+      std::string *vptr;
+      int res = SWIG_ConvertPtr(obj, (void**)&vptr, descriptor, 0);
+      if (SWIG_IsOK(res) && val) *val = vptr;
+      return res;
+    }
+  }
+  return SWIG_ERROR;
+}
+
+
+SWIGINTERNINLINE PyObject *
+SWIG_FromCharPtrAndSize(const char* carray, size_t size)
+{
+  if (carray) {
+    if (size > INT_MAX) {
+      swig_type_info* pchar_descriptor = SWIG_pchar_descriptor();
+      return pchar_descriptor ? 
+	SWIG_InternalNewPointerObj(const_cast< char * >(carray), pchar_descriptor, 0) : SWIG_Py_Void();
+    } else {
+#if PY_VERSION_HEX >= 0x03000000
+#if defined(SWIG_PYTHON_STRICT_BYTE_CHAR)
+      return PyBytes_FromStringAndSize(carray, static_cast< Py_ssize_t >(size));
+#else
+      return PyUnicode_DecodeUTF8(carray, static_cast< Py_ssize_t >(size), "surrogateescape");
+#endif
+#else
+      return PyString_FromStringAndSize(carray, static_cast< Py_ssize_t >(size));
+#endif
+    }
+  } else {
+    return SWIG_Py_Void();
+  }
+}
+
+
+SWIGINTERNINLINE PyObject *
+SWIG_From_std_string  (const std::string& s)
+{
+  return SWIG_FromCharPtrAndSize(s.data(), s.size());
+}
 
 SWIGINTERN stag_int SprsMat_get_rows(SprsMat *self){
         return self->rows();
@@ -5073,6 +5077,214 @@ SWIGINTERN PyObject *Tupleii_swigregister(PyObject *SWIGUNUSEDPARM(self), PyObje
 }
 
 SWIGINTERN PyObject *Tupleii_swiginit(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  return SWIG_Python_InitShadowInstance(args);
+}
+
+SWIGINTERN PyObject *_wrap_new_TupleEigensystem(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Eigen::VectorXd *arg1 = 0 ;
+  Eigen::MatrixXd arg2 ;
+  Eigen::VectorXd temp1 ;
+  Eigen::MatrixXd temp2 ;
+  PyObject *swig_obj[2] ;
+  std::tuple< Eigen::VectorXd,Eigen::MatrixXd > *result = 0 ;
+  
+  if (!SWIG_Python_UnpackTuple(args, "new_TupleEigensystem", 2, 2, swig_obj)) SWIG_fail;
+  {
+    // In: const&
+    int res = ConvertFromNumpyToEigenMatrix<Eigen::VectorXd>(&temp1, swig_obj[0]);
+    if (res < 0) return NULL;
+    arg1 = &temp1;
+  }
+  {
+    int res = ConvertFromNumpyToEigenMatrix<Eigen::MatrixXd>(&temp2, swig_obj[1]);
+    if (res < 0) return NULL;
+    arg2 = temp2;
+  }
+  result = (std::tuple< Eigen::VectorXd,Eigen::MatrixXd > *)new std::tuple< Eigen::VectorXd,Eigen::MatrixXd >((Eigen::VectorXd const &)*arg1,arg2);
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_std__tupleT_Eigen__VectorXd_Eigen__MatrixXd_t, SWIG_POINTER_NEW |  0 );
+  
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_TupleEigensystem_get0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::tuple< Eigen::VectorXd,Eigen::MatrixXd > *arg1 = (std::tuple< Eigen::VectorXd,Eigen::MatrixXd > *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject *swig_obj[1] ;
+  Eigen::VectorXd *result = 0 ;
+  
+  if (!args) SWIG_fail;
+  swig_obj[0] = args;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_std__tupleT_Eigen__VectorXd_Eigen__MatrixXd_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "TupleEigensystem_get0" "', argument " "1"" of type '" "std::tuple< Eigen::VectorXd,Eigen::MatrixXd > const *""'"); 
+  }
+  arg1 = reinterpret_cast< std::tuple< Eigen::VectorXd,Eigen::MatrixXd > * >(argp1);
+  result = (Eigen::VectorXd *) &std_tuple_Sl_Eigen_VectorXd_Sc_Eigen_MatrixXd_Sg__get0((std::tuple< Eigen::VectorXd,Eigen::MatrixXd > const *)arg1);
+  {
+    int res = ConvertFromEigenToNumPyMatrix<Eigen::VectorXd>(&resultobj, result);
+    if (res < 0) return NULL;
+  }
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_TupleEigensystem_get1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::tuple< Eigen::VectorXd,Eigen::MatrixXd > *arg1 = (std::tuple< Eigen::VectorXd,Eigen::MatrixXd > *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject *swig_obj[1] ;
+  Eigen::MatrixXd *result = 0 ;
+  
+  if (!args) SWIG_fail;
+  swig_obj[0] = args;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_std__tupleT_Eigen__VectorXd_Eigen__MatrixXd_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "TupleEigensystem_get1" "', argument " "1"" of type '" "std::tuple< Eigen::VectorXd,Eigen::MatrixXd > const *""'"); 
+  }
+  arg1 = reinterpret_cast< std::tuple< Eigen::VectorXd,Eigen::MatrixXd > * >(argp1);
+  result = (Eigen::MatrixXd *) &std_tuple_Sl_Eigen_VectorXd_Sc_Eigen_MatrixXd_Sg__get1((std::tuple< Eigen::VectorXd,Eigen::MatrixXd > const *)arg1);
+  {
+    int res = ConvertFromEigenToNumPyMatrix<Eigen::MatrixXd>(&resultobj, result);
+    if (res < 0) return NULL;
+  }
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_TupleEigensystem_set0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::tuple< Eigen::VectorXd,Eigen::MatrixXd > *arg1 = (std::tuple< Eigen::VectorXd,Eigen::MatrixXd > *) 0 ;
+  Eigen::VectorXd *arg2 = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  Eigen::VectorXd temp2 ;
+  PyObject *swig_obj[2] ;
+  
+  if (!SWIG_Python_UnpackTuple(args, "TupleEigensystem_set0", 2, 2, swig_obj)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_std__tupleT_Eigen__VectorXd_Eigen__MatrixXd_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "TupleEigensystem_set0" "', argument " "1"" of type '" "std::tuple< Eigen::VectorXd,Eigen::MatrixXd > *""'"); 
+  }
+  arg1 = reinterpret_cast< std::tuple< Eigen::VectorXd,Eigen::MatrixXd > * >(argp1);
+  {
+    // In: const&
+    int res = ConvertFromNumpyToEigenMatrix<Eigen::VectorXd>(&temp2, swig_obj[1]);
+    if (res < 0) return NULL;
+    arg2 = &temp2;
+  }
+  std_tuple_Sl_Eigen_VectorXd_Sc_Eigen_MatrixXd_Sg__set0(arg1,(Eigen::VectorXd const &)*arg2);
+  resultobj = SWIG_Py_Void();
+  
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_TupleEigensystem_set1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::tuple< Eigen::VectorXd,Eigen::MatrixXd > *arg1 = (std::tuple< Eigen::VectorXd,Eigen::MatrixXd > *) 0 ;
+  Eigen::MatrixXd *arg2 = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  Eigen::MatrixXd temp2 ;
+  PyObject *swig_obj[2] ;
+  
+  if (!SWIG_Python_UnpackTuple(args, "TupleEigensystem_set1", 2, 2, swig_obj)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_std__tupleT_Eigen__VectorXd_Eigen__MatrixXd_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "TupleEigensystem_set1" "', argument " "1"" of type '" "std::tuple< Eigen::VectorXd,Eigen::MatrixXd > *""'"); 
+  }
+  arg1 = reinterpret_cast< std::tuple< Eigen::VectorXd,Eigen::MatrixXd > * >(argp1);
+  {
+    // In: const&
+    int res = ConvertFromNumpyToEigenMatrix<Eigen::MatrixXd>(&temp2, swig_obj[1]);
+    if (res < 0) return NULL;
+    arg2 = &temp2;
+  }
+  std_tuple_Sl_Eigen_VectorXd_Sc_Eigen_MatrixXd_Sg__set1(arg1,(Eigen::MatrixXd const &)*arg2);
+  resultobj = SWIG_Py_Void();
+  
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_TupleEigensystem___len__(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::tuple< Eigen::VectorXd,Eigen::MatrixXd > *arg1 = (std::tuple< Eigen::VectorXd,Eigen::MatrixXd > *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject *swig_obj[1] ;
+  size_t result;
+  
+  if (!args) SWIG_fail;
+  swig_obj[0] = args;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_std__tupleT_Eigen__VectorXd_Eigen__MatrixXd_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "TupleEigensystem___len__" "', argument " "1"" of type '" "std::tuple< Eigen::VectorXd,Eigen::MatrixXd > const *""'"); 
+  }
+  arg1 = reinterpret_cast< std::tuple< Eigen::VectorXd,Eigen::MatrixXd > * >(argp1);
+  result = std_tuple_Sl_Eigen_VectorXd_Sc_Eigen_MatrixXd_Sg____len__((std::tuple< Eigen::VectorXd,Eigen::MatrixXd > const *)arg1);
+  resultobj = SWIG_From_size_t(static_cast< size_t >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_delete_TupleEigensystem(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::tuple< Eigen::VectorXd,Eigen::MatrixXd > *arg1 = (std::tuple< Eigen::VectorXd,Eigen::MatrixXd > *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject *swig_obj[1] ;
+  
+  if (!args) SWIG_fail;
+  swig_obj[0] = args;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_std__tupleT_Eigen__VectorXd_Eigen__MatrixXd_t, SWIG_POINTER_DISOWN |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_TupleEigensystem" "', argument " "1"" of type '" "std::tuple< Eigen::VectorXd,Eigen::MatrixXd > *""'"); 
+  }
+  arg1 = reinterpret_cast< std::tuple< Eigen::VectorXd,Eigen::MatrixXd > * >(argp1);
+  {
+    try {
+      delete arg1;
+    } catch (std::invalid_argument &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::domain_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    }
+  }
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *TupleEigensystem_swigregister(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *obj;
+  if (!SWIG_Python_UnpackTuple(args, "swigregister", 1, 1, &obj)) return NULL;
+  SWIG_TypeNewClientData(SWIGTYPE_p_std__tupleT_Eigen__VectorXd_Eigen__MatrixXd_t, SWIG_NewClientData(obj));
+  return SWIG_Py_Void();
+}
+
+SWIGINTERN PyObject *TupleEigensystem_swiginit(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   return SWIG_Python_InitShadowInstance(args);
 }
 
@@ -10839,9 +11051,7 @@ SWIGINTERN PyObject *_wrap_compute_eigensystem__SWIG_0(PyObject *SWIGUNUSEDPARM(
   int res1 = 0 ;
   long long val2 ;
   int ecode2 = 0 ;
-  void *argp3 ;
-  int res3 = 0 ;
-  stag::EigenSystem result;
+  SwigValueWrapper< std::tuple< Eigen::VectorXd,Eigen::MatrixXd > > result;
   
   if ((nobjs < 3) || (nobjs > 3)) SWIG_fail;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_Eigen__SparseMatrixT_double_Eigen__ColMajor_stag_int_t, 0 |  0 );
@@ -10855,16 +11065,13 @@ SWIGINTERN PyObject *_wrap_compute_eigensystem__SWIG_0(PyObject *SWIGUNUSEDPARM(
   } 
   arg2 = static_cast< stag_int >(val2);
   {
-    res3 = SWIG_ConvertPtr(swig_obj[2], &argp3, SWIGTYPE_p_Spectra__SortRule,  0  | 0);
-    if (!SWIG_IsOK(res3)) {
-      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "compute_eigensystem" "', argument " "3"" of type '" "Spectra::SortRule""'"); 
-    }  
-    if (!argp3) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "compute_eigensystem" "', argument " "3"" of type '" "Spectra::SortRule""'");
+    // Assume we are given a boolean
+    // False is SM, True is LM
+    bool input = PyObject_IsTrue(swig_obj[2]);
+    if (input) {
+      arg3 = Spectra::SortRule::LargestMagn;
     } else {
-      Spectra::SortRule * temp = reinterpret_cast< Spectra::SortRule * >(argp3);
-      arg3 = *temp;
-      if (SWIG_IsNewObj(res3)) delete temp;
+      arg3 = Spectra::SortRule::SmallestMagn;
     }
   }
   {
@@ -10893,7 +11100,7 @@ SWIGINTERN PyObject *_wrap_compute_eigensystem__SWIG_1(PyObject *SWIGUNUSEDPARM(
   int res1 = 0 ;
   long long val2 ;
   int ecode2 = 0 ;
-  stag::EigenSystem result;
+  SwigValueWrapper< std::tuple< Eigen::VectorXd,Eigen::MatrixXd > > result;
   
   if ((nobjs < 2) || (nobjs > 2)) SWIG_fail;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_Eigen__SparseMatrixT_double_Eigen__ColMajor_stag_int_t, 0 |  0 );
@@ -10958,8 +11165,9 @@ SWIGINTERN PyObject *_wrap_compute_eigensystem(PyObject *self, PyObject *args) {
         _v = SWIG_CheckState(res);
       }
       if (_v) {
-        int res = SWIG_ConvertPtr(argv[2], 0, SWIGTYPE_p_Spectra__SortRule, SWIG_POINTER_NO_NULL | 0);
-        _v = SWIG_CheckState(res);
+        {
+          _v = 1;
+        }
         if (_v) {
           return _wrap_compute_eigensystem__SWIG_0(self, argc, argv);
         }
@@ -10985,8 +11193,6 @@ SWIGINTERN PyObject *_wrap_compute_eigenvalues__SWIG_0(PyObject *SWIGUNUSEDPARM(
   int res1 = 0 ;
   long long val2 ;
   int ecode2 = 0 ;
-  void *argp3 ;
-  int res3 = 0 ;
   Eigen::VectorXd result;
   
   if ((nobjs < 3) || (nobjs > 3)) SWIG_fail;
@@ -11001,16 +11207,13 @@ SWIGINTERN PyObject *_wrap_compute_eigenvalues__SWIG_0(PyObject *SWIGUNUSEDPARM(
   } 
   arg2 = static_cast< stag_int >(val2);
   {
-    res3 = SWIG_ConvertPtr(swig_obj[2], &argp3, SWIGTYPE_p_Spectra__SortRule,  0  | 0);
-    if (!SWIG_IsOK(res3)) {
-      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "compute_eigenvalues" "', argument " "3"" of type '" "Spectra::SortRule""'"); 
-    }  
-    if (!argp3) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "compute_eigenvalues" "', argument " "3"" of type '" "Spectra::SortRule""'");
+    // Assume we are given a boolean
+    // False is SM, True is LM
+    bool input = PyObject_IsTrue(swig_obj[2]);
+    if (input) {
+      arg3 = Spectra::SortRule::LargestMagn;
     } else {
-      Spectra::SortRule * temp = reinterpret_cast< Spectra::SortRule * >(argp3);
-      arg3 = *temp;
-      if (SWIG_IsNewObj(res3)) delete temp;
+      arg3 = Spectra::SortRule::SmallestMagn;
     }
   }
   {
@@ -11110,8 +11313,9 @@ SWIGINTERN PyObject *_wrap_compute_eigenvalues(PyObject *self, PyObject *args) {
         _v = SWIG_CheckState(res);
       }
       if (_v) {
-        int res = SWIG_ConvertPtr(argv[2], 0, SWIGTYPE_p_Spectra__SortRule, SWIG_POINTER_NO_NULL | 0);
-        _v = SWIG_CheckState(res);
+        {
+          _v = 1;
+        }
         if (_v) {
           return _wrap_compute_eigenvalues__SWIG_0(self, argc, argv);
         }
@@ -11137,8 +11341,6 @@ SWIGINTERN PyObject *_wrap_compute_eigenvectors__SWIG_0(PyObject *SWIGUNUSEDPARM
   int res1 = 0 ;
   long long val2 ;
   int ecode2 = 0 ;
-  void *argp3 ;
-  int res3 = 0 ;
   Eigen::MatrixXd result;
   
   if ((nobjs < 3) || (nobjs > 3)) SWIG_fail;
@@ -11153,16 +11355,13 @@ SWIGINTERN PyObject *_wrap_compute_eigenvectors__SWIG_0(PyObject *SWIGUNUSEDPARM
   } 
   arg2 = static_cast< stag_int >(val2);
   {
-    res3 = SWIG_ConvertPtr(swig_obj[2], &argp3, SWIGTYPE_p_Spectra__SortRule,  0  | 0);
-    if (!SWIG_IsOK(res3)) {
-      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "compute_eigenvectors" "', argument " "3"" of type '" "Spectra::SortRule""'"); 
-    }  
-    if (!argp3) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "compute_eigenvectors" "', argument " "3"" of type '" "Spectra::SortRule""'");
+    // Assume we are given a boolean
+    // False is SM, True is LM
+    bool input = PyObject_IsTrue(swig_obj[2]);
+    if (input) {
+      arg3 = Spectra::SortRule::LargestMagn;
     } else {
-      Spectra::SortRule * temp = reinterpret_cast< Spectra::SortRule * >(argp3);
-      arg3 = *temp;
-      if (SWIG_IsNewObj(res3)) delete temp;
+      arg3 = Spectra::SortRule::SmallestMagn;
     }
   }
   {
@@ -11262,8 +11461,9 @@ SWIGINTERN PyObject *_wrap_compute_eigenvectors(PyObject *self, PyObject *args) 
         _v = SWIG_CheckState(res);
       }
       if (_v) {
-        int res = SWIG_ConvertPtr(argv[2], 0, SWIGTYPE_p_Spectra__SortRule, SWIG_POINTER_NO_NULL | 0);
-        _v = SWIG_CheckState(res);
+        {
+          _v = 1;
+        }
         if (_v) {
           return _wrap_compute_eigenvectors__SWIG_0(self, argc, argv);
         }
@@ -12195,6 +12395,15 @@ static PyMethodDef SwigMethods[] = {
 	 { "delete_Tupleii", _wrap_delete_Tupleii, METH_O, NULL},
 	 { "Tupleii_swigregister", Tupleii_swigregister, METH_O, NULL},
 	 { "Tupleii_swiginit", Tupleii_swiginit, METH_VARARGS, NULL},
+	 { "new_TupleEigensystem", _wrap_new_TupleEigensystem, METH_VARARGS, NULL},
+	 { "TupleEigensystem_get0", _wrap_TupleEigensystem_get0, METH_O, NULL},
+	 { "TupleEigensystem_get1", _wrap_TupleEigensystem_get1, METH_O, NULL},
+	 { "TupleEigensystem_set0", _wrap_TupleEigensystem_set0, METH_VARARGS, NULL},
+	 { "TupleEigensystem_set1", _wrap_TupleEigensystem_set1, METH_VARARGS, NULL},
+	 { "TupleEigensystem___len__", _wrap_TupleEigensystem___len__, METH_O, NULL},
+	 { "delete_TupleEigensystem", _wrap_delete_TupleEigensystem, METH_O, NULL},
+	 { "TupleEigensystem_swigregister", TupleEigensystem_swigregister, METH_O, NULL},
+	 { "TupleEigensystem_swiginit", TupleEigensystem_swiginit, METH_VARARGS, NULL},
 	 { "edge_v1_set", _wrap_edge_v1_set, METH_VARARGS, NULL},
 	 { "edge_v1_get", _wrap_edge_v1_get, METH_O, NULL},
 	 { "edge_v2_set", _wrap_edge_v2_set, METH_VARARGS, NULL},
@@ -12341,7 +12550,6 @@ static void *_p_stag__AdjacencyListLocalGraphTo_p_stag__LocalGraph(void *x, int 
 static swig_type_info _swigt__p_Eigen__MatrixXd = {"_p_Eigen__MatrixXd", "Eigen::MatrixXd *|DenseMat *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_Eigen__SparseMatrixT_double_Eigen__ColMajor_stag_int_t = {"_p_Eigen__SparseMatrixT_double_Eigen__ColMajor_stag_int_t", "Eigen::SparseMatrix< double,Eigen::ColMajor,stag_int > *|SprsMat *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_Eigen__TripletT_double_stag_int_t = {"_p_Eigen__TripletT_double_stag_int_t", "EdgeTriplet *|Eigen::Triplet< double,stag_int > *", 0, 0, (void*)0, 0};
-static swig_type_info _swigt__p_Spectra__SortRule = {"_p_Spectra__SortRule", "Spectra::SortRule *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_Spectra__SparseSymMatProdT_double_Eigen__Upper_Eigen__ColMajor_stag_int_t = {"_p_Spectra__SparseSymMatProdT_double_Eigen__Upper_Eigen__ColMajor_stag_int_t", "stag::SprsMatOp *|Spectra::SparseSymMatProd< double,Eigen::Upper,Eigen::ColMajor,stag_int > *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_char = {"_p_char", "char *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_long_long = {"_p_long_long", "long long *|stag_int *", 0, 0, (void*)0, 0};
@@ -12363,7 +12571,6 @@ static swig_type_info *swig_type_initial[] = {
   &_swigt__p_Eigen__MatrixXd,
   &_swigt__p_Eigen__SparseMatrixT_double_Eigen__ColMajor_stag_int_t,
   &_swigt__p_Eigen__TripletT_double_stag_int_t,
-  &_swigt__p_Spectra__SortRule,
   &_swigt__p_Spectra__SparseSymMatProdT_double_Eigen__Upper_Eigen__ColMajor_stag_int_t,
   &_swigt__p_char,
   &_swigt__p_long_long,
@@ -12385,7 +12592,6 @@ static swig_type_info *swig_type_initial[] = {
 static swig_cast_info _swigc__p_Eigen__MatrixXd[] = {  {&_swigt__p_Eigen__MatrixXd, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_Eigen__SparseMatrixT_double_Eigen__ColMajor_stag_int_t[] = {  {&_swigt__p_Eigen__SparseMatrixT_double_Eigen__ColMajor_stag_int_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_Eigen__TripletT_double_stag_int_t[] = {  {&_swigt__p_Eigen__TripletT_double_stag_int_t, 0, 0, 0},{0, 0, 0, 0}};
-static swig_cast_info _swigc__p_Spectra__SortRule[] = {  {&_swigt__p_Spectra__SortRule, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_Spectra__SparseSymMatProdT_double_Eigen__Upper_Eigen__ColMajor_stag_int_t[] = {  {&_swigt__p_Spectra__SparseSymMatProdT_double_Eigen__Upper_Eigen__ColMajor_stag_int_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_char[] = {  {&_swigt__p_char, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_long_long[] = {  {&_swigt__p_long_long, 0, 0, 0},{0, 0, 0, 0}};
@@ -12407,7 +12613,6 @@ static swig_cast_info *swig_cast_initial[] = {
   _swigc__p_Eigen__MatrixXd,
   _swigc__p_Eigen__SparseMatrixT_double_Eigen__ColMajor_stag_int_t,
   _swigc__p_Eigen__TripletT_double_stag_int_t,
-  _swigc__p_Spectra__SortRule,
   _swigc__p_Spectra__SparseSymMatProdT_double_Eigen__Upper_Eigen__ColMajor_stag_int_t,
   _swigc__p_char,
   _swigc__p_long_long,

@@ -39,6 +39,7 @@
 %include <std_tuple.i>
 %std_tuple(TupleMM, SprsMat, SprsMat)
 %std_tuple(Tupleii, stag_int, stag_int)
+%std_tuple(TupleEigensystem, Eigen::VectorXd, Eigen::MatrixXd)
 
 // Define typemaps for passing by reference
 %include <std_string.i>
@@ -54,6 +55,9 @@
     try {
         $action
     } catch (std::invalid_argument &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::runtime_error &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
     } catch (std::domain_error &e) {
@@ -78,6 +82,22 @@
 
         PyList_SET_ITEM($result, i, new_tuple_object);
     }
+}
+
+// Create a typemap for the Spectra SortRule
+%typemap(in) Spectra::SortRule {
+    // Assume we are given a boolean
+    // False is SM, True is LM
+    bool input = PyObject_IsTrue($input);
+    if (input) {
+        $1 = Spectra::SortRule::LargestMagn;
+    } else {
+        $1 = Spectra::SortRule::SmallestMagn;
+    }
+}
+
+%typemap(typecheck, precedence=SWIG_TYPECHECK_COMPLEX) Spectra::SortRule {
+    $1 = 1;
 }
 
 // Include the complete STAG library
@@ -184,6 +204,8 @@ SprsMat sprsMatFromVectorsDims(stag_int rows,
 }
 
 %}
+
+// Add some code for computing the eigensystem with the correct sort rule
 
 // Metadata about the python interface
 #define VERSION "1.2.1"

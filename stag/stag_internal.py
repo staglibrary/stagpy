@@ -133,6 +133,41 @@ class Tupleii(object):
 # Register Tupleii in _stag_internal:
 _stag_internal.Tupleii_swigregister(Tupleii)
 
+class TupleEigensystem(object):
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
+    __repr__ = _swig_repr
+
+    def __init__(self, arg2, arg3):
+        _stag_internal.TupleEigensystem_swiginit(self, _stag_internal.new_TupleEigensystem(arg2, arg3))
+
+    def get0(self):
+        return _stag_internal.TupleEigensystem_get0(self)
+
+    def get1(self):
+        return _stag_internal.TupleEigensystem_get1(self)
+
+    def set0(self, val):
+        return _stag_internal.TupleEigensystem_set0(self, val)
+
+    def set1(self, val):
+        return _stag_internal.TupleEigensystem_set1(self, val)
+
+    def __len__(self):
+        return _stag_internal.TupleEigensystem___len__(self)
+
+    #[7]
+    def __getitem__(self, n):
+        if n >= len(self): raise IndexError()
+        return getattr(self, 'get%d' % n)()
+    def __setitem__(self, n, val):
+        if n >= len(self): raise IndexError()
+        getattr(self, 'set%d' % n)(val)
+
+    __swig_destroy__ = _stag_internal.delete_TupleEigensystem
+
+# Register TupleEigensystem in _stag_internal:
+_stag_internal.TupleEigensystem_swigregister(TupleEigensystem)
+
 EPSILON = _stag_internal.EPSILON
 class edge(object):
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")

@@ -11,7 +11,8 @@ from . import utility
 from . import stag_internal
 
 
-def compute_eigensystem(mat: Union[scipy.sparse.spmatrix, stag.utility.SprsMat],
+@utility.convert_sprsmats
+def compute_eigensystem(mat: stag.utility.SprsMat,
                         num: int,
                         which: str = 'SM') -> Tuple[np.ndarray, np.ndarray]:
     r"""
@@ -41,13 +42,16 @@ def compute_eigensystem(mat: Union[scipy.sparse.spmatrix, stag.utility.SprsMat],
     @param which (optional) a string indicating which eigenvectors to calculate
     @returns a tuple containing the computed eigenvalues and eigenvectors
     """
-    if issubclass(type(mat), scipy.sparse.spmatrix):
-        return sp.sparse.linalg.eigs(mat, k=num, which=which)
-    else:
-        return sp.sparse.linalg.eigs(mat.to_scipy(), k=num, which=which)
+    # We have configured compute_eigenstystem to accept a boolean value
+    # for whether we are looking for the largest magnitude.
+    largest = which != 'SM'
+    eigensystem = stag_internal.compute_eigensystem(
+        mat.internal_sprsmat, num, largest)
+    return eigensystem.get0(), eigensystem.get1()
 
 
-def compute_eigenvalues(mat: scipy.sparse.spmatrix,
+@utility.convert_sprsmats
+def compute_eigenvalues(mat: stag.utility.SprsMat,
                         num: int,
                         which: str = 'SM') -> np.ndarray:
     r"""
@@ -70,7 +74,9 @@ def compute_eigenvalues(mat: scipy.sparse.spmatrix,
     eigs, _ = compute_eigensystem(mat, num, which=which)
     return eigs
 
-def compute_eigenvectors(mat: scipy.sparse.spmatrix,
+
+@stag.utility.convert_sprsmats
+def compute_eigenvectors(mat: stag.utility.SprsMat,
                          num: int,
                          which: str = 'SM') -> np.ndarray:
     r"""

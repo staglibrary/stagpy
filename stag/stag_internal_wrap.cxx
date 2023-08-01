@@ -4851,6 +4851,9 @@ SWIGINTERN PyObject *_wrap_delete_TupleMM(PyObject *SWIGUNUSEDPARM(self), PyObje
     } catch (std::invalid_argument &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
+    } catch (std::runtime_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
     } catch (std::domain_error &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
@@ -5055,6 +5058,9 @@ SWIGINTERN PyObject *_wrap_delete_Tupleii(PyObject *SWIGUNUSEDPARM(self), PyObje
     try {
       delete arg1;
     } catch (std::invalid_argument &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::runtime_error &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
     } catch (std::domain_error &e) {
@@ -5263,6 +5269,9 @@ SWIGINTERN PyObject *_wrap_delete_TupleEigensystem(PyObject *SWIGUNUSEDPARM(self
     try {
       delete arg1;
     } catch (std::invalid_argument &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::runtime_error &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
     } catch (std::domain_error &e) {
@@ -5497,6 +5506,9 @@ SWIGINTERN PyObject *_wrap_new_edge(PyObject *SWIGUNUSEDPARM(self), PyObject *ar
     } catch (std::invalid_argument &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
+    } catch (std::runtime_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
     } catch (std::domain_error &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
@@ -5527,6 +5539,9 @@ SWIGINTERN PyObject *_wrap_delete_edge(PyObject *SWIGUNUSEDPARM(self), PyObject 
     try {
       delete arg1;
     } catch (std::invalid_argument &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::runtime_error &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
     } catch (std::domain_error &e) {
@@ -5589,6 +5604,9 @@ SWIGINTERN PyObject *_wrap_LocalGraph_degree(PyObject *SWIGUNUSEDPARM(self), PyO
       } catch (std::invalid_argument &e) {
         PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
         return NULL;
+      } catch (std::runtime_error &e) {
+        PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+        return NULL;
       } catch (std::domain_error &e) {
         PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
         return NULL;
@@ -5641,6 +5659,9 @@ SWIGINTERN PyObject *_wrap_LocalGraph_degree_unweighted(PyObject *SWIGUNUSEDPARM
       } catch (std::invalid_argument &e) {
         PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
         return NULL;
+      } catch (std::runtime_error &e) {
+        PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+        return NULL;
       } catch (std::domain_error &e) {
         PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
         return NULL;
@@ -5691,6 +5712,9 @@ SWIGINTERN PyObject *_wrap_LocalGraph_neighbors(PyObject *SWIGUNUSEDPARM(self), 
           result = (arg1)->neighbors(arg2);
         }
       } catch (std::invalid_argument &e) {
+        PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+        return NULL;
+      } catch (std::runtime_error &e) {
         PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
         return NULL;
       } catch (std::domain_error &e) {
@@ -5758,6 +5782,9 @@ SWIGINTERN PyObject *_wrap_LocalGraph_neighbors_unweighted(PyObject *SWIGUNUSEDP
           result = (arg1)->neighbors_unweighted(arg2);
         }
       } catch (std::invalid_argument &e) {
+        PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+        return NULL;
+      } catch (std::runtime_error &e) {
         PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
         return NULL;
       } catch (std::domain_error &e) {
@@ -5843,6 +5870,9 @@ SWIGINTERN PyObject *_wrap_LocalGraph_degrees(PyObject *SWIGUNUSEDPARM(self), Py
       } catch (std::invalid_argument &e) {
         PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
         return NULL;
+      } catch (std::runtime_error &e) {
+        PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+        return NULL;
       } catch (std::domain_error &e) {
         PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
         return NULL;
@@ -5926,6 +5956,9 @@ SWIGINTERN PyObject *_wrap_LocalGraph_degrees_unweighted(PyObject *SWIGUNUSEDPAR
       } catch (std::invalid_argument &e) {
         PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
         return NULL;
+      } catch (std::runtime_error &e) {
+        PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+        return NULL;
       } catch (std::domain_error &e) {
         PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
         return NULL;
@@ -5990,6 +6023,9 @@ SWIGINTERN PyObject *_wrap_LocalGraph_vertex_exists(PyObject *SWIGUNUSEDPARM(sel
       } catch (std::invalid_argument &e) {
         PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
         return NULL;
+      } catch (std::runtime_error &e) {
+        PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+        return NULL;
       } catch (std::domain_error &e) {
         PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
         return NULL;
@@ -6025,6 +6061,9 @@ SWIGINTERN PyObject *_wrap_delete_LocalGraph(PyObject *SWIGUNUSEDPARM(self), PyO
     } catch (std::invalid_argument &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
+    } catch (std::runtime_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
     } catch (std::domain_error &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
@@ -6057,6 +6096,9 @@ SWIGINTERN PyObject *_wrap_new_LocalGraph(PyObject *SWIGUNUSEDPARM(self), PyObje
       }
       
     } catch (std::invalid_argument &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::runtime_error &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
     } catch (std::domain_error &e) {
@@ -6128,6 +6170,9 @@ SWIGINTERN PyObject *_wrap_new_Graph__SWIG_0(PyObject *SWIGUNUSEDPARM(self), Py_
     try {
       result = (stag::Graph *)new stag::Graph((SprsMat const &)*arg1);
     } catch (std::invalid_argument &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::runtime_error &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
     } catch (std::domain_error &e) {
@@ -6234,6 +6279,9 @@ SWIGINTERN PyObject *_wrap_new_Graph__SWIG_1(PyObject *SWIGUNUSEDPARM(self), Py_
     } catch (std::invalid_argument &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
+    } catch (std::runtime_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
     } catch (std::domain_error &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
@@ -6312,6 +6360,9 @@ SWIGINTERN PyObject *_wrap_Graph_adjacency(PyObject *SWIGUNUSEDPARM(self), PyObj
     } catch (std::invalid_argument &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
+    } catch (std::runtime_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
     } catch (std::domain_error &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
@@ -6343,6 +6394,9 @@ SWIGINTERN PyObject *_wrap_Graph_laplacian(PyObject *SWIGUNUSEDPARM(self), PyObj
     try {
       result = (SprsMat *)(arg1)->laplacian();
     } catch (std::invalid_argument &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::runtime_error &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
     } catch (std::domain_error &e) {
@@ -6378,6 +6432,9 @@ SWIGINTERN PyObject *_wrap_Graph_normalised_laplacian(PyObject *SWIGUNUSEDPARM(s
     } catch (std::invalid_argument &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
+    } catch (std::runtime_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
     } catch (std::domain_error &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
@@ -6409,6 +6466,9 @@ SWIGINTERN PyObject *_wrap_Graph_signless_laplacian(PyObject *SWIGUNUSEDPARM(sel
     try {
       result = (SprsMat *)(arg1)->signless_laplacian();
     } catch (std::invalid_argument &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::runtime_error &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
     } catch (std::domain_error &e) {
@@ -6444,6 +6504,9 @@ SWIGINTERN PyObject *_wrap_Graph_normalised_signless_laplacian(PyObject *SWIGUNU
     } catch (std::invalid_argument &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
+    } catch (std::runtime_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
     } catch (std::domain_error &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
@@ -6475,6 +6538,9 @@ SWIGINTERN PyObject *_wrap_Graph_degree_matrix(PyObject *SWIGUNUSEDPARM(self), P
     try {
       result = (SprsMat *)(arg1)->degree_matrix();
     } catch (std::invalid_argument &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::runtime_error &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
     } catch (std::domain_error &e) {
@@ -6510,6 +6576,9 @@ SWIGINTERN PyObject *_wrap_Graph_inverse_degree_matrix(PyObject *SWIGUNUSEDPARM(
     } catch (std::invalid_argument &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
+    } catch (std::runtime_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
     } catch (std::domain_error &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
@@ -6541,6 +6610,9 @@ SWIGINTERN PyObject *_wrap_Graph_lazy_random_walk_matrix(PyObject *SWIGUNUSEDPAR
     try {
       result = (SprsMat *)(arg1)->lazy_random_walk_matrix();
     } catch (std::invalid_argument &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::runtime_error &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
     } catch (std::domain_error &e) {
@@ -6576,6 +6648,9 @@ SWIGINTERN PyObject *_wrap_Graph_total_volume(PyObject *SWIGUNUSEDPARM(self), Py
     } catch (std::invalid_argument &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
+    } catch (std::runtime_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
     } catch (std::domain_error &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
@@ -6607,6 +6682,9 @@ SWIGINTERN PyObject *_wrap_Graph_average_degree(PyObject *SWIGUNUSEDPARM(self), 
     try {
       result = (double)(arg1)->average_degree();
     } catch (std::invalid_argument &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::runtime_error &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
     } catch (std::domain_error &e) {
@@ -6642,6 +6720,9 @@ SWIGINTERN PyObject *_wrap_Graph_number_of_vertices(PyObject *SWIGUNUSEDPARM(sel
     } catch (std::invalid_argument &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
+    } catch (std::runtime_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
     } catch (std::domain_error &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
@@ -6673,6 +6754,9 @@ SWIGINTERN PyObject *_wrap_Graph_number_of_edges(PyObject *SWIGUNUSEDPARM(self),
     try {
       result = (stag_int)((stag::Graph const *)arg1)->number_of_edges();
     } catch (std::invalid_argument &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::runtime_error &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
     } catch (std::domain_error &e) {
@@ -6708,6 +6792,9 @@ SWIGINTERN PyObject *_wrap_Graph_has_self_loops(PyObject *SWIGUNUSEDPARM(self), 
     } catch (std::invalid_argument &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
+    } catch (std::runtime_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
     } catch (std::domain_error &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
@@ -6739,6 +6826,9 @@ SWIGINTERN PyObject *_wrap_Graph_is_connected(PyObject *SWIGUNUSEDPARM(self), Py
     try {
       result = (bool)(arg1)->is_connected();
     } catch (std::invalid_argument &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::runtime_error &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
     } catch (std::domain_error &e) {
@@ -6800,6 +6890,9 @@ SWIGINTERN PyObject *_wrap_Graph_subgraph(PyObject *SWIGUNUSEDPARM(self), PyObje
     } catch (std::invalid_argument &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
+    } catch (std::runtime_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
     } catch (std::domain_error &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
@@ -6843,6 +6936,9 @@ SWIGINTERN PyObject *_wrap_Graph_disjoint_union(PyObject *SWIGUNUSEDPARM(self), 
     } catch (std::invalid_argument &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
+    } catch (std::runtime_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
     } catch (std::domain_error &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
@@ -6881,6 +6977,9 @@ SWIGINTERN PyObject *_wrap_Graph_degree(PyObject *SWIGUNUSEDPARM(self), PyObject
     try {
       result = (double)(arg1)->degree(arg2);
     } catch (std::invalid_argument &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::runtime_error &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
     } catch (std::domain_error &e) {
@@ -6923,6 +7022,9 @@ SWIGINTERN PyObject *_wrap_Graph_degree_unweighted(PyObject *SWIGUNUSEDPARM(self
     } catch (std::invalid_argument &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
+    } catch (std::runtime_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
     } catch (std::domain_error &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
@@ -6961,6 +7063,9 @@ SWIGINTERN PyObject *_wrap_Graph_neighbors(PyObject *SWIGUNUSEDPARM(self), PyObj
     try {
       result = (arg1)->neighbors(arg2);
     } catch (std::invalid_argument &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::runtime_error &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
     } catch (std::domain_error &e) {
@@ -7016,6 +7121,9 @@ SWIGINTERN PyObject *_wrap_Graph_neighbors_unweighted(PyObject *SWIGUNUSEDPARM(s
     try {
       result = (arg1)->neighbors_unweighted(arg2);
     } catch (std::invalid_argument &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::runtime_error &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
     } catch (std::domain_error &e) {
@@ -7089,6 +7197,9 @@ SWIGINTERN PyObject *_wrap_Graph_degrees(PyObject *SWIGUNUSEDPARM(self), PyObjec
     } catch (std::invalid_argument &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
+    } catch (std::runtime_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
     } catch (std::domain_error &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
@@ -7160,6 +7271,9 @@ SWIGINTERN PyObject *_wrap_Graph_degrees_unweighted(PyObject *SWIGUNUSEDPARM(sel
     } catch (std::invalid_argument &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
+    } catch (std::runtime_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
     } catch (std::domain_error &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
@@ -7212,6 +7326,9 @@ SWIGINTERN PyObject *_wrap_Graph_vertex_exists(PyObject *SWIGUNUSEDPARM(self), P
     } catch (std::invalid_argument &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
+    } catch (std::runtime_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
     } catch (std::domain_error &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
@@ -7242,6 +7359,9 @@ SWIGINTERN PyObject *_wrap_delete_Graph(PyObject *SWIGUNUSEDPARM(self), PyObject
     try {
       delete arg1;
     } catch (std::invalid_argument &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::runtime_error &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
     } catch (std::domain_error &e) {
@@ -7282,6 +7402,9 @@ SWIGINTERN PyObject *_wrap_Graph___eq__(PyObject *SWIGUNUSEDPARM(self), PyObject
     try {
       result = (bool)stag_Graph___eq__(arg1,arg2);
     } catch (std::invalid_argument &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::runtime_error &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
     } catch (std::domain_error &e) {
@@ -7335,6 +7458,9 @@ SWIGINTERN PyObject *_wrap_new_AdjacencyListLocalGraph(PyObject *SWIGUNUSEDPARM(
     } catch (std::invalid_argument &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
+    } catch (std::runtime_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
     } catch (std::domain_error &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
@@ -7377,6 +7503,9 @@ SWIGINTERN PyObject *_wrap_AdjacencyListLocalGraph_degree(PyObject *SWIGUNUSEDPA
     } catch (std::invalid_argument &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
+    } catch (std::runtime_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
     } catch (std::domain_error &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
@@ -7417,6 +7546,9 @@ SWIGINTERN PyObject *_wrap_AdjacencyListLocalGraph_degree_unweighted(PyObject *S
     } catch (std::invalid_argument &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
+    } catch (std::runtime_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
     } catch (std::domain_error &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
@@ -7455,6 +7587,9 @@ SWIGINTERN PyObject *_wrap_AdjacencyListLocalGraph_neighbors(PyObject *SWIGUNUSE
     try {
       result = (arg1)->neighbors(arg2);
     } catch (std::invalid_argument &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::runtime_error &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
     } catch (std::domain_error &e) {
@@ -7510,6 +7645,9 @@ SWIGINTERN PyObject *_wrap_AdjacencyListLocalGraph_neighbors_unweighted(PyObject
     try {
       result = (arg1)->neighbors_unweighted(arg2);
     } catch (std::invalid_argument &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::runtime_error &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
     } catch (std::domain_error &e) {
@@ -7583,6 +7721,9 @@ SWIGINTERN PyObject *_wrap_AdjacencyListLocalGraph_degrees(PyObject *SWIGUNUSEDP
     } catch (std::invalid_argument &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
+    } catch (std::runtime_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
     } catch (std::domain_error &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
@@ -7654,6 +7795,9 @@ SWIGINTERN PyObject *_wrap_AdjacencyListLocalGraph_degrees_unweighted(PyObject *
     } catch (std::invalid_argument &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
+    } catch (std::runtime_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
     } catch (std::domain_error &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
@@ -7706,6 +7850,9 @@ SWIGINTERN PyObject *_wrap_AdjacencyListLocalGraph_vertex_exists(PyObject *SWIGU
     } catch (std::invalid_argument &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
+    } catch (std::runtime_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
     } catch (std::domain_error &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
@@ -7736,6 +7883,9 @@ SWIGINTERN PyObject *_wrap_delete_AdjacencyListLocalGraph(PyObject *SWIGUNUSEDPA
     try {
       delete arg1;
     } catch (std::invalid_argument &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::runtime_error &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
     } catch (std::domain_error &e) {
@@ -7782,6 +7932,9 @@ SWIGINTERN PyObject *_wrap_cycle_graph(PyObject *SWIGUNUSEDPARM(self), PyObject 
     } catch (std::invalid_argument &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
+    } catch (std::runtime_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
     } catch (std::domain_error &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
@@ -7813,6 +7966,9 @@ SWIGINTERN PyObject *_wrap_complete_graph(PyObject *SWIGUNUSEDPARM(self), PyObje
     try {
       result = stag::complete_graph(arg1);
     } catch (std::invalid_argument &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::runtime_error &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
     } catch (std::domain_error &e) {
@@ -7848,6 +8004,9 @@ SWIGINTERN PyObject *_wrap_barbell_graph(PyObject *SWIGUNUSEDPARM(self), PyObjec
     } catch (std::invalid_argument &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
+    } catch (std::runtime_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
     } catch (std::domain_error &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
@@ -7881,6 +8040,9 @@ SWIGINTERN PyObject *_wrap_star_graph(PyObject *SWIGUNUSEDPARM(self), PyObject *
     } catch (std::invalid_argument &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
+    } catch (std::runtime_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
     } catch (std::domain_error &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
@@ -7912,6 +8074,9 @@ SWIGINTERN PyObject *_wrap_identity_graph(PyObject *SWIGUNUSEDPARM(self), PyObje
     try {
       result = stag::identity_graph(arg1);
     } catch (std::invalid_argument &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::runtime_error &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
     } catch (std::domain_error &e) {
@@ -7957,6 +8122,9 @@ SWIGINTERN PyObject *_wrap___eq____SWIG_0(PyObject *SWIGUNUSEDPARM(self), Py_ssi
     try {
       result = (bool)stag::operator ==((stag::Graph const &)*arg1,(stag::Graph const &)*arg2);
     } catch (std::invalid_argument &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::runtime_error &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
     } catch (std::domain_error &e) {
@@ -8006,6 +8174,9 @@ SWIGINTERN PyObject *_wrap___ne____SWIG_0(PyObject *SWIGUNUSEDPARM(self), Py_ssi
     } catch (std::invalid_argument &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
+    } catch (std::runtime_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
     } catch (std::domain_error &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
@@ -8051,6 +8222,9 @@ SWIGINTERN PyObject *_wrap___eq____SWIG_1(PyObject *SWIGUNUSEDPARM(self), Py_ssi
     try {
       result = (bool)stag::operator ==((stag::edge const &)*arg1,(stag::edge const &)*arg2);
     } catch (std::invalid_argument &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::runtime_error &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
     } catch (std::domain_error &e) {
@@ -8137,6 +8311,9 @@ SWIGINTERN PyObject *_wrap___ne____SWIG_1(PyObject *SWIGUNUSEDPARM(self), Py_ssi
     try {
       result = (bool)stag::operator !=((stag::edge const &)*arg1,(stag::edge const &)*arg2);
     } catch (std::invalid_argument &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::runtime_error &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
     } catch (std::domain_error &e) {
@@ -8226,6 +8403,9 @@ SWIGINTERN PyObject *_wrap___add__(PyObject *SWIGUNUSEDPARM(self), PyObject *arg
     } catch (std::invalid_argument &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
+    } catch (std::runtime_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
     } catch (std::domain_error &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
@@ -8259,6 +8439,9 @@ SWIGINTERN PyObject *_wrap_sprsMatValues(PyObject *SWIGUNUSEDPARM(self), PyObjec
     try {
       result = stag::sprsMatValues((Eigen::SparseMatrix< double,Eigen::ColMajor,stag_int > const *)arg1);
     } catch (std::invalid_argument &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::runtime_error &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
     } catch (std::domain_error &e) {
@@ -8306,6 +8489,9 @@ SWIGINTERN PyObject *_wrap_sprsMatInnerIndices(PyObject *SWIGUNUSEDPARM(self), P
     } catch (std::invalid_argument &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
+    } catch (std::runtime_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
     } catch (std::domain_error &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
@@ -8349,6 +8535,9 @@ SWIGINTERN PyObject *_wrap_sprsMatOuterStarts(PyObject *SWIGUNUSEDPARM(self), Py
     try {
       result = stag::sprsMatOuterStarts((Eigen::SparseMatrix< double,Eigen::ColMajor,stag_int > const *)arg1);
     } catch (std::invalid_argument &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::runtime_error &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
     } catch (std::domain_error &e) {
@@ -8402,6 +8591,9 @@ SWIGINTERN PyObject *_wrap_sprsMatToVec__SWIG_0(PyObject *SWIGUNUSEDPARM(self), 
     } catch (std::invalid_argument &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
+    } catch (std::runtime_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
     } catch (std::domain_error &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
@@ -8443,6 +8635,9 @@ SWIGINTERN PyObject *_wrap_sprsMatToVec__SWIG_1(PyObject *SWIGUNUSEDPARM(self), 
     try {
       result = stag::sprsMatToVec((Eigen::SparseMatrix< double,Eigen::ColMajor,stag_int > const *)arg1);
     } catch (std::invalid_argument &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::runtime_error &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
     } catch (std::domain_error &e) {
@@ -8604,6 +8799,9 @@ SWIGINTERN PyObject *_wrap_sprsMatFromVectors(PyObject *SWIGUNUSEDPARM(self), Py
     } catch (std::invalid_argument &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
+    } catch (std::runtime_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
     } catch (std::domain_error &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
@@ -8635,6 +8833,9 @@ SWIGINTERN PyObject *_wrap_isSymmetric(PyObject *SWIGUNUSEDPARM(self), PyObject 
     try {
       result = (bool)stag::isSymmetric((Eigen::SparseMatrix< double,Eigen::ColMajor,stag_int > const *)arg1);
     } catch (std::invalid_argument &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::runtime_error &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
     } catch (std::domain_error &e) {
@@ -8683,6 +8884,9 @@ SWIGINTERN PyObject *_wrap_safeGetline(PyObject *SWIGUNUSEDPARM(self), PyObject 
     } catch (std::invalid_argument &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
+    } catch (std::runtime_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
     } catch (std::domain_error &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
@@ -8704,6 +8908,9 @@ SWIGINTERN PyObject *_wrap_getTempFilename(PyObject *SWIGUNUSEDPARM(self), PyObj
     try {
       result = stag::getTempFilename();
     } catch (std::invalid_argument &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::runtime_error &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
     } catch (std::domain_error &e) {
@@ -8737,6 +8944,9 @@ SWIGINTERN PyObject *_wrap_openTempFile(PyObject *SWIGUNUSEDPARM(self), PyObject
     try {
       result = stag::openTempFile(arg1);
     } catch (std::invalid_argument &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::runtime_error &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
     } catch (std::domain_error &e) {
@@ -8777,6 +8987,9 @@ SWIGINTERN PyObject *_wrap_spectral_cluster(PyObject *SWIGUNUSEDPARM(self), PyOb
     try {
       result = stag::spectral_cluster(arg1,arg2);
     } catch (std::invalid_argument &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::runtime_error &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
     } catch (std::domain_error &e) {
@@ -8822,6 +9035,9 @@ SWIGINTERN PyObject *_wrap_cheeger_cut(PyObject *SWIGUNUSEDPARM(self), PyObject 
     try {
       result = stag::cheeger_cut(arg1);
     } catch (std::invalid_argument &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::runtime_error &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
     } catch (std::domain_error &e) {
@@ -8882,6 +9098,9 @@ SWIGINTERN PyObject *_wrap_local_cluster(PyObject *SWIGUNUSEDPARM(self), PyObjec
     try {
       result = stag::local_cluster(arg1,arg2,arg3);
     } catch (std::invalid_argument &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::runtime_error &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
     } catch (std::domain_error &e) {
@@ -8951,6 +9170,9 @@ SWIGINTERN PyObject *_wrap_local_cluster_acl__SWIG_0(PyObject *SWIGUNUSEDPARM(se
     } catch (std::invalid_argument &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
+    } catch (std::runtime_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
     } catch (std::domain_error &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
@@ -9008,6 +9230,9 @@ SWIGINTERN PyObject *_wrap_local_cluster_acl__SWIG_1(PyObject *SWIGUNUSEDPARM(se
     try {
       result = stag::local_cluster_acl(arg1,arg2,arg3);
     } catch (std::invalid_argument &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::runtime_error &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
     } catch (std::domain_error &e) {
@@ -9147,6 +9372,9 @@ SWIGINTERN PyObject *_wrap_approximate_pagerank(PyObject *SWIGUNUSEDPARM(self), 
     } catch (std::invalid_argument &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
+    } catch (std::runtime_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
     } catch (std::domain_error &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
@@ -9187,6 +9415,9 @@ SWIGINTERN PyObject *_wrap_sweep_set_conductance__SWIG_0(PyObject *SWIGUNUSEDPAR
     try {
       result = stag::sweep_set_conductance(arg1,*arg2);
     } catch (std::invalid_argument &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::runtime_error &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
     } catch (std::domain_error &e) {
@@ -9241,6 +9472,9 @@ SWIGINTERN PyObject *_wrap_sweep_set_conductance__SWIG_1(PyObject *SWIGUNUSEDPAR
     try {
       result = stag::sweep_set_conductance(arg1,*arg2);
     } catch (std::invalid_argument &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::runtime_error &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
     } catch (std::domain_error &e) {
@@ -9341,6 +9575,9 @@ SWIGINTERN PyObject *_wrap_connected_component(PyObject *SWIGUNUSEDPARM(self), P
     } catch (std::invalid_argument &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
+    } catch (std::runtime_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
     } catch (std::domain_error &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
@@ -9384,6 +9621,9 @@ SWIGINTERN PyObject *_wrap_connected_components(PyObject *SWIGUNUSEDPARM(self), 
     try {
       result = stag::connected_components(arg1);
     } catch (std::invalid_argument &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::runtime_error &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
     } catch (std::domain_error &e) {
@@ -9480,6 +9720,9 @@ SWIGINTERN PyObject *_wrap_adjusted_rand_index(PyObject *SWIGUNUSEDPARM(self), P
     } catch (std::invalid_argument &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
+    } catch (std::runtime_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
     } catch (std::domain_error &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
@@ -9556,6 +9799,9 @@ SWIGINTERN PyObject *_wrap_mutual_information(PyObject *SWIGUNUSEDPARM(self), Py
     try {
       result = (double)stag::mutual_information(*arg1,*arg2);
     } catch (std::invalid_argument &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::runtime_error &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
     } catch (std::domain_error &e) {
@@ -9636,6 +9882,9 @@ SWIGINTERN PyObject *_wrap_normalised_mutual_information(PyObject *SWIGUNUSEDPAR
     } catch (std::invalid_argument &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
+    } catch (std::runtime_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
     } catch (std::domain_error &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
@@ -9693,6 +9942,9 @@ SWIGINTERN PyObject *_wrap_conductance(PyObject *SWIGUNUSEDPARM(self), PyObject 
     try {
       result = (double)stag::conductance(arg1,*arg2);
     } catch (std::invalid_argument &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::runtime_error &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
     } catch (std::domain_error &e) {
@@ -9773,6 +10025,9 @@ SWIGINTERN PyObject *_wrap_symmetric_difference(PyObject *SWIGUNUSEDPARM(self), 
     } catch (std::invalid_argument &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
+    } catch (std::runtime_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
     } catch (std::domain_error &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
@@ -9818,6 +10073,9 @@ SWIGINTERN PyObject *_wrap_load_edgelist(PyObject *SWIGUNUSEDPARM(self), PyObjec
     try {
       result = stag::load_edgelist(*arg1);
     } catch (std::invalid_argument &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::runtime_error &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
     } catch (std::domain_error &e) {
@@ -9866,6 +10124,9 @@ SWIGINTERN PyObject *_wrap_save_edgelist(PyObject *SWIGUNUSEDPARM(self), PyObjec
     } catch (std::invalid_argument &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
+    } catch (std::runtime_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
     } catch (std::domain_error &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
@@ -9901,6 +10162,9 @@ SWIGINTERN PyObject *_wrap_parse_adjacencylist_content_line(PyObject *SWIGUNUSED
     try {
       result = stag::parse_adjacencylist_content_line(arg1);
     } catch (std::invalid_argument &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::runtime_error &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
     } catch (std::domain_error &e) {
@@ -9952,6 +10216,9 @@ SWIGINTERN PyObject *_wrap_sort_edgelist(PyObject *SWIGUNUSEDPARM(self), PyObjec
     } catch (std::invalid_argument &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
+    } catch (std::runtime_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
     } catch (std::domain_error &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
@@ -9999,6 +10266,9 @@ SWIGINTERN PyObject *_wrap_copy_edgelist_duplicate_edges(PyObject *SWIGUNUSEDPAR
     } catch (std::invalid_argument &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
+    } catch (std::runtime_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
     } catch (std::domain_error &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
@@ -10032,6 +10302,9 @@ SWIGINTERN PyObject *_wrap_load_adjacencylist(PyObject *SWIGUNUSEDPARM(self), Py
     try {
       result = stag::load_adjacencylist(*arg1);
     } catch (std::invalid_argument &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::runtime_error &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
     } catch (std::domain_error &e) {
@@ -10080,6 +10353,9 @@ SWIGINTERN PyObject *_wrap_save_adjacencylist(PyObject *SWIGUNUSEDPARM(self), Py
     } catch (std::invalid_argument &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
+    } catch (std::runtime_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
     } catch (std::domain_error &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
@@ -10123,6 +10399,9 @@ SWIGINTERN PyObject *_wrap_edgelist_to_adjacencylist(PyObject *SWIGUNUSEDPARM(se
     try {
       stag::edgelist_to_adjacencylist(*arg1,*arg2);
     } catch (std::invalid_argument &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::runtime_error &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
     } catch (std::domain_error &e) {
@@ -10170,6 +10449,9 @@ SWIGINTERN PyObject *_wrap_adjacencylist_to_edgelist(PyObject *SWIGUNUSEDPARM(se
     try {
       stag::adjacencylist_to_edgelist(*arg1,*arg2);
     } catch (std::invalid_argument &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::runtime_error &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
     } catch (std::domain_error &e) {
@@ -10239,6 +10521,9 @@ SWIGINTERN PyObject *_wrap_sbm__SWIG_0(PyObject *SWIGUNUSEDPARM(self), Py_ssize_
     } catch (std::invalid_argument &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
+    } catch (std::runtime_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
     } catch (std::domain_error &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
@@ -10292,6 +10577,9 @@ SWIGINTERN PyObject *_wrap_sbm__SWIG_1(PyObject *SWIGUNUSEDPARM(self), Py_ssize_
     try {
       result = stag::sbm(arg1,arg2,arg3,arg4);
     } catch (std::invalid_argument &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::runtime_error &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
     } catch (std::domain_error &e) {
@@ -10440,6 +10728,9 @@ SWIGINTERN PyObject *_wrap_general_sbm__SWIG_0(PyObject *SWIGUNUSEDPARM(self), P
     } catch (std::invalid_argument &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
+    } catch (std::runtime_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
     } catch (std::domain_error &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
@@ -10500,6 +10791,9 @@ SWIGINTERN PyObject *_wrap_general_sbm__SWIG_1(PyObject *SWIGUNUSEDPARM(self), P
     try {
       result = stag::general_sbm(*arg1,*arg2);
     } catch (std::invalid_argument &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::runtime_error &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
     } catch (std::domain_error &e) {
@@ -10633,6 +10927,9 @@ SWIGINTERN PyObject *_wrap_general_sbm_edgelist__SWIG_0(PyObject *SWIGUNUSEDPARM
     } catch (std::invalid_argument &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
+    } catch (std::runtime_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
     } catch (std::domain_error &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
@@ -10704,6 +11001,9 @@ SWIGINTERN PyObject *_wrap_general_sbm_edgelist__SWIG_1(PyObject *SWIGUNUSEDPARM
     try {
       stag::general_sbm_edgelist(*arg1,*arg2,*arg3);
     } catch (std::invalid_argument &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::runtime_error &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
     } catch (std::domain_error &e) {
@@ -10819,6 +11119,9 @@ SWIGINTERN PyObject *_wrap_erdos_renyi__SWIG_0(PyObject *SWIGUNUSEDPARM(self), P
     } catch (std::invalid_argument &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
+    } catch (std::runtime_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
     } catch (std::domain_error &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
@@ -10856,6 +11159,9 @@ SWIGINTERN PyObject *_wrap_erdos_renyi__SWIG_1(PyObject *SWIGUNUSEDPARM(self), P
     try {
       result = stag::erdos_renyi(arg1,arg2);
     } catch (std::invalid_argument &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::runtime_error &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
     } catch (std::domain_error &e) {
@@ -10954,6 +11260,9 @@ SWIGINTERN PyObject *_wrap_sbm_gt_labels(PyObject *SWIGUNUSEDPARM(self), PyObjec
     } catch (std::invalid_argument &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
+    } catch (std::runtime_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
     } catch (std::domain_error &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
@@ -11018,6 +11327,9 @@ SWIGINTERN PyObject *_wrap_general_sbm_gt_labels(PyObject *SWIGUNUSEDPARM(self),
     } catch (std::invalid_argument &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
+    } catch (std::runtime_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
     } catch (std::domain_error &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
@@ -11080,6 +11392,9 @@ SWIGINTERN PyObject *_wrap_compute_eigensystem__SWIG_0(PyObject *SWIGUNUSEDPARM(
     } catch (std::invalid_argument &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
+    } catch (std::runtime_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
     } catch (std::domain_error &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
@@ -11117,6 +11432,9 @@ SWIGINTERN PyObject *_wrap_compute_eigensystem__SWIG_1(PyObject *SWIGUNUSEDPARM(
     try {
       result = stag::compute_eigensystem((Eigen::SparseMatrix< double,Eigen::ColMajor,stag_int > const *)arg1,arg2);
     } catch (std::invalid_argument &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::runtime_error &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
     } catch (std::domain_error &e) {
@@ -11222,6 +11540,9 @@ SWIGINTERN PyObject *_wrap_compute_eigenvalues__SWIG_0(PyObject *SWIGUNUSEDPARM(
     } catch (std::invalid_argument &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
+    } catch (std::runtime_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
     } catch (std::domain_error &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
@@ -11262,6 +11583,9 @@ SWIGINTERN PyObject *_wrap_compute_eigenvalues__SWIG_1(PyObject *SWIGUNUSEDPARM(
     try {
       result = stag::compute_eigenvalues((Eigen::SparseMatrix< double,Eigen::ColMajor,stag_int > const *)arg1,arg2);
     } catch (std::invalid_argument &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::runtime_error &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
     } catch (std::domain_error &e) {
@@ -11370,6 +11694,9 @@ SWIGINTERN PyObject *_wrap_compute_eigenvectors__SWIG_0(PyObject *SWIGUNUSEDPARM
     } catch (std::invalid_argument &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
+    } catch (std::runtime_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
     } catch (std::domain_error &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
@@ -11410,6 +11737,9 @@ SWIGINTERN PyObject *_wrap_compute_eigenvectors__SWIG_1(PyObject *SWIGUNUSEDPARM
     try {
       result = stag::compute_eigenvectors((Eigen::SparseMatrix< double,Eigen::ColMajor,stag_int > const *)arg1,arg2);
     } catch (std::invalid_argument &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::runtime_error &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
     } catch (std::domain_error &e) {
@@ -11514,6 +11844,9 @@ SWIGINTERN PyObject *_wrap_power_method__SWIG_0(PyObject *SWIGUNUSEDPARM(self), 
     } catch (std::invalid_argument &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
+    } catch (std::runtime_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
     } catch (std::domain_error &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
@@ -11554,6 +11887,9 @@ SWIGINTERN PyObject *_wrap_power_method__SWIG_1(PyObject *SWIGUNUSEDPARM(self), 
     try {
       result = stag::power_method((Eigen::SparseMatrix< double,Eigen::ColMajor,stag_int > const *)arg1,arg2);
     } catch (std::invalid_argument &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::runtime_error &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
     } catch (std::domain_error &e) {
@@ -11597,6 +11933,9 @@ SWIGINTERN PyObject *_wrap_power_method__SWIG_2(PyObject *SWIGUNUSEDPARM(self), 
     } catch (std::invalid_argument &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
+    } catch (std::runtime_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
     } catch (std::domain_error &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
@@ -11629,6 +11968,9 @@ SWIGINTERN PyObject *_wrap_power_method__SWIG_3(PyObject *SWIGUNUSEDPARM(self), 
     try {
       result = stag::power_method((Eigen::SparseMatrix< double,Eigen::ColMajor,stag_int > const *)arg1);
     } catch (std::invalid_argument &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::runtime_error &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
     } catch (std::domain_error &e) {
@@ -11752,6 +12094,9 @@ SWIGINTERN PyObject *_wrap_rayleigh_quotient(PyObject *SWIGUNUSEDPARM(self), PyO
     } catch (std::invalid_argument &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
+    } catch (std::runtime_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
     } catch (std::domain_error &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
@@ -11788,6 +12133,9 @@ SWIGINTERN PyObject *_wrap_delete_SprsMat(PyObject *SWIGUNUSEDPARM(self), PyObje
     } catch (std::invalid_argument &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
+    } catch (std::runtime_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
     } catch (std::domain_error &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
@@ -11821,6 +12169,9 @@ SWIGINTERN PyObject *_wrap_SprsMat_get_rows(PyObject *SWIGUNUSEDPARM(self), PyOb
     } catch (std::invalid_argument &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
+    } catch (std::runtime_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
     } catch (std::domain_error &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
@@ -11852,6 +12203,9 @@ SWIGINTERN PyObject *_wrap_SprsMat_get_cols(PyObject *SWIGUNUSEDPARM(self), PyOb
     try {
       result = (stag_int)SprsMat_get_cols(arg1);
     } catch (std::invalid_argument &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::runtime_error &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
     } catch (std::domain_error &e) {
@@ -11892,6 +12246,9 @@ SWIGINTERN PyObject *_wrap_SprsMat___add__(PyObject *SWIGUNUSEDPARM(self), PyObj
     try {
       result = SprsMat___add__(arg1,arg2);
     } catch (std::invalid_argument &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::runtime_error &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
     } catch (std::domain_error &e) {
@@ -11936,6 +12293,9 @@ SWIGINTERN PyObject *_wrap_SprsMat___sub__(PyObject *SWIGUNUSEDPARM(self), PyObj
     } catch (std::invalid_argument &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
+    } catch (std::runtime_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
     } catch (std::domain_error &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
@@ -11976,6 +12336,9 @@ SWIGINTERN PyObject *_wrap_SprsMat___mul__(PyObject *SWIGUNUSEDPARM(self), PyObj
     try {
       result = SprsMat___mul__(arg1,arg2);
     } catch (std::invalid_argument &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::runtime_error &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
     } catch (std::domain_error &e) {
@@ -12020,6 +12383,9 @@ SWIGINTERN PyObject *_wrap_SprsMat___mulfloat__(PyObject *SWIGUNUSEDPARM(self), 
     } catch (std::invalid_argument &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
+    } catch (std::runtime_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
     } catch (std::domain_error &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
@@ -12060,6 +12426,9 @@ SWIGINTERN PyObject *_wrap_SprsMat___mulint__(PyObject *SWIGUNUSEDPARM(self), Py
     } catch (std::invalid_argument &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
+    } catch (std::runtime_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
     } catch (std::domain_error &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
@@ -12091,6 +12460,9 @@ SWIGINTERN PyObject *_wrap_SprsMat___neg__(PyObject *SWIGUNUSEDPARM(self), PyObj
     try {
       result = SprsMat___neg__(arg1);
     } catch (std::invalid_argument &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::runtime_error &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
     } catch (std::domain_error &e) {
@@ -12135,6 +12507,9 @@ SWIGINTERN PyObject *_wrap_SprsMat___truedivfloat__(PyObject *SWIGUNUSEDPARM(sel
     } catch (std::invalid_argument &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
+    } catch (std::runtime_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
     } catch (std::domain_error &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
@@ -12175,6 +12550,9 @@ SWIGINTERN PyObject *_wrap_SprsMat___truedivint__(PyObject *SWIGUNUSEDPARM(self)
     } catch (std::invalid_argument &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
+    } catch (std::runtime_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
     } catch (std::domain_error &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
@@ -12208,6 +12586,9 @@ SWIGINTERN PyObject *_wrap_SprsMat___transpose__(PyObject *SWIGUNUSEDPARM(self),
     } catch (std::invalid_argument &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
+    } catch (std::runtime_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
     } catch (std::domain_error &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
@@ -12229,6 +12610,9 @@ SWIGINTERN PyObject *_wrap_new_SprsMat(PyObject *SWIGUNUSEDPARM(self), PyObject 
     try {
       result = (SprsMat *)new SprsMat();
     } catch (std::invalid_argument &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::runtime_error &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
     } catch (std::domain_error &e) {
@@ -12361,6 +12745,9 @@ SWIGINTERN PyObject *_wrap_sprsMatFromVectorsDims(PyObject *SWIGUNUSEDPARM(self)
     try {
       result = sprsMatFromVectorsDims(arg1,arg2,*arg3,*arg4,*arg5);
     } catch (std::invalid_argument &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::runtime_error &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
     } catch (std::domain_error &e) {

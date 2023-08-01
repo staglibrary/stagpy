@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1689848233363,
+  "lastUpdate": 1690901941207,
   "repoUrl": "https://github.com/staglibrary/stagpy",
   "entries": {
     "Performance Tests": [
@@ -433,6 +433,72 @@ window.BENCHMARK_DATA = {
             "unit": "iter/sec",
             "range": "stddev: 0.0020185079245287917",
             "extra": "mean: 32.36208531500026 msec\nrounds: 200"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "macgregor.pr@gmail.com",
+            "name": "Peter Macgregor",
+            "username": "pmacg"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "c68427b39e3df744fdfee946b89ebcc2e904b9e5",
+          "message": "Merge pull request #48 from staglibrary/28-passing-data\n\nUpdate C++ wrapper",
+          "timestamp": "2023-08-01T15:57:07+01:00",
+          "tree_id": "3d05f11aa8225834aed0112e03da3cd6ddfe4c29",
+          "url": "https://github.com/staglibrary/stagpy/commit/c68427b39e3df744fdfee946b89ebcc2e904b9e5"
+        },
+        "date": 1690901940295,
+        "tool": "pytest",
+        "benches": [
+          {
+            "name": "test/test_performance.py::test_sbm",
+            "value": 533.6995959681482,
+            "unit": "iter/sec",
+            "range": "stddev: 0.00008107042390775321",
+            "extra": "mean: 1.8737132415960853 msec\nrounds: 476"
+          },
+          {
+            "name": "test/test_performance.py::test_load_edgelist",
+            "value": 252.0017254558522,
+            "unit": "iter/sec",
+            "range": "stddev: 0.000015728588713147536",
+            "extra": "mean: 3.9682267976184487 msec\nrounds: 252"
+          },
+          {
+            "name": "test/test_performance.py::test_spectral_cluster",
+            "value": 29.635227109374892,
+            "unit": "iter/sec",
+            "range": "stddev: 0.00010792502953986127",
+            "extra": "mean: 33.743625324999016 msec\nrounds: 200"
+          },
+          {
+            "name": "test/test_performance.py::test_local_cluster",
+            "value": 4119.483471548075,
+            "unit": "iter/sec",
+            "range": "stddev: 0.00000231881716602642",
+            "extra": "mean: 242.74888026779885 usec\nrounds: 2539"
+          },
+          {
+            "name": "test/test_performance.py::test_compute_eigensystem",
+            "value": 31.550925395764917,
+            "unit": "iter/sec",
+            "range": "stddev: 0.00013189533933802015",
+            "extra": "mean: 31.69479143499956 msec\nrounds: 200"
+          },
+          {
+            "name": "test/test_performance.py::test_lap_eigvecs",
+            "value": 26.68264515602735,
+            "unit": "iter/sec",
+            "range": "stddev: 0.00018556977159736132",
+            "extra": "mean: 37.47754370499919 msec\nrounds: 200"
           }
         ]
       }

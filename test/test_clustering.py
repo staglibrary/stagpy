@@ -90,19 +90,20 @@ def test_approximate_pagerank():
 
 
 def test_approximate_pagerank_no_push():
-    # Test the behaviour of the approximate pagerank method when there is no push operation.
+    # Test the behaviour of the approximate pagerank method when there is no
+    # push operation.
     graph = 3 * stag.graph.cycle_graph(4)
 
     # Construct seed matrix.
-    s = scipy.sparse.lil_matrix((4, 1))
+    s = scipy.sparse.lil_matrix((1, 1))
     s[0, 0] = 1
 
     # Run the personalised pagerank and check that we get the right result
     p, r = stag.cluster.approximate_pagerank(graph, s.tocsc(), 1./3, 1./2)
     expected_p = [0]
     expected_r = [1]
-    np.testing.assert_almost_equal(p.todense().transpose().tolist()[0], expected_p)
-    np.testing.assert_almost_equal(r.todense().transpose().tolist()[0], expected_r)
+    np.testing.assert_almost_equal(p.to_dense().transpose().tolist()[0], expected_p)
+    np.testing.assert_almost_equal(r.to_dense().transpose().tolist()[0], expected_r)
 
 
 def test_sweep_set():

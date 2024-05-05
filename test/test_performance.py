@@ -26,8 +26,7 @@ def test_local_cluster(benchmark):
 
 def test_compute_eigensystem(benchmark):
     g = stag.graphio.load_edgelist("data/test6.edgelist")
-    lap = g.laplacian()
-    benchmark(stag.spectrum.compute_eigensystem, lap, 10)
+    benchmark(stag.spectrum.compute_eigensystem, g, "Laplacian", 10, "Smallest")
 
 #-------------------------------------------------------------------------------
 # Multi-step workflows - this is to test the efficiency of passing data back and
@@ -35,8 +34,7 @@ def test_compute_eigensystem(benchmark):
 #-------------------------------------------------------------------------------
 def find_lap_eigvecs():
     g = stag.graphio.load_edgelist("data/test6.edgelist")
-    lap = g.laplacian()
-    eigs = stag.spectrum.compute_eigensystem(lap, 10)
+    eigs = stag.spectrum.compute_eigensystem(g, "Laplacian", 10, "Smallest")
     return eigs
 
 def test_lap_eigvecs(benchmark):

@@ -443,7 +443,7 @@ def test_scalar_multiplication():
 
 
 def test_invalid_matrix_initialisation():
-    """See STAG C++ Issue 43."""
+    """See STAG C++ Issue 126."""
     # Try creating a bad graph
     with pytest.raises(AttributeError):
         bad_mat = sp.sparse.csc_matrix([[0, -1, 0, 1],

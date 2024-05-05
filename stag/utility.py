@@ -49,9 +49,9 @@ class SprsMat(object):
         self.scipy_mat = None
 
         if issubclass(type(matrix), scipy.sparse.spmatrix):
-            self.scipy_mat = matrix.tocsc()
+            self.scipy_mat = matrix.tocsc().astype(np.int64)
         if isinstance(matrix, List):
-            self.scipy_mat = scipy.sparse.csc_matrix(matrix)
+            self.scipy_mat = scipy.sparse.csc_matrix(matrix, dtype=np.int64)
 
         if isinstance(matrix, stag_internal.SprsMat):
             self.internal_sprsmat = matrix
@@ -105,7 +105,7 @@ class SprsMat(object):
     def __sub__(self, other):
         if isinstance(other, SprsMat):
             if self.shape() != other.shape():
-                raise ValueError("Matrix dimensions must match.")
+                raise ValueError(f"Matrix dimensions must match. {self.shape()} != {other.shape()}.")
             return SprsMat(self.internal_sprsmat - other.internal_sprsmat)
         else:
             return NotImplemented

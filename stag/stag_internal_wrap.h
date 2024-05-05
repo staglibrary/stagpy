@@ -19,13 +19,13 @@ class SwigDirector_LocalGraph : public stag::LocalGraph, public Swig::Director {
 
 public:
     SwigDirector_LocalGraph(PyObject *self);
-    virtual double degree(stag_int v);
-    virtual stag_int degree_unweighted(stag_int v);
-    virtual std::vector< stag::edge > neighbors(stag_int v);
-    virtual std::vector< stag_int > neighbors_unweighted(stag_int v);
-    virtual std::vector< double > degrees(std::vector< stag_int > vertices);
-    virtual std::vector< stag_int > degrees_unweighted(std::vector< stag_int > vertices);
-    virtual bool vertex_exists(stag_int v);
+    virtual StagReal degree(StagInt v);
+    virtual StagInt degree_unweighted(StagInt v);
+    virtual std::vector< stag::edge > neighbors(StagInt v);
+    virtual std::vector< StagInt > neighbors_unweighted(StagInt v);
+    virtual std::vector< StagReal > degrees(std::vector< StagInt > vertices);
+    virtual std::vector< StagInt > degrees_unweighted(std::vector< StagInt > vertices);
+    virtual bool vertex_exists(StagInt v);
     virtual ~SwigDirector_LocalGraph();
 
 /* Internal director utilities */

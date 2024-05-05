@@ -3100,27 +3100,38 @@ namespace Swig {
 
 /* -------- TYPES TABLE (BEGIN) -------- */
 
-#define SWIGTYPE_p_Eigen__MatrixXd swig_types[0]
-#define SWIGTYPE_p_Eigen__SparseMatrixT_double_Eigen__ColMajor_stag_int_t swig_types[1]
-#define SWIGTYPE_p_Eigen__TripletT_double_stag_int_t swig_types[2]
-#define SWIGTYPE_p_Spectra__SparseSymMatProdT_double_Eigen__Upper_Eigen__ColMajor_stag_int_t swig_types[3]
-#define SWIGTYPE_p_char swig_types[4]
-#define SWIGTYPE_p_long_long swig_types[5]
-#define SWIGTYPE_p_stag__AdjacencyListLocalGraph swig_types[6]
-#define SWIGTYPE_p_stag__Graph swig_types[7]
-#define SWIGTYPE_p_stag__LocalGraph swig_types[8]
-#define SWIGTYPE_p_stag__edge swig_types[9]
-#define SWIGTYPE_p_std__istream swig_types[10]
-#define SWIGTYPE_p_std__ofstream swig_types[11]
-#define SWIGTYPE_p_std__string swig_types[12]
-#define SWIGTYPE_p_std__tupleT_Eigen__VectorXd_Eigen__MatrixXd_t swig_types[13]
-#define SWIGTYPE_p_std__tupleT_SprsMat_SprsMat_t swig_types[14]
-#define SWIGTYPE_p_std__tupleT_stag_int_stag_int_t swig_types[15]
-#define SWIGTYPE_p_std__vectorT_double_t swig_types[16]
-#define SWIGTYPE_p_std__vectorT_long_long_t swig_types[17]
-#define SWIGTYPE_p_std__vectorT_stag__edge_t swig_types[18]
-static swig_type_info *swig_types[20];
-static swig_module_info swig_module = {swig_types, 19, 0, 0, 0, 0};
+#define SWIGTYPE_p_Eigen__MatrixT_StagReal_Eigen__Dynamic_Eigen__Dynamic_Eigen__RowMajor_t swig_types[0]
+#define SWIGTYPE_p_Eigen__SparseMatrixT_StagReal_Eigen__ColMajor_StagInt_t swig_types[1]
+#define SWIGTYPE_p_Eigen__TripletT_StagReal_StagInt_t swig_types[2]
+#define SWIGTYPE_p_Spectra__SparseSymMatProdT_StagReal_Eigen__Upper_Eigen__ColMajor_StagInt_t swig_types[3]
+#define SWIGTYPE_p_Spectra__SparseSymShiftSolveT_StagReal_Eigen__Upper_Eigen__ColMajor_StagInt_t swig_types[4]
+#define SWIGTYPE_p_char swig_types[5]
+#define SWIGTYPE_p_double swig_types[6]
+#define SWIGTYPE_p_int64_t swig_types[7]
+#define SWIGTYPE_p_size_t swig_types[8]
+#define SWIGTYPE_p_stag__AdjacencyListLocalGraph swig_types[9]
+#define SWIGTYPE_p_stag__CKNSGaussianKDE swig_types[10]
+#define SWIGTYPE_p_stag__CKNSGaussianKDEHashUnit swig_types[11]
+#define SWIGTYPE_p_stag__DataPoint swig_types[12]
+#define SWIGTYPE_p_stag__E2LSH swig_types[13]
+#define SWIGTYPE_p_stag__ExactGaussianKDE swig_types[14]
+#define SWIGTYPE_p_stag__Graph swig_types[15]
+#define SWIGTYPE_p_stag__LSHFunction swig_types[16]
+#define SWIGTYPE_p_stag__LocalGraph swig_types[17]
+#define SWIGTYPE_p_stag__MultiLSHFunction swig_types[18]
+#define SWIGTYPE_p_stag__edge swig_types[19]
+#define SWIGTYPE_p_std__istream swig_types[20]
+#define SWIGTYPE_p_std__mt19937_64 swig_types[21]
+#define SWIGTYPE_p_std__ofstream swig_types[22]
+#define SWIGTYPE_p_std__string swig_types[23]
+#define SWIGTYPE_p_std__tupleT_Eigen__VectorXd_Eigen__MatrixXd_t swig_types[24]
+#define SWIGTYPE_p_std__tupleT_SprsMat_SprsMat_t swig_types[25]
+#define SWIGTYPE_p_std__tupleT_StagInt_StagInt_t swig_types[26]
+#define SWIGTYPE_p_std__vectorT_double_t swig_types[27]
+#define SWIGTYPE_p_std__vectorT_int64_t_t swig_types[28]
+#define SWIGTYPE_p_std__vectorT_stag__edge_t swig_types[29]
+static swig_type_info *swig_types[31];
+static swig_module_info swig_module = {swig_types, 30, 0, 0, 0, 0};
 #define SWIG_TypeQuery(name) SWIG_TypeQueryModule(&swig_module, &swig_module, name)
 #define SWIG_MangledTypeQuery(name) SWIG_MangledTypeQueryModule(&swig_module, &swig_module, name)
 
@@ -3243,6 +3254,10 @@ namespace swig {
     #include "stag_lib/graphio.h"
     #include "stag_lib/random.h"
     #include "stag_lib/spectrum.h"
+    #include "stag_lib/data.h"
+    #include "stag_lib/definitions.h"
+    #include "stag_lib/lsh.h"
+    #include "stag_lib/kde.h"
 
 
 #include <tuple>
@@ -3305,188 +3320,11 @@ SWIG_From_size_t  (size_t value)
 #endif
 }
 
-
-SWIGINTERN int
-SWIG_AsVal_double (PyObject *obj, double *val)
-{
-  int res = SWIG_TypeError;
-  if (PyFloat_Check(obj)) {
-    if (val) *val = PyFloat_AsDouble(obj);
-    return SWIG_OK;
-#if PY_VERSION_HEX < 0x03000000
-  } else if (PyInt_Check(obj)) {
-    if (val) *val = (double) PyInt_AsLong(obj);
-    return SWIG_OK;
-#endif
-  } else if (PyLong_Check(obj)) {
-    double v = PyLong_AsDouble(obj);
-    if (!PyErr_Occurred()) {
-      if (val) *val = v;
-      return SWIG_OK;
-    } else {
-      PyErr_Clear();
-    }
-  }
-#ifdef SWIG_PYTHON_CAST_MODE
-  {
-    int dispatch = 0;
-    double d = PyFloat_AsDouble(obj);
-    if (!PyErr_Occurred()) {
-      if (val) *val = d;
-      return SWIG_AddCast(SWIG_OK);
-    } else {
-      PyErr_Clear();
-    }
-    if (!dispatch) {
-      long v = PyLong_AsLong(obj);
-      if (!PyErr_Occurred()) {
-	if (val) *val = v;
-	return SWIG_AddCast(SWIG_AddCast(SWIG_OK));
-      } else {
-	PyErr_Clear();
-      }
-    }
-  }
-#endif
-  return res;
-}
-
-
-#include <float.h>
-
-
-#include <math.h>
-
-
-SWIGINTERNINLINE int
-SWIG_CanCastAsInteger(double *d, double min, double max) {
-  double x = *d;
-  if ((min <= x && x <= max)) {
-   double fx = floor(x);
-   double cx = ceil(x);
-   double rd =  ((x - fx) < 0.5) ? fx : cx; /* simple rint */
-   if ((errno == EDOM) || (errno == ERANGE)) {
-     errno = 0;
-   } else {
-     double summ, reps, diff;
-     if (rd < x) {
-       diff = x - rd;
-     } else if (rd > x) {
-       diff = rd - x;
-     } else {
-       return 1;
-     }
-     summ = rd + x;
-     reps = diff/summ;
-     if (reps < 8*DBL_EPSILON) {
-       *d = rd;
-       return 1;
-     }
-   }
-  }
-  return 0;
-}
-
-
-SWIGINTERN int
-SWIG_AsVal_long (PyObject *obj, long* val)
-{
-#if PY_VERSION_HEX < 0x03000000
-  if (PyInt_Check(obj)) {
-    if (val) *val = PyInt_AsLong(obj);
-    return SWIG_OK;
-  } else
-#endif
-  if (PyLong_Check(obj)) {
-    long v = PyLong_AsLong(obj);
-    if (!PyErr_Occurred()) {
-      if (val) *val = v;
-      return SWIG_OK;
-    } else {
-      PyErr_Clear();
-      return SWIG_OverflowError;
-    }
-  }
-#ifdef SWIG_PYTHON_CAST_MODE
-  {
-    int dispatch = 0;
-    long v = PyInt_AsLong(obj);
-    if (!PyErr_Occurred()) {
-      if (val) *val = v;
-      return SWIG_AddCast(SWIG_OK);
-    } else {
-      PyErr_Clear();
-    }
-    if (!dispatch) {
-      double d;
-      int res = SWIG_AddCast(SWIG_AsVal_double (obj,&d));
-      if (SWIG_IsOK(res) && SWIG_CanCastAsInteger(&d, LONG_MIN, LONG_MAX)) {
-	if (val) *val = (long)(d);
-	return res;
-      }
-    }
-  }
-#endif
-  return SWIG_TypeError;
-}
-
-
-#ifdef SWIG_LONG_LONG_AVAILABLE
-SWIGINTERN int
-SWIG_AsVal_long_SS_long (PyObject *obj, long long *val)
-{
-  int res = SWIG_TypeError;
-  if (PyLong_Check(obj)) {
-    long long v = PyLong_AsLongLong(obj);
-    if (!PyErr_Occurred()) {
-      if (val) *val = v;
-      return SWIG_OK;
-    } else {
-      PyErr_Clear();
-      res = SWIG_OverflowError;
-    }
-  } else {
-    long v;
-    res = SWIG_AsVal_long (obj,&v);
-    if (SWIG_IsOK(res)) {
-      if (val) *val = v;
-      return res;
-    }
-  }
-#ifdef SWIG_PYTHON_CAST_MODE
-  {
-    const double mant_max = 1LL << DBL_MANT_DIG;
-    const double mant_min = -mant_max;
-    double d;
-    res = SWIG_AsVal_double (obj,&d);
-    if (SWIG_IsOK(res) && !SWIG_CanCastAsInteger(&d, mant_min, mant_max))
-      return SWIG_OverflowError;
-    if (SWIG_IsOK(res) && SWIG_CanCastAsInteger(&d, mant_min, mant_max)) {
-      if (val) *val = (long long)(d);
-      return SWIG_AddCast(res);
-    }
-    res = SWIG_TypeError;
-  }
-#endif
-  return res;
-}
-#endif
-
-SWIGINTERN stag_int const &std_tuple_Sl_stag_int_Sc_stag_int_Sg__get0(std::tuple< stag_int,stag_int > const *self){ return std::get<0>(*self); }
-
-#ifdef SWIG_LONG_LONG_AVAILABLE
-SWIGINTERNINLINE PyObject* 
-SWIG_From_long_SS_long  (long long value)
-{
-  return ((value < LONG_MIN) || (value > LONG_MAX)) ?
-    PyLong_FromLongLong(value) : PyInt_FromLong(static_cast< long >(value));
-}
-#endif
-
-SWIGINTERN stag_int const &std_tuple_Sl_stag_int_Sc_stag_int_Sg__get1(std::tuple< stag_int,stag_int > const *self){ return std::get<1>(*self); }
-SWIGINTERN void std_tuple_Sl_stag_int_Sc_stag_int_Sg__set0(std::tuple< stag_int,stag_int > *self,stag_int const &val){ std::get<0>(*self) = val; }
-SWIGINTERN void std_tuple_Sl_stag_int_Sc_stag_int_Sg__set1(std::tuple< stag_int,stag_int > *self,stag_int const &val){ std::get<1>(*self) = val; }
-SWIGINTERN size_t std_tuple_Sl_stag_int_Sc_stag_int_Sg____len__(std::tuple< stag_int,stag_int > const *self){ return std::tuple_size<std::decay_t<decltype(*self)>>{}; }
+SWIGINTERN StagInt const &std_tuple_Sl_StagInt_Sc_StagInt_Sg__get0(std::tuple< StagInt,StagInt > const *self){ return std::get<0>(*self); }
+SWIGINTERN StagInt const &std_tuple_Sl_StagInt_Sc_StagInt_Sg__get1(std::tuple< StagInt,StagInt > const *self){ return std::get<1>(*self); }
+SWIGINTERN void std_tuple_Sl_StagInt_Sc_StagInt_Sg__set0(std::tuple< StagInt,StagInt > *self,StagInt const &val){ std::get<0>(*self) = val; }
+SWIGINTERN void std_tuple_Sl_StagInt_Sc_StagInt_Sg__set1(std::tuple< StagInt,StagInt > *self,StagInt const &val){ std::get<1>(*self) = val; }
+SWIGINTERN size_t std_tuple_Sl_StagInt_Sc_StagInt_Sg____len__(std::tuple< StagInt,StagInt > const *self){ return std::tuple_size<std::decay_t<decltype(*self)>>{}; }
 
 #if NPY_API_VERSION < 0x00000007
 #define NPY_ARRAY_DEFAULT NPY_DEFAULT
@@ -4114,7 +3952,132 @@ SWIGINTERNINLINE PyObject*
 }
 
 
+SWIGINTERN int
+SWIG_AsVal_double (PyObject *obj, double *val)
+{
+  int res = SWIG_TypeError;
+  if (PyFloat_Check(obj)) {
+    if (val) *val = PyFloat_AsDouble(obj);
+    return SWIG_OK;
+#if PY_VERSION_HEX < 0x03000000
+  } else if (PyInt_Check(obj)) {
+    if (val) *val = (double) PyInt_AsLong(obj);
+    return SWIG_OK;
+#endif
+  } else if (PyLong_Check(obj)) {
+    double v = PyLong_AsDouble(obj);
+    if (!PyErr_Occurred()) {
+      if (val) *val = v;
+      return SWIG_OK;
+    } else {
+      PyErr_Clear();
+    }
+  }
+#ifdef SWIG_PYTHON_CAST_MODE
+  {
+    int dispatch = 0;
+    double d = PyFloat_AsDouble(obj);
+    if (!PyErr_Occurred()) {
+      if (val) *val = d;
+      return SWIG_AddCast(SWIG_OK);
+    } else {
+      PyErr_Clear();
+    }
+    if (!dispatch) {
+      long v = PyLong_AsLong(obj);
+      if (!PyErr_Occurred()) {
+	if (val) *val = v;
+	return SWIG_AddCast(SWIG_AddCast(SWIG_OK));
+      } else {
+	PyErr_Clear();
+      }
+    }
+  }
+#endif
+  return res;
+}
+
+
   #define SWIG_From_double   PyFloat_FromDouble 
+
+
+#include <float.h>
+
+
+#include <math.h>
+
+
+SWIGINTERNINLINE int
+SWIG_CanCastAsInteger(double *d, double min, double max) {
+  double x = *d;
+  if ((min <= x && x <= max)) {
+   double fx = floor(x);
+   double cx = ceil(x);
+   double rd =  ((x - fx) < 0.5) ? fx : cx; /* simple rint */
+   if ((errno == EDOM) || (errno == ERANGE)) {
+     errno = 0;
+   } else {
+     double summ, reps, diff;
+     if (rd < x) {
+       diff = x - rd;
+     } else if (rd > x) {
+       diff = rd - x;
+     } else {
+       return 1;
+     }
+     summ = rd + x;
+     reps = diff/summ;
+     if (reps < 8*DBL_EPSILON) {
+       *d = rd;
+       return 1;
+     }
+   }
+  }
+  return 0;
+}
+
+
+SWIGINTERN int
+SWIG_AsVal_long (PyObject *obj, long* val)
+{
+#if PY_VERSION_HEX < 0x03000000
+  if (PyInt_Check(obj)) {
+    if (val) *val = PyInt_AsLong(obj);
+    return SWIG_OK;
+  } else
+#endif
+  if (PyLong_Check(obj)) {
+    long v = PyLong_AsLong(obj);
+    if (!PyErr_Occurred()) {
+      if (val) *val = v;
+      return SWIG_OK;
+    } else {
+      PyErr_Clear();
+      return SWIG_OverflowError;
+    }
+  }
+#ifdef SWIG_PYTHON_CAST_MODE
+  {
+    int dispatch = 0;
+    long v = PyInt_AsLong(obj);
+    if (!PyErr_Occurred()) {
+      if (val) *val = v;
+      return SWIG_AddCast(SWIG_OK);
+    } else {
+      PyErr_Clear();
+    }
+    if (!dispatch) {
+      double d;
+      int res = SWIG_AddCast(SWIG_AsVal_double (obj,&d));
+      if (SWIG_IsOK(res) && SWIG_CanCastAsInteger(&d, LONG_MIN, LONG_MAX)) {
+	if (val) *val = (long)(d);
+	return res;
+      }
+    }
+  }
+#endif
+  return SWIG_TypeError;
+}
 
 
 SWIGINTERN int
@@ -4325,10 +4288,143 @@ SWIG_From_std_string  (const std::string& s)
   return SWIG_FromCharPtrAndSize(s.data(), s.size());
 }
 
-SWIGINTERN stag_int SprsMat_get_rows(SprsMat *self){
+
+SWIGINTERNINLINE PyObject*
+  SWIG_From_int  (int value)
+{
+  return PyInt_FromLong((long) value);
+}
+
+
+SWIGINTERN int
+SWIG_AsVal_int (PyObject * obj, int *val)
+{
+  long v;
+  int res = SWIG_AsVal_long (obj, &v);
+  if (SWIG_IsOK(res)) {
+    if ((v < INT_MIN || v > INT_MAX)) {
+      return SWIG_OverflowError;
+    } else {
+      if (val) *val = static_cast< int >(v);
+    }
+  }  
+  return res;
+}
+
+
+SWIGINTERN int
+SWIG_AsVal_unsigned_SS_long (PyObject *obj, unsigned long *val) 
+{
+#if PY_VERSION_HEX < 0x03000000
+  if (PyInt_Check(obj)) {
+    long v = PyInt_AsLong(obj);
+    if (v >= 0) {
+      if (val) *val = v;
+      return SWIG_OK;
+    } else {
+      return SWIG_OverflowError;
+    }
+  } else
+#endif
+  if (PyLong_Check(obj)) {
+    unsigned long v = PyLong_AsUnsignedLong(obj);
+    if (!PyErr_Occurred()) {
+      if (val) *val = v;
+      return SWIG_OK;
+    } else {
+      PyErr_Clear();
+      return SWIG_OverflowError;
+    }
+  }
+#ifdef SWIG_PYTHON_CAST_MODE
+  {
+    int dispatch = 0;
+    unsigned long v = PyLong_AsUnsignedLong(obj);
+    if (!PyErr_Occurred()) {
+      if (val) *val = v;
+      return SWIG_AddCast(SWIG_OK);
+    } else {
+      PyErr_Clear();
+    }
+    if (!dispatch) {
+      double d;
+      int res = SWIG_AddCast(SWIG_AsVal_double (obj,&d));
+      if (SWIG_IsOK(res) && SWIG_CanCastAsInteger(&d, 0, ULONG_MAX)) {
+	if (val) *val = (unsigned long)(d);
+	return res;
+      }
+    }
+  }
+#endif
+  return SWIG_TypeError;
+}
+
+
+#ifdef SWIG_LONG_LONG_AVAILABLE
+SWIGINTERN int
+SWIG_AsVal_unsigned_SS_long_SS_long (PyObject *obj, unsigned long long *val)
+{
+  int res = SWIG_TypeError;
+  if (PyLong_Check(obj)) {
+    unsigned long long v = PyLong_AsUnsignedLongLong(obj);
+    if (!PyErr_Occurred()) {
+      if (val) *val = v;
+      return SWIG_OK;
+    } else {
+      PyErr_Clear();
+      res = SWIG_OverflowError;
+    }
+  } else {
+    unsigned long v;
+    res = SWIG_AsVal_unsigned_SS_long (obj,&v);
+    if (SWIG_IsOK(res)) {
+      if (val) *val = v;
+      return res;
+    }
+  }
+#ifdef SWIG_PYTHON_CAST_MODE
+  {
+    const double mant_max = 1LL << DBL_MANT_DIG;
+    double d;
+    res = SWIG_AsVal_double (obj,&d);
+    if (SWIG_IsOK(res) && !SWIG_CanCastAsInteger(&d, 0, mant_max))
+      return SWIG_OverflowError;
+    if (SWIG_IsOK(res) && SWIG_CanCastAsInteger(&d, 0, mant_max)) {
+      if (val) *val = (unsigned long long)(d);
+      return SWIG_AddCast(res);
+    }
+    res = SWIG_TypeError;
+  }
+#endif
+  return res;
+}
+#endif
+
+
+SWIGINTERNINLINE int
+SWIG_AsVal_size_t (PyObject * obj, size_t *val)
+{
+  int res = SWIG_TypeError;
+#ifdef SWIG_LONG_LONG_AVAILABLE
+  if (sizeof(size_t) <= sizeof(unsigned long)) {
+#endif
+    unsigned long v;
+    res = SWIG_AsVal_unsigned_SS_long (obj, val ? &v : 0);
+    if (SWIG_IsOK(res) && val) *val = static_cast< size_t >(v);
+#ifdef SWIG_LONG_LONG_AVAILABLE
+  } else if (sizeof(size_t) <= sizeof(unsigned long long)) {
+    unsigned long long v;
+    res = SWIG_AsVal_unsigned_SS_long_SS_long (obj, val ? &v : 0);
+    if (SWIG_IsOK(res) && val) *val = static_cast< size_t >(v);
+  }
+#endif
+  return res;
+}
+
+SWIGINTERN StagInt SprsMat_get_rows(SprsMat *self){
         return self->rows();
     }
-SWIGINTERN stag_int SprsMat_get_cols(SprsMat *self){
+SWIGINTERN StagInt SprsMat_get_cols(SprsMat *self){
         return self->cols();
     }
 SWIGINTERN SprsMat SprsMat___add__(SprsMat *self,SprsMat *other){
@@ -4343,7 +4439,7 @@ SWIGINTERN SprsMat SprsMat___mul__(SprsMat *self,SprsMat *other){
 SWIGINTERN SprsMat SprsMat___mulfloat__(SprsMat *self,double other){
         return other * *self;
     }
-SWIGINTERN SprsMat SprsMat___mulint__(SprsMat *self,stag_int other){
+SWIGINTERN SprsMat SprsMat___mulint__(SprsMat *self,StagInt other){
         return other * *self;
     }
 SWIGINTERN SprsMat SprsMat___neg__(SprsMat *self){
@@ -4352,17 +4448,17 @@ SWIGINTERN SprsMat SprsMat___neg__(SprsMat *self){
 SWIGINTERN SprsMat SprsMat___truedivfloat__(SprsMat *self,double other){
         return *self / other;
     }
-SWIGINTERN SprsMat SprsMat___truedivint__(SprsMat *self,stag_int other){
+SWIGINTERN SprsMat SprsMat___truedivint__(SprsMat *self,StagInt other){
         return *self / other;
     }
 SWIGINTERN SprsMat SprsMat___transpose__(SprsMat *self){
         return self->transpose();
     }
 
-SprsMat sprsMatFromVectorsDims(stag_int rows,
-                               stag_int cols,
-                               std::vector<stag_int>& column_starts,
-                               std::vector<stag_int>& row_indices,
+SprsMat sprsMatFromVectorsDims(long rows,
+                               long cols,
+                               std::vector<StagInt>& column_starts,
+                               std::vector<StagInt>& row_indices,
                                std::vector<double>& values) {
   // The length of the row_indices and values vectors should be the same
   if (row_indices.size() != values.size()) {
@@ -4371,7 +4467,7 @@ SprsMat sprsMatFromVectorsDims(stag_int rows,
 
   // The last value in the column_starts vector should be equal to the length
   // of the data vectors.
-  if (column_starts.back() != (stag_int) row_indices.size()) {
+  if (column_starts.back() != (StagInt) row_indices.size()) {
     throw std::invalid_argument("Final column starts entry should equal size of data vectors.");
   }
 
@@ -4381,7 +4477,7 @@ SprsMat sprsMatFromVectorsDims(stag_int rows,
 
   SprsMat constructed_mat = Eigen::Map<SprsMat>(rows,
                                                 cols,
-                                                (stag_int) values.size(),
+                                                (StagInt) values.size(),
                                                 column_starts.data(),
                                                 row_indices.data(),
                                                 values.data());
@@ -4412,11 +4508,11 @@ SwigDirector_LocalGraph::SwigDirector_LocalGraph(PyObject *self): stag::LocalGra
 
 
 
-double SwigDirector_LocalGraph::degree(stag_int v) {
-  double c_result = SwigValueInit< double >() ;
+StagReal SwigDirector_LocalGraph::degree(StagInt v) {
+  StagReal c_result = SwigValueInit< StagReal >() ;
   
   swig::SwigVar_PyObject obj0;
-  obj0 = SWIG_From_long_SS_long(static_cast< long long >(v));
+  obj0 = SWIG_NewPointerObj(SWIG_as_voidptr(new StagInt((const StagInt &)v)), SWIGTYPE_p_int64_t, SWIG_POINTER_OWN |  0 );
   if (!swig_get_self()) {
     Swig::DirectorException::raise("'self' uninitialized, maybe you forgot to call LocalGraph.__init__.");
   }
@@ -4438,18 +4534,20 @@ double SwigDirector_LocalGraph::degree(stag_int v) {
   double swig_val;
   int swig_res = SWIG_AsVal_double(result, &swig_val);
   if (!SWIG_IsOK(swig_res)) {
-    Swig::DirectorTypeMismatchException::raise(SWIG_ErrorType(SWIG_ArgError(swig_res)), "in output value of type '""double""'");
+    Swig::DirectorTypeMismatchException::raise(SWIG_ErrorType(SWIG_ArgError(swig_res)), "in output value of type '""StagReal""'");
   }
-  c_result = static_cast< double >(swig_val);
-  return (double) c_result;
+  c_result = static_cast< StagReal >(swig_val);
+  return (StagReal) c_result;
 }
 
 
-stag_int SwigDirector_LocalGraph::degree_unweighted(stag_int v) {
-  stag_int c_result = SwigValueInit< stag_int >() ;
+StagInt SwigDirector_LocalGraph::degree_unweighted(StagInt v) {
+  StagInt c_result = SwigValueInit< StagInt >() ;
+  void *swig_argp ;
+  int swig_res = 0 ;
   
   swig::SwigVar_PyObject obj0;
-  obj0 = SWIG_From_long_SS_long(static_cast< long long >(v));
+  obj0 = SWIG_NewPointerObj(SWIG_as_voidptr(new StagInt((const StagInt &)v)), SWIGTYPE_p_int64_t, SWIG_POINTER_OWN |  0 );
   if (!swig_get_self()) {
     Swig::DirectorException::raise("'self' uninitialized, maybe you forgot to call LocalGraph.__init__.");
   }
@@ -4468,23 +4566,23 @@ stag_int SwigDirector_LocalGraph::degree_unweighted(stag_int v) {
       Swig::DirectorMethodException::raise("Error detected when calling 'LocalGraph.degree_unweighted'");
     }
   }
-  long long swig_val;
-  int swig_res = SWIG_AsVal_long_SS_long(result, &swig_val);
+  swig_res = SWIG_ConvertPtr(result,&swig_argp,SWIGTYPE_p_int64_t,  0  | 0);
   if (!SWIG_IsOK(swig_res)) {
-    Swig::DirectorTypeMismatchException::raise(SWIG_ErrorType(SWIG_ArgError(swig_res)), "in output value of type '""stag_int""'");
+    Swig::DirectorTypeMismatchException::raise(SWIG_ErrorType(SWIG_ArgError(swig_res)), "in output value of type '""StagInt""'");
   }
-  c_result = static_cast< stag_int >(swig_val);
-  return (stag_int) c_result;
+  c_result = *(reinterpret_cast< StagInt * >(swig_argp));
+  if (SWIG_IsNewObj(swig_res)) delete reinterpret_cast< StagInt * >(swig_argp);
+  return (StagInt) c_result;
 }
 
 
-std::vector< stag::edge > SwigDirector_LocalGraph::neighbors(stag_int v) {
+std::vector< stag::edge > SwigDirector_LocalGraph::neighbors(StagInt v) {
   void *swig_argp ;
   int swig_res = 0 ;
   
   std::vector< stag::edge > c_result;
   swig::SwigVar_PyObject obj0;
-  obj0 = SWIG_From_long_SS_long(static_cast< long long >(v));
+  obj0 = SWIG_NewPointerObj(SWIG_as_voidptr(new StagInt((const StagInt &)v)), SWIGTYPE_p_int64_t, SWIG_POINTER_OWN |  0 );
   if (!swig_get_self()) {
     Swig::DirectorException::raise("'self' uninitialized, maybe you forgot to call LocalGraph.__init__.");
   }
@@ -4513,13 +4611,13 @@ std::vector< stag::edge > SwigDirector_LocalGraph::neighbors(stag_int v) {
 }
 
 
-std::vector< stag_int > SwigDirector_LocalGraph::neighbors_unweighted(stag_int v) {
-  std::vector< stag_int > c_result = SwigValueInit< std::vector< stag_int > >() ;
+std::vector< StagInt > SwigDirector_LocalGraph::neighbors_unweighted(StagInt v) {
+  std::vector< StagInt > c_result = SwigValueInit< std::vector< StagInt > >() ;
   void *swig_argp ;
   int swig_res = 0 ;
   
   swig::SwigVar_PyObject obj0;
-  obj0 = SWIG_From_long_SS_long(static_cast< long long >(v));
+  obj0 = SWIG_NewPointerObj(SWIG_as_voidptr(new StagInt((const StagInt &)v)), SWIGTYPE_p_int64_t, SWIG_POINTER_OWN |  0 );
   if (!swig_get_self()) {
     Swig::DirectorException::raise("'self' uninitialized, maybe you forgot to call LocalGraph.__init__.");
   }
@@ -4538,23 +4636,23 @@ std::vector< stag_int > SwigDirector_LocalGraph::neighbors_unweighted(stag_int v
       Swig::DirectorMethodException::raise("Error detected when calling 'LocalGraph.neighbors_unweighted'");
     }
   }
-  swig_res = SWIG_ConvertPtr(result,&swig_argp,SWIGTYPE_p_std__vectorT_long_long_t,  0  | 0);
+  swig_res = SWIG_ConvertPtr(result,&swig_argp,SWIGTYPE_p_std__vectorT_int64_t_t,  0  | 0);
   if (!SWIG_IsOK(swig_res)) {
-    Swig::DirectorTypeMismatchException::raise(SWIG_ErrorType(SWIG_ArgError(swig_res)), "in output value of type '""std::vector< stag_int >""'");
+    Swig::DirectorTypeMismatchException::raise(SWIG_ErrorType(SWIG_ArgError(swig_res)), "in output value of type '""std::vector< StagInt >""'");
   }
-  c_result = *(reinterpret_cast< std::vector< stag_int > * >(swig_argp));
-  if (SWIG_IsNewObj(swig_res)) delete reinterpret_cast< std::vector< stag_int > * >(swig_argp);
-  return (std::vector< stag_int >) c_result;
+  c_result = *(reinterpret_cast< std::vector< StagInt > * >(swig_argp));
+  if (SWIG_IsNewObj(swig_res)) delete reinterpret_cast< std::vector< StagInt > * >(swig_argp);
+  return (std::vector< StagInt >) c_result;
 }
 
 
-std::vector< double > SwigDirector_LocalGraph::degrees(std::vector< stag_int > vertices) {
-  std::vector< double > c_result = SwigValueInit< std::vector< double > >() ;
+std::vector< StagReal > SwigDirector_LocalGraph::degrees(std::vector< StagInt > vertices) {
+  std::vector< StagReal > c_result = SwigValueInit< std::vector< StagReal > >() ;
   void *swig_argp ;
   int swig_res = 0 ;
   
   swig::SwigVar_PyObject obj0;
-  obj0 = SWIG_NewPointerObj(SWIG_as_voidptr(new std::vector< stag_int >((const std::vector< stag_int > &)vertices)), SWIGTYPE_p_std__vectorT_long_long_t, SWIG_POINTER_OWN |  0 );
+  obj0 = SWIG_NewPointerObj(SWIG_as_voidptr(new std::vector< StagInt >((const std::vector< StagInt > &)vertices)), SWIGTYPE_p_std__vectorT_int64_t_t, SWIG_POINTER_OWN |  0 );
   if (!swig_get_self()) {
     Swig::DirectorException::raise("'self' uninitialized, maybe you forgot to call LocalGraph.__init__.");
   }
@@ -4575,21 +4673,21 @@ std::vector< double > SwigDirector_LocalGraph::degrees(std::vector< stag_int > v
   }
   swig_res = SWIG_ConvertPtr(result,&swig_argp,SWIGTYPE_p_std__vectorT_double_t,  0  | 0);
   if (!SWIG_IsOK(swig_res)) {
-    Swig::DirectorTypeMismatchException::raise(SWIG_ErrorType(SWIG_ArgError(swig_res)), "in output value of type '""std::vector< double >""'");
+    Swig::DirectorTypeMismatchException::raise(SWIG_ErrorType(SWIG_ArgError(swig_res)), "in output value of type '""std::vector< StagReal >""'");
   }
-  c_result = *(reinterpret_cast< std::vector< double > * >(swig_argp));
-  if (SWIG_IsNewObj(swig_res)) delete reinterpret_cast< std::vector< double > * >(swig_argp);
-  return (std::vector< double >) c_result;
+  c_result = *(reinterpret_cast< std::vector< StagReal > * >(swig_argp));
+  if (SWIG_IsNewObj(swig_res)) delete reinterpret_cast< std::vector< StagReal > * >(swig_argp);
+  return (std::vector< StagReal >) c_result;
 }
 
 
-std::vector< stag_int > SwigDirector_LocalGraph::degrees_unweighted(std::vector< stag_int > vertices) {
-  std::vector< stag_int > c_result = SwigValueInit< std::vector< stag_int > >() ;
+std::vector< StagInt > SwigDirector_LocalGraph::degrees_unweighted(std::vector< StagInt > vertices) {
+  std::vector< StagInt > c_result = SwigValueInit< std::vector< StagInt > >() ;
   void *swig_argp ;
   int swig_res = 0 ;
   
   swig::SwigVar_PyObject obj0;
-  obj0 = SWIG_NewPointerObj(SWIG_as_voidptr(new std::vector< stag_int >((const std::vector< stag_int > &)vertices)), SWIGTYPE_p_std__vectorT_long_long_t, SWIG_POINTER_OWN |  0 );
+  obj0 = SWIG_NewPointerObj(SWIG_as_voidptr(new std::vector< StagInt >((const std::vector< StagInt > &)vertices)), SWIGTYPE_p_std__vectorT_int64_t_t, SWIG_POINTER_OWN |  0 );
   if (!swig_get_self()) {
     Swig::DirectorException::raise("'self' uninitialized, maybe you forgot to call LocalGraph.__init__.");
   }
@@ -4608,21 +4706,21 @@ std::vector< stag_int > SwigDirector_LocalGraph::degrees_unweighted(std::vector<
       Swig::DirectorMethodException::raise("Error detected when calling 'LocalGraph.degrees_unweighted'");
     }
   }
-  swig_res = SWIG_ConvertPtr(result,&swig_argp,SWIGTYPE_p_std__vectorT_long_long_t,  0  | 0);
+  swig_res = SWIG_ConvertPtr(result,&swig_argp,SWIGTYPE_p_std__vectorT_int64_t_t,  0  | 0);
   if (!SWIG_IsOK(swig_res)) {
-    Swig::DirectorTypeMismatchException::raise(SWIG_ErrorType(SWIG_ArgError(swig_res)), "in output value of type '""std::vector< stag_int >""'");
+    Swig::DirectorTypeMismatchException::raise(SWIG_ErrorType(SWIG_ArgError(swig_res)), "in output value of type '""std::vector< StagInt >""'");
   }
-  c_result = *(reinterpret_cast< std::vector< stag_int > * >(swig_argp));
-  if (SWIG_IsNewObj(swig_res)) delete reinterpret_cast< std::vector< stag_int > * >(swig_argp);
-  return (std::vector< stag_int >) c_result;
+  c_result = *(reinterpret_cast< std::vector< StagInt > * >(swig_argp));
+  if (SWIG_IsNewObj(swig_res)) delete reinterpret_cast< std::vector< StagInt > * >(swig_argp);
+  return (std::vector< StagInt >) c_result;
 }
 
 
-bool SwigDirector_LocalGraph::vertex_exists(stag_int v) {
+bool SwigDirector_LocalGraph::vertex_exists(StagInt v) {
   bool c_result = SwigValueInit< bool >() ;
   
   swig::SwigVar_PyObject obj0;
-  obj0 = SWIG_From_long_SS_long(static_cast< long long >(v));
+  obj0 = SWIG_NewPointerObj(SWIG_as_voidptr(new StagInt((const StagInt &)v)), SWIGTYPE_p_int64_t, SWIG_POINTER_OWN |  0 );
   if (!swig_get_self()) {
     Swig::DirectorException::raise("'self' uninitialized, maybe you forgot to call LocalGraph.__init__.");
   }
@@ -4669,7 +4767,7 @@ SWIGINTERN PyObject *_wrap_new_TupleMM(PyObject *SWIGUNUSEDPARM(self), PyObject 
   std::tuple< SprsMat,SprsMat > *result = 0 ;
   
   if (!SWIG_Python_UnpackTuple(args, "new_TupleMM", 2, 2, swig_obj)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1, SWIGTYPE_p_Eigen__SparseMatrixT_double_Eigen__ColMajor_stag_int_t,  0  | 0);
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1, SWIGTYPE_p_Eigen__SparseMatrixT_StagReal_Eigen__ColMajor_StagInt_t,  0  | 0);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "new_TupleMM" "', argument " "1"" of type '" "SprsMat const &""'"); 
   }
@@ -4678,7 +4776,7 @@ SWIGINTERN PyObject *_wrap_new_TupleMM(PyObject *SWIGUNUSEDPARM(self), PyObject 
   }
   arg1 = reinterpret_cast< SprsMat * >(argp1);
   {
-    res2 = SWIG_ConvertPtr(swig_obj[1], &argp2, SWIGTYPE_p_Eigen__SparseMatrixT_double_Eigen__ColMajor_stag_int_t,  0  | 0);
+    res2 = SWIG_ConvertPtr(swig_obj[1], &argp2, SWIGTYPE_p_Eigen__SparseMatrixT_StagReal_Eigen__ColMajor_StagInt_t,  0  | 0);
     if (!SWIG_IsOK(res2)) {
       SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "new_TupleMM" "', argument " "2"" of type '" "SprsMat""'"); 
     }  
@@ -4714,7 +4812,7 @@ SWIGINTERN PyObject *_wrap_TupleMM_get0(PyObject *SWIGUNUSEDPARM(self), PyObject
   }
   arg1 = reinterpret_cast< std::tuple< SprsMat,SprsMat > * >(argp1);
   result = (SprsMat *) &std_tuple_Sl_SprsMat_Sc_SprsMat_Sg__get0((std::tuple< SprsMat,SprsMat > const *)arg1);
-  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_Eigen__SparseMatrixT_double_Eigen__ColMajor_stag_int_t, 0 |  0 );
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_Eigen__SparseMatrixT_StagReal_Eigen__ColMajor_StagInt_t, 0 |  0 );
   return resultobj;
 fail:
   return NULL;
@@ -4737,7 +4835,7 @@ SWIGINTERN PyObject *_wrap_TupleMM_get1(PyObject *SWIGUNUSEDPARM(self), PyObject
   }
   arg1 = reinterpret_cast< std::tuple< SprsMat,SprsMat > * >(argp1);
   result = (SprsMat *) &std_tuple_Sl_SprsMat_Sc_SprsMat_Sg__get1((std::tuple< SprsMat,SprsMat > const *)arg1);
-  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_Eigen__SparseMatrixT_double_Eigen__ColMajor_stag_int_t, 0 |  0 );
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_Eigen__SparseMatrixT_StagReal_Eigen__ColMajor_StagInt_t, 0 |  0 );
   return resultobj;
 fail:
   return NULL;
@@ -4760,7 +4858,7 @@ SWIGINTERN PyObject *_wrap_TupleMM_set0(PyObject *SWIGUNUSEDPARM(self), PyObject
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "TupleMM_set0" "', argument " "1"" of type '" "std::tuple< SprsMat,SprsMat > *""'"); 
   }
   arg1 = reinterpret_cast< std::tuple< SprsMat,SprsMat > * >(argp1);
-  res2 = SWIG_ConvertPtr(swig_obj[1], &argp2, SWIGTYPE_p_Eigen__SparseMatrixT_double_Eigen__ColMajor_stag_int_t,  0  | 0);
+  res2 = SWIG_ConvertPtr(swig_obj[1], &argp2, SWIGTYPE_p_Eigen__SparseMatrixT_StagReal_Eigen__ColMajor_StagInt_t,  0  | 0);
   if (!SWIG_IsOK(res2)) {
     SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "TupleMM_set0" "', argument " "2"" of type '" "SprsMat const &""'"); 
   }
@@ -4768,7 +4866,7 @@ SWIGINTERN PyObject *_wrap_TupleMM_set0(PyObject *SWIGUNUSEDPARM(self), PyObject
     SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "TupleMM_set0" "', argument " "2"" of type '" "SprsMat const &""'"); 
   }
   arg2 = reinterpret_cast< SprsMat * >(argp2);
-  std_tuple_Sl_SprsMat_Sc_SprsMat_Sg__set0(arg1,(Eigen::SparseMatrix< double,Eigen::ColMajor,stag_int > const &)*arg2);
+  std_tuple_Sl_SprsMat_Sc_SprsMat_Sg__set0(arg1,(Eigen::SparseMatrix< StagReal,Eigen::ColMajor,StagInt > const &)*arg2);
   resultobj = SWIG_Py_Void();
   return resultobj;
 fail:
@@ -4792,7 +4890,7 @@ SWIGINTERN PyObject *_wrap_TupleMM_set1(PyObject *SWIGUNUSEDPARM(self), PyObject
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "TupleMM_set1" "', argument " "1"" of type '" "std::tuple< SprsMat,SprsMat > *""'"); 
   }
   arg1 = reinterpret_cast< std::tuple< SprsMat,SprsMat > * >(argp1);
-  res2 = SWIG_ConvertPtr(swig_obj[1], &argp2, SWIGTYPE_p_Eigen__SparseMatrixT_double_Eigen__ColMajor_stag_int_t,  0  | 0);
+  res2 = SWIG_ConvertPtr(swig_obj[1], &argp2, SWIGTYPE_p_Eigen__SparseMatrixT_StagReal_Eigen__ColMajor_StagInt_t,  0  | 0);
   if (!SWIG_IsOK(res2)) {
     SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "TupleMM_set1" "', argument " "2"" of type '" "SprsMat const &""'"); 
   }
@@ -4800,7 +4898,7 @@ SWIGINTERN PyObject *_wrap_TupleMM_set1(PyObject *SWIGUNUSEDPARM(self), PyObject
     SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "TupleMM_set1" "', argument " "2"" of type '" "SprsMat const &""'"); 
   }
   arg2 = reinterpret_cast< SprsMat * >(argp2);
-  std_tuple_Sl_SprsMat_Sc_SprsMat_Sg__set1(arg1,(Eigen::SparseMatrix< double,Eigen::ColMajor,stag_int > const &)*arg2);
+  std_tuple_Sl_SprsMat_Sc_SprsMat_Sg__set1(arg1,(Eigen::SparseMatrix< StagReal,Eigen::ColMajor,StagInt > const &)*arg2);
   resultobj = SWIG_Py_Void();
   return resultobj;
 fail:
@@ -4879,30 +4977,39 @@ SWIGINTERN PyObject *TupleMM_swiginit(PyObject *SWIGUNUSEDPARM(self), PyObject *
 
 SWIGINTERN PyObject *_wrap_new_Tupleii(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
-  stag_int *arg1 = 0 ;
-  stag_int arg2 ;
-  stag_int temp1 ;
-  long long val1 ;
-  int ecode1 = 0 ;
-  long long val2 ;
-  int ecode2 = 0 ;
+  StagInt *arg1 = 0 ;
+  StagInt arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  void *argp2 ;
+  int res2 = 0 ;
   PyObject *swig_obj[2] ;
-  std::tuple< stag_int,stag_int > *result = 0 ;
+  std::tuple< StagInt,StagInt > *result = 0 ;
   
   if (!SWIG_Python_UnpackTuple(args, "new_Tupleii", 2, 2, swig_obj)) SWIG_fail;
-  ecode1 = SWIG_AsVal_long_SS_long(swig_obj[0], &val1);
-  if (!SWIG_IsOK(ecode1)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "new_Tupleii" "', argument " "1"" of type '" "stag_int""'");
-  } 
-  temp1 = static_cast< stag_int >(val1);
-  arg1 = &temp1;
-  ecode2 = SWIG_AsVal_long_SS_long(swig_obj[1], &val2);
-  if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "new_Tupleii" "', argument " "2"" of type '" "stag_int""'");
-  } 
-  arg2 = static_cast< stag_int >(val2);
-  result = (std::tuple< stag_int,stag_int > *)new std::tuple< stag_int,stag_int >((stag_int const &)*arg1,arg2);
-  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_std__tupleT_stag_int_stag_int_t, SWIG_POINTER_NEW |  0 );
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1, SWIGTYPE_p_int64_t,  0  | 0);
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "new_Tupleii" "', argument " "1"" of type '" "StagInt const &""'"); 
+  }
+  if (!argp1) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "new_Tupleii" "', argument " "1"" of type '" "StagInt const &""'"); 
+  }
+  arg1 = reinterpret_cast< StagInt * >(argp1);
+  {
+    res2 = SWIG_ConvertPtr(swig_obj[1], &argp2, SWIGTYPE_p_int64_t,  0  | 0);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "new_Tupleii" "', argument " "2"" of type '" "StagInt""'"); 
+    }  
+    if (!argp2) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "new_Tupleii" "', argument " "2"" of type '" "StagInt""'");
+    } else {
+      StagInt * temp = reinterpret_cast< StagInt * >(argp2);
+      arg2 = *temp;
+      if (SWIG_IsNewObj(res2)) delete temp;
+    }
+  }
+  result = (std::tuple< StagInt,StagInt > *)new std::tuple< StagInt,StagInt >((StagInt const &)*arg1,arg2);
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_std__tupleT_StagInt_StagInt_t, SWIG_POINTER_NEW |  0 );
   return resultobj;
 fail:
   return NULL;
@@ -4911,21 +5018,21 @@ fail:
 
 SWIGINTERN PyObject *_wrap_Tupleii_get0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
-  std::tuple< stag_int,stag_int > *arg1 = (std::tuple< stag_int,stag_int > *) 0 ;
+  std::tuple< StagInt,StagInt > *arg1 = (std::tuple< StagInt,StagInt > *) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
-  stag_int *result = 0 ;
+  StagInt *result = 0 ;
   
   if (!args) SWIG_fail;
   swig_obj[0] = args;
-  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_std__tupleT_stag_int_stag_int_t, 0 |  0 );
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_std__tupleT_StagInt_StagInt_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Tupleii_get0" "', argument " "1"" of type '" "std::tuple< stag_int,stag_int > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Tupleii_get0" "', argument " "1"" of type '" "std::tuple< StagInt,StagInt > const *""'"); 
   }
-  arg1 = reinterpret_cast< std::tuple< stag_int,stag_int > * >(argp1);
-  result = (stag_int *) &std_tuple_Sl_stag_int_Sc_stag_int_Sg__get0((std::tuple< stag_int,stag_int > const *)arg1);
-  resultobj = SWIG_From_long_SS_long(static_cast< long long >(*result));
+  arg1 = reinterpret_cast< std::tuple< StagInt,StagInt > * >(argp1);
+  result = (StagInt *) &std_tuple_Sl_StagInt_Sc_StagInt_Sg__get0((std::tuple< StagInt,StagInt > const *)arg1);
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_int64_t, 0 |  0 );
   return resultobj;
 fail:
   return NULL;
@@ -4934,21 +5041,21 @@ fail:
 
 SWIGINTERN PyObject *_wrap_Tupleii_get1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
-  std::tuple< stag_int,stag_int > *arg1 = (std::tuple< stag_int,stag_int > *) 0 ;
+  std::tuple< StagInt,StagInt > *arg1 = (std::tuple< StagInt,StagInt > *) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
-  stag_int *result = 0 ;
+  StagInt *result = 0 ;
   
   if (!args) SWIG_fail;
   swig_obj[0] = args;
-  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_std__tupleT_stag_int_stag_int_t, 0 |  0 );
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_std__tupleT_StagInt_StagInt_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Tupleii_get1" "', argument " "1"" of type '" "std::tuple< stag_int,stag_int > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Tupleii_get1" "', argument " "1"" of type '" "std::tuple< StagInt,StagInt > const *""'"); 
   }
-  arg1 = reinterpret_cast< std::tuple< stag_int,stag_int > * >(argp1);
-  result = (stag_int *) &std_tuple_Sl_stag_int_Sc_stag_int_Sg__get1((std::tuple< stag_int,stag_int > const *)arg1);
-  resultobj = SWIG_From_long_SS_long(static_cast< long long >(*result));
+  arg1 = reinterpret_cast< std::tuple< StagInt,StagInt > * >(argp1);
+  result = (StagInt *) &std_tuple_Sl_StagInt_Sc_StagInt_Sg__get1((std::tuple< StagInt,StagInt > const *)arg1);
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_int64_t, 0 |  0 );
   return resultobj;
 fail:
   return NULL;
@@ -4957,28 +5064,29 @@ fail:
 
 SWIGINTERN PyObject *_wrap_Tupleii_set0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
-  std::tuple< stag_int,stag_int > *arg1 = (std::tuple< stag_int,stag_int > *) 0 ;
-  stag_int *arg2 = 0 ;
+  std::tuple< StagInt,StagInt > *arg1 = (std::tuple< StagInt,StagInt > *) 0 ;
+  StagInt *arg2 = 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-  stag_int temp2 ;
-  long long val2 ;
-  int ecode2 = 0 ;
+  void *argp2 = 0 ;
+  int res2 = 0 ;
   PyObject *swig_obj[2] ;
   
   if (!SWIG_Python_UnpackTuple(args, "Tupleii_set0", 2, 2, swig_obj)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_std__tupleT_stag_int_stag_int_t, 0 |  0 );
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_std__tupleT_StagInt_StagInt_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Tupleii_set0" "', argument " "1"" of type '" "std::tuple< stag_int,stag_int > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Tupleii_set0" "', argument " "1"" of type '" "std::tuple< StagInt,StagInt > *""'"); 
   }
-  arg1 = reinterpret_cast< std::tuple< stag_int,stag_int > * >(argp1);
-  ecode2 = SWIG_AsVal_long_SS_long(swig_obj[1], &val2);
-  if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "Tupleii_set0" "', argument " "2"" of type '" "stag_int""'");
-  } 
-  temp2 = static_cast< stag_int >(val2);
-  arg2 = &temp2;
-  std_tuple_Sl_stag_int_Sc_stag_int_Sg__set0(arg1,(long long const &)*arg2);
+  arg1 = reinterpret_cast< std::tuple< StagInt,StagInt > * >(argp1);
+  res2 = SWIG_ConvertPtr(swig_obj[1], &argp2, SWIGTYPE_p_int64_t,  0  | 0);
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Tupleii_set0" "', argument " "2"" of type '" "StagInt const &""'"); 
+  }
+  if (!argp2) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Tupleii_set0" "', argument " "2"" of type '" "StagInt const &""'"); 
+  }
+  arg2 = reinterpret_cast< StagInt * >(argp2);
+  std_tuple_Sl_StagInt_Sc_StagInt_Sg__set0(arg1,(int64_t const &)*arg2);
   resultobj = SWIG_Py_Void();
   return resultobj;
 fail:
@@ -4988,28 +5096,29 @@ fail:
 
 SWIGINTERN PyObject *_wrap_Tupleii_set1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
-  std::tuple< stag_int,stag_int > *arg1 = (std::tuple< stag_int,stag_int > *) 0 ;
-  stag_int *arg2 = 0 ;
+  std::tuple< StagInt,StagInt > *arg1 = (std::tuple< StagInt,StagInt > *) 0 ;
+  StagInt *arg2 = 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-  stag_int temp2 ;
-  long long val2 ;
-  int ecode2 = 0 ;
+  void *argp2 = 0 ;
+  int res2 = 0 ;
   PyObject *swig_obj[2] ;
   
   if (!SWIG_Python_UnpackTuple(args, "Tupleii_set1", 2, 2, swig_obj)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_std__tupleT_stag_int_stag_int_t, 0 |  0 );
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_std__tupleT_StagInt_StagInt_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Tupleii_set1" "', argument " "1"" of type '" "std::tuple< stag_int,stag_int > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Tupleii_set1" "', argument " "1"" of type '" "std::tuple< StagInt,StagInt > *""'"); 
   }
-  arg1 = reinterpret_cast< std::tuple< stag_int,stag_int > * >(argp1);
-  ecode2 = SWIG_AsVal_long_SS_long(swig_obj[1], &val2);
-  if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "Tupleii_set1" "', argument " "2"" of type '" "stag_int""'");
-  } 
-  temp2 = static_cast< stag_int >(val2);
-  arg2 = &temp2;
-  std_tuple_Sl_stag_int_Sc_stag_int_Sg__set1(arg1,(long long const &)*arg2);
+  arg1 = reinterpret_cast< std::tuple< StagInt,StagInt > * >(argp1);
+  res2 = SWIG_ConvertPtr(swig_obj[1], &argp2, SWIGTYPE_p_int64_t,  0  | 0);
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Tupleii_set1" "', argument " "2"" of type '" "StagInt const &""'"); 
+  }
+  if (!argp2) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Tupleii_set1" "', argument " "2"" of type '" "StagInt const &""'"); 
+  }
+  arg2 = reinterpret_cast< StagInt * >(argp2);
+  std_tuple_Sl_StagInt_Sc_StagInt_Sg__set1(arg1,(int64_t const &)*arg2);
   resultobj = SWIG_Py_Void();
   return resultobj;
 fail:
@@ -5019,7 +5128,7 @@ fail:
 
 SWIGINTERN PyObject *_wrap_Tupleii___len__(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
-  std::tuple< stag_int,stag_int > *arg1 = (std::tuple< stag_int,stag_int > *) 0 ;
+  std::tuple< StagInt,StagInt > *arg1 = (std::tuple< StagInt,StagInt > *) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
@@ -5027,12 +5136,12 @@ SWIGINTERN PyObject *_wrap_Tupleii___len__(PyObject *SWIGUNUSEDPARM(self), PyObj
   
   if (!args) SWIG_fail;
   swig_obj[0] = args;
-  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_std__tupleT_stag_int_stag_int_t, 0 |  0 );
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_std__tupleT_StagInt_StagInt_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Tupleii___len__" "', argument " "1"" of type '" "std::tuple< stag_int,stag_int > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Tupleii___len__" "', argument " "1"" of type '" "std::tuple< StagInt,StagInt > const *""'"); 
   }
-  arg1 = reinterpret_cast< std::tuple< stag_int,stag_int > * >(argp1);
-  result = std_tuple_Sl_stag_int_Sc_stag_int_Sg____len__((std::tuple< stag_int,stag_int > const *)arg1);
+  arg1 = reinterpret_cast< std::tuple< StagInt,StagInt > * >(argp1);
+  result = std_tuple_Sl_StagInt_Sc_StagInt_Sg____len__((std::tuple< StagInt,StagInt > const *)arg1);
   resultobj = SWIG_From_size_t(static_cast< size_t >(result));
   return resultobj;
 fail:
@@ -5042,18 +5151,18 @@ fail:
 
 SWIGINTERN PyObject *_wrap_delete_Tupleii(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
-  std::tuple< stag_int,stag_int > *arg1 = (std::tuple< stag_int,stag_int > *) 0 ;
+  std::tuple< StagInt,StagInt > *arg1 = (std::tuple< StagInt,StagInt > *) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
   
   if (!args) SWIG_fail;
   swig_obj[0] = args;
-  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_std__tupleT_stag_int_stag_int_t, SWIG_POINTER_DISOWN |  0 );
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_std__tupleT_StagInt_StagInt_t, SWIG_POINTER_DISOWN |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_Tupleii" "', argument " "1"" of type '" "std::tuple< stag_int,stag_int > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_Tupleii" "', argument " "1"" of type '" "std::tuple< StagInt,StagInt > *""'"); 
   }
-  arg1 = reinterpret_cast< std::tuple< stag_int,stag_int > * >(argp1);
+  arg1 = reinterpret_cast< std::tuple< StagInt,StagInt > * >(argp1);
   {
     try {
       delete arg1;
@@ -5078,7 +5187,7 @@ fail:
 SWIGINTERN PyObject *Tupleii_swigregister(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *obj;
   if (!SWIG_Python_UnpackTuple(args, "swigregister", 1, 1, &obj)) return NULL;
-  SWIG_TypeNewClientData(SWIGTYPE_p_std__tupleT_stag_int_stag_int_t, SWIG_NewClientData(obj));
+  SWIG_TypeNewClientData(SWIGTYPE_p_std__tupleT_StagInt_StagInt_t, SWIG_NewClientData(obj));
   return SWIG_Py_Void();
 }
 
@@ -5342,11 +5451,9 @@ SWIGINTERN PyObject *Swig_var_VERSION_PATCH_get(void) {
 SWIGINTERN PyObject *_wrap_edge_v1_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   stag::edge *arg1 = (stag::edge *) 0 ;
-  stag_int arg2 ;
+  StagInt arg2 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-  long long val2 ;
-  int ecode2 = 0 ;
   PyObject *swig_obj[2] ;
   
   if (!SWIG_Python_UnpackTuple(args, "edge_v1_set", 2, 2, swig_obj)) SWIG_fail;
@@ -5355,11 +5462,14 @@ SWIGINTERN PyObject *_wrap_edge_v1_set(PyObject *SWIGUNUSEDPARM(self), PyObject 
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "edge_v1_set" "', argument " "1"" of type '" "stag::edge *""'"); 
   }
   arg1 = reinterpret_cast< stag::edge * >(argp1);
-  ecode2 = SWIG_AsVal_long_SS_long(swig_obj[1], &val2);
-  if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "edge_v1_set" "', argument " "2"" of type '" "stag_int""'");
-  } 
-  arg2 = static_cast< stag_int >(val2);
+  {
+    // StagInt typemap (in)
+    if (!PyLong_Check((PyObject *) swig_obj[1])) {
+      PyErr_SetString(PyExc_TypeError, "Expected an integer.");
+      return NULL;
+    }
+    arg2 = (StagInt) PyLong_AsLong((PyObject*) swig_obj[1]);
+  }
   if (arg1) (arg1)->v1 = arg2;
   resultobj = SWIG_Py_Void();
   return resultobj;
@@ -5374,7 +5484,7 @@ SWIGINTERN PyObject *_wrap_edge_v1_get(PyObject *SWIGUNUSEDPARM(self), PyObject 
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
-  stag_int result;
+  StagInt result;
   
   if (!args) SWIG_fail;
   swig_obj[0] = args;
@@ -5383,8 +5493,11 @@ SWIGINTERN PyObject *_wrap_edge_v1_get(PyObject *SWIGUNUSEDPARM(self), PyObject 
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "edge_v1_get" "', argument " "1"" of type '" "stag::edge *""'"); 
   }
   arg1 = reinterpret_cast< stag::edge * >(argp1);
-  result = (stag_int) ((arg1)->v1);
-  resultobj = SWIG_From_long_SS_long(static_cast< long long >(result));
+  result =  ((arg1)->v1);
+  {
+    // StagInt typemap (out)
+    resultobj = PyLong_FromLongLong((long long) result);
+  }
   return resultobj;
 fail:
   return NULL;
@@ -5394,11 +5507,9 @@ fail:
 SWIGINTERN PyObject *_wrap_edge_v2_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   stag::edge *arg1 = (stag::edge *) 0 ;
-  stag_int arg2 ;
+  StagInt arg2 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-  long long val2 ;
-  int ecode2 = 0 ;
   PyObject *swig_obj[2] ;
   
   if (!SWIG_Python_UnpackTuple(args, "edge_v2_set", 2, 2, swig_obj)) SWIG_fail;
@@ -5407,11 +5518,14 @@ SWIGINTERN PyObject *_wrap_edge_v2_set(PyObject *SWIGUNUSEDPARM(self), PyObject 
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "edge_v2_set" "', argument " "1"" of type '" "stag::edge *""'"); 
   }
   arg1 = reinterpret_cast< stag::edge * >(argp1);
-  ecode2 = SWIG_AsVal_long_SS_long(swig_obj[1], &val2);
-  if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "edge_v2_set" "', argument " "2"" of type '" "stag_int""'");
-  } 
-  arg2 = static_cast< stag_int >(val2);
+  {
+    // StagInt typemap (in)
+    if (!PyLong_Check((PyObject *) swig_obj[1])) {
+      PyErr_SetString(PyExc_TypeError, "Expected an integer.");
+      return NULL;
+    }
+    arg2 = (StagInt) PyLong_AsLong((PyObject*) swig_obj[1]);
+  }
   if (arg1) (arg1)->v2 = arg2;
   resultobj = SWIG_Py_Void();
   return resultobj;
@@ -5426,7 +5540,7 @@ SWIGINTERN PyObject *_wrap_edge_v2_get(PyObject *SWIGUNUSEDPARM(self), PyObject 
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
-  stag_int result;
+  StagInt result;
   
   if (!args) SWIG_fail;
   swig_obj[0] = args;
@@ -5435,8 +5549,11 @@ SWIGINTERN PyObject *_wrap_edge_v2_get(PyObject *SWIGUNUSEDPARM(self), PyObject 
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "edge_v2_get" "', argument " "1"" of type '" "stag::edge *""'"); 
   }
   arg1 = reinterpret_cast< stag::edge * >(argp1);
-  result = (stag_int) ((arg1)->v2);
-  resultobj = SWIG_From_long_SS_long(static_cast< long long >(result));
+  result =  ((arg1)->v2);
+  {
+    // StagInt typemap (out)
+    resultobj = PyLong_FromLongLong((long long) result);
+  }
   return resultobj;
 fail:
   return NULL;
@@ -5446,7 +5563,7 @@ fail:
 SWIGINTERN PyObject *_wrap_edge_weight_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   stag::edge *arg1 = (stag::edge *) 0 ;
-  double arg2 ;
+  StagReal arg2 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
   double val2 ;
@@ -5461,9 +5578,9 @@ SWIGINTERN PyObject *_wrap_edge_weight_set(PyObject *SWIGUNUSEDPARM(self), PyObj
   arg1 = reinterpret_cast< stag::edge * >(argp1);
   ecode2 = SWIG_AsVal_double(swig_obj[1], &val2);
   if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "edge_weight_set" "', argument " "2"" of type '" "double""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "edge_weight_set" "', argument " "2"" of type '" "StagReal""'");
   } 
-  arg2 = static_cast< double >(val2);
+  arg2 = static_cast< StagReal >(val2);
   if (arg1) (arg1)->weight = arg2;
   resultobj = SWIG_Py_Void();
   return resultobj;
@@ -5478,7 +5595,7 @@ SWIGINTERN PyObject *_wrap_edge_weight_get(PyObject *SWIGUNUSEDPARM(self), PyObj
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
-  double result;
+  StagReal result;
   
   if (!args) SWIG_fail;
   swig_obj[0] = args;
@@ -5487,7 +5604,7 @@ SWIGINTERN PyObject *_wrap_edge_weight_get(PyObject *SWIGUNUSEDPARM(self), PyObj
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "edge_weight_get" "', argument " "1"" of type '" "stag::edge *""'"); 
   }
   arg1 = reinterpret_cast< stag::edge * >(argp1);
-  result = (double) ((arg1)->weight);
+  result = (StagReal) ((arg1)->weight);
   resultobj = SWIG_From_double(static_cast< double >(result));
   return resultobj;
 fail:
@@ -5570,15 +5687,13 @@ SWIGINTERN PyObject *edge_swiginit(PyObject *SWIGUNUSEDPARM(self), PyObject *arg
 SWIGINTERN PyObject *_wrap_LocalGraph_degree(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   stag::LocalGraph *arg1 = (stag::LocalGraph *) 0 ;
-  stag_int arg2 ;
+  StagInt arg2 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-  long long val2 ;
-  int ecode2 = 0 ;
   PyObject *swig_obj[2] ;
   Swig::Director *director = 0;
   bool upcall = false;
-  double result;
+  StagReal result;
   
   if (!SWIG_Python_UnpackTuple(args, "LocalGraph_degree", 2, 2, swig_obj)) SWIG_fail;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_stag__LocalGraph, 0 |  0 );
@@ -5586,11 +5701,14 @@ SWIGINTERN PyObject *_wrap_LocalGraph_degree(PyObject *SWIGUNUSEDPARM(self), PyO
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "LocalGraph_degree" "', argument " "1"" of type '" "stag::LocalGraph *""'"); 
   }
   arg1 = reinterpret_cast< stag::LocalGraph * >(argp1);
-  ecode2 = SWIG_AsVal_long_SS_long(swig_obj[1], &val2);
-  if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "LocalGraph_degree" "', argument " "2"" of type '" "stag_int""'");
-  } 
-  arg2 = static_cast< stag_int >(val2);
+  {
+    // StagInt typemap (in)
+    if (!PyLong_Check((PyObject *) swig_obj[1])) {
+      PyErr_SetString(PyExc_TypeError, "Expected an integer.");
+      return NULL;
+    }
+    arg2 = (StagInt) PyLong_AsLong((PyObject*) swig_obj[1]);
+  }
   director = SWIG_DIRECTOR_CAST(arg1);
   upcall = (director && (director->swig_get_self()==swig_obj[0]));
   try {
@@ -5599,7 +5717,7 @@ SWIGINTERN PyObject *_wrap_LocalGraph_degree(PyObject *SWIGUNUSEDPARM(self), PyO
         if (upcall) {
           Swig::DirectorPureVirtualException::raise("stag::LocalGraph::degree");
         } else {
-          result = (double)(arg1)->degree(arg2);
+          result = (StagReal)(arg1)->degree(arg2);
         }
       } catch (std::invalid_argument &e) {
         PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
@@ -5625,15 +5743,13 @@ fail:
 SWIGINTERN PyObject *_wrap_LocalGraph_degree_unweighted(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   stag::LocalGraph *arg1 = (stag::LocalGraph *) 0 ;
-  stag_int arg2 ;
+  StagInt arg2 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-  long long val2 ;
-  int ecode2 = 0 ;
   PyObject *swig_obj[2] ;
   Swig::Director *director = 0;
   bool upcall = false;
-  stag_int result;
+  StagInt result;
   
   if (!SWIG_Python_UnpackTuple(args, "LocalGraph_degree_unweighted", 2, 2, swig_obj)) SWIG_fail;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_stag__LocalGraph, 0 |  0 );
@@ -5641,11 +5757,14 @@ SWIGINTERN PyObject *_wrap_LocalGraph_degree_unweighted(PyObject *SWIGUNUSEDPARM
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "LocalGraph_degree_unweighted" "', argument " "1"" of type '" "stag::LocalGraph *""'"); 
   }
   arg1 = reinterpret_cast< stag::LocalGraph * >(argp1);
-  ecode2 = SWIG_AsVal_long_SS_long(swig_obj[1], &val2);
-  if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "LocalGraph_degree_unweighted" "', argument " "2"" of type '" "stag_int""'");
-  } 
-  arg2 = static_cast< stag_int >(val2);
+  {
+    // StagInt typemap (in)
+    if (!PyLong_Check((PyObject *) swig_obj[1])) {
+      PyErr_SetString(PyExc_TypeError, "Expected an integer.");
+      return NULL;
+    }
+    arg2 = (StagInt) PyLong_AsLong((PyObject*) swig_obj[1]);
+  }
   director = SWIG_DIRECTOR_CAST(arg1);
   upcall = (director && (director->swig_get_self()==swig_obj[0]));
   try {
@@ -5654,7 +5773,7 @@ SWIGINTERN PyObject *_wrap_LocalGraph_degree_unweighted(PyObject *SWIGUNUSEDPARM
         if (upcall) {
           Swig::DirectorPureVirtualException::raise("stag::LocalGraph::degree_unweighted");
         } else {
-          result = (stag_int)(arg1)->degree_unweighted(arg2);
+          result = (arg1)->degree_unweighted(arg2);
         }
       } catch (std::invalid_argument &e) {
         PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
@@ -5670,7 +5789,10 @@ SWIGINTERN PyObject *_wrap_LocalGraph_degree_unweighted(PyObject *SWIGUNUSEDPARM
   } catch (Swig::DirectorException&) {
     SWIG_fail;
   }
-  resultobj = SWIG_From_long_SS_long(static_cast< long long >(result));
+  {
+    // StagInt typemap (out)
+    resultobj = PyLong_FromLongLong((long long) result);
+  }
   return resultobj;
 fail:
   return NULL;
@@ -5680,11 +5802,9 @@ fail:
 SWIGINTERN PyObject *_wrap_LocalGraph_neighbors(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   stag::LocalGraph *arg1 = (stag::LocalGraph *) 0 ;
-  stag_int arg2 ;
+  StagInt arg2 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-  long long val2 ;
-  int ecode2 = 0 ;
   PyObject *swig_obj[2] ;
   Swig::Director *director = 0;
   bool upcall = false;
@@ -5696,11 +5816,14 @@ SWIGINTERN PyObject *_wrap_LocalGraph_neighbors(PyObject *SWIGUNUSEDPARM(self), 
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "LocalGraph_neighbors" "', argument " "1"" of type '" "stag::LocalGraph *""'"); 
   }
   arg1 = reinterpret_cast< stag::LocalGraph * >(argp1);
-  ecode2 = SWIG_AsVal_long_SS_long(swig_obj[1], &val2);
-  if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "LocalGraph_neighbors" "', argument " "2"" of type '" "stag_int""'");
-  } 
-  arg2 = static_cast< stag_int >(val2);
+  {
+    // StagInt typemap (in)
+    if (!PyLong_Check((PyObject *) swig_obj[1])) {
+      PyErr_SetString(PyExc_TypeError, "Expected an integer.");
+      return NULL;
+    }
+    arg2 = (StagInt) PyLong_AsLong((PyObject*) swig_obj[1]);
+  }
   director = SWIG_DIRECTOR_CAST(arg1);
   upcall = (director && (director->swig_get_self()==swig_obj[0]));
   try {
@@ -5727,11 +5850,11 @@ SWIGINTERN PyObject *_wrap_LocalGraph_neighbors(PyObject *SWIGUNUSEDPARM(self), 
   }
   {
     // Return a vector of edges as a list of tuples
-    stag_int outer_length = (&result)->size();
+    StagInt outer_length = (&result)->size();
     resultobj = PyList_New(outer_length);
     
     // Construct a new 3-tuple for each inner object, and add to the list.
-    for (stag_int i = 0; i < outer_length; i++) {
+    for (StagInt i = 0; i < outer_length; i++) {
       PyObject* new_tuple_object = PyTuple_Pack(
         3,
         PyLong_FromLongLong((&result)->at(i).v1),
@@ -5750,15 +5873,13 @@ fail:
 SWIGINTERN PyObject *_wrap_LocalGraph_neighbors_unweighted(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   stag::LocalGraph *arg1 = (stag::LocalGraph *) 0 ;
-  stag_int arg2 ;
+  StagInt arg2 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-  long long val2 ;
-  int ecode2 = 0 ;
   PyObject *swig_obj[2] ;
   Swig::Director *director = 0;
   bool upcall = false;
-  std::vector< stag_int > result;
+  std::vector< StagInt > result;
   
   if (!SWIG_Python_UnpackTuple(args, "LocalGraph_neighbors_unweighted", 2, 2, swig_obj)) SWIG_fail;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_stag__LocalGraph, 0 |  0 );
@@ -5766,11 +5887,14 @@ SWIGINTERN PyObject *_wrap_LocalGraph_neighbors_unweighted(PyObject *SWIGUNUSEDP
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "LocalGraph_neighbors_unweighted" "', argument " "1"" of type '" "stag::LocalGraph *""'"); 
   }
   arg1 = reinterpret_cast< stag::LocalGraph * >(argp1);
-  ecode2 = SWIG_AsVal_long_SS_long(swig_obj[1], &val2);
-  if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "LocalGraph_neighbors_unweighted" "', argument " "2"" of type '" "stag_int""'");
-  } 
-  arg2 = static_cast< stag_int >(val2);
+  {
+    // StagInt typemap (in)
+    if (!PyLong_Check((PyObject *) swig_obj[1])) {
+      PyErr_SetString(PyExc_TypeError, "Expected an integer.");
+      return NULL;
+    }
+    arg2 = (StagInt) PyLong_AsLong((PyObject*) swig_obj[1]);
+  }
   director = SWIG_DIRECTOR_CAST(arg1);
   upcall = (director && (director->swig_get_self()==swig_obj[0]));
   try {
@@ -5803,10 +5927,10 @@ SWIGINTERN PyObject *_wrap_LocalGraph_neighbors_unweighted(PyObject *SWIGUNUSEDP
     // This adds a small 'constant factor' to the running time of the algorithm
     // in STAGPy over C++ STAG.
     npy_intp length = (&result)->size();
-    resultobj = PyArray_SimpleNew(1, &length, NPY_LONGLONG);
+    resultobj = PyArray_SimpleNew(1, &length, NPY_INT64);
     memcpy(PyArray_DATA((PyArrayObject*) resultobj),
       (&result)->data(),
-      sizeof(long long) * length);
+      sizeof(int64_t) * length);
   }
   return resultobj;
 fail:
@@ -5817,16 +5941,16 @@ fail:
 SWIGINTERN PyObject *_wrap_LocalGraph_degrees(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   stag::LocalGraph *arg1 = (stag::LocalGraph *) 0 ;
-  std::vector< stag_int > arg2 ;
+  std::vector< StagInt > arg2 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyArrayObject *array2 = NULL ;
   int is_new_object2 = 0 ;
-  std::vector< long long > temp_vec2 ;
+  std::vector< int64_t > temp_vec2 ;
   PyObject *swig_obj[2] ;
   Swig::Director *director = 0;
   bool upcall = false;
-  std::vector< double > result;
+  std::vector< StagReal > result;
   
   if (!SWIG_Python_UnpackTuple(args, "LocalGraph_degrees", 2, 2, swig_obj)) SWIG_fail;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_stag__LocalGraph, 0 |  0 );
@@ -5842,13 +5966,13 @@ SWIGINTERN PyObject *_wrap_LocalGraph_degrees(PyObject *SWIGUNUSEDPARM(self), Py
     
     // Check that the dimensions of the array2 are correct
     array2 = obj_to_array_contiguous_allow_conversion(swig_obj[1],
-      NPY_LONGLONG,
+      NPY_INT64,
       &is_new_object2);
     if (!array2 || !require_dimensions(array2, 1) ||
       !require_size(array2, size, 1)) SWIG_fail;
     
     // Get a pointer to the data in the numpy array2
-    long long* data_ptr = (long long*) array_data(array2);
+    int64_t* data_ptr = (int64_t*) array_data(array2);
     
     // Copy the numpy data into the new vector.
     temp_vec2.reserve(size[0]);
@@ -5903,16 +6027,16 @@ fail:
 SWIGINTERN PyObject *_wrap_LocalGraph_degrees_unweighted(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   stag::LocalGraph *arg1 = (stag::LocalGraph *) 0 ;
-  std::vector< stag_int > arg2 ;
+  std::vector< StagInt > arg2 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyArrayObject *array2 = NULL ;
   int is_new_object2 = 0 ;
-  std::vector< long long > temp_vec2 ;
+  std::vector< int64_t > temp_vec2 ;
   PyObject *swig_obj[2] ;
   Swig::Director *director = 0;
   bool upcall = false;
-  std::vector< stag_int > result;
+  std::vector< StagInt > result;
   
   if (!SWIG_Python_UnpackTuple(args, "LocalGraph_degrees_unweighted", 2, 2, swig_obj)) SWIG_fail;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_stag__LocalGraph, 0 |  0 );
@@ -5928,13 +6052,13 @@ SWIGINTERN PyObject *_wrap_LocalGraph_degrees_unweighted(PyObject *SWIGUNUSEDPAR
     
     // Check that the dimensions of the array2 are correct
     array2 = obj_to_array_contiguous_allow_conversion(swig_obj[1],
-      NPY_LONGLONG,
+      NPY_INT64,
       &is_new_object2);
     if (!array2 || !require_dimensions(array2, 1) ||
       !require_size(array2, size, 1)) SWIG_fail;
     
     // Get a pointer to the data in the numpy array2
-    long long* data_ptr = (long long*) array_data(array2);
+    int64_t* data_ptr = (int64_t*) array_data(array2);
     
     // Copy the numpy data into the new vector.
     temp_vec2.reserve(size[0]);
@@ -5975,10 +6099,10 @@ SWIGINTERN PyObject *_wrap_LocalGraph_degrees_unweighted(PyObject *SWIGUNUSEDPAR
     // This adds a small 'constant factor' to the running time of the algorithm
     // in STAGPy over C++ STAG.
     npy_intp length = (&result)->size();
-    resultobj = PyArray_SimpleNew(1, &length, NPY_LONGLONG);
+    resultobj = PyArray_SimpleNew(1, &length, NPY_INT64);
     memcpy(PyArray_DATA((PyArrayObject*) resultobj),
       (&result)->data(),
-      sizeof(long long) * length);
+      sizeof(int64_t) * length);
   }
   return resultobj;
 fail:
@@ -5989,11 +6113,9 @@ fail:
 SWIGINTERN PyObject *_wrap_LocalGraph_vertex_exists(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   stag::LocalGraph *arg1 = (stag::LocalGraph *) 0 ;
-  stag_int arg2 ;
+  StagInt arg2 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-  long long val2 ;
-  int ecode2 = 0 ;
   PyObject *swig_obj[2] ;
   Swig::Director *director = 0;
   bool upcall = false;
@@ -6005,11 +6127,14 @@ SWIGINTERN PyObject *_wrap_LocalGraph_vertex_exists(PyObject *SWIGUNUSEDPARM(sel
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "LocalGraph_vertex_exists" "', argument " "1"" of type '" "stag::LocalGraph *""'"); 
   }
   arg1 = reinterpret_cast< stag::LocalGraph * >(argp1);
-  ecode2 = SWIG_AsVal_long_SS_long(swig_obj[1], &val2);
-  if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "LocalGraph_vertex_exists" "', argument " "2"" of type '" "stag_int""'");
-  } 
-  arg2 = static_cast< stag_int >(val2);
+  {
+    // StagInt typemap (in)
+    if (!PyLong_Check((PyObject *) swig_obj[1])) {
+      PyErr_SetString(PyExc_TypeError, "Expected an integer.");
+      return NULL;
+    }
+    arg2 = (StagInt) PyLong_AsLong((PyObject*) swig_obj[1]);
+  }
   director = SWIG_DIRECTOR_CAST(arg1);
   upcall = (director && (director->swig_get_self()==swig_obj[0]));
   try {
@@ -6158,7 +6283,7 @@ SWIGINTERN PyObject *_wrap_new_Graph__SWIG_0(PyObject *SWIGUNUSEDPARM(self), Py_
   stag::Graph *result = 0 ;
   
   if ((nobjs < 1) || (nobjs > 1)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1, SWIGTYPE_p_Eigen__SparseMatrixT_double_Eigen__ColMajor_stag_int_t,  0  | 0);
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1, SWIGTYPE_p_Eigen__SparseMatrixT_StagReal_Eigen__ColMajor_StagInt_t,  0  | 0);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "new_Graph" "', argument " "1"" of type '" "SprsMat const &""'"); 
   }
@@ -6189,15 +6314,15 @@ fail:
 
 SWIGINTERN PyObject *_wrap_new_Graph__SWIG_1(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
   PyObject *resultobj = 0;
-  std::vector< stag_int > *arg1 = 0 ;
-  std::vector< stag_int > *arg2 = 0 ;
-  std::vector< double > *arg3 = 0 ;
+  std::vector< StagInt > *arg1 = 0 ;
+  std::vector< StagInt > *arg2 = 0 ;
+  std::vector< StagReal > *arg3 = 0 ;
   PyArrayObject *array1 = NULL ;
   int is_new_object1 = 0 ;
-  std::vector< long long > temp_vec1 ;
+  std::vector< int64_t > temp_vec1 ;
   PyArrayObject *array2 = NULL ;
   int is_new_object2 = 0 ;
-  std::vector< long long > temp_vec2 ;
+  std::vector< int64_t > temp_vec2 ;
   PyArrayObject *array3 = NULL ;
   int is_new_object3 = 0 ;
   std::vector< double > temp_vec3 ;
@@ -6212,13 +6337,13 @@ SWIGINTERN PyObject *_wrap_new_Graph__SWIG_1(PyObject *SWIGUNUSEDPARM(self), Py_
     
     // Check that the dimensions of the array1 are correct
     array1 = obj_to_array_contiguous_allow_conversion(swig_obj[0],
-      NPY_LONGLONG,
+      NPY_INT64,
       &is_new_object1);
     if (!array1 || !require_dimensions(array1, 1) ||
       !require_size(array1, size, 1)) SWIG_fail;
     
     // Get a pointer to the data in the numpy array1
-    long long* data_ptr = (long long*) array_data(array1);
+    int64_t* data_ptr = (int64_t*) array_data(array1);
     
     // Copy the numpy data into the new vector.
     temp_vec1.reserve(size[0]);
@@ -6235,13 +6360,13 @@ SWIGINTERN PyObject *_wrap_new_Graph__SWIG_1(PyObject *SWIGUNUSEDPARM(self), Py_
     
     // Check that the dimensions of the array2 are correct
     array2 = obj_to_array_contiguous_allow_conversion(swig_obj[1],
-      NPY_LONGLONG,
+      NPY_INT64,
       &is_new_object2);
     if (!array2 || !require_dimensions(array2, 1) ||
       !require_size(array2, size, 1)) SWIG_fail;
     
     // Get a pointer to the data in the numpy array2
-    long long* data_ptr = (long long*) array_data(array2);
+    int64_t* data_ptr = (int64_t*) array_data(array2);
     
     // Copy the numpy data into the new vector.
     temp_vec2.reserve(size[0]);
@@ -6304,7 +6429,7 @@ SWIGINTERN PyObject *_wrap_new_Graph(PyObject *self, PyObject *args) {
   --argc;
   if (argc == 1) {
     int _v;
-    int res = SWIG_ConvertPtr(argv[0], 0, SWIGTYPE_p_Eigen__SparseMatrixT_double_Eigen__ColMajor_stag_int_t, SWIG_POINTER_NO_NULL | 0);
+    int res = SWIG_ConvertPtr(argv[0], 0, SWIGTYPE_p_Eigen__SparseMatrixT_StagReal_Eigen__ColMajor_StagInt_t, SWIG_POINTER_NO_NULL | 0);
     _v = SWIG_CheckState(res);
     if (_v) {
       return _wrap_new_Graph__SWIG_0(self, argc, argv);
@@ -6334,7 +6459,7 @@ fail:
   SWIG_Python_RaiseOrModifyTypeError("Wrong number or type of arguments for overloaded function 'new_Graph'.\n"
     "  Possible C/C++ prototypes are:\n"
     "    stag::Graph::Graph(SprsMat const &)\n"
-    "    stag::Graph::Graph(std::vector< stag_int > &,std::vector< stag_int > &,std::vector< double > &)\n");
+    "    stag::Graph::Graph(std::vector< StagInt > &,std::vector< StagInt > &,std::vector< StagReal > &)\n");
   return 0;
 }
 
@@ -6368,7 +6493,7 @@ SWIGINTERN PyObject *_wrap_Graph_adjacency(PyObject *SWIGUNUSEDPARM(self), PyObj
       return NULL;
     }
   }
-  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_Eigen__SparseMatrixT_double_Eigen__ColMajor_stag_int_t, 0 |  0 );
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_Eigen__SparseMatrixT_StagReal_Eigen__ColMajor_StagInt_t, 0 |  0 );
   return resultobj;
 fail:
   return NULL;
@@ -6404,7 +6529,7 @@ SWIGINTERN PyObject *_wrap_Graph_laplacian(PyObject *SWIGUNUSEDPARM(self), PyObj
       return NULL;
     }
   }
-  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_Eigen__SparseMatrixT_double_Eigen__ColMajor_stag_int_t, 0 |  0 );
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_Eigen__SparseMatrixT_StagReal_Eigen__ColMajor_StagInt_t, 0 |  0 );
   return resultobj;
 fail:
   return NULL;
@@ -6440,7 +6565,7 @@ SWIGINTERN PyObject *_wrap_Graph_normalised_laplacian(PyObject *SWIGUNUSEDPARM(s
       return NULL;
     }
   }
-  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_Eigen__SparseMatrixT_double_Eigen__ColMajor_stag_int_t, 0 |  0 );
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_Eigen__SparseMatrixT_StagReal_Eigen__ColMajor_StagInt_t, 0 |  0 );
   return resultobj;
 fail:
   return NULL;
@@ -6476,7 +6601,7 @@ SWIGINTERN PyObject *_wrap_Graph_signless_laplacian(PyObject *SWIGUNUSEDPARM(sel
       return NULL;
     }
   }
-  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_Eigen__SparseMatrixT_double_Eigen__ColMajor_stag_int_t, 0 |  0 );
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_Eigen__SparseMatrixT_StagReal_Eigen__ColMajor_StagInt_t, 0 |  0 );
   return resultobj;
 fail:
   return NULL;
@@ -6512,7 +6637,7 @@ SWIGINTERN PyObject *_wrap_Graph_normalised_signless_laplacian(PyObject *SWIGUNU
       return NULL;
     }
   }
-  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_Eigen__SparseMatrixT_double_Eigen__ColMajor_stag_int_t, 0 |  0 );
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_Eigen__SparseMatrixT_StagReal_Eigen__ColMajor_StagInt_t, 0 |  0 );
   return resultobj;
 fail:
   return NULL;
@@ -6548,7 +6673,7 @@ SWIGINTERN PyObject *_wrap_Graph_degree_matrix(PyObject *SWIGUNUSEDPARM(self), P
       return NULL;
     }
   }
-  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_Eigen__SparseMatrixT_double_Eigen__ColMajor_stag_int_t, 0 |  0 );
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_Eigen__SparseMatrixT_StagReal_Eigen__ColMajor_StagInt_t, 0 |  0 );
   return resultobj;
 fail:
   return NULL;
@@ -6584,7 +6709,7 @@ SWIGINTERN PyObject *_wrap_Graph_inverse_degree_matrix(PyObject *SWIGUNUSEDPARM(
       return NULL;
     }
   }
-  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_Eigen__SparseMatrixT_double_Eigen__ColMajor_stag_int_t, 0 |  0 );
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_Eigen__SparseMatrixT_StagReal_Eigen__ColMajor_StagInt_t, 0 |  0 );
   return resultobj;
 fail:
   return NULL;
@@ -6620,7 +6745,7 @@ SWIGINTERN PyObject *_wrap_Graph_lazy_random_walk_matrix(PyObject *SWIGUNUSEDPAR
       return NULL;
     }
   }
-  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_Eigen__SparseMatrixT_double_Eigen__ColMajor_stag_int_t, 0 |  0 );
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_Eigen__SparseMatrixT_StagReal_Eigen__ColMajor_StagInt_t, 0 |  0 );
   return resultobj;
 fail:
   return NULL;
@@ -6633,7 +6758,7 @@ SWIGINTERN PyObject *_wrap_Graph_total_volume(PyObject *SWIGUNUSEDPARM(self), Py
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
-  double result;
+  StagReal result;
   
   if (!args) SWIG_fail;
   swig_obj[0] = args;
@@ -6644,7 +6769,7 @@ SWIGINTERN PyObject *_wrap_Graph_total_volume(PyObject *SWIGUNUSEDPARM(self), Py
   arg1 = reinterpret_cast< stag::Graph * >(argp1);
   {
     try {
-      result = (double)(arg1)->total_volume();
+      result = (StagReal)(arg1)->total_volume();
     } catch (std::invalid_argument &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
@@ -6669,7 +6794,7 @@ SWIGINTERN PyObject *_wrap_Graph_average_degree(PyObject *SWIGUNUSEDPARM(self), 
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
-  double result;
+  StagReal result;
   
   if (!args) SWIG_fail;
   swig_obj[0] = args;
@@ -6680,7 +6805,7 @@ SWIGINTERN PyObject *_wrap_Graph_average_degree(PyObject *SWIGUNUSEDPARM(self), 
   arg1 = reinterpret_cast< stag::Graph * >(argp1);
   {
     try {
-      result = (double)(arg1)->average_degree();
+      result = (StagReal)(arg1)->average_degree();
     } catch (std::invalid_argument &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
@@ -6705,7 +6830,7 @@ SWIGINTERN PyObject *_wrap_Graph_number_of_vertices(PyObject *SWIGUNUSEDPARM(sel
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
-  stag_int result;
+  StagInt result;
   
   if (!args) SWIG_fail;
   swig_obj[0] = args;
@@ -6716,7 +6841,7 @@ SWIGINTERN PyObject *_wrap_Graph_number_of_vertices(PyObject *SWIGUNUSEDPARM(sel
   arg1 = reinterpret_cast< stag::Graph * >(argp1);
   {
     try {
-      result = (stag_int)((stag::Graph const *)arg1)->number_of_vertices();
+      result = ((stag::Graph const *)arg1)->number_of_vertices();
     } catch (std::invalid_argument &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
@@ -6728,7 +6853,10 @@ SWIGINTERN PyObject *_wrap_Graph_number_of_vertices(PyObject *SWIGUNUSEDPARM(sel
       return NULL;
     }
   }
-  resultobj = SWIG_From_long_SS_long(static_cast< long long >(result));
+  {
+    // StagInt typemap (out)
+    resultobj = PyLong_FromLongLong((long long) result);
+  }
   return resultobj;
 fail:
   return NULL;
@@ -6741,7 +6869,7 @@ SWIGINTERN PyObject *_wrap_Graph_number_of_edges(PyObject *SWIGUNUSEDPARM(self),
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
-  stag_int result;
+  StagInt result;
   
   if (!args) SWIG_fail;
   swig_obj[0] = args;
@@ -6752,7 +6880,7 @@ SWIGINTERN PyObject *_wrap_Graph_number_of_edges(PyObject *SWIGUNUSEDPARM(self),
   arg1 = reinterpret_cast< stag::Graph * >(argp1);
   {
     try {
-      result = (stag_int)((stag::Graph const *)arg1)->number_of_edges();
+      result = ((stag::Graph const *)arg1)->number_of_edges();
     } catch (std::invalid_argument &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
@@ -6764,7 +6892,122 @@ SWIGINTERN PyObject *_wrap_Graph_number_of_edges(PyObject *SWIGUNUSEDPARM(self),
       return NULL;
     }
   }
-  resultobj = SWIG_From_long_SS_long(static_cast< long long >(result));
+  {
+    // StagInt typemap (out)
+    resultobj = PyLong_FromLongLong((long long) result);
+  }
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_Graph_add_edge(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  stag::Graph *arg1 = (stag::Graph *) 0 ;
+  StagInt arg2 ;
+  StagInt arg3 ;
+  StagReal arg4 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  double val4 ;
+  int ecode4 = 0 ;
+  PyObject *swig_obj[4] ;
+  
+  if (!SWIG_Python_UnpackTuple(args, "Graph_add_edge", 4, 4, swig_obj)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_stag__Graph, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Graph_add_edge" "', argument " "1"" of type '" "stag::Graph *""'"); 
+  }
+  arg1 = reinterpret_cast< stag::Graph * >(argp1);
+  {
+    // StagInt typemap (in)
+    if (!PyLong_Check((PyObject *) swig_obj[1])) {
+      PyErr_SetString(PyExc_TypeError, "Expected an integer.");
+      return NULL;
+    }
+    arg2 = (StagInt) PyLong_AsLong((PyObject*) swig_obj[1]);
+  }
+  {
+    // StagInt typemap (in)
+    if (!PyLong_Check((PyObject *) swig_obj[2])) {
+      PyErr_SetString(PyExc_TypeError, "Expected an integer.");
+      return NULL;
+    }
+    arg3 = (StagInt) PyLong_AsLong((PyObject*) swig_obj[2]);
+  }
+  ecode4 = SWIG_AsVal_double(swig_obj[3], &val4);
+  if (!SWIG_IsOK(ecode4)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "Graph_add_edge" "', argument " "4"" of type '" "StagReal""'");
+  } 
+  arg4 = static_cast< StagReal >(val4);
+  {
+    try {
+      (arg1)->add_edge(arg2,arg3,arg4);
+    } catch (std::invalid_argument &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::runtime_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::domain_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    }
+  }
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_Graph_remove_edge(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  stag::Graph *arg1 = (stag::Graph *) 0 ;
+  StagInt arg2 ;
+  StagInt arg3 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject *swig_obj[3] ;
+  
+  if (!SWIG_Python_UnpackTuple(args, "Graph_remove_edge", 3, 3, swig_obj)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_stag__Graph, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Graph_remove_edge" "', argument " "1"" of type '" "stag::Graph *""'"); 
+  }
+  arg1 = reinterpret_cast< stag::Graph * >(argp1);
+  {
+    // StagInt typemap (in)
+    if (!PyLong_Check((PyObject *) swig_obj[1])) {
+      PyErr_SetString(PyExc_TypeError, "Expected an integer.");
+      return NULL;
+    }
+    arg2 = (StagInt) PyLong_AsLong((PyObject*) swig_obj[1]);
+  }
+  {
+    // StagInt typemap (in)
+    if (!PyLong_Check((PyObject *) swig_obj[2])) {
+      PyErr_SetString(PyExc_TypeError, "Expected an integer.");
+      return NULL;
+    }
+    arg3 = (StagInt) PyLong_AsLong((PyObject*) swig_obj[2]);
+  }
+  {
+    try {
+      (arg1)->remove_edge(arg2,arg3);
+    } catch (std::invalid_argument &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::runtime_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::domain_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    }
+  }
+  resultobj = SWIG_Py_Void();
   return resultobj;
 fail:
   return NULL;
@@ -6846,12 +7089,12 @@ fail:
 SWIGINTERN PyObject *_wrap_Graph_subgraph(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   stag::Graph *arg1 = (stag::Graph *) 0 ;
-  std::vector< stag_int > *arg2 = 0 ;
+  std::vector< StagInt > *arg2 = 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyArrayObject *array2 = NULL ;
   int is_new_object2 = 0 ;
-  std::vector< long long > temp_vec2 ;
+  std::vector< int64_t > temp_vec2 ;
   PyObject *swig_obj[2] ;
   SwigValueWrapper< stag::Graph > result;
   
@@ -6869,13 +7112,13 @@ SWIGINTERN PyObject *_wrap_Graph_subgraph(PyObject *SWIGUNUSEDPARM(self), PyObje
     
     // Check that the dimensions of the array2 are correct
     array2 = obj_to_array_contiguous_allow_conversion(swig_obj[1],
-      NPY_LONGLONG,
+      NPY_INT64,
       &is_new_object2);
     if (!array2 || !require_dimensions(array2, 1) ||
       !require_size(array2, size, 1)) SWIG_fail;
     
     // Get a pointer to the data in the numpy array2
-    long long* data_ptr = (long long*) array_data(array2);
+    int64_t* data_ptr = (int64_t*) array_data(array2);
     
     // Copy the numpy data into the new vector.
     temp_vec2.reserve(size[0]);
@@ -6954,13 +7197,11 @@ fail:
 SWIGINTERN PyObject *_wrap_Graph_degree(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   stag::Graph *arg1 = (stag::Graph *) 0 ;
-  stag_int arg2 ;
+  StagInt arg2 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-  long long val2 ;
-  int ecode2 = 0 ;
   PyObject *swig_obj[2] ;
-  double result;
+  StagReal result;
   
   if (!SWIG_Python_UnpackTuple(args, "Graph_degree", 2, 2, swig_obj)) SWIG_fail;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_stag__Graph, 0 |  0 );
@@ -6968,14 +7209,17 @@ SWIGINTERN PyObject *_wrap_Graph_degree(PyObject *SWIGUNUSEDPARM(self), PyObject
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Graph_degree" "', argument " "1"" of type '" "stag::Graph *""'"); 
   }
   arg1 = reinterpret_cast< stag::Graph * >(argp1);
-  ecode2 = SWIG_AsVal_long_SS_long(swig_obj[1], &val2);
-  if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "Graph_degree" "', argument " "2"" of type '" "stag_int""'");
-  } 
-  arg2 = static_cast< stag_int >(val2);
+  {
+    // StagInt typemap (in)
+    if (!PyLong_Check((PyObject *) swig_obj[1])) {
+      PyErr_SetString(PyExc_TypeError, "Expected an integer.");
+      return NULL;
+    }
+    arg2 = (StagInt) PyLong_AsLong((PyObject*) swig_obj[1]);
+  }
   {
     try {
-      result = (double)(arg1)->degree(arg2);
+      result = (StagReal)(arg1)->degree(arg2);
     } catch (std::invalid_argument &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
@@ -6997,13 +7241,11 @@ fail:
 SWIGINTERN PyObject *_wrap_Graph_degree_unweighted(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   stag::Graph *arg1 = (stag::Graph *) 0 ;
-  stag_int arg2 ;
+  StagInt arg2 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-  long long val2 ;
-  int ecode2 = 0 ;
   PyObject *swig_obj[2] ;
-  stag_int result;
+  StagInt result;
   
   if (!SWIG_Python_UnpackTuple(args, "Graph_degree_unweighted", 2, 2, swig_obj)) SWIG_fail;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_stag__Graph, 0 |  0 );
@@ -7011,14 +7253,17 @@ SWIGINTERN PyObject *_wrap_Graph_degree_unweighted(PyObject *SWIGUNUSEDPARM(self
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Graph_degree_unweighted" "', argument " "1"" of type '" "stag::Graph *""'"); 
   }
   arg1 = reinterpret_cast< stag::Graph * >(argp1);
-  ecode2 = SWIG_AsVal_long_SS_long(swig_obj[1], &val2);
-  if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "Graph_degree_unweighted" "', argument " "2"" of type '" "stag_int""'");
-  } 
-  arg2 = static_cast< stag_int >(val2);
+  {
+    // StagInt typemap (in)
+    if (!PyLong_Check((PyObject *) swig_obj[1])) {
+      PyErr_SetString(PyExc_TypeError, "Expected an integer.");
+      return NULL;
+    }
+    arg2 = (StagInt) PyLong_AsLong((PyObject*) swig_obj[1]);
+  }
   {
     try {
-      result = (stag_int)(arg1)->degree_unweighted(arg2);
+      result = (arg1)->degree_unweighted(arg2);
     } catch (std::invalid_argument &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
@@ -7030,7 +7275,10 @@ SWIGINTERN PyObject *_wrap_Graph_degree_unweighted(PyObject *SWIGUNUSEDPARM(self
       return NULL;
     }
   }
-  resultobj = SWIG_From_long_SS_long(static_cast< long long >(result));
+  {
+    // StagInt typemap (out)
+    resultobj = PyLong_FromLongLong((long long) result);
+  }
   return resultobj;
 fail:
   return NULL;
@@ -7040,11 +7288,9 @@ fail:
 SWIGINTERN PyObject *_wrap_Graph_neighbors(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   stag::Graph *arg1 = (stag::Graph *) 0 ;
-  stag_int arg2 ;
+  StagInt arg2 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-  long long val2 ;
-  int ecode2 = 0 ;
   PyObject *swig_obj[2] ;
   SwigValueWrapper< std::vector< stag::edge > > result;
   
@@ -7054,11 +7300,14 @@ SWIGINTERN PyObject *_wrap_Graph_neighbors(PyObject *SWIGUNUSEDPARM(self), PyObj
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Graph_neighbors" "', argument " "1"" of type '" "stag::Graph *""'"); 
   }
   arg1 = reinterpret_cast< stag::Graph * >(argp1);
-  ecode2 = SWIG_AsVal_long_SS_long(swig_obj[1], &val2);
-  if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "Graph_neighbors" "', argument " "2"" of type '" "stag_int""'");
-  } 
-  arg2 = static_cast< stag_int >(val2);
+  {
+    // StagInt typemap (in)
+    if (!PyLong_Check((PyObject *) swig_obj[1])) {
+      PyErr_SetString(PyExc_TypeError, "Expected an integer.");
+      return NULL;
+    }
+    arg2 = (StagInt) PyLong_AsLong((PyObject*) swig_obj[1]);
+  }
   {
     try {
       result = (arg1)->neighbors(arg2);
@@ -7075,11 +7324,11 @@ SWIGINTERN PyObject *_wrap_Graph_neighbors(PyObject *SWIGUNUSEDPARM(self), PyObj
   }
   {
     // Return a vector of edges as a list of tuples
-    stag_int outer_length = (&result)->size();
+    StagInt outer_length = (&result)->size();
     resultobj = PyList_New(outer_length);
     
     // Construct a new 3-tuple for each inner object, and add to the list.
-    for (stag_int i = 0; i < outer_length; i++) {
+    for (StagInt i = 0; i < outer_length; i++) {
       PyObject* new_tuple_object = PyTuple_Pack(
         3,
         PyLong_FromLongLong((&result)->at(i).v1),
@@ -7098,13 +7347,11 @@ fail:
 SWIGINTERN PyObject *_wrap_Graph_neighbors_unweighted(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   stag::Graph *arg1 = (stag::Graph *) 0 ;
-  stag_int arg2 ;
+  StagInt arg2 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-  long long val2 ;
-  int ecode2 = 0 ;
   PyObject *swig_obj[2] ;
-  std::vector< stag_int > result;
+  std::vector< StagInt > result;
   
   if (!SWIG_Python_UnpackTuple(args, "Graph_neighbors_unweighted", 2, 2, swig_obj)) SWIG_fail;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_stag__Graph, 0 |  0 );
@@ -7112,11 +7359,14 @@ SWIGINTERN PyObject *_wrap_Graph_neighbors_unweighted(PyObject *SWIGUNUSEDPARM(s
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Graph_neighbors_unweighted" "', argument " "1"" of type '" "stag::Graph *""'"); 
   }
   arg1 = reinterpret_cast< stag::Graph * >(argp1);
-  ecode2 = SWIG_AsVal_long_SS_long(swig_obj[1], &val2);
-  if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "Graph_neighbors_unweighted" "', argument " "2"" of type '" "stag_int""'");
-  } 
-  arg2 = static_cast< stag_int >(val2);
+  {
+    // StagInt typemap (in)
+    if (!PyLong_Check((PyObject *) swig_obj[1])) {
+      PyErr_SetString(PyExc_TypeError, "Expected an integer.");
+      return NULL;
+    }
+    arg2 = (StagInt) PyLong_AsLong((PyObject*) swig_obj[1]);
+  }
   {
     try {
       result = (arg1)->neighbors_unweighted(arg2);
@@ -7139,10 +7389,10 @@ SWIGINTERN PyObject *_wrap_Graph_neighbors_unweighted(PyObject *SWIGUNUSEDPARM(s
     // This adds a small 'constant factor' to the running time of the algorithm
     // in STAGPy over C++ STAG.
     npy_intp length = (&result)->size();
-    resultobj = PyArray_SimpleNew(1, &length, NPY_LONGLONG);
+    resultobj = PyArray_SimpleNew(1, &length, NPY_INT64);
     memcpy(PyArray_DATA((PyArrayObject*) resultobj),
       (&result)->data(),
-      sizeof(long long) * length);
+      sizeof(int64_t) * length);
   }
   return resultobj;
 fail:
@@ -7153,14 +7403,14 @@ fail:
 SWIGINTERN PyObject *_wrap_Graph_degrees(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   stag::Graph *arg1 = (stag::Graph *) 0 ;
-  std::vector< stag_int > arg2 ;
+  std::vector< StagInt > arg2 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyArrayObject *array2 = NULL ;
   int is_new_object2 = 0 ;
-  std::vector< long long > temp_vec2 ;
+  std::vector< int64_t > temp_vec2 ;
   PyObject *swig_obj[2] ;
-  std::vector< double > result;
+  std::vector< StagReal > result;
   
   if (!SWIG_Python_UnpackTuple(args, "Graph_degrees", 2, 2, swig_obj)) SWIG_fail;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_stag__Graph, 0 |  0 );
@@ -7176,13 +7426,13 @@ SWIGINTERN PyObject *_wrap_Graph_degrees(PyObject *SWIGUNUSEDPARM(self), PyObjec
     
     // Check that the dimensions of the array2 are correct
     array2 = obj_to_array_contiguous_allow_conversion(swig_obj[1],
-      NPY_LONGLONG,
+      NPY_INT64,
       &is_new_object2);
     if (!array2 || !require_dimensions(array2, 1) ||
       !require_size(array2, size, 1)) SWIG_fail;
     
     // Get a pointer to the data in the numpy array2
-    long long* data_ptr = (long long*) array_data(array2);
+    int64_t* data_ptr = (int64_t*) array_data(array2);
     
     // Copy the numpy data into the new vector.
     temp_vec2.reserve(size[0]);
@@ -7227,14 +7477,14 @@ fail:
 SWIGINTERN PyObject *_wrap_Graph_degrees_unweighted(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   stag::Graph *arg1 = (stag::Graph *) 0 ;
-  std::vector< stag_int > arg2 ;
+  std::vector< StagInt > arg2 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyArrayObject *array2 = NULL ;
   int is_new_object2 = 0 ;
-  std::vector< long long > temp_vec2 ;
+  std::vector< int64_t > temp_vec2 ;
   PyObject *swig_obj[2] ;
-  std::vector< stag_int > result;
+  std::vector< StagInt > result;
   
   if (!SWIG_Python_UnpackTuple(args, "Graph_degrees_unweighted", 2, 2, swig_obj)) SWIG_fail;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_stag__Graph, 0 |  0 );
@@ -7250,13 +7500,13 @@ SWIGINTERN PyObject *_wrap_Graph_degrees_unweighted(PyObject *SWIGUNUSEDPARM(sel
     
     // Check that the dimensions of the array2 are correct
     array2 = obj_to_array_contiguous_allow_conversion(swig_obj[1],
-      NPY_LONGLONG,
+      NPY_INT64,
       &is_new_object2);
     if (!array2 || !require_dimensions(array2, 1) ||
       !require_size(array2, size, 1)) SWIG_fail;
     
     // Get a pointer to the data in the numpy array2
-    long long* data_ptr = (long long*) array_data(array2);
+    int64_t* data_ptr = (int64_t*) array_data(array2);
     
     // Copy the numpy data into the new vector.
     temp_vec2.reserve(size[0]);
@@ -7287,10 +7537,10 @@ SWIGINTERN PyObject *_wrap_Graph_degrees_unweighted(PyObject *SWIGUNUSEDPARM(sel
     // This adds a small 'constant factor' to the running time of the algorithm
     // in STAGPy over C++ STAG.
     npy_intp length = (&result)->size();
-    resultobj = PyArray_SimpleNew(1, &length, NPY_LONGLONG);
+    resultobj = PyArray_SimpleNew(1, &length, NPY_INT64);
     memcpy(PyArray_DATA((PyArrayObject*) resultobj),
       (&result)->data(),
-      sizeof(long long) * length);
+      sizeof(int64_t) * length);
   }
   return resultobj;
 fail:
@@ -7301,11 +7551,9 @@ fail:
 SWIGINTERN PyObject *_wrap_Graph_vertex_exists(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   stag::Graph *arg1 = (stag::Graph *) 0 ;
-  stag_int arg2 ;
+  StagInt arg2 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-  long long val2 ;
-  int ecode2 = 0 ;
   PyObject *swig_obj[2] ;
   bool result;
   
@@ -7315,11 +7563,14 @@ SWIGINTERN PyObject *_wrap_Graph_vertex_exists(PyObject *SWIGUNUSEDPARM(self), P
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Graph_vertex_exists" "', argument " "1"" of type '" "stag::Graph *""'"); 
   }
   arg1 = reinterpret_cast< stag::Graph * >(argp1);
-  ecode2 = SWIG_AsVal_long_SS_long(swig_obj[1], &val2);
-  if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "Graph_vertex_exists" "', argument " "2"" of type '" "stag_int""'");
-  } 
-  arg2 = static_cast< stag_int >(val2);
+  {
+    // StagInt typemap (in)
+    if (!PyLong_Check((PyObject *) swig_obj[1])) {
+      PyErr_SetString(PyExc_TypeError, "Expected an integer.");
+      return NULL;
+    }
+    arg2 = (StagInt) PyLong_AsLong((PyObject*) swig_obj[1]);
+  }
   {
     try {
       result = (bool)(arg1)->vertex_exists(arg2);
@@ -7478,13 +7729,11 @@ fail:
 SWIGINTERN PyObject *_wrap_AdjacencyListLocalGraph_degree(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   stag::AdjacencyListLocalGraph *arg1 = (stag::AdjacencyListLocalGraph *) 0 ;
-  stag_int arg2 ;
+  StagInt arg2 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-  long long val2 ;
-  int ecode2 = 0 ;
   PyObject *swig_obj[2] ;
-  double result;
+  StagReal result;
   
   if (!SWIG_Python_UnpackTuple(args, "AdjacencyListLocalGraph_degree", 2, 2, swig_obj)) SWIG_fail;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_stag__AdjacencyListLocalGraph, 0 |  0 );
@@ -7492,14 +7741,17 @@ SWIGINTERN PyObject *_wrap_AdjacencyListLocalGraph_degree(PyObject *SWIGUNUSEDPA
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AdjacencyListLocalGraph_degree" "', argument " "1"" of type '" "stag::AdjacencyListLocalGraph *""'"); 
   }
   arg1 = reinterpret_cast< stag::AdjacencyListLocalGraph * >(argp1);
-  ecode2 = SWIG_AsVal_long_SS_long(swig_obj[1], &val2);
-  if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "AdjacencyListLocalGraph_degree" "', argument " "2"" of type '" "stag_int""'");
-  } 
-  arg2 = static_cast< stag_int >(val2);
+  {
+    // StagInt typemap (in)
+    if (!PyLong_Check((PyObject *) swig_obj[1])) {
+      PyErr_SetString(PyExc_TypeError, "Expected an integer.");
+      return NULL;
+    }
+    arg2 = (StagInt) PyLong_AsLong((PyObject*) swig_obj[1]);
+  }
   {
     try {
-      result = (double)(arg1)->degree(arg2);
+      result = (StagReal)(arg1)->degree(arg2);
     } catch (std::invalid_argument &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
@@ -7521,13 +7773,11 @@ fail:
 SWIGINTERN PyObject *_wrap_AdjacencyListLocalGraph_degree_unweighted(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   stag::AdjacencyListLocalGraph *arg1 = (stag::AdjacencyListLocalGraph *) 0 ;
-  stag_int arg2 ;
+  StagInt arg2 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-  long long val2 ;
-  int ecode2 = 0 ;
   PyObject *swig_obj[2] ;
-  stag_int result;
+  StagInt result;
   
   if (!SWIG_Python_UnpackTuple(args, "AdjacencyListLocalGraph_degree_unweighted", 2, 2, swig_obj)) SWIG_fail;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_stag__AdjacencyListLocalGraph, 0 |  0 );
@@ -7535,14 +7785,17 @@ SWIGINTERN PyObject *_wrap_AdjacencyListLocalGraph_degree_unweighted(PyObject *S
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AdjacencyListLocalGraph_degree_unweighted" "', argument " "1"" of type '" "stag::AdjacencyListLocalGraph *""'"); 
   }
   arg1 = reinterpret_cast< stag::AdjacencyListLocalGraph * >(argp1);
-  ecode2 = SWIG_AsVal_long_SS_long(swig_obj[1], &val2);
-  if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "AdjacencyListLocalGraph_degree_unweighted" "', argument " "2"" of type '" "stag_int""'");
-  } 
-  arg2 = static_cast< stag_int >(val2);
+  {
+    // StagInt typemap (in)
+    if (!PyLong_Check((PyObject *) swig_obj[1])) {
+      PyErr_SetString(PyExc_TypeError, "Expected an integer.");
+      return NULL;
+    }
+    arg2 = (StagInt) PyLong_AsLong((PyObject*) swig_obj[1]);
+  }
   {
     try {
-      result = (stag_int)(arg1)->degree_unweighted(arg2);
+      result = (arg1)->degree_unweighted(arg2);
     } catch (std::invalid_argument &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
@@ -7554,7 +7807,10 @@ SWIGINTERN PyObject *_wrap_AdjacencyListLocalGraph_degree_unweighted(PyObject *S
       return NULL;
     }
   }
-  resultobj = SWIG_From_long_SS_long(static_cast< long long >(result));
+  {
+    // StagInt typemap (out)
+    resultobj = PyLong_FromLongLong((long long) result);
+  }
   return resultobj;
 fail:
   return NULL;
@@ -7564,11 +7820,9 @@ fail:
 SWIGINTERN PyObject *_wrap_AdjacencyListLocalGraph_neighbors(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   stag::AdjacencyListLocalGraph *arg1 = (stag::AdjacencyListLocalGraph *) 0 ;
-  stag_int arg2 ;
+  StagInt arg2 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-  long long val2 ;
-  int ecode2 = 0 ;
   PyObject *swig_obj[2] ;
   SwigValueWrapper< std::vector< stag::edge > > result;
   
@@ -7578,11 +7832,14 @@ SWIGINTERN PyObject *_wrap_AdjacencyListLocalGraph_neighbors(PyObject *SWIGUNUSE
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AdjacencyListLocalGraph_neighbors" "', argument " "1"" of type '" "stag::AdjacencyListLocalGraph *""'"); 
   }
   arg1 = reinterpret_cast< stag::AdjacencyListLocalGraph * >(argp1);
-  ecode2 = SWIG_AsVal_long_SS_long(swig_obj[1], &val2);
-  if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "AdjacencyListLocalGraph_neighbors" "', argument " "2"" of type '" "stag_int""'");
-  } 
-  arg2 = static_cast< stag_int >(val2);
+  {
+    // StagInt typemap (in)
+    if (!PyLong_Check((PyObject *) swig_obj[1])) {
+      PyErr_SetString(PyExc_TypeError, "Expected an integer.");
+      return NULL;
+    }
+    arg2 = (StagInt) PyLong_AsLong((PyObject*) swig_obj[1]);
+  }
   {
     try {
       result = (arg1)->neighbors(arg2);
@@ -7599,11 +7856,11 @@ SWIGINTERN PyObject *_wrap_AdjacencyListLocalGraph_neighbors(PyObject *SWIGUNUSE
   }
   {
     // Return a vector of edges as a list of tuples
-    stag_int outer_length = (&result)->size();
+    StagInt outer_length = (&result)->size();
     resultobj = PyList_New(outer_length);
     
     // Construct a new 3-tuple for each inner object, and add to the list.
-    for (stag_int i = 0; i < outer_length; i++) {
+    for (StagInt i = 0; i < outer_length; i++) {
       PyObject* new_tuple_object = PyTuple_Pack(
         3,
         PyLong_FromLongLong((&result)->at(i).v1),
@@ -7622,13 +7879,11 @@ fail:
 SWIGINTERN PyObject *_wrap_AdjacencyListLocalGraph_neighbors_unweighted(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   stag::AdjacencyListLocalGraph *arg1 = (stag::AdjacencyListLocalGraph *) 0 ;
-  stag_int arg2 ;
+  StagInt arg2 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-  long long val2 ;
-  int ecode2 = 0 ;
   PyObject *swig_obj[2] ;
-  std::vector< stag_int > result;
+  std::vector< StagInt > result;
   
   if (!SWIG_Python_UnpackTuple(args, "AdjacencyListLocalGraph_neighbors_unweighted", 2, 2, swig_obj)) SWIG_fail;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_stag__AdjacencyListLocalGraph, 0 |  0 );
@@ -7636,11 +7891,14 @@ SWIGINTERN PyObject *_wrap_AdjacencyListLocalGraph_neighbors_unweighted(PyObject
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AdjacencyListLocalGraph_neighbors_unweighted" "', argument " "1"" of type '" "stag::AdjacencyListLocalGraph *""'"); 
   }
   arg1 = reinterpret_cast< stag::AdjacencyListLocalGraph * >(argp1);
-  ecode2 = SWIG_AsVal_long_SS_long(swig_obj[1], &val2);
-  if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "AdjacencyListLocalGraph_neighbors_unweighted" "', argument " "2"" of type '" "stag_int""'");
-  } 
-  arg2 = static_cast< stag_int >(val2);
+  {
+    // StagInt typemap (in)
+    if (!PyLong_Check((PyObject *) swig_obj[1])) {
+      PyErr_SetString(PyExc_TypeError, "Expected an integer.");
+      return NULL;
+    }
+    arg2 = (StagInt) PyLong_AsLong((PyObject*) swig_obj[1]);
+  }
   {
     try {
       result = (arg1)->neighbors_unweighted(arg2);
@@ -7663,10 +7921,10 @@ SWIGINTERN PyObject *_wrap_AdjacencyListLocalGraph_neighbors_unweighted(PyObject
     // This adds a small 'constant factor' to the running time of the algorithm
     // in STAGPy over C++ STAG.
     npy_intp length = (&result)->size();
-    resultobj = PyArray_SimpleNew(1, &length, NPY_LONGLONG);
+    resultobj = PyArray_SimpleNew(1, &length, NPY_INT64);
     memcpy(PyArray_DATA((PyArrayObject*) resultobj),
       (&result)->data(),
-      sizeof(long long) * length);
+      sizeof(int64_t) * length);
   }
   return resultobj;
 fail:
@@ -7677,14 +7935,14 @@ fail:
 SWIGINTERN PyObject *_wrap_AdjacencyListLocalGraph_degrees(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   stag::AdjacencyListLocalGraph *arg1 = (stag::AdjacencyListLocalGraph *) 0 ;
-  std::vector< stag_int > arg2 ;
+  std::vector< StagInt > arg2 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyArrayObject *array2 = NULL ;
   int is_new_object2 = 0 ;
-  std::vector< long long > temp_vec2 ;
+  std::vector< int64_t > temp_vec2 ;
   PyObject *swig_obj[2] ;
-  std::vector< double > result;
+  std::vector< StagReal > result;
   
   if (!SWIG_Python_UnpackTuple(args, "AdjacencyListLocalGraph_degrees", 2, 2, swig_obj)) SWIG_fail;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_stag__AdjacencyListLocalGraph, 0 |  0 );
@@ -7700,13 +7958,13 @@ SWIGINTERN PyObject *_wrap_AdjacencyListLocalGraph_degrees(PyObject *SWIGUNUSEDP
     
     // Check that the dimensions of the array2 are correct
     array2 = obj_to_array_contiguous_allow_conversion(swig_obj[1],
-      NPY_LONGLONG,
+      NPY_INT64,
       &is_new_object2);
     if (!array2 || !require_dimensions(array2, 1) ||
       !require_size(array2, size, 1)) SWIG_fail;
     
     // Get a pointer to the data in the numpy array2
-    long long* data_ptr = (long long*) array_data(array2);
+    int64_t* data_ptr = (int64_t*) array_data(array2);
     
     // Copy the numpy data into the new vector.
     temp_vec2.reserve(size[0]);
@@ -7751,14 +8009,14 @@ fail:
 SWIGINTERN PyObject *_wrap_AdjacencyListLocalGraph_degrees_unweighted(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   stag::AdjacencyListLocalGraph *arg1 = (stag::AdjacencyListLocalGraph *) 0 ;
-  std::vector< stag_int > arg2 ;
+  std::vector< StagInt > arg2 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyArrayObject *array2 = NULL ;
   int is_new_object2 = 0 ;
-  std::vector< long long > temp_vec2 ;
+  std::vector< int64_t > temp_vec2 ;
   PyObject *swig_obj[2] ;
-  std::vector< stag_int > result;
+  std::vector< StagInt > result;
   
   if (!SWIG_Python_UnpackTuple(args, "AdjacencyListLocalGraph_degrees_unweighted", 2, 2, swig_obj)) SWIG_fail;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_stag__AdjacencyListLocalGraph, 0 |  0 );
@@ -7774,13 +8032,13 @@ SWIGINTERN PyObject *_wrap_AdjacencyListLocalGraph_degrees_unweighted(PyObject *
     
     // Check that the dimensions of the array2 are correct
     array2 = obj_to_array_contiguous_allow_conversion(swig_obj[1],
-      NPY_LONGLONG,
+      NPY_INT64,
       &is_new_object2);
     if (!array2 || !require_dimensions(array2, 1) ||
       !require_size(array2, size, 1)) SWIG_fail;
     
     // Get a pointer to the data in the numpy array2
-    long long* data_ptr = (long long*) array_data(array2);
+    int64_t* data_ptr = (int64_t*) array_data(array2);
     
     // Copy the numpy data into the new vector.
     temp_vec2.reserve(size[0]);
@@ -7811,10 +8069,10 @@ SWIGINTERN PyObject *_wrap_AdjacencyListLocalGraph_degrees_unweighted(PyObject *
     // This adds a small 'constant factor' to the running time of the algorithm
     // in STAGPy over C++ STAG.
     npy_intp length = (&result)->size();
-    resultobj = PyArray_SimpleNew(1, &length, NPY_LONGLONG);
+    resultobj = PyArray_SimpleNew(1, &length, NPY_INT64);
     memcpy(PyArray_DATA((PyArrayObject*) resultobj),
       (&result)->data(),
-      sizeof(long long) * length);
+      sizeof(int64_t) * length);
   }
   return resultobj;
 fail:
@@ -7825,11 +8083,9 @@ fail:
 SWIGINTERN PyObject *_wrap_AdjacencyListLocalGraph_vertex_exists(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   stag::AdjacencyListLocalGraph *arg1 = (stag::AdjacencyListLocalGraph *) 0 ;
-  stag_int arg2 ;
+  StagInt arg2 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-  long long val2 ;
-  int ecode2 = 0 ;
   PyObject *swig_obj[2] ;
   bool result;
   
@@ -7839,11 +8095,14 @@ SWIGINTERN PyObject *_wrap_AdjacencyListLocalGraph_vertex_exists(PyObject *SWIGU
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AdjacencyListLocalGraph_vertex_exists" "', argument " "1"" of type '" "stag::AdjacencyListLocalGraph *""'"); 
   }
   arg1 = reinterpret_cast< stag::AdjacencyListLocalGraph * >(argp1);
-  ecode2 = SWIG_AsVal_long_SS_long(swig_obj[1], &val2);
-  if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "AdjacencyListLocalGraph_vertex_exists" "', argument " "2"" of type '" "stag_int""'");
-  } 
-  arg2 = static_cast< stag_int >(val2);
+  {
+    // StagInt typemap (in)
+    if (!PyLong_Check((PyObject *) swig_obj[1])) {
+      PyErr_SetString(PyExc_TypeError, "Expected an integer.");
+      return NULL;
+    }
+    arg2 = (StagInt) PyLong_AsLong((PyObject*) swig_obj[1]);
+  }
   {
     try {
       result = (bool)(arg1)->vertex_exists(arg2);
@@ -7913,19 +8172,20 @@ SWIGINTERN PyObject *AdjacencyListLocalGraph_swiginit(PyObject *SWIGUNUSEDPARM(s
 
 SWIGINTERN PyObject *_wrap_cycle_graph(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
-  stag_int arg1 ;
-  long long val1 ;
-  int ecode1 = 0 ;
+  StagInt arg1 ;
   PyObject *swig_obj[1] ;
   SwigValueWrapper< stag::Graph > result;
   
   if (!args) SWIG_fail;
   swig_obj[0] = args;
-  ecode1 = SWIG_AsVal_long_SS_long(swig_obj[0], &val1);
-  if (!SWIG_IsOK(ecode1)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "cycle_graph" "', argument " "1"" of type '" "stag_int""'");
-  } 
-  arg1 = static_cast< stag_int >(val1);
+  {
+    // StagInt typemap (in)
+    if (!PyLong_Check((PyObject *) swig_obj[0])) {
+      PyErr_SetString(PyExc_TypeError, "Expected an integer.");
+      return NULL;
+    }
+    arg1 = (StagInt) PyLong_AsLong((PyObject*) swig_obj[0]);
+  }
   {
     try {
       result = stag::cycle_graph(arg1);
@@ -7949,19 +8209,20 @@ fail:
 
 SWIGINTERN PyObject *_wrap_complete_graph(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
-  stag_int arg1 ;
-  long long val1 ;
-  int ecode1 = 0 ;
+  StagInt arg1 ;
   PyObject *swig_obj[1] ;
   SwigValueWrapper< stag::Graph > result;
   
   if (!args) SWIG_fail;
   swig_obj[0] = args;
-  ecode1 = SWIG_AsVal_long_SS_long(swig_obj[0], &val1);
-  if (!SWIG_IsOK(ecode1)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "complete_graph" "', argument " "1"" of type '" "stag_int""'");
-  } 
-  arg1 = static_cast< stag_int >(val1);
+  {
+    // StagInt typemap (in)
+    if (!PyLong_Check((PyObject *) swig_obj[0])) {
+      PyErr_SetString(PyExc_TypeError, "Expected an integer.");
+      return NULL;
+    }
+    arg1 = (StagInt) PyLong_AsLong((PyObject*) swig_obj[0]);
+  }
   {
     try {
       result = stag::complete_graph(arg1);
@@ -7985,19 +8246,20 @@ fail:
 
 SWIGINTERN PyObject *_wrap_barbell_graph(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
-  stag_int arg1 ;
-  long long val1 ;
-  int ecode1 = 0 ;
+  StagInt arg1 ;
   PyObject *swig_obj[1] ;
   SwigValueWrapper< stag::Graph > result;
   
   if (!args) SWIG_fail;
   swig_obj[0] = args;
-  ecode1 = SWIG_AsVal_long_SS_long(swig_obj[0], &val1);
-  if (!SWIG_IsOK(ecode1)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "barbell_graph" "', argument " "1"" of type '" "stag_int""'");
-  } 
-  arg1 = static_cast< stag_int >(val1);
+  {
+    // StagInt typemap (in)
+    if (!PyLong_Check((PyObject *) swig_obj[0])) {
+      PyErr_SetString(PyExc_TypeError, "Expected an integer.");
+      return NULL;
+    }
+    arg1 = (StagInt) PyLong_AsLong((PyObject*) swig_obj[0]);
+  }
   {
     try {
       result = stag::barbell_graph(arg1);
@@ -8021,19 +8283,20 @@ fail:
 
 SWIGINTERN PyObject *_wrap_star_graph(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
-  stag_int arg1 ;
-  long long val1 ;
-  int ecode1 = 0 ;
+  StagInt arg1 ;
   PyObject *swig_obj[1] ;
   SwigValueWrapper< stag::Graph > result;
   
   if (!args) SWIG_fail;
   swig_obj[0] = args;
-  ecode1 = SWIG_AsVal_long_SS_long(swig_obj[0], &val1);
-  if (!SWIG_IsOK(ecode1)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "star_graph" "', argument " "1"" of type '" "stag_int""'");
-  } 
-  arg1 = static_cast< stag_int >(val1);
+  {
+    // StagInt typemap (in)
+    if (!PyLong_Check((PyObject *) swig_obj[0])) {
+      PyErr_SetString(PyExc_TypeError, "Expected an integer.");
+      return NULL;
+    }
+    arg1 = (StagInt) PyLong_AsLong((PyObject*) swig_obj[0]);
+  }
   {
     try {
       result = stag::star_graph(arg1);
@@ -8057,19 +8320,20 @@ fail:
 
 SWIGINTERN PyObject *_wrap_identity_graph(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
-  stag_int arg1 ;
-  long long val1 ;
-  int ecode1 = 0 ;
+  StagInt arg1 ;
   PyObject *swig_obj[1] ;
   SwigValueWrapper< stag::Graph > result;
   
   if (!args) SWIG_fail;
   swig_obj[0] = args;
-  ecode1 = SWIG_AsVal_long_SS_long(swig_obj[0], &val1);
-  if (!SWIG_IsOK(ecode1)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "identity_graph" "', argument " "1"" of type '" "stag_int""'");
-  } 
-  arg1 = static_cast< stag_int >(val1);
+  {
+    // StagInt typemap (in)
+    if (!PyLong_Check((PyObject *) swig_obj[0])) {
+      PyErr_SetString(PyExc_TypeError, "Expected an integer.");
+      return NULL;
+    }
+    arg1 = (StagInt) PyLong_AsLong((PyObject*) swig_obj[0]);
+  }
   {
     try {
       result = stag::identity_graph(arg1);
@@ -8426,18 +8690,18 @@ SWIGINTERN PyObject *_wrap_sprsMatValues(PyObject *SWIGUNUSEDPARM(self), PyObjec
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
-  std::vector< double > result;
+  std::vector< StagReal > result;
   
   if (!args) SWIG_fail;
   swig_obj[0] = args;
-  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_Eigen__SparseMatrixT_double_Eigen__ColMajor_stag_int_t, 0 |  0 );
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_Eigen__SparseMatrixT_StagReal_Eigen__ColMajor_StagInt_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "sprsMatValues" "', argument " "1"" of type '" "SprsMat const *""'"); 
   }
   arg1 = reinterpret_cast< SprsMat * >(argp1);
   {
     try {
-      result = stag::sprsMatValues((Eigen::SparseMatrix< double,Eigen::ColMajor,stag_int > const *)arg1);
+      result = stag::sprsMatValues((Eigen::SparseMatrix< StagReal,Eigen::ColMajor,StagInt > const *)arg1);
     } catch (std::invalid_argument &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
@@ -8474,18 +8738,18 @@ SWIGINTERN PyObject *_wrap_sprsMatInnerIndices(PyObject *SWIGUNUSEDPARM(self), P
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
-  std::vector< stag_int > result;
+  std::vector< StagInt > result;
   
   if (!args) SWIG_fail;
   swig_obj[0] = args;
-  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_Eigen__SparseMatrixT_double_Eigen__ColMajor_stag_int_t, 0 |  0 );
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_Eigen__SparseMatrixT_StagReal_Eigen__ColMajor_StagInt_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "sprsMatInnerIndices" "', argument " "1"" of type '" "SprsMat const *""'"); 
   }
   arg1 = reinterpret_cast< SprsMat * >(argp1);
   {
     try {
-      result = stag::sprsMatInnerIndices((Eigen::SparseMatrix< double,Eigen::ColMajor,stag_int > const *)arg1);
+      result = stag::sprsMatInnerIndices((Eigen::SparseMatrix< StagReal,Eigen::ColMajor,StagInt > const *)arg1);
     } catch (std::invalid_argument &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
@@ -8505,10 +8769,10 @@ SWIGINTERN PyObject *_wrap_sprsMatInnerIndices(PyObject *SWIGUNUSEDPARM(self), P
     // This adds a small 'constant factor' to the running time of the algorithm
     // in STAGPy over C++ STAG.
     npy_intp length = (&result)->size();
-    resultobj = PyArray_SimpleNew(1, &length, NPY_LONGLONG);
+    resultobj = PyArray_SimpleNew(1, &length, NPY_INT64);
     memcpy(PyArray_DATA((PyArrayObject*) resultobj),
       (&result)->data(),
-      sizeof(long long) * length);
+      sizeof(int64_t) * length);
   }
   return resultobj;
 fail:
@@ -8522,18 +8786,18 @@ SWIGINTERN PyObject *_wrap_sprsMatOuterStarts(PyObject *SWIGUNUSEDPARM(self), Py
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
-  std::vector< stag_int > result;
+  std::vector< StagInt > result;
   
   if (!args) SWIG_fail;
   swig_obj[0] = args;
-  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_Eigen__SparseMatrixT_double_Eigen__ColMajor_stag_int_t, 0 |  0 );
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_Eigen__SparseMatrixT_StagReal_Eigen__ColMajor_StagInt_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "sprsMatOuterStarts" "', argument " "1"" of type '" "SprsMat const *""'"); 
   }
   arg1 = reinterpret_cast< SprsMat * >(argp1);
   {
     try {
-      result = stag::sprsMatOuterStarts((Eigen::SparseMatrix< double,Eigen::ColMajor,stag_int > const *)arg1);
+      result = stag::sprsMatOuterStarts((Eigen::SparseMatrix< StagReal,Eigen::ColMajor,StagInt > const *)arg1);
     } catch (std::invalid_argument &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
@@ -8553,10 +8817,10 @@ SWIGINTERN PyObject *_wrap_sprsMatOuterStarts(PyObject *SWIGUNUSEDPARM(self), Py
     // This adds a small 'constant factor' to the running time of the algorithm
     // in STAGPy over C++ STAG.
     npy_intp length = (&result)->size();
-    resultobj = PyArray_SimpleNew(1, &length, NPY_LONGLONG);
+    resultobj = PyArray_SimpleNew(1, &length, NPY_INT64);
     memcpy(PyArray_DATA((PyArrayObject*) resultobj),
       (&result)->data(),
-      sizeof(long long) * length);
+      sizeof(int64_t) * length);
   }
   return resultobj;
 fail:
@@ -8567,27 +8831,28 @@ fail:
 SWIGINTERN PyObject *_wrap_sprsMatToVec__SWIG_0(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
   PyObject *resultobj = 0;
   SprsMat *arg1 = (SprsMat *) 0 ;
-  stag_int arg2 ;
+  StagInt arg2 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-  long long val2 ;
-  int ecode2 = 0 ;
-  std::vector< double > result;
+  std::vector< StagReal > result;
   
   if ((nobjs < 2) || (nobjs > 2)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_Eigen__SparseMatrixT_double_Eigen__ColMajor_stag_int_t, 0 |  0 );
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_Eigen__SparseMatrixT_StagReal_Eigen__ColMajor_StagInt_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "sprsMatToVec" "', argument " "1"" of type '" "SprsMat const *""'"); 
   }
   arg1 = reinterpret_cast< SprsMat * >(argp1);
-  ecode2 = SWIG_AsVal_long_SS_long(swig_obj[1], &val2);
-  if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "sprsMatToVec" "', argument " "2"" of type '" "stag_int""'");
-  } 
-  arg2 = static_cast< stag_int >(val2);
+  {
+    // StagInt typemap (in)
+    if (!PyLong_Check((PyObject *) swig_obj[1])) {
+      PyErr_SetString(PyExc_TypeError, "Expected an integer.");
+      return NULL;
+    }
+    arg2 = (StagInt) PyLong_AsLong((PyObject*) swig_obj[1]);
+  }
   {
     try {
-      result = stag::sprsMatToVec((Eigen::SparseMatrix< double,Eigen::ColMajor,stag_int > const *)arg1,arg2);
+      result = stag::sprsMatToVec((Eigen::SparseMatrix< StagReal,Eigen::ColMajor,StagInt > const *)arg1,arg2);
     } catch (std::invalid_argument &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
@@ -8623,17 +8888,17 @@ SWIGINTERN PyObject *_wrap_sprsMatToVec__SWIG_1(PyObject *SWIGUNUSEDPARM(self), 
   SprsMat *arg1 = (SprsMat *) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-  std::vector< double > result;
+  std::vector< StagReal > result;
   
   if ((nobjs < 1) || (nobjs > 1)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_Eigen__SparseMatrixT_double_Eigen__ColMajor_stag_int_t, 0 |  0 );
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_Eigen__SparseMatrixT_StagReal_Eigen__ColMajor_StagInt_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "sprsMatToVec" "', argument " "1"" of type '" "SprsMat const *""'"); 
   }
   arg1 = reinterpret_cast< SprsMat * >(argp1);
   {
     try {
-      result = stag::sprsMatToVec((Eigen::SparseMatrix< double,Eigen::ColMajor,stag_int > const *)arg1);
+      result = stag::sprsMatToVec((Eigen::SparseMatrix< StagReal,Eigen::ColMajor,StagInt > const *)arg1);
     } catch (std::invalid_argument &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
@@ -8675,7 +8940,7 @@ SWIGINTERN PyObject *_wrap_sprsMatToVec(PyObject *self, PyObject *args) {
   if (argc == 1) {
     int _v;
     void *vptr = 0;
-    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_Eigen__SparseMatrixT_double_Eigen__ColMajor_stag_int_t, 0);
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_Eigen__SparseMatrixT_StagReal_Eigen__ColMajor_StagInt_t, 0);
     _v = SWIG_CheckState(res);
     if (_v) {
       return _wrap_sprsMatToVec__SWIG_1(self, argc, argv);
@@ -8684,12 +8949,12 @@ SWIGINTERN PyObject *_wrap_sprsMatToVec(PyObject *self, PyObject *args) {
   if (argc == 2) {
     int _v;
     void *vptr = 0;
-    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_Eigen__SparseMatrixT_double_Eigen__ColMajor_stag_int_t, 0);
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_Eigen__SparseMatrixT_StagReal_Eigen__ColMajor_StagInt_t, 0);
     _v = SWIG_CheckState(res);
     if (_v) {
       {
-        int res = SWIG_AsVal_long_SS_long(argv[1], NULL);
-        _v = SWIG_CheckState(res);
+        // Typecheck for StagInt
+        _v = PyLong_Check((PyObject*) argv[1]);
       }
       if (_v) {
         return _wrap_sprsMatToVec__SWIG_0(self, argc, argv);
@@ -8700,7 +8965,7 @@ SWIGINTERN PyObject *_wrap_sprsMatToVec(PyObject *self, PyObject *args) {
 fail:
   SWIG_Python_RaiseOrModifyTypeError("Wrong number or type of arguments for overloaded function 'sprsMatToVec'.\n"
     "  Possible C/C++ prototypes are:\n"
-    "    stag::sprsMatToVec(SprsMat const *,stag_int)\n"
+    "    stag::sprsMatToVec(SprsMat const *,StagInt)\n"
     "    stag::sprsMatToVec(SprsMat const *)\n");
   return 0;
 }
@@ -8708,15 +8973,15 @@ fail:
 
 SWIGINTERN PyObject *_wrap_sprsMatFromVectors(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
-  std::vector< stag_int > *arg1 = 0 ;
-  std::vector< stag_int > *arg2 = 0 ;
-  std::vector< double > *arg3 = 0 ;
+  std::vector< StagInt > *arg1 = 0 ;
+  std::vector< StagInt > *arg2 = 0 ;
+  std::vector< StagReal > *arg3 = 0 ;
   PyArrayObject *array1 = NULL ;
   int is_new_object1 = 0 ;
-  std::vector< long long > temp_vec1 ;
+  std::vector< int64_t > temp_vec1 ;
   PyArrayObject *array2 = NULL ;
   int is_new_object2 = 0 ;
-  std::vector< long long > temp_vec2 ;
+  std::vector< int64_t > temp_vec2 ;
   PyArrayObject *array3 = NULL ;
   int is_new_object3 = 0 ;
   std::vector< double > temp_vec3 ;
@@ -8732,13 +8997,13 @@ SWIGINTERN PyObject *_wrap_sprsMatFromVectors(PyObject *SWIGUNUSEDPARM(self), Py
     
     // Check that the dimensions of the array1 are correct
     array1 = obj_to_array_contiguous_allow_conversion(swig_obj[0],
-      NPY_LONGLONG,
+      NPY_INT64,
       &is_new_object1);
     if (!array1 || !require_dimensions(array1, 1) ||
       !require_size(array1, size, 1)) SWIG_fail;
     
     // Get a pointer to the data in the numpy array1
-    long long* data_ptr = (long long*) array_data(array1);
+    int64_t* data_ptr = (int64_t*) array_data(array1);
     
     // Copy the numpy data into the new vector.
     temp_vec1.reserve(size[0]);
@@ -8755,13 +9020,13 @@ SWIGINTERN PyObject *_wrap_sprsMatFromVectors(PyObject *SWIGUNUSEDPARM(self), Py
     
     // Check that the dimensions of the array2 are correct
     array2 = obj_to_array_contiguous_allow_conversion(swig_obj[1],
-      NPY_LONGLONG,
+      NPY_INT64,
       &is_new_object2);
     if (!array2 || !require_dimensions(array2, 1) ||
       !require_size(array2, size, 1)) SWIG_fail;
     
     // Get a pointer to the data in the numpy array2
-    long long* data_ptr = (long long*) array_data(array2);
+    int64_t* data_ptr = (int64_t*) array_data(array2);
     
     // Copy the numpy data into the new vector.
     temp_vec2.reserve(size[0]);
@@ -8807,7 +9072,7 @@ SWIGINTERN PyObject *_wrap_sprsMatFromVectors(PyObject *SWIGUNUSEDPARM(self), Py
       return NULL;
     }
   }
-  resultobj = SWIG_NewPointerObj((new SprsMat(static_cast< const SprsMat& >(result))), SWIGTYPE_p_Eigen__SparseMatrixT_double_Eigen__ColMajor_stag_int_t, SWIG_POINTER_OWN |  0 );
+  resultobj = SWIG_NewPointerObj((new SprsMat(static_cast< const SprsMat& >(result))), SWIGTYPE_p_Eigen__SparseMatrixT_StagReal_Eigen__ColMajor_StagInt_t, SWIG_POINTER_OWN |  0 );
   return resultobj;
 fail:
   return NULL;
@@ -8824,14 +9089,14 @@ SWIGINTERN PyObject *_wrap_isSymmetric(PyObject *SWIGUNUSEDPARM(self), PyObject 
   
   if (!args) SWIG_fail;
   swig_obj[0] = args;
-  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_Eigen__SparseMatrixT_double_Eigen__ColMajor_stag_int_t, 0 |  0 );
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_Eigen__SparseMatrixT_StagReal_Eigen__ColMajor_StagInt_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "isSymmetric" "', argument " "1"" of type '" "SprsMat const *""'"); 
   }
   arg1 = reinterpret_cast< SprsMat * >(argp1);
   {
     try {
-      result = (bool)stag::isSymmetric((Eigen::SparseMatrix< double,Eigen::ColMajor,stag_int > const *)arg1);
+      result = (bool)stag::isSymmetric((Eigen::SparseMatrix< StagReal,Eigen::ColMajor,StagInt > const *)arg1);
     } catch (std::invalid_argument &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
@@ -8964,13 +9229,11 @@ fail:
 SWIGINTERN PyObject *_wrap_spectral_cluster(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   stag::Graph *arg1 = (stag::Graph *) 0 ;
-  stag_int arg2 ;
+  StagInt arg2 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-  long long val2 ;
-  int ecode2 = 0 ;
   PyObject *swig_obj[2] ;
-  std::vector< stag_int > result;
+  std::vector< StagInt > result;
   
   if (!SWIG_Python_UnpackTuple(args, "spectral_cluster", 2, 2, swig_obj)) SWIG_fail;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_stag__Graph, 0 |  0 );
@@ -8978,11 +9241,14 @@ SWIGINTERN PyObject *_wrap_spectral_cluster(PyObject *SWIGUNUSEDPARM(self), PyOb
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "spectral_cluster" "', argument " "1"" of type '" "stag::Graph *""'"); 
   }
   arg1 = reinterpret_cast< stag::Graph * >(argp1);
-  ecode2 = SWIG_AsVal_long_SS_long(swig_obj[1], &val2);
-  if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "spectral_cluster" "', argument " "2"" of type '" "stag_int""'");
-  } 
-  arg2 = static_cast< stag_int >(val2);
+  {
+    // StagInt typemap (in)
+    if (!PyLong_Check((PyObject *) swig_obj[1])) {
+      PyErr_SetString(PyExc_TypeError, "Expected an integer.");
+      return NULL;
+    }
+    arg2 = (StagInt) PyLong_AsLong((PyObject*) swig_obj[1]);
+  }
   {
     try {
       result = stag::spectral_cluster(arg1,arg2);
@@ -9005,10 +9271,10 @@ SWIGINTERN PyObject *_wrap_spectral_cluster(PyObject *SWIGUNUSEDPARM(self), PyOb
     // This adds a small 'constant factor' to the running time of the algorithm
     // in STAGPy over C++ STAG.
     npy_intp length = (&result)->size();
-    resultobj = PyArray_SimpleNew(1, &length, NPY_LONGLONG);
+    resultobj = PyArray_SimpleNew(1, &length, NPY_INT64);
     memcpy(PyArray_DATA((PyArrayObject*) resultobj),
       (&result)->data(),
-      sizeof(long long) * length);
+      sizeof(int64_t) * length);
   }
   return resultobj;
 fail:
@@ -9022,7 +9288,7 @@ SWIGINTERN PyObject *_wrap_cheeger_cut(PyObject *SWIGUNUSEDPARM(self), PyObject 
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
-  std::vector< stag_int > result;
+  std::vector< StagInt > result;
   
   if (!args) SWIG_fail;
   swig_obj[0] = args;
@@ -9053,10 +9319,10 @@ SWIGINTERN PyObject *_wrap_cheeger_cut(PyObject *SWIGUNUSEDPARM(self), PyObject 
     // This adds a small 'constant factor' to the running time of the algorithm
     // in STAGPy over C++ STAG.
     npy_intp length = (&result)->size();
-    resultobj = PyArray_SimpleNew(1, &length, NPY_LONGLONG);
+    resultobj = PyArray_SimpleNew(1, &length, NPY_INT64);
     memcpy(PyArray_DATA((PyArrayObject*) resultobj),
       (&result)->data(),
-      sizeof(long long) * length);
+      sizeof(int64_t) * length);
   }
   return resultobj;
 fail:
@@ -9067,16 +9333,14 @@ fail:
 SWIGINTERN PyObject *_wrap_local_cluster(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   stag::LocalGraph *arg1 = (stag::LocalGraph *) 0 ;
-  stag_int arg2 ;
+  StagInt arg2 ;
   double arg3 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-  long long val2 ;
-  int ecode2 = 0 ;
   double val3 ;
   int ecode3 = 0 ;
   PyObject *swig_obj[3] ;
-  std::vector< stag_int > result;
+  std::vector< StagInt > result;
   
   if (!SWIG_Python_UnpackTuple(args, "local_cluster", 3, 3, swig_obj)) SWIG_fail;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_stag__LocalGraph, 0 |  0 );
@@ -9084,11 +9348,14 @@ SWIGINTERN PyObject *_wrap_local_cluster(PyObject *SWIGUNUSEDPARM(self), PyObjec
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "local_cluster" "', argument " "1"" of type '" "stag::LocalGraph *""'"); 
   }
   arg1 = reinterpret_cast< stag::LocalGraph * >(argp1);
-  ecode2 = SWIG_AsVal_long_SS_long(swig_obj[1], &val2);
-  if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "local_cluster" "', argument " "2"" of type '" "stag_int""'");
-  } 
-  arg2 = static_cast< stag_int >(val2);
+  {
+    // StagInt typemap (in)
+    if (!PyLong_Check((PyObject *) swig_obj[1])) {
+      PyErr_SetString(PyExc_TypeError, "Expected an integer.");
+      return NULL;
+    }
+    arg2 = (StagInt) PyLong_AsLong((PyObject*) swig_obj[1]);
+  }
   ecode3 = SWIG_AsVal_double(swig_obj[2], &val3);
   if (!SWIG_IsOK(ecode3)) {
     SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "local_cluster" "', argument " "3"" of type '" "double""'");
@@ -9116,10 +9383,10 @@ SWIGINTERN PyObject *_wrap_local_cluster(PyObject *SWIGUNUSEDPARM(self), PyObjec
     // This adds a small 'constant factor' to the running time of the algorithm
     // in STAGPy over C++ STAG.
     npy_intp length = (&result)->size();
-    resultobj = PyArray_SimpleNew(1, &length, NPY_LONGLONG);
+    resultobj = PyArray_SimpleNew(1, &length, NPY_INT64);
     memcpy(PyArray_DATA((PyArrayObject*) resultobj),
       (&result)->data(),
-      sizeof(long long) * length);
+      sizeof(int64_t) * length);
   }
   return resultobj;
 fail:
@@ -9130,18 +9397,16 @@ fail:
 SWIGINTERN PyObject *_wrap_local_cluster_acl__SWIG_0(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
   PyObject *resultobj = 0;
   stag::LocalGraph *arg1 = (stag::LocalGraph *) 0 ;
-  stag_int arg2 ;
+  StagInt arg2 ;
   double arg3 ;
   double arg4 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-  long long val2 ;
-  int ecode2 = 0 ;
   double val3 ;
   int ecode3 = 0 ;
   double val4 ;
   int ecode4 = 0 ;
-  std::vector< stag_int > result;
+  std::vector< StagInt > result;
   
   if ((nobjs < 4) || (nobjs > 4)) SWIG_fail;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_stag__LocalGraph, 0 |  0 );
@@ -9149,11 +9414,14 @@ SWIGINTERN PyObject *_wrap_local_cluster_acl__SWIG_0(PyObject *SWIGUNUSEDPARM(se
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "local_cluster_acl" "', argument " "1"" of type '" "stag::LocalGraph *""'"); 
   }
   arg1 = reinterpret_cast< stag::LocalGraph * >(argp1);
-  ecode2 = SWIG_AsVal_long_SS_long(swig_obj[1], &val2);
-  if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "local_cluster_acl" "', argument " "2"" of type '" "stag_int""'");
-  } 
-  arg2 = static_cast< stag_int >(val2);
+  {
+    // StagInt typemap (in)
+    if (!PyLong_Check((PyObject *) swig_obj[1])) {
+      PyErr_SetString(PyExc_TypeError, "Expected an integer.");
+      return NULL;
+    }
+    arg2 = (StagInt) PyLong_AsLong((PyObject*) swig_obj[1]);
+  }
   ecode3 = SWIG_AsVal_double(swig_obj[2], &val3);
   if (!SWIG_IsOK(ecode3)) {
     SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "local_cluster_acl" "', argument " "3"" of type '" "double""'");
@@ -9186,10 +9454,10 @@ SWIGINTERN PyObject *_wrap_local_cluster_acl__SWIG_0(PyObject *SWIGUNUSEDPARM(se
     // This adds a small 'constant factor' to the running time of the algorithm
     // in STAGPy over C++ STAG.
     npy_intp length = (&result)->size();
-    resultobj = PyArray_SimpleNew(1, &length, NPY_LONGLONG);
+    resultobj = PyArray_SimpleNew(1, &length, NPY_INT64);
     memcpy(PyArray_DATA((PyArrayObject*) resultobj),
       (&result)->data(),
-      sizeof(long long) * length);
+      sizeof(int64_t) * length);
   }
   return resultobj;
 fail:
@@ -9200,15 +9468,13 @@ fail:
 SWIGINTERN PyObject *_wrap_local_cluster_acl__SWIG_1(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
   PyObject *resultobj = 0;
   stag::LocalGraph *arg1 = (stag::LocalGraph *) 0 ;
-  stag_int arg2 ;
+  StagInt arg2 ;
   double arg3 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-  long long val2 ;
-  int ecode2 = 0 ;
   double val3 ;
   int ecode3 = 0 ;
-  std::vector< stag_int > result;
+  std::vector< StagInt > result;
   
   if ((nobjs < 3) || (nobjs > 3)) SWIG_fail;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_stag__LocalGraph, 0 |  0 );
@@ -9216,11 +9482,14 @@ SWIGINTERN PyObject *_wrap_local_cluster_acl__SWIG_1(PyObject *SWIGUNUSEDPARM(se
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "local_cluster_acl" "', argument " "1"" of type '" "stag::LocalGraph *""'"); 
   }
   arg1 = reinterpret_cast< stag::LocalGraph * >(argp1);
-  ecode2 = SWIG_AsVal_long_SS_long(swig_obj[1], &val2);
-  if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "local_cluster_acl" "', argument " "2"" of type '" "stag_int""'");
-  } 
-  arg2 = static_cast< stag_int >(val2);
+  {
+    // StagInt typemap (in)
+    if (!PyLong_Check((PyObject *) swig_obj[1])) {
+      PyErr_SetString(PyExc_TypeError, "Expected an integer.");
+      return NULL;
+    }
+    arg2 = (StagInt) PyLong_AsLong((PyObject*) swig_obj[1]);
+  }
   ecode3 = SWIG_AsVal_double(swig_obj[2], &val3);
   if (!SWIG_IsOK(ecode3)) {
     SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "local_cluster_acl" "', argument " "3"" of type '" "double""'");
@@ -9248,10 +9517,10 @@ SWIGINTERN PyObject *_wrap_local_cluster_acl__SWIG_1(PyObject *SWIGUNUSEDPARM(se
     // This adds a small 'constant factor' to the running time of the algorithm
     // in STAGPy over C++ STAG.
     npy_intp length = (&result)->size();
-    resultobj = PyArray_SimpleNew(1, &length, NPY_LONGLONG);
+    resultobj = PyArray_SimpleNew(1, &length, NPY_INT64);
     memcpy(PyArray_DATA((PyArrayObject*) resultobj),
       (&result)->data(),
-      sizeof(long long) * length);
+      sizeof(int64_t) * length);
   }
   return resultobj;
 fail:
@@ -9274,8 +9543,8 @@ SWIGINTERN PyObject *_wrap_local_cluster_acl(PyObject *self, PyObject *args) {
     _v = SWIG_CheckState(res);
     if (_v) {
       {
-        int res = SWIG_AsVal_long_SS_long(argv[1], NULL);
-        _v = SWIG_CheckState(res);
+        // Typecheck for StagInt
+        _v = PyLong_Check((PyObject*) argv[1]);
       }
       if (_v) {
         {
@@ -9295,8 +9564,8 @@ SWIGINTERN PyObject *_wrap_local_cluster_acl(PyObject *self, PyObject *args) {
     _v = SWIG_CheckState(res);
     if (_v) {
       {
-        int res = SWIG_AsVal_long_SS_long(argv[1], NULL);
-        _v = SWIG_CheckState(res);
+        // Typecheck for StagInt
+        _v = PyLong_Check((PyObject*) argv[1]);
       }
       if (_v) {
         {
@@ -9319,8 +9588,8 @@ SWIGINTERN PyObject *_wrap_local_cluster_acl(PyObject *self, PyObject *args) {
 fail:
   SWIG_Python_RaiseOrModifyTypeError("Wrong number or type of arguments for overloaded function 'local_cluster_acl'.\n"
     "  Possible C/C++ prototypes are:\n"
-    "    stag::local_cluster_acl(stag::LocalGraph *,stag_int,double,double)\n"
-    "    stag::local_cluster_acl(stag::LocalGraph *,stag_int,double)\n");
+    "    stag::local_cluster_acl(stag::LocalGraph *,StagInt,double,double)\n"
+    "    stag::local_cluster_acl(stag::LocalGraph *,StagInt,double)\n");
   return 0;
 }
 
@@ -9348,7 +9617,7 @@ SWIGINTERN PyObject *_wrap_approximate_pagerank(PyObject *SWIGUNUSEDPARM(self), 
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "approximate_pagerank" "', argument " "1"" of type '" "stag::LocalGraph *""'"); 
   }
   arg1 = reinterpret_cast< stag::LocalGraph * >(argp1);
-  res2 = SWIG_ConvertPtr(swig_obj[1], &argp2, SWIGTYPE_p_Eigen__SparseMatrixT_double_Eigen__ColMajor_stag_int_t,  0 );
+  res2 = SWIG_ConvertPtr(swig_obj[1], &argp2, SWIGTYPE_p_Eigen__SparseMatrixT_StagReal_Eigen__ColMajor_StagInt_t,  0 );
   if (!SWIG_IsOK(res2)) {
     SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "approximate_pagerank" "', argument " "2"" of type '" "SprsMat &""'"); 
   }
@@ -9395,7 +9664,7 @@ SWIGINTERN PyObject *_wrap_sweep_set_conductance__SWIG_0(PyObject *SWIGUNUSEDPAR
   int res1 = 0 ;
   void *argp2 = 0 ;
   int res2 = 0 ;
-  std::vector< stag_int > result;
+  std::vector< StagInt > result;
   
   if ((nobjs < 2) || (nobjs > 2)) SWIG_fail;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_stag__LocalGraph, 0 |  0 );
@@ -9403,7 +9672,7 @@ SWIGINTERN PyObject *_wrap_sweep_set_conductance__SWIG_0(PyObject *SWIGUNUSEDPAR
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "sweep_set_conductance" "', argument " "1"" of type '" "stag::LocalGraph *""'"); 
   }
   arg1 = reinterpret_cast< stag::LocalGraph * >(argp1);
-  res2 = SWIG_ConvertPtr(swig_obj[1], &argp2, SWIGTYPE_p_Eigen__SparseMatrixT_double_Eigen__ColMajor_stag_int_t,  0 );
+  res2 = SWIG_ConvertPtr(swig_obj[1], &argp2, SWIGTYPE_p_Eigen__SparseMatrixT_StagReal_Eigen__ColMajor_StagInt_t,  0 );
   if (!SWIG_IsOK(res2)) {
     SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "sweep_set_conductance" "', argument " "2"" of type '" "SprsMat &""'"); 
   }
@@ -9433,10 +9702,10 @@ SWIGINTERN PyObject *_wrap_sweep_set_conductance__SWIG_0(PyObject *SWIGUNUSEDPAR
     // This adds a small 'constant factor' to the running time of the algorithm
     // in STAGPy over C++ STAG.
     npy_intp length = (&result)->size();
-    resultobj = PyArray_SimpleNew(1, &length, NPY_LONGLONG);
+    resultobj = PyArray_SimpleNew(1, &length, NPY_INT64);
     memcpy(PyArray_DATA((PyArrayObject*) resultobj),
       (&result)->data(),
-      sizeof(long long) * length);
+      sizeof(int64_t) * length);
   }
   return resultobj;
 fail:
@@ -9452,7 +9721,7 @@ SWIGINTERN PyObject *_wrap_sweep_set_conductance__SWIG_1(PyObject *SWIGUNUSEDPAR
   int res1 = 0 ;
   void *argp2 = 0 ;
   int res2 = 0 ;
-  std::vector< stag_int > result;
+  std::vector< StagInt > result;
   
   if ((nobjs < 2) || (nobjs > 2)) SWIG_fail;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_stag__Graph, 0 |  0 );
@@ -9460,7 +9729,7 @@ SWIGINTERN PyObject *_wrap_sweep_set_conductance__SWIG_1(PyObject *SWIGUNUSEDPAR
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "sweep_set_conductance" "', argument " "1"" of type '" "stag::Graph *""'"); 
   }
   arg1 = reinterpret_cast< stag::Graph * >(argp1);
-  res2 = SWIG_ConvertPtr(swig_obj[1], &argp2, SWIGTYPE_p_Eigen__SparseMatrixT_double_Eigen__ColMajor_stag_int_t,  0 );
+  res2 = SWIG_ConvertPtr(swig_obj[1], &argp2, SWIGTYPE_p_Eigen__SparseMatrixT_StagReal_Eigen__ColMajor_StagInt_t,  0 );
   if (!SWIG_IsOK(res2)) {
     SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "sweep_set_conductance" "', argument " "2"" of type '" "SprsMat &""'"); 
   }
@@ -9490,10 +9759,10 @@ SWIGINTERN PyObject *_wrap_sweep_set_conductance__SWIG_1(PyObject *SWIGUNUSEDPAR
     // This adds a small 'constant factor' to the running time of the algorithm
     // in STAGPy over C++ STAG.
     npy_intp length = (&result)->size();
-    resultobj = PyArray_SimpleNew(1, &length, NPY_LONGLONG);
+    resultobj = PyArray_SimpleNew(1, &length, NPY_INT64);
     memcpy(PyArray_DATA((PyArrayObject*) resultobj),
       (&result)->data(),
-      sizeof(long long) * length);
+      sizeof(int64_t) * length);
   }
   return resultobj;
 fail:
@@ -9516,7 +9785,7 @@ SWIGINTERN PyObject *_wrap_sweep_set_conductance(PyObject *self, PyObject *args)
     _v = SWIG_CheckState(res);
     if (_v) {
       void *vptr = 0;
-      int res = SWIG_ConvertPtr(argv[1], &vptr, SWIGTYPE_p_Eigen__SparseMatrixT_double_Eigen__ColMajor_stag_int_t, SWIG_POINTER_NO_NULL);
+      int res = SWIG_ConvertPtr(argv[1], &vptr, SWIGTYPE_p_Eigen__SparseMatrixT_StagReal_Eigen__ColMajor_StagInt_t, SWIG_POINTER_NO_NULL);
       _v = SWIG_CheckState(res);
       if (_v) {
         return _wrap_sweep_set_conductance__SWIG_1(self, argc, argv);
@@ -9530,7 +9799,7 @@ SWIGINTERN PyObject *_wrap_sweep_set_conductance(PyObject *self, PyObject *args)
     _v = SWIG_CheckState(res);
     if (_v) {
       void *vptr = 0;
-      int res = SWIG_ConvertPtr(argv[1], &vptr, SWIGTYPE_p_Eigen__SparseMatrixT_double_Eigen__ColMajor_stag_int_t, SWIG_POINTER_NO_NULL);
+      int res = SWIG_ConvertPtr(argv[1], &vptr, SWIGTYPE_p_Eigen__SparseMatrixT_StagReal_Eigen__ColMajor_StagInt_t, SWIG_POINTER_NO_NULL);
       _v = SWIG_CheckState(res);
       if (_v) {
         return _wrap_sweep_set_conductance__SWIG_0(self, argc, argv);
@@ -9550,13 +9819,11 @@ fail:
 SWIGINTERN PyObject *_wrap_connected_component(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   stag::LocalGraph *arg1 = (stag::LocalGraph *) 0 ;
-  stag_int arg2 ;
+  StagInt arg2 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-  long long val2 ;
-  int ecode2 = 0 ;
   PyObject *swig_obj[2] ;
-  std::vector< stag_int > result;
+  std::vector< StagInt > result;
   
   if (!SWIG_Python_UnpackTuple(args, "connected_component", 2, 2, swig_obj)) SWIG_fail;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_stag__LocalGraph, 0 |  0 );
@@ -9564,11 +9831,14 @@ SWIGINTERN PyObject *_wrap_connected_component(PyObject *SWIGUNUSEDPARM(self), P
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "connected_component" "', argument " "1"" of type '" "stag::LocalGraph *""'"); 
   }
   arg1 = reinterpret_cast< stag::LocalGraph * >(argp1);
-  ecode2 = SWIG_AsVal_long_SS_long(swig_obj[1], &val2);
-  if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "connected_component" "', argument " "2"" of type '" "stag_int""'");
-  } 
-  arg2 = static_cast< stag_int >(val2);
+  {
+    // StagInt typemap (in)
+    if (!PyLong_Check((PyObject *) swig_obj[1])) {
+      PyErr_SetString(PyExc_TypeError, "Expected an integer.");
+      return NULL;
+    }
+    arg2 = (StagInt) PyLong_AsLong((PyObject*) swig_obj[1]);
+  }
   {
     try {
       result = stag::connected_component(arg1,arg2);
@@ -9591,10 +9861,10 @@ SWIGINTERN PyObject *_wrap_connected_component(PyObject *SWIGUNUSEDPARM(self), P
     // This adds a small 'constant factor' to the running time of the algorithm
     // in STAGPy over C++ STAG.
     npy_intp length = (&result)->size();
-    resultobj = PyArray_SimpleNew(1, &length, NPY_LONGLONG);
+    resultobj = PyArray_SimpleNew(1, &length, NPY_INT64);
     memcpy(PyArray_DATA((PyArrayObject*) resultobj),
       (&result)->data(),
-      sizeof(long long) * length);
+      sizeof(int64_t) * length);
   }
   return resultobj;
 fail:
@@ -9608,7 +9878,7 @@ SWIGINTERN PyObject *_wrap_connected_components(PyObject *SWIGUNUSEDPARM(self), 
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
-  std::vector< std::vector< stag_int > > result;
+  std::vector< std::vector< StagInt > > result;
   
   if (!args) SWIG_fail;
   swig_obj[0] = args;
@@ -9634,16 +9904,16 @@ SWIGINTERN PyObject *_wrap_connected_components(PyObject *SWIGUNUSEDPARM(self), 
   {
     // For a nested vector, we'd like to return a python list of numpy
     // arrays.
-    stag_int outer_length = (&result)->size();
+    StagInt outer_length = (&result)->size();
     resultobj = PyList_New(outer_length);
     
     // Construct a new numpy array for each inner object, and add to the list.
-    for (stag_int i = 0; i < outer_length; i++) {
+    for (StagInt i = 0; i < outer_length; i++) {
       npy_intp length = (&result)->at(i).size();
-      PyObject* new_numpy_object = PyArray_SimpleNew(1, &length, NPY_LONGLONG);
+      PyObject* new_numpy_object = PyArray_SimpleNew(1, &length, NPY_INT64);
       memcpy(PyArray_DATA((PyArrayObject*) new_numpy_object),
         (&result)->at(i).data(),
-        sizeof(long long) * length);
+        sizeof(int64_t) * length);
       
       PyList_SET_ITEM(resultobj, i, new_numpy_object);
     }
@@ -9656,14 +9926,14 @@ fail:
 
 SWIGINTERN PyObject *_wrap_adjusted_rand_index(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
-  std::vector< stag_int > *arg1 = 0 ;
-  std::vector< stag_int > *arg2 = 0 ;
+  std::vector< StagInt > *arg1 = 0 ;
+  std::vector< StagInt > *arg2 = 0 ;
   PyArrayObject *array1 = NULL ;
   int is_new_object1 = 0 ;
-  std::vector< long long > temp_vec1 ;
+  std::vector< int64_t > temp_vec1 ;
   PyArrayObject *array2 = NULL ;
   int is_new_object2 = 0 ;
-  std::vector< long long > temp_vec2 ;
+  std::vector< int64_t > temp_vec2 ;
   PyObject *swig_obj[2] ;
   double result;
   
@@ -9676,13 +9946,13 @@ SWIGINTERN PyObject *_wrap_adjusted_rand_index(PyObject *SWIGUNUSEDPARM(self), P
     
     // Check that the dimensions of the array1 are correct
     array1 = obj_to_array_contiguous_allow_conversion(swig_obj[0],
-      NPY_LONGLONG,
+      NPY_INT64,
       &is_new_object1);
     if (!array1 || !require_dimensions(array1, 1) ||
       !require_size(array1, size, 1)) SWIG_fail;
     
     // Get a pointer to the data in the numpy array1
-    long long* data_ptr = (long long*) array_data(array1);
+    int64_t* data_ptr = (int64_t*) array_data(array1);
     
     // Copy the numpy data into the new vector.
     temp_vec1.reserve(size[0]);
@@ -9699,13 +9969,13 @@ SWIGINTERN PyObject *_wrap_adjusted_rand_index(PyObject *SWIGUNUSEDPARM(self), P
     
     // Check that the dimensions of the array2 are correct
     array2 = obj_to_array_contiguous_allow_conversion(swig_obj[1],
-      NPY_LONGLONG,
+      NPY_INT64,
       &is_new_object2);
     if (!array2 || !require_dimensions(array2, 1) ||
       !require_size(array2, size, 1)) SWIG_fail;
     
     // Get a pointer to the data in the numpy array2
-    long long* data_ptr = (long long*) array_data(array2);
+    int64_t* data_ptr = (int64_t*) array_data(array2);
     
     // Copy the numpy data into the new vector.
     temp_vec2.reserve(size[0]);
@@ -9737,14 +10007,14 @@ fail:
 
 SWIGINTERN PyObject *_wrap_mutual_information(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
-  std::vector< stag_int > *arg1 = 0 ;
-  std::vector< stag_int > *arg2 = 0 ;
+  std::vector< StagInt > *arg1 = 0 ;
+  std::vector< StagInt > *arg2 = 0 ;
   PyArrayObject *array1 = NULL ;
   int is_new_object1 = 0 ;
-  std::vector< long long > temp_vec1 ;
+  std::vector< int64_t > temp_vec1 ;
   PyArrayObject *array2 = NULL ;
   int is_new_object2 = 0 ;
-  std::vector< long long > temp_vec2 ;
+  std::vector< int64_t > temp_vec2 ;
   PyObject *swig_obj[2] ;
   double result;
   
@@ -9757,13 +10027,13 @@ SWIGINTERN PyObject *_wrap_mutual_information(PyObject *SWIGUNUSEDPARM(self), Py
     
     // Check that the dimensions of the array1 are correct
     array1 = obj_to_array_contiguous_allow_conversion(swig_obj[0],
-      NPY_LONGLONG,
+      NPY_INT64,
       &is_new_object1);
     if (!array1 || !require_dimensions(array1, 1) ||
       !require_size(array1, size, 1)) SWIG_fail;
     
     // Get a pointer to the data in the numpy array1
-    long long* data_ptr = (long long*) array_data(array1);
+    int64_t* data_ptr = (int64_t*) array_data(array1);
     
     // Copy the numpy data into the new vector.
     temp_vec1.reserve(size[0]);
@@ -9780,13 +10050,13 @@ SWIGINTERN PyObject *_wrap_mutual_information(PyObject *SWIGUNUSEDPARM(self), Py
     
     // Check that the dimensions of the array2 are correct
     array2 = obj_to_array_contiguous_allow_conversion(swig_obj[1],
-      NPY_LONGLONG,
+      NPY_INT64,
       &is_new_object2);
     if (!array2 || !require_dimensions(array2, 1) ||
       !require_size(array2, size, 1)) SWIG_fail;
     
     // Get a pointer to the data in the numpy array2
-    long long* data_ptr = (long long*) array_data(array2);
+    int64_t* data_ptr = (int64_t*) array_data(array2);
     
     // Copy the numpy data into the new vector.
     temp_vec2.reserve(size[0]);
@@ -9818,14 +10088,14 @@ fail:
 
 SWIGINTERN PyObject *_wrap_normalised_mutual_information(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
-  std::vector< stag_int > *arg1 = 0 ;
-  std::vector< stag_int > *arg2 = 0 ;
+  std::vector< StagInt > *arg1 = 0 ;
+  std::vector< StagInt > *arg2 = 0 ;
   PyArrayObject *array1 = NULL ;
   int is_new_object1 = 0 ;
-  std::vector< long long > temp_vec1 ;
+  std::vector< int64_t > temp_vec1 ;
   PyArrayObject *array2 = NULL ;
   int is_new_object2 = 0 ;
-  std::vector< long long > temp_vec2 ;
+  std::vector< int64_t > temp_vec2 ;
   PyObject *swig_obj[2] ;
   double result;
   
@@ -9838,13 +10108,13 @@ SWIGINTERN PyObject *_wrap_normalised_mutual_information(PyObject *SWIGUNUSEDPAR
     
     // Check that the dimensions of the array1 are correct
     array1 = obj_to_array_contiguous_allow_conversion(swig_obj[0],
-      NPY_LONGLONG,
+      NPY_INT64,
       &is_new_object1);
     if (!array1 || !require_dimensions(array1, 1) ||
       !require_size(array1, size, 1)) SWIG_fail;
     
     // Get a pointer to the data in the numpy array1
-    long long* data_ptr = (long long*) array_data(array1);
+    int64_t* data_ptr = (int64_t*) array_data(array1);
     
     // Copy the numpy data into the new vector.
     temp_vec1.reserve(size[0]);
@@ -9861,13 +10131,13 @@ SWIGINTERN PyObject *_wrap_normalised_mutual_information(PyObject *SWIGUNUSEDPAR
     
     // Check that the dimensions of the array2 are correct
     array2 = obj_to_array_contiguous_allow_conversion(swig_obj[1],
-      NPY_LONGLONG,
+      NPY_INT64,
       &is_new_object2);
     if (!array2 || !require_dimensions(array2, 1) ||
       !require_size(array2, size, 1)) SWIG_fail;
     
     // Get a pointer to the data in the numpy array2
-    long long* data_ptr = (long long*) array_data(array2);
+    int64_t* data_ptr = (int64_t*) array_data(array2);
     
     // Copy the numpy data into the new vector.
     temp_vec2.reserve(size[0]);
@@ -9900,12 +10170,12 @@ fail:
 SWIGINTERN PyObject *_wrap_conductance(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   stag::LocalGraph *arg1 = (stag::LocalGraph *) 0 ;
-  std::vector< stag_int > *arg2 = 0 ;
+  std::vector< StagInt > *arg2 = 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyArrayObject *array2 = NULL ;
   int is_new_object2 = 0 ;
-  std::vector< long long > temp_vec2 ;
+  std::vector< int64_t > temp_vec2 ;
   PyObject *swig_obj[2] ;
   double result;
   
@@ -9923,13 +10193,13 @@ SWIGINTERN PyObject *_wrap_conductance(PyObject *SWIGUNUSEDPARM(self), PyObject 
     
     // Check that the dimensions of the array2 are correct
     array2 = obj_to_array_contiguous_allow_conversion(swig_obj[1],
-      NPY_LONGLONG,
+      NPY_INT64,
       &is_new_object2);
     if (!array2 || !require_dimensions(array2, 1) ||
       !require_size(array2, size, 1)) SWIG_fail;
     
     // Get a pointer to the data in the numpy array2
-    long long* data_ptr = (long long*) array_data(array2);
+    int64_t* data_ptr = (int64_t*) array_data(array2);
     
     // Copy the numpy data into the new vector.
     temp_vec2.reserve(size[0]);
@@ -9961,16 +10231,16 @@ fail:
 
 SWIGINTERN PyObject *_wrap_symmetric_difference(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
-  std::vector< stag_int > *arg1 = 0 ;
-  std::vector< stag_int > *arg2 = 0 ;
+  std::vector< StagInt > *arg1 = 0 ;
+  std::vector< StagInt > *arg2 = 0 ;
   PyArrayObject *array1 = NULL ;
   int is_new_object1 = 0 ;
-  std::vector< long long > temp_vec1 ;
+  std::vector< int64_t > temp_vec1 ;
   PyArrayObject *array2 = NULL ;
   int is_new_object2 = 0 ;
-  std::vector< long long > temp_vec2 ;
+  std::vector< int64_t > temp_vec2 ;
   PyObject *swig_obj[2] ;
-  std::vector< stag_int > result;
+  std::vector< StagInt > result;
   
   if (!SWIG_Python_UnpackTuple(args, "symmetric_difference", 2, 2, swig_obj)) SWIG_fail;
   {
@@ -9981,13 +10251,13 @@ SWIGINTERN PyObject *_wrap_symmetric_difference(PyObject *SWIGUNUSEDPARM(self), 
     
     // Check that the dimensions of the array1 are correct
     array1 = obj_to_array_contiguous_allow_conversion(swig_obj[0],
-      NPY_LONGLONG,
+      NPY_INT64,
       &is_new_object1);
     if (!array1 || !require_dimensions(array1, 1) ||
       !require_size(array1, size, 1)) SWIG_fail;
     
     // Get a pointer to the data in the numpy array1
-    long long* data_ptr = (long long*) array_data(array1);
+    int64_t* data_ptr = (int64_t*) array_data(array1);
     
     // Copy the numpy data into the new vector.
     temp_vec1.reserve(size[0]);
@@ -10004,13 +10274,13 @@ SWIGINTERN PyObject *_wrap_symmetric_difference(PyObject *SWIGUNUSEDPARM(self), 
     
     // Check that the dimensions of the array2 are correct
     array2 = obj_to_array_contiguous_allow_conversion(swig_obj[1],
-      NPY_LONGLONG,
+      NPY_INT64,
       &is_new_object2);
     if (!array2 || !require_dimensions(array2, 1) ||
       !require_size(array2, size, 1)) SWIG_fail;
     
     // Get a pointer to the data in the numpy array2
-    long long* data_ptr = (long long*) array_data(array2);
+    int64_t* data_ptr = (int64_t*) array_data(array2);
     
     // Copy the numpy data into the new vector.
     temp_vec2.reserve(size[0]);
@@ -10041,11 +10311,89 @@ SWIGINTERN PyObject *_wrap_symmetric_difference(PyObject *SWIGUNUSEDPARM(self), 
     // This adds a small 'constant factor' to the running time of the algorithm
     // in STAGPy over C++ STAG.
     npy_intp length = (&result)->size();
-    resultobj = PyArray_SimpleNew(1, &length, NPY_LONGLONG);
+    resultobj = PyArray_SimpleNew(1, &length, NPY_INT64);
     memcpy(PyArray_DATA((PyArrayObject*) resultobj),
       (&result)->data(),
-      sizeof(long long) * length);
+      sizeof(int64_t) * length);
   }
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_approximate_similarity_graph(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  DenseMat *arg1 = (DenseMat *) 0 ;
+  StagReal arg2 ;
+  double val2 ;
+  int ecode2 = 0 ;
+  PyObject *swig_obj[2] ;
+  SwigValueWrapper< stag::Graph > result;
+  
+  if (!SWIG_Python_UnpackTuple(args, "approximate_similarity_graph", 2, 2, swig_obj)) SWIG_fail;
+  {
+    PyErr_SetString(PyExc_ValueError, "The input typemap for non-const pointer is not yet implemented. Please report this problem to the developer.");
+  }
+  ecode2 = SWIG_AsVal_double(swig_obj[1], &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "approximate_similarity_graph" "', argument " "2"" of type '" "StagReal""'");
+  } 
+  arg2 = static_cast< StagReal >(val2);
+  {
+    try {
+      result = stag::approximate_similarity_graph(arg1,arg2);
+    } catch (std::invalid_argument &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::runtime_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::domain_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    }
+  }
+  resultobj = SWIG_NewPointerObj((new stag::Graph(static_cast< const stag::Graph& >(result))), SWIGTYPE_p_stag__Graph, SWIG_POINTER_OWN |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_similarity_graph(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  DenseMat *arg1 = (DenseMat *) 0 ;
+  StagReal arg2 ;
+  double val2 ;
+  int ecode2 = 0 ;
+  PyObject *swig_obj[2] ;
+  SwigValueWrapper< stag::Graph > result;
+  
+  if (!SWIG_Python_UnpackTuple(args, "similarity_graph", 2, 2, swig_obj)) SWIG_fail;
+  {
+    PyErr_SetString(PyExc_ValueError, "The input typemap for non-const pointer is not yet implemented. Please report this problem to the developer.");
+  }
+  ecode2 = SWIG_AsVal_double(swig_obj[1], &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "similarity_graph" "', argument " "2"" of type '" "StagReal""'");
+  } 
+  arg2 = static_cast< StagReal >(val2);
+  {
+    try {
+      result = stag::similarity_graph(arg1,arg2);
+    } catch (std::invalid_argument &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::runtime_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::domain_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    }
+  }
+  resultobj = SWIG_NewPointerObj((new stag::Graph(static_cast< const stag::Graph& >(result))), SWIGTYPE_p_stag__Graph, SWIG_POINTER_OWN |  0 );
   return resultobj;
 fail:
   return NULL;
@@ -10174,11 +10522,11 @@ SWIGINTERN PyObject *_wrap_parse_adjacencylist_content_line(PyObject *SWIGUNUSED
   }
   {
     // Return a vector of edges as a list of tuples
-    stag_int outer_length = (&result)->size();
+    StagInt outer_length = (&result)->size();
     resultobj = PyList_New(outer_length);
     
     // Construct a new 3-tuple for each inner object, and add to the list.
-    for (stag_int i = 0; i < outer_length; i++) {
+    for (StagInt i = 0; i < outer_length; i++) {
       PyObject* new_tuple_object = PyTuple_Pack(
         3,
         PyLong_FromLongLong((&result)->at(i).v1),
@@ -10470,17 +10818,65 @@ fail:
 }
 
 
+SWIGINTERN PyObject *_wrap_get_global_rng(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::mt19937_64 *result = 0 ;
+  
+  if (!SWIG_Python_UnpackTuple(args, "get_global_rng", 0, 0, 0)) SWIG_fail;
+  {
+    try {
+      result = (std::mt19937_64 *)stag::get_global_rng();
+    } catch (std::invalid_argument &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::runtime_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::domain_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    }
+  }
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_std__mt19937_64, 0 |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_create_rng(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::mt19937_64 result;
+  
+  if (!SWIG_Python_UnpackTuple(args, "create_rng", 0, 0, 0)) SWIG_fail;
+  {
+    try {
+      result = stag::create_rng();
+    } catch (std::invalid_argument &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::runtime_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::domain_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    }
+  }
+  resultobj = SWIG_NewPointerObj((new std::mt19937_64(static_cast< const std::mt19937_64& >(result))), SWIGTYPE_p_std__mt19937_64, SWIG_POINTER_OWN |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
 SWIGINTERN PyObject *_wrap_sbm__SWIG_0(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
   PyObject *resultobj = 0;
-  stag_int arg1 ;
-  stag_int arg2 ;
-  double arg3 ;
-  double arg4 ;
+  StagInt arg1 ;
+  StagInt arg2 ;
+  StagReal arg3 ;
+  StagReal arg4 ;
   bool arg5 ;
-  long long val1 ;
-  int ecode1 = 0 ;
-  long long val2 ;
-  int ecode2 = 0 ;
   double val3 ;
   int ecode3 = 0 ;
   double val4 ;
@@ -10490,26 +10886,32 @@ SWIGINTERN PyObject *_wrap_sbm__SWIG_0(PyObject *SWIGUNUSEDPARM(self), Py_ssize_
   SwigValueWrapper< stag::Graph > result;
   
   if ((nobjs < 5) || (nobjs > 5)) SWIG_fail;
-  ecode1 = SWIG_AsVal_long_SS_long(swig_obj[0], &val1);
-  if (!SWIG_IsOK(ecode1)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "sbm" "', argument " "1"" of type '" "stag_int""'");
-  } 
-  arg1 = static_cast< stag_int >(val1);
-  ecode2 = SWIG_AsVal_long_SS_long(swig_obj[1], &val2);
-  if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "sbm" "', argument " "2"" of type '" "stag_int""'");
-  } 
-  arg2 = static_cast< stag_int >(val2);
+  {
+    // StagInt typemap (in)
+    if (!PyLong_Check((PyObject *) swig_obj[0])) {
+      PyErr_SetString(PyExc_TypeError, "Expected an integer.");
+      return NULL;
+    }
+    arg1 = (StagInt) PyLong_AsLong((PyObject*) swig_obj[0]);
+  }
+  {
+    // StagInt typemap (in)
+    if (!PyLong_Check((PyObject *) swig_obj[1])) {
+      PyErr_SetString(PyExc_TypeError, "Expected an integer.");
+      return NULL;
+    }
+    arg2 = (StagInt) PyLong_AsLong((PyObject*) swig_obj[1]);
+  }
   ecode3 = SWIG_AsVal_double(swig_obj[2], &val3);
   if (!SWIG_IsOK(ecode3)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "sbm" "', argument " "3"" of type '" "double""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "sbm" "', argument " "3"" of type '" "StagReal""'");
   } 
-  arg3 = static_cast< double >(val3);
+  arg3 = static_cast< StagReal >(val3);
   ecode4 = SWIG_AsVal_double(swig_obj[3], &val4);
   if (!SWIG_IsOK(ecode4)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "sbm" "', argument " "4"" of type '" "double""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "sbm" "', argument " "4"" of type '" "StagReal""'");
   } 
-  arg4 = static_cast< double >(val4);
+  arg4 = static_cast< StagReal >(val4);
   ecode5 = SWIG_AsVal_bool(swig_obj[4], &val5);
   if (!SWIG_IsOK(ecode5)) {
     SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "sbm" "', argument " "5"" of type '" "bool""'");
@@ -10538,14 +10940,10 @@ fail:
 
 SWIGINTERN PyObject *_wrap_sbm__SWIG_1(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
   PyObject *resultobj = 0;
-  stag_int arg1 ;
-  stag_int arg2 ;
-  double arg3 ;
-  double arg4 ;
-  long long val1 ;
-  int ecode1 = 0 ;
-  long long val2 ;
-  int ecode2 = 0 ;
+  StagInt arg1 ;
+  StagInt arg2 ;
+  StagReal arg3 ;
+  StagReal arg4 ;
   double val3 ;
   int ecode3 = 0 ;
   double val4 ;
@@ -10553,26 +10951,32 @@ SWIGINTERN PyObject *_wrap_sbm__SWIG_1(PyObject *SWIGUNUSEDPARM(self), Py_ssize_
   SwigValueWrapper< stag::Graph > result;
   
   if ((nobjs < 4) || (nobjs > 4)) SWIG_fail;
-  ecode1 = SWIG_AsVal_long_SS_long(swig_obj[0], &val1);
-  if (!SWIG_IsOK(ecode1)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "sbm" "', argument " "1"" of type '" "stag_int""'");
-  } 
-  arg1 = static_cast< stag_int >(val1);
-  ecode2 = SWIG_AsVal_long_SS_long(swig_obj[1], &val2);
-  if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "sbm" "', argument " "2"" of type '" "stag_int""'");
-  } 
-  arg2 = static_cast< stag_int >(val2);
+  {
+    // StagInt typemap (in)
+    if (!PyLong_Check((PyObject *) swig_obj[0])) {
+      PyErr_SetString(PyExc_TypeError, "Expected an integer.");
+      return NULL;
+    }
+    arg1 = (StagInt) PyLong_AsLong((PyObject*) swig_obj[0]);
+  }
+  {
+    // StagInt typemap (in)
+    if (!PyLong_Check((PyObject *) swig_obj[1])) {
+      PyErr_SetString(PyExc_TypeError, "Expected an integer.");
+      return NULL;
+    }
+    arg2 = (StagInt) PyLong_AsLong((PyObject*) swig_obj[1]);
+  }
   ecode3 = SWIG_AsVal_double(swig_obj[2], &val3);
   if (!SWIG_IsOK(ecode3)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "sbm" "', argument " "3"" of type '" "double""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "sbm" "', argument " "3"" of type '" "StagReal""'");
   } 
-  arg3 = static_cast< double >(val3);
+  arg3 = static_cast< StagReal >(val3);
   ecode4 = SWIG_AsVal_double(swig_obj[3], &val4);
   if (!SWIG_IsOK(ecode4)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "sbm" "', argument " "4"" of type '" "double""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "sbm" "', argument " "4"" of type '" "StagReal""'");
   } 
-  arg4 = static_cast< double >(val4);
+  arg4 = static_cast< StagReal >(val4);
   {
     try {
       result = stag::sbm(arg1,arg2,arg3,arg4);
@@ -10605,13 +11009,13 @@ SWIGINTERN PyObject *_wrap_sbm(PyObject *self, PyObject *args) {
   if (argc == 4) {
     int _v;
     {
-      int res = SWIG_AsVal_long_SS_long(argv[0], NULL);
-      _v = SWIG_CheckState(res);
+      // Typecheck for StagInt
+      _v = PyLong_Check((PyObject*) argv[0]);
     }
     if (_v) {
       {
-        int res = SWIG_AsVal_long_SS_long(argv[1], NULL);
-        _v = SWIG_CheckState(res);
+        // Typecheck for StagInt
+        _v = PyLong_Check((PyObject*) argv[1]);
       }
       if (_v) {
         {
@@ -10633,13 +11037,13 @@ SWIGINTERN PyObject *_wrap_sbm(PyObject *self, PyObject *args) {
   if (argc == 5) {
     int _v;
     {
-      int res = SWIG_AsVal_long_SS_long(argv[0], NULL);
-      _v = SWIG_CheckState(res);
+      // Typecheck for StagInt
+      _v = PyLong_Check((PyObject*) argv[0]);
     }
     if (_v) {
       {
-        int res = SWIG_AsVal_long_SS_long(argv[1], NULL);
-        _v = SWIG_CheckState(res);
+        // Typecheck for StagInt
+        _v = PyLong_Check((PyObject*) argv[1]);
       }
       if (_v) {
         {
@@ -10668,20 +11072,20 @@ SWIGINTERN PyObject *_wrap_sbm(PyObject *self, PyObject *args) {
 fail:
   SWIG_Python_RaiseOrModifyTypeError("Wrong number or type of arguments for overloaded function 'sbm'.\n"
     "  Possible C/C++ prototypes are:\n"
-    "    stag::sbm(stag_int,stag_int,double,double,bool)\n"
-    "    stag::sbm(stag_int,stag_int,double,double)\n");
+    "    stag::sbm(StagInt,StagInt,StagReal,StagReal,bool)\n"
+    "    stag::sbm(StagInt,StagInt,StagReal,StagReal)\n");
   return 0;
 }
 
 
 SWIGINTERN PyObject *_wrap_general_sbm__SWIG_0(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
   PyObject *resultobj = 0;
-  std::vector< stag_int > *arg1 = 0 ;
+  std::vector< StagInt > *arg1 = 0 ;
   DenseMat *arg2 = 0 ;
   bool arg3 ;
   PyArrayObject *array1 = NULL ;
   int is_new_object1 = 0 ;
-  std::vector< long long > temp_vec1 ;
+  std::vector< int64_t > temp_vec1 ;
   DenseMat temp2 ;
   bool val3 ;
   int ecode3 = 0 ;
@@ -10696,13 +11100,13 @@ SWIGINTERN PyObject *_wrap_general_sbm__SWIG_0(PyObject *SWIGUNUSEDPARM(self), P
     
     // Check that the dimensions of the array1 are correct
     array1 = obj_to_array_contiguous_allow_conversion(swig_obj[0],
-      NPY_LONGLONG,
+      NPY_INT64,
       &is_new_object1);
     if (!array1 || !require_dimensions(array1, 1) ||
       !require_size(array1, size, 1)) SWIG_fail;
     
     // Get a pointer to the data in the numpy array1
-    long long* data_ptr = (long long*) array_data(array1);
+    int64_t* data_ptr = (int64_t*) array_data(array1);
     
     // Copy the numpy data into the new vector.
     temp_vec1.reserve(size[0]);
@@ -10749,11 +11153,11 @@ fail:
 
 SWIGINTERN PyObject *_wrap_general_sbm__SWIG_1(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
   PyObject *resultobj = 0;
-  std::vector< stag_int > *arg1 = 0 ;
+  std::vector< StagInt > *arg1 = 0 ;
   DenseMat *arg2 = 0 ;
   PyArrayObject *array1 = NULL ;
   int is_new_object1 = 0 ;
-  std::vector< long long > temp_vec1 ;
+  std::vector< int64_t > temp_vec1 ;
   DenseMat temp2 ;
   SwigValueWrapper< stag::Graph > result;
   
@@ -10766,13 +11170,13 @@ SWIGINTERN PyObject *_wrap_general_sbm__SWIG_1(PyObject *SWIGUNUSEDPARM(self), P
     
     // Check that the dimensions of the array1 are correct
     array1 = obj_to_array_contiguous_allow_conversion(swig_obj[0],
-      NPY_LONGLONG,
+      NPY_INT64,
       &is_new_object1);
     if (!array1 || !require_dimensions(array1, 1) ||
       !require_size(array1, size, 1)) SWIG_fail;
     
     // Get a pointer to the data in the numpy array1
-    long long* data_ptr = (long long*) array_data(array1);
+    int64_t* data_ptr = (int64_t*) array_data(array1);
     
     // Copy the numpy data into the new vector.
     temp_vec1.reserve(size[0]);
@@ -10858,8 +11262,8 @@ SWIGINTERN PyObject *_wrap_general_sbm(PyObject *self, PyObject *args) {
 fail:
   SWIG_Python_RaiseOrModifyTypeError("Wrong number or type of arguments for overloaded function 'general_sbm'.\n"
     "  Possible C/C++ prototypes are:\n"
-    "    stag::general_sbm(std::vector< stag_int > &,DenseMat &,bool)\n"
-    "    stag::general_sbm(std::vector< stag_int > &,DenseMat &)\n");
+    "    stag::general_sbm(std::vector< StagInt > &,DenseMat &,bool)\n"
+    "    stag::general_sbm(std::vector< StagInt > &,DenseMat &)\n");
   return 0;
 }
 
@@ -10867,13 +11271,13 @@ fail:
 SWIGINTERN PyObject *_wrap_general_sbm_edgelist__SWIG_0(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
   PyObject *resultobj = 0;
   std::string *arg1 = 0 ;
-  std::vector< stag_int > *arg2 = 0 ;
+  std::vector< StagInt > *arg2 = 0 ;
   DenseMat *arg3 = 0 ;
   bool arg4 ;
   int res1 = 0 ;
   PyArrayObject *array2 = NULL ;
   int is_new_object2 = 0 ;
-  std::vector< long long > temp_vec2 ;
+  std::vector< int64_t > temp_vec2 ;
   DenseMat temp3 ;
   bool val4 ;
   int ecode4 = 0 ;
@@ -10895,13 +11299,13 @@ SWIGINTERN PyObject *_wrap_general_sbm_edgelist__SWIG_0(PyObject *SWIGUNUSEDPARM
     
     // Check that the dimensions of the array2 are correct
     array2 = obj_to_array_contiguous_allow_conversion(swig_obj[1],
-      NPY_LONGLONG,
+      NPY_INT64,
       &is_new_object2);
     if (!array2 || !require_dimensions(array2, 1) ||
       !require_size(array2, size, 1)) SWIG_fail;
     
     // Get a pointer to the data in the numpy array2
-    long long* data_ptr = (long long*) array_data(array2);
+    int64_t* data_ptr = (int64_t*) array_data(array2);
     
     // Copy the numpy data into the new vector.
     temp_vec2.reserve(size[0]);
@@ -10951,12 +11355,12 @@ fail:
 SWIGINTERN PyObject *_wrap_general_sbm_edgelist__SWIG_1(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
   PyObject *resultobj = 0;
   std::string *arg1 = 0 ;
-  std::vector< stag_int > *arg2 = 0 ;
+  std::vector< StagInt > *arg2 = 0 ;
   DenseMat *arg3 = 0 ;
   int res1 = 0 ;
   PyArrayObject *array2 = NULL ;
   int is_new_object2 = 0 ;
-  std::vector< long long > temp_vec2 ;
+  std::vector< int64_t > temp_vec2 ;
   DenseMat temp3 ;
   
   if ((nobjs < 3) || (nobjs > 3)) SWIG_fail;
@@ -10976,13 +11380,13 @@ SWIGINTERN PyObject *_wrap_general_sbm_edgelist__SWIG_1(PyObject *SWIGUNUSEDPARM
     
     // Check that the dimensions of the array2 are correct
     array2 = obj_to_array_contiguous_allow_conversion(swig_obj[1],
-      NPY_LONGLONG,
+      NPY_INT64,
       &is_new_object2);
     if (!array2 || !require_dimensions(array2, 1) ||
       !require_size(array2, size, 1)) SWIG_fail;
     
     // Get a pointer to the data in the numpy array2
-    long long* data_ptr = (long long*) array_data(array2);
+    int64_t* data_ptr = (int64_t*) array_data(array2);
     
     // Copy the numpy data into the new vector.
     temp_vec2.reserve(size[0]);
@@ -11078,19 +11482,17 @@ SWIGINTERN PyObject *_wrap_general_sbm_edgelist(PyObject *self, PyObject *args) 
 fail:
   SWIG_Python_RaiseOrModifyTypeError("Wrong number or type of arguments for overloaded function 'general_sbm_edgelist'.\n"
     "  Possible C/C++ prototypes are:\n"
-    "    stag::general_sbm_edgelist(std::string &,std::vector< stag_int > &,DenseMat &,bool)\n"
-    "    stag::general_sbm_edgelist(std::string &,std::vector< stag_int > &,DenseMat &)\n");
+    "    stag::general_sbm_edgelist(std::string &,std::vector< StagInt > &,DenseMat &,bool)\n"
+    "    stag::general_sbm_edgelist(std::string &,std::vector< StagInt > &,DenseMat &)\n");
   return 0;
 }
 
 
 SWIGINTERN PyObject *_wrap_erdos_renyi__SWIG_0(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
   PyObject *resultobj = 0;
-  stag_int arg1 ;
-  double arg2 ;
+  StagInt arg1 ;
+  StagReal arg2 ;
   bool arg3 ;
-  long long val1 ;
-  int ecode1 = 0 ;
   double val2 ;
   int ecode2 = 0 ;
   bool val3 ;
@@ -11098,16 +11500,19 @@ SWIGINTERN PyObject *_wrap_erdos_renyi__SWIG_0(PyObject *SWIGUNUSEDPARM(self), P
   SwigValueWrapper< stag::Graph > result;
   
   if ((nobjs < 3) || (nobjs > 3)) SWIG_fail;
-  ecode1 = SWIG_AsVal_long_SS_long(swig_obj[0], &val1);
-  if (!SWIG_IsOK(ecode1)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "erdos_renyi" "', argument " "1"" of type '" "stag_int""'");
-  } 
-  arg1 = static_cast< stag_int >(val1);
+  {
+    // StagInt typemap (in)
+    if (!PyLong_Check((PyObject *) swig_obj[0])) {
+      PyErr_SetString(PyExc_TypeError, "Expected an integer.");
+      return NULL;
+    }
+    arg1 = (StagInt) PyLong_AsLong((PyObject*) swig_obj[0]);
+  }
   ecode2 = SWIG_AsVal_double(swig_obj[1], &val2);
   if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "erdos_renyi" "', argument " "2"" of type '" "double""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "erdos_renyi" "', argument " "2"" of type '" "StagReal""'");
   } 
-  arg2 = static_cast< double >(val2);
+  arg2 = static_cast< StagReal >(val2);
   ecode3 = SWIG_AsVal_bool(swig_obj[2], &val3);
   if (!SWIG_IsOK(ecode3)) {
     SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "erdos_renyi" "', argument " "3"" of type '" "bool""'");
@@ -11136,25 +11541,26 @@ fail:
 
 SWIGINTERN PyObject *_wrap_erdos_renyi__SWIG_1(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
   PyObject *resultobj = 0;
-  stag_int arg1 ;
-  double arg2 ;
-  long long val1 ;
-  int ecode1 = 0 ;
+  StagInt arg1 ;
+  StagReal arg2 ;
   double val2 ;
   int ecode2 = 0 ;
   SwigValueWrapper< stag::Graph > result;
   
   if ((nobjs < 2) || (nobjs > 2)) SWIG_fail;
-  ecode1 = SWIG_AsVal_long_SS_long(swig_obj[0], &val1);
-  if (!SWIG_IsOK(ecode1)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "erdos_renyi" "', argument " "1"" of type '" "stag_int""'");
-  } 
-  arg1 = static_cast< stag_int >(val1);
+  {
+    // StagInt typemap (in)
+    if (!PyLong_Check((PyObject *) swig_obj[0])) {
+      PyErr_SetString(PyExc_TypeError, "Expected an integer.");
+      return NULL;
+    }
+    arg1 = (StagInt) PyLong_AsLong((PyObject*) swig_obj[0]);
+  }
   ecode2 = SWIG_AsVal_double(swig_obj[1], &val2);
   if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "erdos_renyi" "', argument " "2"" of type '" "double""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "erdos_renyi" "', argument " "2"" of type '" "StagReal""'");
   } 
-  arg2 = static_cast< double >(val2);
+  arg2 = static_cast< StagReal >(val2);
   {
     try {
       result = stag::erdos_renyi(arg1,arg2);
@@ -11187,8 +11593,8 @@ SWIGINTERN PyObject *_wrap_erdos_renyi(PyObject *self, PyObject *args) {
   if (argc == 2) {
     int _v;
     {
-      int res = SWIG_AsVal_long_SS_long(argv[0], NULL);
-      _v = SWIG_CheckState(res);
+      // Typecheck for StagInt
+      _v = PyLong_Check((PyObject*) argv[0]);
     }
     if (_v) {
       {
@@ -11203,8 +11609,8 @@ SWIGINTERN PyObject *_wrap_erdos_renyi(PyObject *self, PyObject *args) {
   if (argc == 3) {
     int _v;
     {
-      int res = SWIG_AsVal_long_SS_long(argv[0], NULL);
-      _v = SWIG_CheckState(res);
+      // Typecheck for StagInt
+      _v = PyLong_Check((PyObject*) argv[0]);
     }
     if (_v) {
       {
@@ -11226,34 +11632,36 @@ SWIGINTERN PyObject *_wrap_erdos_renyi(PyObject *self, PyObject *args) {
 fail:
   SWIG_Python_RaiseOrModifyTypeError("Wrong number or type of arguments for overloaded function 'erdos_renyi'.\n"
     "  Possible C/C++ prototypes are:\n"
-    "    stag::erdos_renyi(stag_int,double,bool)\n"
-    "    stag::erdos_renyi(stag_int,double)\n");
+    "    stag::erdos_renyi(StagInt,StagReal,bool)\n"
+    "    stag::erdos_renyi(StagInt,StagReal)\n");
   return 0;
 }
 
 
 SWIGINTERN PyObject *_wrap_sbm_gt_labels(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
-  stag_int arg1 ;
-  stag_int arg2 ;
-  long long val1 ;
-  int ecode1 = 0 ;
-  long long val2 ;
-  int ecode2 = 0 ;
+  StagInt arg1 ;
+  StagInt arg2 ;
   PyObject *swig_obj[2] ;
-  std::vector< stag_int > result;
+  std::vector< StagInt > result;
   
   if (!SWIG_Python_UnpackTuple(args, "sbm_gt_labels", 2, 2, swig_obj)) SWIG_fail;
-  ecode1 = SWIG_AsVal_long_SS_long(swig_obj[0], &val1);
-  if (!SWIG_IsOK(ecode1)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "sbm_gt_labels" "', argument " "1"" of type '" "stag_int""'");
-  } 
-  arg1 = static_cast< stag_int >(val1);
-  ecode2 = SWIG_AsVal_long_SS_long(swig_obj[1], &val2);
-  if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "sbm_gt_labels" "', argument " "2"" of type '" "stag_int""'");
-  } 
-  arg2 = static_cast< stag_int >(val2);
+  {
+    // StagInt typemap (in)
+    if (!PyLong_Check((PyObject *) swig_obj[0])) {
+      PyErr_SetString(PyExc_TypeError, "Expected an integer.");
+      return NULL;
+    }
+    arg1 = (StagInt) PyLong_AsLong((PyObject*) swig_obj[0]);
+  }
+  {
+    // StagInt typemap (in)
+    if (!PyLong_Check((PyObject *) swig_obj[1])) {
+      PyErr_SetString(PyExc_TypeError, "Expected an integer.");
+      return NULL;
+    }
+    arg2 = (StagInt) PyLong_AsLong((PyObject*) swig_obj[1]);
+  }
   {
     try {
       result = stag::sbm_gt_labels(arg1,arg2);
@@ -11276,10 +11684,10 @@ SWIGINTERN PyObject *_wrap_sbm_gt_labels(PyObject *SWIGUNUSEDPARM(self), PyObjec
     // This adds a small 'constant factor' to the running time of the algorithm
     // in STAGPy over C++ STAG.
     npy_intp length = (&result)->size();
-    resultobj = PyArray_SimpleNew(1, &length, NPY_LONGLONG);
+    resultobj = PyArray_SimpleNew(1, &length, NPY_INT64);
     memcpy(PyArray_DATA((PyArrayObject*) resultobj),
       (&result)->data(),
-      sizeof(long long) * length);
+      sizeof(int64_t) * length);
   }
   return resultobj;
 fail:
@@ -11289,12 +11697,12 @@ fail:
 
 SWIGINTERN PyObject *_wrap_general_sbm_gt_labels(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
-  std::vector< stag_int > *arg1 = 0 ;
+  std::vector< StagInt > *arg1 = 0 ;
   PyArrayObject *array1 = NULL ;
   int is_new_object1 = 0 ;
-  std::vector< long long > temp_vec1 ;
+  std::vector< int64_t > temp_vec1 ;
   PyObject *swig_obj[1] ;
-  std::vector< stag_int > result;
+  std::vector< StagInt > result;
   
   if (!args) SWIG_fail;
   swig_obj[0] = args;
@@ -11306,13 +11714,13 @@ SWIGINTERN PyObject *_wrap_general_sbm_gt_labels(PyObject *SWIGUNUSEDPARM(self),
     
     // Check that the dimensions of the array1 are correct
     array1 = obj_to_array_contiguous_allow_conversion(swig_obj[0],
-      NPY_LONGLONG,
+      NPY_INT64,
       &is_new_object1);
     if (!array1 || !require_dimensions(array1, 1) ||
       !require_size(array1, size, 1)) SWIG_fail;
     
     // Get a pointer to the data in the numpy array1
-    long long* data_ptr = (long long*) array_data(array1);
+    int64_t* data_ptr = (int64_t*) array_data(array1);
     
     // Copy the numpy data into the new vector.
     temp_vec1.reserve(size[0]);
@@ -11343,10 +11751,10 @@ SWIGINTERN PyObject *_wrap_general_sbm_gt_labels(PyObject *SWIGUNUSEDPARM(self),
     // This adds a small 'constant factor' to the running time of the algorithm
     // in STAGPy over C++ STAG.
     npy_intp length = (&result)->size();
-    resultobj = PyArray_SimpleNew(1, &length, NPY_LONGLONG);
+    resultobj = PyArray_SimpleNew(1, &length, NPY_INT64);
     memcpy(PyArray_DATA((PyArrayObject*) resultobj),
       (&result)->data(),
-      sizeof(long long) * length);
+      sizeof(int64_t) * length);
   }
   return resultobj;
 fail:
@@ -11354,41 +11762,48 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_compute_eigensystem__SWIG_0(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
+SWIGINTERN PyObject *_wrap_compute_eigensystem(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
-  SprsMat *arg1 = (SprsMat *) 0 ;
-  stag_int arg2 ;
-  Spectra::SortRule arg3 ;
+  stag::Graph *arg1 = (stag::Graph *) 0 ;
+  stag::GraphMatrix arg2 ;
+  StagInt arg3 ;
+  stag::EigenSortRule arg4 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-  long long val2 ;
+  int val2 ;
   int ecode2 = 0 ;
+  int val4 ;
+  int ecode4 = 0 ;
+  PyObject *swig_obj[4] ;
   SwigValueWrapper< std::tuple< Eigen::VectorXd,Eigen::MatrixXd > > result;
   
-  if ((nobjs < 3) || (nobjs > 3)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_Eigen__SparseMatrixT_double_Eigen__ColMajor_stag_int_t, 0 |  0 );
+  if (!SWIG_Python_UnpackTuple(args, "compute_eigensystem", 4, 4, swig_obj)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_stag__Graph, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "compute_eigensystem" "', argument " "1"" of type '" "SprsMat const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "compute_eigensystem" "', argument " "1"" of type '" "stag::Graph *""'"); 
   }
-  arg1 = reinterpret_cast< SprsMat * >(argp1);
-  ecode2 = SWIG_AsVal_long_SS_long(swig_obj[1], &val2);
+  arg1 = reinterpret_cast< stag::Graph * >(argp1);
+  ecode2 = SWIG_AsVal_int(swig_obj[1], &val2);
   if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "compute_eigensystem" "', argument " "2"" of type '" "stag_int""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "compute_eigensystem" "', argument " "2"" of type '" "stag::GraphMatrix""'");
   } 
-  arg2 = static_cast< stag_int >(val2);
+  arg2 = static_cast< stag::GraphMatrix >(val2);
   {
-    // Assume we are given a boolean
-    // False is SM, True is LM
-    bool input = PyObject_IsTrue(swig_obj[2]);
-    if (input) {
-      arg3 = Spectra::SortRule::LargestMagn;
-    } else {
-      arg3 = Spectra::SortRule::SmallestMagn;
+    // StagInt typemap (in)
+    if (!PyLong_Check((PyObject *) swig_obj[2])) {
+      PyErr_SetString(PyExc_TypeError, "Expected an integer.");
+      return NULL;
     }
+    arg3 = (StagInt) PyLong_AsLong((PyObject*) swig_obj[2]);
   }
+  ecode4 = SWIG_AsVal_int(swig_obj[3], &val4);
+  if (!SWIG_IsOK(ecode4)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "compute_eigensystem" "', argument " "4"" of type '" "stag::EigenSortRule""'");
+  } 
+  arg4 = static_cast< stag::EigenSortRule >(val4);
   {
     try {
-      result = stag::compute_eigensystem((Eigen::SparseMatrix< double,Eigen::ColMajor,stag_int > const *)arg1,arg2,arg3);
+      result = stag::compute_eigensystem(arg1,arg2,arg3,arg4);
     } catch (std::invalid_argument &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
@@ -11407,290 +11822,48 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_compute_eigensystem__SWIG_1(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
+SWIGINTERN PyObject *_wrap_compute_eigenvectors(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
-  SprsMat *arg1 = (SprsMat *) 0 ;
-  stag_int arg2 ;
+  stag::Graph *arg1 = (stag::Graph *) 0 ;
+  stag::GraphMatrix arg2 ;
+  StagInt arg3 ;
+  stag::EigenSortRule arg4 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-  long long val2 ;
+  int val2 ;
   int ecode2 = 0 ;
-  SwigValueWrapper< std::tuple< Eigen::VectorXd,Eigen::MatrixXd > > result;
-  
-  if ((nobjs < 2) || (nobjs > 2)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_Eigen__SparseMatrixT_double_Eigen__ColMajor_stag_int_t, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "compute_eigensystem" "', argument " "1"" of type '" "SprsMat const *""'"); 
-  }
-  arg1 = reinterpret_cast< SprsMat * >(argp1);
-  ecode2 = SWIG_AsVal_long_SS_long(swig_obj[1], &val2);
-  if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "compute_eigensystem" "', argument " "2"" of type '" "stag_int""'");
-  } 
-  arg2 = static_cast< stag_int >(val2);
-  {
-    try {
-      result = stag::compute_eigensystem((Eigen::SparseMatrix< double,Eigen::ColMajor,stag_int > const *)arg1,arg2);
-    } catch (std::invalid_argument &e) {
-      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
-      return NULL;
-    } catch (std::runtime_error &e) {
-      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
-      return NULL;
-    } catch (std::domain_error &e) {
-      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
-      return NULL;
-    }
-  }
-  resultobj = SWIG_NewPointerObj((new stag::EigenSystem(static_cast< const stag::EigenSystem& >(result))), SWIGTYPE_p_std__tupleT_Eigen__VectorXd_Eigen__MatrixXd_t, SWIG_POINTER_OWN |  0 );
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_compute_eigensystem(PyObject *self, PyObject *args) {
-  Py_ssize_t argc;
-  PyObject *argv[4] = {
-    0
-  };
-  
-  if (!(argc = SWIG_Python_UnpackTuple(args, "compute_eigensystem", 0, 3, argv))) SWIG_fail;
-  --argc;
-  if (argc == 2) {
-    int _v;
-    void *vptr = 0;
-    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_Eigen__SparseMatrixT_double_Eigen__ColMajor_stag_int_t, 0);
-    _v = SWIG_CheckState(res);
-    if (_v) {
-      {
-        int res = SWIG_AsVal_long_SS_long(argv[1], NULL);
-        _v = SWIG_CheckState(res);
-      }
-      if (_v) {
-        return _wrap_compute_eigensystem__SWIG_1(self, argc, argv);
-      }
-    }
-  }
-  if (argc == 3) {
-    int _v;
-    void *vptr = 0;
-    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_Eigen__SparseMatrixT_double_Eigen__ColMajor_stag_int_t, 0);
-    _v = SWIG_CheckState(res);
-    if (_v) {
-      {
-        int res = SWIG_AsVal_long_SS_long(argv[1], NULL);
-        _v = SWIG_CheckState(res);
-      }
-      if (_v) {
-        {
-          _v = 1;
-        }
-        if (_v) {
-          return _wrap_compute_eigensystem__SWIG_0(self, argc, argv);
-        }
-      }
-    }
-  }
-  
-fail:
-  SWIG_Python_RaiseOrModifyTypeError("Wrong number or type of arguments for overloaded function 'compute_eigensystem'.\n"
-    "  Possible C/C++ prototypes are:\n"
-    "    stag::compute_eigensystem(SprsMat const *,stag_int,Spectra::SortRule)\n"
-    "    stag::compute_eigensystem(SprsMat const *,stag_int)\n");
-  return 0;
-}
-
-
-SWIGINTERN PyObject *_wrap_compute_eigenvalues__SWIG_0(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
-  PyObject *resultobj = 0;
-  SprsMat *arg1 = (SprsMat *) 0 ;
-  stag_int arg2 ;
-  Spectra::SortRule arg3 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  long long val2 ;
-  int ecode2 = 0 ;
-  Eigen::VectorXd result;
-  
-  if ((nobjs < 3) || (nobjs > 3)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_Eigen__SparseMatrixT_double_Eigen__ColMajor_stag_int_t, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "compute_eigenvalues" "', argument " "1"" of type '" "SprsMat const *""'"); 
-  }
-  arg1 = reinterpret_cast< SprsMat * >(argp1);
-  ecode2 = SWIG_AsVal_long_SS_long(swig_obj[1], &val2);
-  if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "compute_eigenvalues" "', argument " "2"" of type '" "stag_int""'");
-  } 
-  arg2 = static_cast< stag_int >(val2);
-  {
-    // Assume we are given a boolean
-    // False is SM, True is LM
-    bool input = PyObject_IsTrue(swig_obj[2]);
-    if (input) {
-      arg3 = Spectra::SortRule::LargestMagn;
-    } else {
-      arg3 = Spectra::SortRule::SmallestMagn;
-    }
-  }
-  {
-    try {
-      result = stag::compute_eigenvalues((Eigen::SparseMatrix< double,Eigen::ColMajor,stag_int > const *)arg1,arg2,arg3);
-    } catch (std::invalid_argument &e) {
-      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
-      return NULL;
-    } catch (std::runtime_error &e) {
-      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
-      return NULL;
-    } catch (std::domain_error &e) {
-      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
-      return NULL;
-    }
-  }
-  {
-    int res = ConvertFromEigenToNumPyMatrix<Eigen::VectorXd>(&resultobj, &result);
-    if (res < 0) return NULL;
-  }
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_compute_eigenvalues__SWIG_1(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
-  PyObject *resultobj = 0;
-  SprsMat *arg1 = (SprsMat *) 0 ;
-  stag_int arg2 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  long long val2 ;
-  int ecode2 = 0 ;
-  Eigen::VectorXd result;
-  
-  if ((nobjs < 2) || (nobjs > 2)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_Eigen__SparseMatrixT_double_Eigen__ColMajor_stag_int_t, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "compute_eigenvalues" "', argument " "1"" of type '" "SprsMat const *""'"); 
-  }
-  arg1 = reinterpret_cast< SprsMat * >(argp1);
-  ecode2 = SWIG_AsVal_long_SS_long(swig_obj[1], &val2);
-  if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "compute_eigenvalues" "', argument " "2"" of type '" "stag_int""'");
-  } 
-  arg2 = static_cast< stag_int >(val2);
-  {
-    try {
-      result = stag::compute_eigenvalues((Eigen::SparseMatrix< double,Eigen::ColMajor,stag_int > const *)arg1,arg2);
-    } catch (std::invalid_argument &e) {
-      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
-      return NULL;
-    } catch (std::runtime_error &e) {
-      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
-      return NULL;
-    } catch (std::domain_error &e) {
-      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
-      return NULL;
-    }
-  }
-  {
-    int res = ConvertFromEigenToNumPyMatrix<Eigen::VectorXd>(&resultobj, &result);
-    if (res < 0) return NULL;
-  }
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_compute_eigenvalues(PyObject *self, PyObject *args) {
-  Py_ssize_t argc;
-  PyObject *argv[4] = {
-    0
-  };
-  
-  if (!(argc = SWIG_Python_UnpackTuple(args, "compute_eigenvalues", 0, 3, argv))) SWIG_fail;
-  --argc;
-  if (argc == 2) {
-    int _v;
-    void *vptr = 0;
-    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_Eigen__SparseMatrixT_double_Eigen__ColMajor_stag_int_t, 0);
-    _v = SWIG_CheckState(res);
-    if (_v) {
-      {
-        int res = SWIG_AsVal_long_SS_long(argv[1], NULL);
-        _v = SWIG_CheckState(res);
-      }
-      if (_v) {
-        return _wrap_compute_eigenvalues__SWIG_1(self, argc, argv);
-      }
-    }
-  }
-  if (argc == 3) {
-    int _v;
-    void *vptr = 0;
-    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_Eigen__SparseMatrixT_double_Eigen__ColMajor_stag_int_t, 0);
-    _v = SWIG_CheckState(res);
-    if (_v) {
-      {
-        int res = SWIG_AsVal_long_SS_long(argv[1], NULL);
-        _v = SWIG_CheckState(res);
-      }
-      if (_v) {
-        {
-          _v = 1;
-        }
-        if (_v) {
-          return _wrap_compute_eigenvalues__SWIG_0(self, argc, argv);
-        }
-      }
-    }
-  }
-  
-fail:
-  SWIG_Python_RaiseOrModifyTypeError("Wrong number or type of arguments for overloaded function 'compute_eigenvalues'.\n"
-    "  Possible C/C++ prototypes are:\n"
-    "    stag::compute_eigenvalues(SprsMat const *,stag_int,Spectra::SortRule)\n"
-    "    stag::compute_eigenvalues(SprsMat const *,stag_int)\n");
-  return 0;
-}
-
-
-SWIGINTERN PyObject *_wrap_compute_eigenvectors__SWIG_0(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
-  PyObject *resultobj = 0;
-  SprsMat *arg1 = (SprsMat *) 0 ;
-  stag_int arg2 ;
-  Spectra::SortRule arg3 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  long long val2 ;
-  int ecode2 = 0 ;
+  int val4 ;
+  int ecode4 = 0 ;
+  PyObject *swig_obj[4] ;
   Eigen::MatrixXd result;
   
-  if ((nobjs < 3) || (nobjs > 3)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_Eigen__SparseMatrixT_double_Eigen__ColMajor_stag_int_t, 0 |  0 );
+  if (!SWIG_Python_UnpackTuple(args, "compute_eigenvectors", 4, 4, swig_obj)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_stag__Graph, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "compute_eigenvectors" "', argument " "1"" of type '" "SprsMat const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "compute_eigenvectors" "', argument " "1"" of type '" "stag::Graph *""'"); 
   }
-  arg1 = reinterpret_cast< SprsMat * >(argp1);
-  ecode2 = SWIG_AsVal_long_SS_long(swig_obj[1], &val2);
+  arg1 = reinterpret_cast< stag::Graph * >(argp1);
+  ecode2 = SWIG_AsVal_int(swig_obj[1], &val2);
   if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "compute_eigenvectors" "', argument " "2"" of type '" "stag_int""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "compute_eigenvectors" "', argument " "2"" of type '" "stag::GraphMatrix""'");
   } 
-  arg2 = static_cast< stag_int >(val2);
+  arg2 = static_cast< stag::GraphMatrix >(val2);
   {
-    // Assume we are given a boolean
-    // False is SM, True is LM
-    bool input = PyObject_IsTrue(swig_obj[2]);
-    if (input) {
-      arg3 = Spectra::SortRule::LargestMagn;
-    } else {
-      arg3 = Spectra::SortRule::SmallestMagn;
+    // StagInt typemap (in)
+    if (!PyLong_Check((PyObject *) swig_obj[2])) {
+      PyErr_SetString(PyExc_TypeError, "Expected an integer.");
+      return NULL;
     }
+    arg3 = (StagInt) PyLong_AsLong((PyObject*) swig_obj[2]);
   }
+  ecode4 = SWIG_AsVal_int(swig_obj[3], &val4);
+  if (!SWIG_IsOK(ecode4)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "compute_eigenvectors" "', argument " "4"" of type '" "stag::EigenSortRule""'");
+  } 
+  arg4 = static_cast< stag::EigenSortRule >(val4);
   {
     try {
-      result = stag::compute_eigenvectors((Eigen::SparseMatrix< double,Eigen::ColMajor,stag_int > const *)arg1,arg2,arg3);
+      result = stag::compute_eigenvectors(arg1,arg2,arg3,arg4);
     } catch (std::invalid_argument &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
@@ -11712,30 +11885,48 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_compute_eigenvectors__SWIG_1(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
+SWIGINTERN PyObject *_wrap_compute_eigenvalues(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
-  SprsMat *arg1 = (SprsMat *) 0 ;
-  stag_int arg2 ;
+  stag::Graph *arg1 = (stag::Graph *) 0 ;
+  stag::GraphMatrix arg2 ;
+  StagInt arg3 ;
+  stag::EigenSortRule arg4 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-  long long val2 ;
+  int val2 ;
   int ecode2 = 0 ;
-  Eigen::MatrixXd result;
+  int val4 ;
+  int ecode4 = 0 ;
+  PyObject *swig_obj[4] ;
+  Eigen::VectorXd result;
   
-  if ((nobjs < 2) || (nobjs > 2)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_Eigen__SparseMatrixT_double_Eigen__ColMajor_stag_int_t, 0 |  0 );
+  if (!SWIG_Python_UnpackTuple(args, "compute_eigenvalues", 4, 4, swig_obj)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_stag__Graph, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "compute_eigenvectors" "', argument " "1"" of type '" "SprsMat const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "compute_eigenvalues" "', argument " "1"" of type '" "stag::Graph *""'"); 
   }
-  arg1 = reinterpret_cast< SprsMat * >(argp1);
-  ecode2 = SWIG_AsVal_long_SS_long(swig_obj[1], &val2);
+  arg1 = reinterpret_cast< stag::Graph * >(argp1);
+  ecode2 = SWIG_AsVal_int(swig_obj[1], &val2);
   if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "compute_eigenvectors" "', argument " "2"" of type '" "stag_int""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "compute_eigenvalues" "', argument " "2"" of type '" "stag::GraphMatrix""'");
   } 
-  arg2 = static_cast< stag_int >(val2);
+  arg2 = static_cast< stag::GraphMatrix >(val2);
+  {
+    // StagInt typemap (in)
+    if (!PyLong_Check((PyObject *) swig_obj[2])) {
+      PyErr_SetString(PyExc_TypeError, "Expected an integer.");
+      return NULL;
+    }
+    arg3 = (StagInt) PyLong_AsLong((PyObject*) swig_obj[2]);
+  }
+  ecode4 = SWIG_AsVal_int(swig_obj[3], &val4);
+  if (!SWIG_IsOK(ecode4)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "compute_eigenvalues" "', argument " "4"" of type '" "stag::EigenSortRule""'");
+  } 
+  arg4 = static_cast< stag::EigenSortRule >(val4);
   {
     try {
-      result = stag::compute_eigenvectors((Eigen::SparseMatrix< double,Eigen::ColMajor,stag_int > const *)arg1,arg2);
+      result = stag::compute_eigenvalues(arg1,arg2,arg3,arg4);
     } catch (std::invalid_argument &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
@@ -11748,91 +11939,39 @@ SWIGINTERN PyObject *_wrap_compute_eigenvectors__SWIG_1(PyObject *SWIGUNUSEDPARM
     }
   }
   {
-    int res = ConvertFromEigenToNumPyMatrix<Eigen::MatrixXd>(&resultobj, &result);
+    int res = ConvertFromEigenToNumPyMatrix<Eigen::VectorXd>(&resultobj, &result);
     if (res < 0) return NULL;
   }
   return resultobj;
 fail:
   return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_compute_eigenvectors(PyObject *self, PyObject *args) {
-  Py_ssize_t argc;
-  PyObject *argv[4] = {
-    0
-  };
-  
-  if (!(argc = SWIG_Python_UnpackTuple(args, "compute_eigenvectors", 0, 3, argv))) SWIG_fail;
-  --argc;
-  if (argc == 2) {
-    int _v;
-    void *vptr = 0;
-    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_Eigen__SparseMatrixT_double_Eigen__ColMajor_stag_int_t, 0);
-    _v = SWIG_CheckState(res);
-    if (_v) {
-      {
-        int res = SWIG_AsVal_long_SS_long(argv[1], NULL);
-        _v = SWIG_CheckState(res);
-      }
-      if (_v) {
-        return _wrap_compute_eigenvectors__SWIG_1(self, argc, argv);
-      }
-    }
-  }
-  if (argc == 3) {
-    int _v;
-    void *vptr = 0;
-    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_Eigen__SparseMatrixT_double_Eigen__ColMajor_stag_int_t, 0);
-    _v = SWIG_CheckState(res);
-    if (_v) {
-      {
-        int res = SWIG_AsVal_long_SS_long(argv[1], NULL);
-        _v = SWIG_CheckState(res);
-      }
-      if (_v) {
-        {
-          _v = 1;
-        }
-        if (_v) {
-          return _wrap_compute_eigenvectors__SWIG_0(self, argc, argv);
-        }
-      }
-    }
-  }
-  
-fail:
-  SWIG_Python_RaiseOrModifyTypeError("Wrong number or type of arguments for overloaded function 'compute_eigenvectors'.\n"
-    "  Possible C/C++ prototypes are:\n"
-    "    stag::compute_eigenvectors(SprsMat const *,stag_int,Spectra::SortRule)\n"
-    "    stag::compute_eigenvectors(SprsMat const *,stag_int)\n");
-  return 0;
 }
 
 
 SWIGINTERN PyObject *_wrap_power_method__SWIG_0(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
   PyObject *resultobj = 0;
   SprsMat *arg1 = (SprsMat *) 0 ;
-  stag_int arg2 ;
+  StagInt arg2 ;
   Eigen::VectorXd arg3 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-  long long val2 ;
-  int ecode2 = 0 ;
   Eigen::VectorXd temp3 ;
   Eigen::VectorXd result;
   
   if ((nobjs < 3) || (nobjs > 3)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_Eigen__SparseMatrixT_double_Eigen__ColMajor_stag_int_t, 0 |  0 );
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_Eigen__SparseMatrixT_StagReal_Eigen__ColMajor_StagInt_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "power_method" "', argument " "1"" of type '" "SprsMat const *""'"); 
   }
   arg1 = reinterpret_cast< SprsMat * >(argp1);
-  ecode2 = SWIG_AsVal_long_SS_long(swig_obj[1], &val2);
-  if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "power_method" "', argument " "2"" of type '" "stag_int""'");
-  } 
-  arg2 = static_cast< stag_int >(val2);
+  {
+    // StagInt typemap (in)
+    if (!PyLong_Check((PyObject *) swig_obj[1])) {
+      PyErr_SetString(PyExc_TypeError, "Expected an integer.");
+      return NULL;
+    }
+    arg2 = (StagInt) PyLong_AsLong((PyObject*) swig_obj[1]);
+  }
   {
     int res = ConvertFromNumpyToEigenMatrix<Eigen::VectorXd>(&temp3, swig_obj[2]);
     if (res < 0) return NULL;
@@ -11840,7 +11979,7 @@ SWIGINTERN PyObject *_wrap_power_method__SWIG_0(PyObject *SWIGUNUSEDPARM(self), 
   }
   {
     try {
-      result = stag::power_method((Eigen::SparseMatrix< double,Eigen::ColMajor,stag_int > const *)arg1,arg2,arg3);
+      result = stag::power_method((Eigen::SparseMatrix< StagReal,Eigen::ColMajor,StagInt > const *)arg1,arg2,arg3);
     } catch (std::invalid_argument &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
@@ -11865,27 +12004,28 @@ fail:
 SWIGINTERN PyObject *_wrap_power_method__SWIG_1(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
   PyObject *resultobj = 0;
   SprsMat *arg1 = (SprsMat *) 0 ;
-  stag_int arg2 ;
+  StagInt arg2 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-  long long val2 ;
-  int ecode2 = 0 ;
   Eigen::VectorXd result;
   
   if ((nobjs < 2) || (nobjs > 2)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_Eigen__SparseMatrixT_double_Eigen__ColMajor_stag_int_t, 0 |  0 );
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_Eigen__SparseMatrixT_StagReal_Eigen__ColMajor_StagInt_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "power_method" "', argument " "1"" of type '" "SprsMat const *""'"); 
   }
   arg1 = reinterpret_cast< SprsMat * >(argp1);
-  ecode2 = SWIG_AsVal_long_SS_long(swig_obj[1], &val2);
-  if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "power_method" "', argument " "2"" of type '" "stag_int""'");
-  } 
-  arg2 = static_cast< stag_int >(val2);
+  {
+    // StagInt typemap (in)
+    if (!PyLong_Check((PyObject *) swig_obj[1])) {
+      PyErr_SetString(PyExc_TypeError, "Expected an integer.");
+      return NULL;
+    }
+    arg2 = (StagInt) PyLong_AsLong((PyObject*) swig_obj[1]);
+  }
   {
     try {
-      result = stag::power_method((Eigen::SparseMatrix< double,Eigen::ColMajor,stag_int > const *)arg1,arg2);
+      result = stag::power_method((Eigen::SparseMatrix< StagReal,Eigen::ColMajor,StagInt > const *)arg1,arg2);
     } catch (std::invalid_argument &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
@@ -11917,7 +12057,7 @@ SWIGINTERN PyObject *_wrap_power_method__SWIG_2(PyObject *SWIGUNUSEDPARM(self), 
   Eigen::VectorXd result;
   
   if ((nobjs < 2) || (nobjs > 2)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_Eigen__SparseMatrixT_double_Eigen__ColMajor_stag_int_t, 0 |  0 );
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_Eigen__SparseMatrixT_StagReal_Eigen__ColMajor_StagInt_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "power_method" "', argument " "1"" of type '" "SprsMat const *""'"); 
   }
@@ -11929,7 +12069,7 @@ SWIGINTERN PyObject *_wrap_power_method__SWIG_2(PyObject *SWIGUNUSEDPARM(self), 
   }
   {
     try {
-      result = stag::power_method((Eigen::SparseMatrix< double,Eigen::ColMajor,stag_int > const *)arg1,arg2);
+      result = stag::power_method((Eigen::SparseMatrix< StagReal,Eigen::ColMajor,StagInt > const *)arg1,arg2);
     } catch (std::invalid_argument &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
@@ -11959,14 +12099,14 @@ SWIGINTERN PyObject *_wrap_power_method__SWIG_3(PyObject *SWIGUNUSEDPARM(self), 
   Eigen::VectorXd result;
   
   if ((nobjs < 1) || (nobjs > 1)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_Eigen__SparseMatrixT_double_Eigen__ColMajor_stag_int_t, 0 |  0 );
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_Eigen__SparseMatrixT_StagReal_Eigen__ColMajor_StagInt_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "power_method" "', argument " "1"" of type '" "SprsMat const *""'"); 
   }
   arg1 = reinterpret_cast< SprsMat * >(argp1);
   {
     try {
-      result = stag::power_method((Eigen::SparseMatrix< double,Eigen::ColMajor,stag_int > const *)arg1);
+      result = stag::power_method((Eigen::SparseMatrix< StagReal,Eigen::ColMajor,StagInt > const *)arg1);
     } catch (std::invalid_argument &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
@@ -11999,7 +12139,7 @@ SWIGINTERN PyObject *_wrap_power_method(PyObject *self, PyObject *args) {
   if (argc == 1) {
     int _v;
     void *vptr = 0;
-    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_Eigen__SparseMatrixT_double_Eigen__ColMajor_stag_int_t, 0);
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_Eigen__SparseMatrixT_StagReal_Eigen__ColMajor_StagInt_t, 0);
     _v = SWIG_CheckState(res);
     if (_v) {
       return _wrap_power_method__SWIG_3(self, argc, argv);
@@ -12008,12 +12148,12 @@ SWIGINTERN PyObject *_wrap_power_method(PyObject *self, PyObject *args) {
   if (argc == 2) {
     int _v;
     void *vptr = 0;
-    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_Eigen__SparseMatrixT_double_Eigen__ColMajor_stag_int_t, 0);
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_Eigen__SparseMatrixT_StagReal_Eigen__ColMajor_StagInt_t, 0);
     _v = SWIG_CheckState(res);
     if (_v) {
       {
-        int res = SWIG_AsVal_long_SS_long(argv[1], NULL);
-        _v = SWIG_CheckState(res);
+        // Typecheck for StagInt
+        _v = PyLong_Check((PyObject*) argv[1]);
       }
       if (_v) {
         return _wrap_power_method__SWIG_1(self, argc, argv);
@@ -12023,7 +12163,7 @@ SWIGINTERN PyObject *_wrap_power_method(PyObject *self, PyObject *args) {
   if (argc == 2) {
     int _v;
     void *vptr = 0;
-    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_Eigen__SparseMatrixT_double_Eigen__ColMajor_stag_int_t, 0);
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_Eigen__SparseMatrixT_StagReal_Eigen__ColMajor_StagInt_t, 0);
     _v = SWIG_CheckState(res);
     if (_v) {
       {
@@ -12037,12 +12177,12 @@ SWIGINTERN PyObject *_wrap_power_method(PyObject *self, PyObject *args) {
   if (argc == 3) {
     int _v;
     void *vptr = 0;
-    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_Eigen__SparseMatrixT_double_Eigen__ColMajor_stag_int_t, 0);
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_Eigen__SparseMatrixT_StagReal_Eigen__ColMajor_StagInt_t, 0);
     _v = SWIG_CheckState(res);
     if (_v) {
       {
-        int res = SWIG_AsVal_long_SS_long(argv[1], NULL);
-        _v = SWIG_CheckState(res);
+        // Typecheck for StagInt
+        _v = PyLong_Check((PyObject*) argv[1]);
       }
       if (_v) {
         {
@@ -12058,8 +12198,8 @@ SWIGINTERN PyObject *_wrap_power_method(PyObject *self, PyObject *args) {
 fail:
   SWIG_Python_RaiseOrModifyTypeError("Wrong number or type of arguments for overloaded function 'power_method'.\n"
     "  Possible C/C++ prototypes are:\n"
-    "    stag::power_method(SprsMat const *,stag_int,Eigen::VectorXd)\n"
-    "    stag::power_method(SprsMat const *,stag_int)\n"
+    "    stag::power_method(SprsMat const *,StagInt,Eigen::VectorXd)\n"
+    "    stag::power_method(SprsMat const *,StagInt)\n"
     "    stag::power_method(SprsMat const *,Eigen::VectorXd)\n"
     "    stag::power_method(SprsMat const *)\n");
   return 0;
@@ -12074,10 +12214,10 @@ SWIGINTERN PyObject *_wrap_rayleigh_quotient(PyObject *SWIGUNUSEDPARM(self), PyO
   int res1 = 0 ;
   Eigen::VectorXd temp2 ;
   PyObject *swig_obj[2] ;
-  double result;
+  StagReal result;
   
   if (!SWIG_Python_UnpackTuple(args, "rayleigh_quotient", 2, 2, swig_obj)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_Eigen__SparseMatrixT_double_Eigen__ColMajor_stag_int_t, 0 |  0 );
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_Eigen__SparseMatrixT_StagReal_Eigen__ColMajor_StagInt_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "rayleigh_quotient" "', argument " "1"" of type '" "SprsMat const *""'"); 
   }
@@ -12090,7 +12230,7 @@ SWIGINTERN PyObject *_wrap_rayleigh_quotient(PyObject *SWIGUNUSEDPARM(self), PyO
   }
   {
     try {
-      result = (double)stag::rayleigh_quotient((Eigen::SparseMatrix< double,Eigen::ColMajor,stag_int > const *)arg1,*arg2);
+      result = (StagReal)stag::rayleigh_quotient((Eigen::SparseMatrix< StagReal,Eigen::ColMajor,StagInt > const *)arg1,*arg2);
     } catch (std::invalid_argument &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
@@ -12113,6 +12253,2680 @@ fail:
 }
 
 
+SWIGINTERN PyObject *_wrap_new_DataPoint__SWIG_0(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **SWIGUNUSEDPARM(swig_obj)) {
+  PyObject *resultobj = 0;
+  stag::DataPoint *result = 0 ;
+  
+  if ((nobjs < 0) || (nobjs > 0)) SWIG_fail;
+  {
+    try {
+      result = (stag::DataPoint *)new stag::DataPoint();
+    } catch (std::invalid_argument &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::runtime_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::domain_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    }
+  }
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_stag__DataPoint, SWIG_POINTER_NEW |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_new_DataPoint__SWIG_1(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
+  PyObject *resultobj = 0;
+  StagUInt arg1 ;
+  StagReal *arg2 = (StagReal *) 0 ;
+  size_t val1 ;
+  int ecode1 = 0 ;
+  void *argp2 = 0 ;
+  int res2 = 0 ;
+  stag::DataPoint *result = 0 ;
+  
+  if ((nobjs < 2) || (nobjs > 2)) SWIG_fail;
+  ecode1 = SWIG_AsVal_size_t(swig_obj[0], &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "new_DataPoint" "', argument " "1"" of type '" "StagUInt""'");
+  } 
+  arg1 = static_cast< StagUInt >(val1);
+  res2 = SWIG_ConvertPtr(swig_obj[1], &argp2,SWIGTYPE_p_double, 0 |  0 );
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "new_DataPoint" "', argument " "2"" of type '" "StagReal *""'"); 
+  }
+  arg2 = reinterpret_cast< StagReal * >(argp2);
+  {
+    try {
+      result = (stag::DataPoint *)new stag::DataPoint(arg1,arg2);
+    } catch (std::invalid_argument &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::runtime_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::domain_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    }
+  }
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_stag__DataPoint, SWIG_POINTER_NEW |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_new_DataPoint__SWIG_2(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
+  PyObject *resultobj = 0;
+  DenseMat *arg1 = 0 ;
+  StagInt arg2 ;
+  DenseMat temp1 ;
+  stag::DataPoint *result = 0 ;
+  
+  if ((nobjs < 2) || (nobjs > 2)) SWIG_fail;
+  {
+    // In: non-const&
+    int res = ConvertFromNumpyToEigenMatrix<DenseMat>(&temp1, swig_obj[0]);
+    if (res < 0) return NULL;
+    arg1 = &temp1;
+  }
+  {
+    // StagInt typemap (in)
+    if (!PyLong_Check((PyObject *) swig_obj[1])) {
+      PyErr_SetString(PyExc_TypeError, "Expected an integer.");
+      return NULL;
+    }
+    arg2 = (StagInt) PyLong_AsLong((PyObject*) swig_obj[1]);
+  }
+  {
+    try {
+      result = (stag::DataPoint *)new stag::DataPoint(*arg1,arg2);
+    } catch (std::invalid_argument &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::runtime_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::domain_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    }
+  }
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_stag__DataPoint, SWIG_POINTER_NEW |  0 );
+  {
+    // Argout: &
+    CopyFromEigenToNumPyMatrix<DenseMat>(swig_obj[0], arg1);
+  }
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_new_DataPoint__SWIG_3(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
+  PyObject *resultobj = 0;
+  std::vector< StagReal > *arg1 = 0 ;
+  PyArrayObject *array1 = NULL ;
+  int is_new_object1 = 0 ;
+  std::vector< double > temp_vec1 ;
+  stag::DataPoint *result = 0 ;
+  
+  if ((nobjs < 1) || (nobjs > 1)) SWIG_fail;
+  {
+    // Get the number of elements in the numpy array1
+    npy_intp size[1] = {
+      PyArray_DIMS((PyArrayObject*) swig_obj[0])[0] 
+    };
+    
+    // Check that the dimensions of the array1 are correct
+    array1 = obj_to_array_contiguous_allow_conversion(swig_obj[0],
+      NPY_DOUBLE,
+      &is_new_object1);
+    if (!array1 || !require_dimensions(array1, 1) ||
+      !require_size(array1, size, 1)) SWIG_fail;
+    
+    // Get a pointer to the data in the numpy array1
+    double* data_ptr = (double*) array_data(array1);
+    
+    // Copy the numpy data into the new vector.
+    temp_vec1.reserve(size[0]);
+    for (int i = 0; i < size[0]; i++) {
+      temp_vec1.push_back(data_ptr[i]);
+    }
+    arg1 = &temp_vec1;
+  }
+  {
+    try {
+      result = (stag::DataPoint *)new stag::DataPoint(*arg1);
+    } catch (std::invalid_argument &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::runtime_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::domain_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    }
+  }
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_stag__DataPoint, SWIG_POINTER_NEW |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_new_DataPoint(PyObject *self, PyObject *args) {
+  Py_ssize_t argc;
+  PyObject *argv[3] = {
+    0
+  };
+  
+  if (!(argc = SWIG_Python_UnpackTuple(args, "new_DataPoint", 0, 2, argv))) SWIG_fail;
+  --argc;
+  if (argc == 0) {
+    return _wrap_new_DataPoint__SWIG_0(self, argc, argv);
+  }
+  if (argc == 1) {
+    int _v;
+    {
+      _v = is_array((PyObject *) argv[0]) ? 1 : 0;
+    }
+    if (_v) {
+      return _wrap_new_DataPoint__SWIG_3(self, argc, argv);
+    }
+  }
+  if (argc == 2) {
+    int _v;
+    {
+      int res = SWIG_AsVal_size_t(argv[0], NULL);
+      _v = SWIG_CheckState(res);
+    }
+    if (_v) {
+      void *vptr = 0;
+      int res = SWIG_ConvertPtr(argv[1], &vptr, SWIGTYPE_p_double, 0);
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        return _wrap_new_DataPoint__SWIG_1(self, argc, argv);
+      }
+    }
+  }
+  if (argc == 2) {
+    int _v;
+    {
+      _v = is_array((PyObject *) argv[0]) ? 1 : 0;
+    }
+    if (_v) {
+      {
+        // Typecheck for StagInt
+        _v = PyLong_Check((PyObject*) argv[1]);
+      }
+      if (_v) {
+        return _wrap_new_DataPoint__SWIG_2(self, argc, argv);
+      }
+    }
+  }
+  
+fail:
+  SWIG_Python_RaiseOrModifyTypeError("Wrong number or type of arguments for overloaded function 'new_DataPoint'.\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    stag::DataPoint::DataPoint()\n"
+    "    stag::DataPoint::DataPoint(StagUInt,StagReal *)\n"
+    "    stag::DataPoint::DataPoint(DenseMat &,StagInt)\n"
+    "    stag::DataPoint::DataPoint(std::vector< StagReal > &)\n");
+  return 0;
+}
+
+
+SWIGINTERN PyObject *_wrap_DataPoint_dimension_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  stag::DataPoint *arg1 = (stag::DataPoint *) 0 ;
+  StagUInt arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  size_t val2 ;
+  int ecode2 = 0 ;
+  PyObject *swig_obj[2] ;
+  
+  if (!SWIG_Python_UnpackTuple(args, "DataPoint_dimension_set", 2, 2, swig_obj)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_stag__DataPoint, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DataPoint_dimension_set" "', argument " "1"" of type '" "stag::DataPoint *""'"); 
+  }
+  arg1 = reinterpret_cast< stag::DataPoint * >(argp1);
+  ecode2 = SWIG_AsVal_size_t(swig_obj[1], &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "DataPoint_dimension_set" "', argument " "2"" of type '" "StagUInt""'");
+  } 
+  arg2 = static_cast< StagUInt >(val2);
+  if (arg1) (arg1)->dimension = arg2;
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_DataPoint_dimension_get(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  stag::DataPoint *arg1 = (stag::DataPoint *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject *swig_obj[1] ;
+  StagUInt result;
+  
+  if (!args) SWIG_fail;
+  swig_obj[0] = args;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_stag__DataPoint, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DataPoint_dimension_get" "', argument " "1"" of type '" "stag::DataPoint *""'"); 
+  }
+  arg1 = reinterpret_cast< stag::DataPoint * >(argp1);
+  result =  ((arg1)->dimension);
+  resultobj = SWIG_From_size_t(static_cast< size_t >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_DataPoint_coordinates_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  stag::DataPoint *arg1 = (stag::DataPoint *) 0 ;
+  StagReal *arg2 = (StagReal *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  void *argp2 = 0 ;
+  int res2 = 0 ;
+  PyObject *swig_obj[2] ;
+  
+  if (!SWIG_Python_UnpackTuple(args, "DataPoint_coordinates_set", 2, 2, swig_obj)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_stag__DataPoint, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DataPoint_coordinates_set" "', argument " "1"" of type '" "stag::DataPoint *""'"); 
+  }
+  arg1 = reinterpret_cast< stag::DataPoint * >(argp1);
+  res2 = SWIG_ConvertPtr(swig_obj[1], &argp2,SWIGTYPE_p_double, SWIG_POINTER_DISOWN |  0 );
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "DataPoint_coordinates_set" "', argument " "2"" of type '" "StagReal *""'"); 
+  }
+  arg2 = reinterpret_cast< StagReal * >(argp2);
+  if (arg1) (arg1)->coordinates = arg2;
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_DataPoint_coordinates_get(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  stag::DataPoint *arg1 = (stag::DataPoint *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject *swig_obj[1] ;
+  StagReal *result = 0 ;
+  
+  if (!args) SWIG_fail;
+  swig_obj[0] = args;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_stag__DataPoint, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DataPoint_coordinates_get" "', argument " "1"" of type '" "stag::DataPoint *""'"); 
+  }
+  arg1 = reinterpret_cast< stag::DataPoint * >(argp1);
+  result = (StagReal *) ((arg1)->coordinates);
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_double, 0 |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_delete_DataPoint(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  stag::DataPoint *arg1 = (stag::DataPoint *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject *swig_obj[1] ;
+  
+  if (!args) SWIG_fail;
+  swig_obj[0] = args;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_stag__DataPoint, SWIG_POINTER_DISOWN |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_DataPoint" "', argument " "1"" of type '" "stag::DataPoint *""'"); 
+  }
+  arg1 = reinterpret_cast< stag::DataPoint * >(argp1);
+  {
+    try {
+      delete arg1;
+    } catch (std::invalid_argument &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::runtime_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::domain_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    }
+  }
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *DataPoint_swigregister(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *obj;
+  if (!SWIG_Python_UnpackTuple(args, "swigregister", 1, 1, &obj)) return NULL;
+  SWIG_TypeNewClientData(SWIGTYPE_p_stag__DataPoint, SWIG_NewClientData(obj));
+  return SWIG_Py_Void();
+}
+
+SWIGINTERN PyObject *DataPoint_swiginit(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  return SWIG_Python_InitShadowInstance(args);
+}
+
+SWIGINTERN PyObject *_wrap_load_matrix(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  int res1 = 0 ;
+  PyObject *swig_obj[1] ;
+  DenseMat result;
+  
+  if (!args) SWIG_fail;
+  swig_obj[0] = args;
+  res1 = SWIG_AsPtr_std_string(swig_obj[0], &arg1);
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "load_matrix" "', argument " "1"" of type '" "std::string &""'");
+  }     
+  if (!arg1) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "load_matrix" "', argument " "1"" of type '" "std::string &""'");
+  }
+  res1 = SWIG_AddTmpMask(res1);
+  {
+    try {
+      result = stag::load_matrix(*arg1);
+    } catch (std::invalid_argument &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::runtime_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::domain_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    }
+  }
+  {
+    int res = ConvertFromEigenToNumPyMatrix<DenseMat>(&resultobj, &result);
+    if (res < 0) return NULL;
+  }
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_save_matrix(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  DenseMat *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  DenseMat temp1 ;
+  int res2 = 0 ;
+  PyObject *swig_obj[2] ;
+  
+  if (!SWIG_Python_UnpackTuple(args, "save_matrix", 2, 2, swig_obj)) SWIG_fail;
+  {
+    // In: non-const&
+    int res = ConvertFromNumpyToEigenMatrix<DenseMat>(&temp1, swig_obj[0]);
+    if (res < 0) return NULL;
+    arg1 = &temp1;
+  }
+  res2 = SWIG_AsPtr_std_string(swig_obj[1], &arg2);
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "save_matrix" "', argument " "2"" of type '" "std::string &""'");
+  }     
+  if (!arg2) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "save_matrix" "', argument " "2"" of type '" "std::string &""'");
+  }
+  res2 = SWIG_AddTmpMask(res2);
+  {
+    try {
+      stag::save_matrix(*arg1,*arg2);
+    } catch (std::invalid_argument &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::runtime_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::domain_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    }
+  }
+  resultobj = SWIG_Py_Void();
+  {
+    // Argout: &
+    CopyFromEigenToNumPyMatrix<DenseMat>(swig_obj[0], arg1);
+  }
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_matrix_to_datapoints(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  DenseMat *arg1 = (DenseMat *) 0 ;
+  PyObject *swig_obj[1] ;
+  SwigValueWrapper< std::vector< stag::DataPoint > > result;
+  
+  if (!args) SWIG_fail;
+  swig_obj[0] = args;
+  {
+    PyErr_SetString(PyExc_ValueError, "The input typemap for non-const pointer is not yet implemented. Please report this problem to the developer.");
+  }
+  {
+    try {
+      result = stag::matrix_to_datapoints(arg1);
+    } catch (std::invalid_argument &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::runtime_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::domain_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    }
+  }
+  {
+    // Construct a python list of data point objects
+    StagInt outer_length = (&result)->size();
+    resultobj = PyList_New(outer_length);
+    
+    // Construct a new DataPoint for each inner object, and add to the list.
+    for (StagInt i = 0; i < outer_length; i++) {
+      PyObject* new_datapoint_object = SWIG_NewPointerObj(SWIG_as_voidptr(&(&result)->at(i)), SWIGTYPE_p_stag__DataPoint, SWIG_POINTER_NEW |  0 );
+      
+      PyList_SET_ITEM(resultobj, i, new_datapoint_object);
+    }
+  }
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_gaussian_kernel__SWIG_0(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
+  PyObject *resultobj = 0;
+  StagReal arg1 ;
+  stag::DataPoint *arg2 = 0 ;
+  stag::DataPoint *arg3 = 0 ;
+  double val1 ;
+  int ecode1 = 0 ;
+  void *argp2 = 0 ;
+  int res2 = 0 ;
+  void *argp3 = 0 ;
+  int res3 = 0 ;
+  StagReal result;
+  
+  if ((nobjs < 3) || (nobjs > 3)) SWIG_fail;
+  ecode1 = SWIG_AsVal_double(swig_obj[0], &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "gaussian_kernel" "', argument " "1"" of type '" "StagReal""'");
+  } 
+  arg1 = static_cast< StagReal >(val1);
+  res2 = SWIG_ConvertPtr(swig_obj[1], &argp2, SWIGTYPE_p_stag__DataPoint,  0  | 0);
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "gaussian_kernel" "', argument " "2"" of type '" "stag::DataPoint const &""'"); 
+  }
+  if (!argp2) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "gaussian_kernel" "', argument " "2"" of type '" "stag::DataPoint const &""'"); 
+  }
+  arg2 = reinterpret_cast< stag::DataPoint * >(argp2);
+  res3 = SWIG_ConvertPtr(swig_obj[2], &argp3, SWIGTYPE_p_stag__DataPoint,  0  | 0);
+  if (!SWIG_IsOK(res3)) {
+    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "gaussian_kernel" "', argument " "3"" of type '" "stag::DataPoint const &""'"); 
+  }
+  if (!argp3) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "gaussian_kernel" "', argument " "3"" of type '" "stag::DataPoint const &""'"); 
+  }
+  arg3 = reinterpret_cast< stag::DataPoint * >(argp3);
+  {
+    try {
+      result = (StagReal)stag::gaussian_kernel(arg1,(stag::DataPoint const &)*arg2,(stag::DataPoint const &)*arg3);
+    } catch (std::invalid_argument &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::runtime_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::domain_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    }
+  }
+  resultobj = SWIG_From_double(static_cast< double >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_gaussian_kernel__SWIG_1(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
+  PyObject *resultobj = 0;
+  StagReal arg1 ;
+  StagReal arg2 ;
+  double val1 ;
+  int ecode1 = 0 ;
+  double val2 ;
+  int ecode2 = 0 ;
+  StagReal result;
+  
+  if ((nobjs < 2) || (nobjs > 2)) SWIG_fail;
+  ecode1 = SWIG_AsVal_double(swig_obj[0], &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "gaussian_kernel" "', argument " "1"" of type '" "StagReal""'");
+  } 
+  arg1 = static_cast< StagReal >(val1);
+  ecode2 = SWIG_AsVal_double(swig_obj[1], &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "gaussian_kernel" "', argument " "2"" of type '" "StagReal""'");
+  } 
+  arg2 = static_cast< StagReal >(val2);
+  {
+    try {
+      result = (StagReal)stag::gaussian_kernel(arg1,arg2);
+    } catch (std::invalid_argument &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::runtime_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::domain_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    }
+  }
+  resultobj = SWIG_From_double(static_cast< double >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_gaussian_kernel(PyObject *self, PyObject *args) {
+  Py_ssize_t argc;
+  PyObject *argv[4] = {
+    0
+  };
+  
+  if (!(argc = SWIG_Python_UnpackTuple(args, "gaussian_kernel", 0, 3, argv))) SWIG_fail;
+  --argc;
+  if (argc == 2) {
+    int _v;
+    {
+      int res = SWIG_AsVal_double(argv[0], NULL);
+      _v = SWIG_CheckState(res);
+    }
+    if (_v) {
+      {
+        int res = SWIG_AsVal_double(argv[1], NULL);
+        _v = SWIG_CheckState(res);
+      }
+      if (_v) {
+        return _wrap_gaussian_kernel__SWIG_1(self, argc, argv);
+      }
+    }
+  }
+  if (argc == 3) {
+    int _v;
+    {
+      int res = SWIG_AsVal_double(argv[0], NULL);
+      _v = SWIG_CheckState(res);
+    }
+    if (_v) {
+      int res = SWIG_ConvertPtr(argv[1], 0, SWIGTYPE_p_stag__DataPoint, SWIG_POINTER_NO_NULL | 0);
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        int res = SWIG_ConvertPtr(argv[2], 0, SWIGTYPE_p_stag__DataPoint, SWIG_POINTER_NO_NULL | 0);
+        _v = SWIG_CheckState(res);
+        if (_v) {
+          return _wrap_gaussian_kernel__SWIG_0(self, argc, argv);
+        }
+      }
+    }
+  }
+  
+fail:
+  SWIG_Python_RaiseOrModifyTypeError("Wrong number or type of arguments for overloaded function 'gaussian_kernel'.\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    stag::gaussian_kernel(StagReal,stag::DataPoint const &,stag::DataPoint const &)\n"
+    "    stag::gaussian_kernel(StagReal,StagReal)\n");
+  return 0;
+}
+
+
+SWIGINTERN PyObject *_wrap_new_CKNSGaussianKDEHashUnit(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  StagReal arg1 ;
+  DenseMat *arg2 = (DenseMat *) 0 ;
+  StagInt arg3 ;
+  StagInt arg4 ;
+  StagReal arg5 ;
+  StagInt arg6 ;
+  double val1 ;
+  int ecode1 = 0 ;
+  double val5 ;
+  int ecode5 = 0 ;
+  PyObject *swig_obj[6] ;
+  stag::CKNSGaussianKDEHashUnit *result = 0 ;
+  
+  if (!SWIG_Python_UnpackTuple(args, "new_CKNSGaussianKDEHashUnit", 6, 6, swig_obj)) SWIG_fail;
+  ecode1 = SWIG_AsVal_double(swig_obj[0], &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "new_CKNSGaussianKDEHashUnit" "', argument " "1"" of type '" "StagReal""'");
+  } 
+  arg1 = static_cast< StagReal >(val1);
+  {
+    PyErr_SetString(PyExc_ValueError, "The input typemap for non-const pointer is not yet implemented. Please report this problem to the developer.");
+  }
+  {
+    // StagInt typemap (in)
+    if (!PyLong_Check((PyObject *) swig_obj[2])) {
+      PyErr_SetString(PyExc_TypeError, "Expected an integer.");
+      return NULL;
+    }
+    arg3 = (StagInt) PyLong_AsLong((PyObject*) swig_obj[2]);
+  }
+  {
+    // StagInt typemap (in)
+    if (!PyLong_Check((PyObject *) swig_obj[3])) {
+      PyErr_SetString(PyExc_TypeError, "Expected an integer.");
+      return NULL;
+    }
+    arg4 = (StagInt) PyLong_AsLong((PyObject*) swig_obj[3]);
+  }
+  ecode5 = SWIG_AsVal_double(swig_obj[4], &val5);
+  if (!SWIG_IsOK(ecode5)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "new_CKNSGaussianKDEHashUnit" "', argument " "5"" of type '" "StagReal""'");
+  } 
+  arg5 = static_cast< StagReal >(val5);
+  {
+    // StagInt typemap (in)
+    if (!PyLong_Check((PyObject *) swig_obj[5])) {
+      PyErr_SetString(PyExc_TypeError, "Expected an integer.");
+      return NULL;
+    }
+    arg6 = (StagInt) PyLong_AsLong((PyObject*) swig_obj[5]);
+  }
+  {
+    try {
+      result = (stag::CKNSGaussianKDEHashUnit *)new stag::CKNSGaussianKDEHashUnit(arg1,arg2,arg3,arg4,arg5,arg6);
+    } catch (std::invalid_argument &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::runtime_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::domain_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    }
+  }
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_stag__CKNSGaussianKDEHashUnit, SWIG_POINTER_NEW |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_CKNSGaussianKDEHashUnit_query(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  stag::CKNSGaussianKDEHashUnit *arg1 = (stag::CKNSGaussianKDEHashUnit *) 0 ;
+  stag::DataPoint *arg2 = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  void *argp2 = 0 ;
+  int res2 = 0 ;
+  PyObject *swig_obj[2] ;
+  StagReal result;
+  
+  if (!SWIG_Python_UnpackTuple(args, "CKNSGaussianKDEHashUnit_query", 2, 2, swig_obj)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_stag__CKNSGaussianKDEHashUnit, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "CKNSGaussianKDEHashUnit_query" "', argument " "1"" of type '" "stag::CKNSGaussianKDEHashUnit *""'"); 
+  }
+  arg1 = reinterpret_cast< stag::CKNSGaussianKDEHashUnit * >(argp1);
+  res2 = SWIG_ConvertPtr(swig_obj[1], &argp2, SWIGTYPE_p_stag__DataPoint,  0  | 0);
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "CKNSGaussianKDEHashUnit_query" "', argument " "2"" of type '" "stag::DataPoint const &""'"); 
+  }
+  if (!argp2) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "CKNSGaussianKDEHashUnit_query" "', argument " "2"" of type '" "stag::DataPoint const &""'"); 
+  }
+  arg2 = reinterpret_cast< stag::DataPoint * >(argp2);
+  {
+    try {
+      result = (StagReal)(arg1)->query((stag::DataPoint const &)*arg2);
+    } catch (std::invalid_argument &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::runtime_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::domain_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    }
+  }
+  resultobj = SWIG_From_double(static_cast< double >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_delete_CKNSGaussianKDEHashUnit(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  stag::CKNSGaussianKDEHashUnit *arg1 = (stag::CKNSGaussianKDEHashUnit *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject *swig_obj[1] ;
+  
+  if (!args) SWIG_fail;
+  swig_obj[0] = args;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_stag__CKNSGaussianKDEHashUnit, SWIG_POINTER_DISOWN |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_CKNSGaussianKDEHashUnit" "', argument " "1"" of type '" "stag::CKNSGaussianKDEHashUnit *""'"); 
+  }
+  arg1 = reinterpret_cast< stag::CKNSGaussianKDEHashUnit * >(argp1);
+  {
+    try {
+      delete arg1;
+    } catch (std::invalid_argument &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::runtime_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::domain_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    }
+  }
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *CKNSGaussianKDEHashUnit_swigregister(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *obj;
+  if (!SWIG_Python_UnpackTuple(args, "swigregister", 1, 1, &obj)) return NULL;
+  SWIG_TypeNewClientData(SWIGTYPE_p_stag__CKNSGaussianKDEHashUnit, SWIG_NewClientData(obj));
+  return SWIG_Py_Void();
+}
+
+SWIGINTERN PyObject *CKNSGaussianKDEHashUnit_swiginit(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  return SWIG_Python_InitShadowInstance(args);
+}
+
+SWIGINTERN PyObject *_wrap_new_CKNSGaussianKDE__SWIG_0(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **SWIGUNUSEDPARM(swig_obj)) {
+  PyObject *resultobj = 0;
+  stag::CKNSGaussianKDE *result = 0 ;
+  
+  if ((nobjs < 0) || (nobjs > 0)) SWIG_fail;
+  {
+    try {
+      result = (stag::CKNSGaussianKDE *)new stag::CKNSGaussianKDE();
+    } catch (std::invalid_argument &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::runtime_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::domain_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    }
+  }
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_stag__CKNSGaussianKDE, SWIG_POINTER_NEW |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_new_CKNSGaussianKDE__SWIG_1(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
+  PyObject *resultobj = 0;
+  DenseMat *arg1 = (DenseMat *) 0 ;
+  StagReal arg2 ;
+  StagReal arg3 ;
+  StagReal arg4 ;
+  double val2 ;
+  int ecode2 = 0 ;
+  double val3 ;
+  int ecode3 = 0 ;
+  double val4 ;
+  int ecode4 = 0 ;
+  stag::CKNSGaussianKDE *result = 0 ;
+  
+  if ((nobjs < 4) || (nobjs > 4)) SWIG_fail;
+  {
+    PyErr_SetString(PyExc_ValueError, "The input typemap for non-const pointer is not yet implemented. Please report this problem to the developer.");
+  }
+  ecode2 = SWIG_AsVal_double(swig_obj[1], &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "new_CKNSGaussianKDE" "', argument " "2"" of type '" "StagReal""'");
+  } 
+  arg2 = static_cast< StagReal >(val2);
+  ecode3 = SWIG_AsVal_double(swig_obj[2], &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "new_CKNSGaussianKDE" "', argument " "3"" of type '" "StagReal""'");
+  } 
+  arg3 = static_cast< StagReal >(val3);
+  ecode4 = SWIG_AsVal_double(swig_obj[3], &val4);
+  if (!SWIG_IsOK(ecode4)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "new_CKNSGaussianKDE" "', argument " "4"" of type '" "StagReal""'");
+  } 
+  arg4 = static_cast< StagReal >(val4);
+  {
+    try {
+      result = (stag::CKNSGaussianKDE *)new stag::CKNSGaussianKDE(arg1,arg2,arg3,arg4);
+    } catch (std::invalid_argument &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::runtime_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::domain_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    }
+  }
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_stag__CKNSGaussianKDE, SWIG_POINTER_NEW |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_new_CKNSGaussianKDE__SWIG_2(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
+  PyObject *resultobj = 0;
+  DenseMat *arg1 = (DenseMat *) 0 ;
+  StagReal arg2 ;
+  StagReal arg3 ;
+  double val2 ;
+  int ecode2 = 0 ;
+  double val3 ;
+  int ecode3 = 0 ;
+  stag::CKNSGaussianKDE *result = 0 ;
+  
+  if ((nobjs < 3) || (nobjs > 3)) SWIG_fail;
+  {
+    PyErr_SetString(PyExc_ValueError, "The input typemap for non-const pointer is not yet implemented. Please report this problem to the developer.");
+  }
+  ecode2 = SWIG_AsVal_double(swig_obj[1], &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "new_CKNSGaussianKDE" "', argument " "2"" of type '" "StagReal""'");
+  } 
+  arg2 = static_cast< StagReal >(val2);
+  ecode3 = SWIG_AsVal_double(swig_obj[2], &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "new_CKNSGaussianKDE" "', argument " "3"" of type '" "StagReal""'");
+  } 
+  arg3 = static_cast< StagReal >(val3);
+  {
+    try {
+      result = (stag::CKNSGaussianKDE *)new stag::CKNSGaussianKDE(arg1,arg2,arg3);
+    } catch (std::invalid_argument &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::runtime_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::domain_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    }
+  }
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_stag__CKNSGaussianKDE, SWIG_POINTER_NEW |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_new_CKNSGaussianKDE__SWIG_3(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
+  PyObject *resultobj = 0;
+  DenseMat *arg1 = (DenseMat *) 0 ;
+  StagReal arg2 ;
+  double val2 ;
+  int ecode2 = 0 ;
+  stag::CKNSGaussianKDE *result = 0 ;
+  
+  if ((nobjs < 2) || (nobjs > 2)) SWIG_fail;
+  {
+    PyErr_SetString(PyExc_ValueError, "The input typemap for non-const pointer is not yet implemented. Please report this problem to the developer.");
+  }
+  ecode2 = SWIG_AsVal_double(swig_obj[1], &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "new_CKNSGaussianKDE" "', argument " "2"" of type '" "StagReal""'");
+  } 
+  arg2 = static_cast< StagReal >(val2);
+  {
+    try {
+      result = (stag::CKNSGaussianKDE *)new stag::CKNSGaussianKDE(arg1,arg2);
+    } catch (std::invalid_argument &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::runtime_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::domain_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    }
+  }
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_stag__CKNSGaussianKDE, SWIG_POINTER_NEW |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_new_CKNSGaussianKDE__SWIG_4(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
+  PyObject *resultobj = 0;
+  DenseMat *arg1 = (DenseMat *) 0 ;
+  StagReal arg2 ;
+  StagReal arg3 ;
+  StagInt arg4 ;
+  StagReal arg5 ;
+  StagInt arg6 ;
+  double val2 ;
+  int ecode2 = 0 ;
+  double val3 ;
+  int ecode3 = 0 ;
+  double val5 ;
+  int ecode5 = 0 ;
+  stag::CKNSGaussianKDE *result = 0 ;
+  
+  if ((nobjs < 6) || (nobjs > 6)) SWIG_fail;
+  {
+    PyErr_SetString(PyExc_ValueError, "The input typemap for non-const pointer is not yet implemented. Please report this problem to the developer.");
+  }
+  ecode2 = SWIG_AsVal_double(swig_obj[1], &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "new_CKNSGaussianKDE" "', argument " "2"" of type '" "StagReal""'");
+  } 
+  arg2 = static_cast< StagReal >(val2);
+  ecode3 = SWIG_AsVal_double(swig_obj[2], &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "new_CKNSGaussianKDE" "', argument " "3"" of type '" "StagReal""'");
+  } 
+  arg3 = static_cast< StagReal >(val3);
+  {
+    // StagInt typemap (in)
+    if (!PyLong_Check((PyObject *) swig_obj[3])) {
+      PyErr_SetString(PyExc_TypeError, "Expected an integer.");
+      return NULL;
+    }
+    arg4 = (StagInt) PyLong_AsLong((PyObject*) swig_obj[3]);
+  }
+  ecode5 = SWIG_AsVal_double(swig_obj[4], &val5);
+  if (!SWIG_IsOK(ecode5)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "new_CKNSGaussianKDE" "', argument " "5"" of type '" "StagReal""'");
+  } 
+  arg5 = static_cast< StagReal >(val5);
+  {
+    // StagInt typemap (in)
+    if (!PyLong_Check((PyObject *) swig_obj[5])) {
+      PyErr_SetString(PyExc_TypeError, "Expected an integer.");
+      return NULL;
+    }
+    arg6 = (StagInt) PyLong_AsLong((PyObject*) swig_obj[5]);
+  }
+  {
+    try {
+      result = (stag::CKNSGaussianKDE *)new stag::CKNSGaussianKDE(arg1,arg2,arg3,arg4,arg5,arg6);
+    } catch (std::invalid_argument &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::runtime_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::domain_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    }
+  }
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_stag__CKNSGaussianKDE, SWIG_POINTER_NEW |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_new_CKNSGaussianKDE__SWIG_5(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
+  PyObject *resultobj = 0;
+  DenseMat *arg1 = (DenseMat *) 0 ;
+  StagReal arg2 ;
+  StagReal arg3 ;
+  StagInt arg4 ;
+  StagReal arg5 ;
+  StagInt arg6 ;
+  StagInt arg7 ;
+  StagInt arg8 ;
+  double val2 ;
+  int ecode2 = 0 ;
+  double val3 ;
+  int ecode3 = 0 ;
+  double val5 ;
+  int ecode5 = 0 ;
+  stag::CKNSGaussianKDE *result = 0 ;
+  
+  if ((nobjs < 8) || (nobjs > 8)) SWIG_fail;
+  {
+    PyErr_SetString(PyExc_ValueError, "The input typemap for non-const pointer is not yet implemented. Please report this problem to the developer.");
+  }
+  ecode2 = SWIG_AsVal_double(swig_obj[1], &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "new_CKNSGaussianKDE" "', argument " "2"" of type '" "StagReal""'");
+  } 
+  arg2 = static_cast< StagReal >(val2);
+  ecode3 = SWIG_AsVal_double(swig_obj[2], &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "new_CKNSGaussianKDE" "', argument " "3"" of type '" "StagReal""'");
+  } 
+  arg3 = static_cast< StagReal >(val3);
+  {
+    // StagInt typemap (in)
+    if (!PyLong_Check((PyObject *) swig_obj[3])) {
+      PyErr_SetString(PyExc_TypeError, "Expected an integer.");
+      return NULL;
+    }
+    arg4 = (StagInt) PyLong_AsLong((PyObject*) swig_obj[3]);
+  }
+  ecode5 = SWIG_AsVal_double(swig_obj[4], &val5);
+  if (!SWIG_IsOK(ecode5)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "new_CKNSGaussianKDE" "', argument " "5"" of type '" "StagReal""'");
+  } 
+  arg5 = static_cast< StagReal >(val5);
+  {
+    // StagInt typemap (in)
+    if (!PyLong_Check((PyObject *) swig_obj[5])) {
+      PyErr_SetString(PyExc_TypeError, "Expected an integer.");
+      return NULL;
+    }
+    arg6 = (StagInt) PyLong_AsLong((PyObject*) swig_obj[5]);
+  }
+  {
+    // StagInt typemap (in)
+    if (!PyLong_Check((PyObject *) swig_obj[6])) {
+      PyErr_SetString(PyExc_TypeError, "Expected an integer.");
+      return NULL;
+    }
+    arg7 = (StagInt) PyLong_AsLong((PyObject*) swig_obj[6]);
+  }
+  {
+    // StagInt typemap (in)
+    if (!PyLong_Check((PyObject *) swig_obj[7])) {
+      PyErr_SetString(PyExc_TypeError, "Expected an integer.");
+      return NULL;
+    }
+    arg8 = (StagInt) PyLong_AsLong((PyObject*) swig_obj[7]);
+  }
+  {
+    try {
+      result = (stag::CKNSGaussianKDE *)new stag::CKNSGaussianKDE(arg1,arg2,arg3,arg4,arg5,arg6,arg7,arg8);
+    } catch (std::invalid_argument &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::runtime_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::domain_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    }
+  }
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_stag__CKNSGaussianKDE, SWIG_POINTER_NEW |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_new_CKNSGaussianKDE(PyObject *self, PyObject *args) {
+  Py_ssize_t argc;
+  PyObject *argv[9] = {
+    0
+  };
+  
+  if (!(argc = SWIG_Python_UnpackTuple(args, "new_CKNSGaussianKDE", 0, 8, argv))) SWIG_fail;
+  --argc;
+  if (argc == 0) {
+    return _wrap_new_CKNSGaussianKDE__SWIG_0(self, argc, argv);
+  }
+  if (argc == 2) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_Eigen__MatrixT_StagReal_Eigen__Dynamic_Eigen__Dynamic_Eigen__RowMajor_t, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      {
+        int res = SWIG_AsVal_double(argv[1], NULL);
+        _v = SWIG_CheckState(res);
+      }
+      if (_v) {
+        return _wrap_new_CKNSGaussianKDE__SWIG_3(self, argc, argv);
+      }
+    }
+  }
+  if (argc == 3) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_Eigen__MatrixT_StagReal_Eigen__Dynamic_Eigen__Dynamic_Eigen__RowMajor_t, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      {
+        int res = SWIG_AsVal_double(argv[1], NULL);
+        _v = SWIG_CheckState(res);
+      }
+      if (_v) {
+        {
+          int res = SWIG_AsVal_double(argv[2], NULL);
+          _v = SWIG_CheckState(res);
+        }
+        if (_v) {
+          return _wrap_new_CKNSGaussianKDE__SWIG_2(self, argc, argv);
+        }
+      }
+    }
+  }
+  if (argc == 4) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_Eigen__MatrixT_StagReal_Eigen__Dynamic_Eigen__Dynamic_Eigen__RowMajor_t, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      {
+        int res = SWIG_AsVal_double(argv[1], NULL);
+        _v = SWIG_CheckState(res);
+      }
+      if (_v) {
+        {
+          int res = SWIG_AsVal_double(argv[2], NULL);
+          _v = SWIG_CheckState(res);
+        }
+        if (_v) {
+          {
+            int res = SWIG_AsVal_double(argv[3], NULL);
+            _v = SWIG_CheckState(res);
+          }
+          if (_v) {
+            return _wrap_new_CKNSGaussianKDE__SWIG_1(self, argc, argv);
+          }
+        }
+      }
+    }
+  }
+  if (argc == 6) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_Eigen__MatrixT_StagReal_Eigen__Dynamic_Eigen__Dynamic_Eigen__RowMajor_t, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      {
+        int res = SWIG_AsVal_double(argv[1], NULL);
+        _v = SWIG_CheckState(res);
+      }
+      if (_v) {
+        {
+          int res = SWIG_AsVal_double(argv[2], NULL);
+          _v = SWIG_CheckState(res);
+        }
+        if (_v) {
+          {
+            // Typecheck for StagInt
+            _v = PyLong_Check((PyObject*) argv[3]);
+          }
+          if (_v) {
+            {
+              int res = SWIG_AsVal_double(argv[4], NULL);
+              _v = SWIG_CheckState(res);
+            }
+            if (_v) {
+              {
+                // Typecheck for StagInt
+                _v = PyLong_Check((PyObject*) argv[5]);
+              }
+              if (_v) {
+                return _wrap_new_CKNSGaussianKDE__SWIG_4(self, argc, argv);
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  if (argc == 8) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_Eigen__MatrixT_StagReal_Eigen__Dynamic_Eigen__Dynamic_Eigen__RowMajor_t, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      {
+        int res = SWIG_AsVal_double(argv[1], NULL);
+        _v = SWIG_CheckState(res);
+      }
+      if (_v) {
+        {
+          int res = SWIG_AsVal_double(argv[2], NULL);
+          _v = SWIG_CheckState(res);
+        }
+        if (_v) {
+          {
+            // Typecheck for StagInt
+            _v = PyLong_Check((PyObject*) argv[3]);
+          }
+          if (_v) {
+            {
+              int res = SWIG_AsVal_double(argv[4], NULL);
+              _v = SWIG_CheckState(res);
+            }
+            if (_v) {
+              {
+                // Typecheck for StagInt
+                _v = PyLong_Check((PyObject*) argv[5]);
+              }
+              if (_v) {
+                {
+                  // Typecheck for StagInt
+                  _v = PyLong_Check((PyObject*) argv[6]);
+                }
+                if (_v) {
+                  {
+                    // Typecheck for StagInt
+                    _v = PyLong_Check((PyObject*) argv[7]);
+                  }
+                  if (_v) {
+                    return _wrap_new_CKNSGaussianKDE__SWIG_5(self, argc, argv);
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  
+fail:
+  SWIG_Python_RaiseOrModifyTypeError("Wrong number or type of arguments for overloaded function 'new_CKNSGaussianKDE'.\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    stag::CKNSGaussianKDE::CKNSGaussianKDE()\n"
+    "    stag::CKNSGaussianKDE::CKNSGaussianKDE(DenseMat *,StagReal,StagReal,StagReal)\n"
+    "    stag::CKNSGaussianKDE::CKNSGaussianKDE(DenseMat *,StagReal,StagReal)\n"
+    "    stag::CKNSGaussianKDE::CKNSGaussianKDE(DenseMat *,StagReal)\n"
+    "    stag::CKNSGaussianKDE::CKNSGaussianKDE(DenseMat *,StagReal,StagReal,StagInt,StagReal,StagInt)\n"
+    "    stag::CKNSGaussianKDE::CKNSGaussianKDE(DenseMat *,StagReal,StagReal,StagInt,StagReal,StagInt,StagInt,StagInt)\n");
+  return 0;
+}
+
+
+SWIGINTERN PyObject *_wrap_CKNSGaussianKDE_query__SWIG_0(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
+  PyObject *resultobj = 0;
+  stag::CKNSGaussianKDE *arg1 = (stag::CKNSGaussianKDE *) 0 ;
+  DenseMat *arg2 = (DenseMat *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  std::vector< StagReal > result;
+  
+  if ((nobjs < 2) || (nobjs > 2)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_stag__CKNSGaussianKDE, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "CKNSGaussianKDE_query" "', argument " "1"" of type '" "stag::CKNSGaussianKDE *""'"); 
+  }
+  arg1 = reinterpret_cast< stag::CKNSGaussianKDE * >(argp1);
+  {
+    PyErr_SetString(PyExc_ValueError, "The input typemap for non-const pointer is not yet implemented. Please report this problem to the developer.");
+  }
+  {
+    try {
+      result = (arg1)->query(arg2);
+    } catch (std::invalid_argument &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::runtime_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::domain_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    }
+  }
+  {
+    // For non-pointer output vectors, we just copy the data into a numpy array.
+    // The copying at least happens still on the C++ side so will be relatively
+    // fast and optimised by the compiler.
+    //
+    // This adds a small 'constant factor' to the running time of the algorithm
+    // in STAGPy over C++ STAG.
+    npy_intp length = (&result)->size();
+    resultobj = PyArray_SimpleNew(1, &length, NPY_DOUBLE);
+    memcpy(PyArray_DATA((PyArrayObject*) resultobj),
+      (&result)->data(),
+      sizeof(double) * length);
+  }
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_CKNSGaussianKDE_query__SWIG_1(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
+  PyObject *resultobj = 0;
+  stag::CKNSGaussianKDE *arg1 = (stag::CKNSGaussianKDE *) 0 ;
+  stag::DataPoint *arg2 = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  void *argp2 = 0 ;
+  int res2 = 0 ;
+  StagReal result;
+  
+  if ((nobjs < 2) || (nobjs > 2)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_stag__CKNSGaussianKDE, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "CKNSGaussianKDE_query" "', argument " "1"" of type '" "stag::CKNSGaussianKDE *""'"); 
+  }
+  arg1 = reinterpret_cast< stag::CKNSGaussianKDE * >(argp1);
+  res2 = SWIG_ConvertPtr(swig_obj[1], &argp2, SWIGTYPE_p_stag__DataPoint,  0  | 0);
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "CKNSGaussianKDE_query" "', argument " "2"" of type '" "stag::DataPoint const &""'"); 
+  }
+  if (!argp2) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "CKNSGaussianKDE_query" "', argument " "2"" of type '" "stag::DataPoint const &""'"); 
+  }
+  arg2 = reinterpret_cast< stag::DataPoint * >(argp2);
+  {
+    try {
+      result = (StagReal)(arg1)->query((stag::DataPoint const &)*arg2);
+    } catch (std::invalid_argument &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::runtime_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::domain_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    }
+  }
+  resultobj = SWIG_From_double(static_cast< double >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_CKNSGaussianKDE_query(PyObject *self, PyObject *args) {
+  Py_ssize_t argc;
+  PyObject *argv[3] = {
+    0
+  };
+  
+  if (!(argc = SWIG_Python_UnpackTuple(args, "CKNSGaussianKDE_query", 0, 2, argv))) SWIG_fail;
+  --argc;
+  if (argc == 2) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_stag__CKNSGaussianKDE, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      void *vptr = 0;
+      int res = SWIG_ConvertPtr(argv[1], &vptr, SWIGTYPE_p_Eigen__MatrixT_StagReal_Eigen__Dynamic_Eigen__Dynamic_Eigen__RowMajor_t, 0);
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        return _wrap_CKNSGaussianKDE_query__SWIG_0(self, argc, argv);
+      }
+    }
+  }
+  if (argc == 2) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_stag__CKNSGaussianKDE, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      int res = SWIG_ConvertPtr(argv[1], 0, SWIGTYPE_p_stag__DataPoint, SWIG_POINTER_NO_NULL | 0);
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        return _wrap_CKNSGaussianKDE_query__SWIG_1(self, argc, argv);
+      }
+    }
+  }
+  
+fail:
+  SWIG_Python_RaiseOrModifyTypeError("Wrong number or type of arguments for overloaded function 'CKNSGaussianKDE_query'.\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    stag::CKNSGaussianKDE::query(DenseMat *)\n"
+    "    stag::CKNSGaussianKDE::query(stag::DataPoint const &)\n");
+  return 0;
+}
+
+
+SWIGINTERN PyObject *_wrap_delete_CKNSGaussianKDE(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  stag::CKNSGaussianKDE *arg1 = (stag::CKNSGaussianKDE *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject *swig_obj[1] ;
+  
+  if (!args) SWIG_fail;
+  swig_obj[0] = args;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_stag__CKNSGaussianKDE, SWIG_POINTER_DISOWN |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_CKNSGaussianKDE" "', argument " "1"" of type '" "stag::CKNSGaussianKDE *""'"); 
+  }
+  arg1 = reinterpret_cast< stag::CKNSGaussianKDE * >(argp1);
+  {
+    try {
+      delete arg1;
+    } catch (std::invalid_argument &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::runtime_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::domain_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    }
+  }
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *CKNSGaussianKDE_swigregister(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *obj;
+  if (!SWIG_Python_UnpackTuple(args, "swigregister", 1, 1, &obj)) return NULL;
+  SWIG_TypeNewClientData(SWIGTYPE_p_stag__CKNSGaussianKDE, SWIG_NewClientData(obj));
+  return SWIG_Py_Void();
+}
+
+SWIGINTERN PyObject *CKNSGaussianKDE_swiginit(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  return SWIG_Python_InitShadowInstance(args);
+}
+
+SWIGINTERN PyObject *_wrap_new_ExactGaussianKDE__SWIG_0(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **SWIGUNUSEDPARM(swig_obj)) {
+  PyObject *resultobj = 0;
+  stag::ExactGaussianKDE *result = 0 ;
+  
+  if ((nobjs < 0) || (nobjs > 0)) SWIG_fail;
+  {
+    try {
+      result = (stag::ExactGaussianKDE *)new stag::ExactGaussianKDE();
+    } catch (std::invalid_argument &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::runtime_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::domain_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    }
+  }
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_stag__ExactGaussianKDE, SWIG_POINTER_NEW |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_new_ExactGaussianKDE__SWIG_1(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
+  PyObject *resultobj = 0;
+  DenseMat *arg1 = (DenseMat *) 0 ;
+  StagReal arg2 ;
+  double val2 ;
+  int ecode2 = 0 ;
+  stag::ExactGaussianKDE *result = 0 ;
+  
+  if ((nobjs < 2) || (nobjs > 2)) SWIG_fail;
+  {
+    PyErr_SetString(PyExc_ValueError, "The input typemap for non-const pointer is not yet implemented. Please report this problem to the developer.");
+  }
+  ecode2 = SWIG_AsVal_double(swig_obj[1], &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "new_ExactGaussianKDE" "', argument " "2"" of type '" "StagReal""'");
+  } 
+  arg2 = static_cast< StagReal >(val2);
+  {
+    try {
+      result = (stag::ExactGaussianKDE *)new stag::ExactGaussianKDE(arg1,arg2);
+    } catch (std::invalid_argument &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::runtime_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::domain_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    }
+  }
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_stag__ExactGaussianKDE, SWIG_POINTER_NEW |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_new_ExactGaussianKDE__SWIG_2(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
+  PyObject *resultobj = 0;
+  DenseMat *arg1 = (DenseMat *) 0 ;
+  StagReal arg2 ;
+  StagInt arg3 ;
+  StagInt arg4 ;
+  double val2 ;
+  int ecode2 = 0 ;
+  stag::ExactGaussianKDE *result = 0 ;
+  
+  if ((nobjs < 4) || (nobjs > 4)) SWIG_fail;
+  {
+    PyErr_SetString(PyExc_ValueError, "The input typemap for non-const pointer is not yet implemented. Please report this problem to the developer.");
+  }
+  ecode2 = SWIG_AsVal_double(swig_obj[1], &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "new_ExactGaussianKDE" "', argument " "2"" of type '" "StagReal""'");
+  } 
+  arg2 = static_cast< StagReal >(val2);
+  {
+    // StagInt typemap (in)
+    if (!PyLong_Check((PyObject *) swig_obj[2])) {
+      PyErr_SetString(PyExc_TypeError, "Expected an integer.");
+      return NULL;
+    }
+    arg3 = (StagInt) PyLong_AsLong((PyObject*) swig_obj[2]);
+  }
+  {
+    // StagInt typemap (in)
+    if (!PyLong_Check((PyObject *) swig_obj[3])) {
+      PyErr_SetString(PyExc_TypeError, "Expected an integer.");
+      return NULL;
+    }
+    arg4 = (StagInt) PyLong_AsLong((PyObject*) swig_obj[3]);
+  }
+  {
+    try {
+      result = (stag::ExactGaussianKDE *)new stag::ExactGaussianKDE(arg1,arg2,arg3,arg4);
+    } catch (std::invalid_argument &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::runtime_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::domain_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    }
+  }
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_stag__ExactGaussianKDE, SWIG_POINTER_NEW |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_new_ExactGaussianKDE(PyObject *self, PyObject *args) {
+  Py_ssize_t argc;
+  PyObject *argv[5] = {
+    0
+  };
+  
+  if (!(argc = SWIG_Python_UnpackTuple(args, "new_ExactGaussianKDE", 0, 4, argv))) SWIG_fail;
+  --argc;
+  if (argc == 0) {
+    return _wrap_new_ExactGaussianKDE__SWIG_0(self, argc, argv);
+  }
+  if (argc == 2) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_Eigen__MatrixT_StagReal_Eigen__Dynamic_Eigen__Dynamic_Eigen__RowMajor_t, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      {
+        int res = SWIG_AsVal_double(argv[1], NULL);
+        _v = SWIG_CheckState(res);
+      }
+      if (_v) {
+        return _wrap_new_ExactGaussianKDE__SWIG_1(self, argc, argv);
+      }
+    }
+  }
+  if (argc == 4) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_Eigen__MatrixT_StagReal_Eigen__Dynamic_Eigen__Dynamic_Eigen__RowMajor_t, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      {
+        int res = SWIG_AsVal_double(argv[1], NULL);
+        _v = SWIG_CheckState(res);
+      }
+      if (_v) {
+        {
+          // Typecheck for StagInt
+          _v = PyLong_Check((PyObject*) argv[2]);
+        }
+        if (_v) {
+          {
+            // Typecheck for StagInt
+            _v = PyLong_Check((PyObject*) argv[3]);
+          }
+          if (_v) {
+            return _wrap_new_ExactGaussianKDE__SWIG_2(self, argc, argv);
+          }
+        }
+      }
+    }
+  }
+  
+fail:
+  SWIG_Python_RaiseOrModifyTypeError("Wrong number or type of arguments for overloaded function 'new_ExactGaussianKDE'.\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    stag::ExactGaussianKDE::ExactGaussianKDE()\n"
+    "    stag::ExactGaussianKDE::ExactGaussianKDE(DenseMat *,StagReal)\n"
+    "    stag::ExactGaussianKDE::ExactGaussianKDE(DenseMat *,StagReal,StagInt,StagInt)\n");
+  return 0;
+}
+
+
+SWIGINTERN PyObject *_wrap_ExactGaussianKDE_query__SWIG_0(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
+  PyObject *resultobj = 0;
+  stag::ExactGaussianKDE *arg1 = (stag::ExactGaussianKDE *) 0 ;
+  DenseMat *arg2 = (DenseMat *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  std::vector< StagReal > result;
+  
+  if ((nobjs < 2) || (nobjs > 2)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_stag__ExactGaussianKDE, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ExactGaussianKDE_query" "', argument " "1"" of type '" "stag::ExactGaussianKDE *""'"); 
+  }
+  arg1 = reinterpret_cast< stag::ExactGaussianKDE * >(argp1);
+  {
+    PyErr_SetString(PyExc_ValueError, "The input typemap for non-const pointer is not yet implemented. Please report this problem to the developer.");
+  }
+  {
+    try {
+      result = (arg1)->query(arg2);
+    } catch (std::invalid_argument &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::runtime_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::domain_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    }
+  }
+  {
+    // For non-pointer output vectors, we just copy the data into a numpy array.
+    // The copying at least happens still on the C++ side so will be relatively
+    // fast and optimised by the compiler.
+    //
+    // This adds a small 'constant factor' to the running time of the algorithm
+    // in STAGPy over C++ STAG.
+    npy_intp length = (&result)->size();
+    resultobj = PyArray_SimpleNew(1, &length, NPY_DOUBLE);
+    memcpy(PyArray_DATA((PyArrayObject*) resultobj),
+      (&result)->data(),
+      sizeof(double) * length);
+  }
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_ExactGaussianKDE_query__SWIG_1(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
+  PyObject *resultobj = 0;
+  stag::ExactGaussianKDE *arg1 = (stag::ExactGaussianKDE *) 0 ;
+  stag::DataPoint *arg2 = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  void *argp2 = 0 ;
+  int res2 = 0 ;
+  StagReal result;
+  
+  if ((nobjs < 2) || (nobjs > 2)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_stag__ExactGaussianKDE, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ExactGaussianKDE_query" "', argument " "1"" of type '" "stag::ExactGaussianKDE *""'"); 
+  }
+  arg1 = reinterpret_cast< stag::ExactGaussianKDE * >(argp1);
+  res2 = SWIG_ConvertPtr(swig_obj[1], &argp2, SWIGTYPE_p_stag__DataPoint,  0  | 0);
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "ExactGaussianKDE_query" "', argument " "2"" of type '" "stag::DataPoint const &""'"); 
+  }
+  if (!argp2) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "ExactGaussianKDE_query" "', argument " "2"" of type '" "stag::DataPoint const &""'"); 
+  }
+  arg2 = reinterpret_cast< stag::DataPoint * >(argp2);
+  {
+    try {
+      result = (StagReal)(arg1)->query((stag::DataPoint const &)*arg2);
+    } catch (std::invalid_argument &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::runtime_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::domain_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    }
+  }
+  resultobj = SWIG_From_double(static_cast< double >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_ExactGaussianKDE_query(PyObject *self, PyObject *args) {
+  Py_ssize_t argc;
+  PyObject *argv[3] = {
+    0
+  };
+  
+  if (!(argc = SWIG_Python_UnpackTuple(args, "ExactGaussianKDE_query", 0, 2, argv))) SWIG_fail;
+  --argc;
+  if (argc == 2) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_stag__ExactGaussianKDE, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      void *vptr = 0;
+      int res = SWIG_ConvertPtr(argv[1], &vptr, SWIGTYPE_p_Eigen__MatrixT_StagReal_Eigen__Dynamic_Eigen__Dynamic_Eigen__RowMajor_t, 0);
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        return _wrap_ExactGaussianKDE_query__SWIG_0(self, argc, argv);
+      }
+    }
+  }
+  if (argc == 2) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_stag__ExactGaussianKDE, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      int res = SWIG_ConvertPtr(argv[1], 0, SWIGTYPE_p_stag__DataPoint, SWIG_POINTER_NO_NULL | 0);
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        return _wrap_ExactGaussianKDE_query__SWIG_1(self, argc, argv);
+      }
+    }
+  }
+  
+fail:
+  SWIG_Python_RaiseOrModifyTypeError("Wrong number or type of arguments for overloaded function 'ExactGaussianKDE_query'.\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    stag::ExactGaussianKDE::query(DenseMat *)\n"
+    "    stag::ExactGaussianKDE::query(stag::DataPoint const &)\n");
+  return 0;
+}
+
+
+SWIGINTERN PyObject *_wrap_ExactGaussianKDE_sample_neighbors(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  stag::ExactGaussianKDE *arg1 = (stag::ExactGaussianKDE *) 0 ;
+  stag::DataPoint *arg2 = 0 ;
+  StagReal arg3 ;
+  std::vector< StagReal > arg4 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  void *argp2 = 0 ;
+  int res2 = 0 ;
+  double val3 ;
+  int ecode3 = 0 ;
+  PyArrayObject *array4 = NULL ;
+  int is_new_object4 = 0 ;
+  std::vector< double > temp_vec4 ;
+  PyObject *swig_obj[4] ;
+  std::vector< StagInt > result;
+  
+  if (!SWIG_Python_UnpackTuple(args, "ExactGaussianKDE_sample_neighbors", 4, 4, swig_obj)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_stag__ExactGaussianKDE, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ExactGaussianKDE_sample_neighbors" "', argument " "1"" of type '" "stag::ExactGaussianKDE *""'"); 
+  }
+  arg1 = reinterpret_cast< stag::ExactGaussianKDE * >(argp1);
+  res2 = SWIG_ConvertPtr(swig_obj[1], &argp2, SWIGTYPE_p_stag__DataPoint,  0  | 0);
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "ExactGaussianKDE_sample_neighbors" "', argument " "2"" of type '" "stag::DataPoint const &""'"); 
+  }
+  if (!argp2) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "ExactGaussianKDE_sample_neighbors" "', argument " "2"" of type '" "stag::DataPoint const &""'"); 
+  }
+  arg2 = reinterpret_cast< stag::DataPoint * >(argp2);
+  ecode3 = SWIG_AsVal_double(swig_obj[2], &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "ExactGaussianKDE_sample_neighbors" "', argument " "3"" of type '" "StagReal""'");
+  } 
+  arg3 = static_cast< StagReal >(val3);
+  {
+    // Get the number of elements in the numpy array4
+    npy_intp size[1] = {
+      PyArray_DIMS((PyArrayObject*) swig_obj[3])[0] 
+    };
+    
+    // Check that the dimensions of the array4 are correct
+    array4 = obj_to_array_contiguous_allow_conversion(swig_obj[3],
+      NPY_DOUBLE,
+      &is_new_object4);
+    if (!array4 || !require_dimensions(array4, 1) ||
+      !require_size(array4, size, 1)) SWIG_fail;
+    
+    // Get a pointer to the data in the numpy array4
+    double* data_ptr = (double*) array_data(array4);
+    
+    // Copy the numpy data into the new vector.
+    temp_vec4.reserve(size[0]);
+    for (int i = 0; i < size[0]; i++) {
+      temp_vec4.push_back(data_ptr[i]);
+    }
+    arg4 = temp_vec4;
+  }
+  {
+    try {
+      result = (arg1)->sample_neighbors((stag::DataPoint const &)*arg2,arg3,arg4);
+    } catch (std::invalid_argument &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::runtime_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::domain_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    }
+  }
+  {
+    // For non-pointer output vectors, we just copy the data into a numpy array.
+    // The copying at least happens still on the C++ side so will be relatively
+    // fast and optimised by the compiler.
+    //
+    // This adds a small 'constant factor' to the running time of the algorithm
+    // in STAGPy over C++ STAG.
+    npy_intp length = (&result)->size();
+    resultobj = PyArray_SimpleNew(1, &length, NPY_INT64);
+    memcpy(PyArray_DATA((PyArrayObject*) resultobj),
+      (&result)->data(),
+      sizeof(int64_t) * length);
+  }
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_delete_ExactGaussianKDE(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  stag::ExactGaussianKDE *arg1 = (stag::ExactGaussianKDE *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject *swig_obj[1] ;
+  
+  if (!args) SWIG_fail;
+  swig_obj[0] = args;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_stag__ExactGaussianKDE, SWIG_POINTER_DISOWN |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_ExactGaussianKDE" "', argument " "1"" of type '" "stag::ExactGaussianKDE *""'"); 
+  }
+  arg1 = reinterpret_cast< stag::ExactGaussianKDE * >(argp1);
+  {
+    try {
+      delete arg1;
+    } catch (std::invalid_argument &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::runtime_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::domain_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    }
+  }
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *ExactGaussianKDE_swigregister(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *obj;
+  if (!SWIG_Python_UnpackTuple(args, "swigregister", 1, 1, &obj)) return NULL;
+  SWIG_TypeNewClientData(SWIGTYPE_p_stag__ExactGaussianKDE, SWIG_NewClientData(obj));
+  return SWIG_Py_Void();
+}
+
+SWIGINTERN PyObject *ExactGaussianKDE_swiginit(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  return SWIG_Python_InitShadowInstance(args);
+}
+
+SWIGINTERN PyObject *_wrap_new_LSHFunction(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  StagUInt arg1 ;
+  size_t val1 ;
+  int ecode1 = 0 ;
+  PyObject *swig_obj[1] ;
+  stag::LSHFunction *result = 0 ;
+  
+  if (!args) SWIG_fail;
+  swig_obj[0] = args;
+  ecode1 = SWIG_AsVal_size_t(swig_obj[0], &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "new_LSHFunction" "', argument " "1"" of type '" "StagUInt""'");
+  } 
+  arg1 = static_cast< StagUInt >(val1);
+  {
+    try {
+      result = (stag::LSHFunction *)new stag::LSHFunction(arg1);
+    } catch (std::invalid_argument &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::runtime_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::domain_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    }
+  }
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_stag__LSHFunction, SWIG_POINTER_NEW |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_LSHFunction_apply(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  stag::LSHFunction *arg1 = (stag::LSHFunction *) 0 ;
+  stag::DataPoint *arg2 = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  void *argp2 = 0 ;
+  int res2 = 0 ;
+  PyObject *swig_obj[2] ;
+  StagInt result;
+  
+  if (!SWIG_Python_UnpackTuple(args, "LSHFunction_apply", 2, 2, swig_obj)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_stag__LSHFunction, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "LSHFunction_apply" "', argument " "1"" of type '" "stag::LSHFunction *""'"); 
+  }
+  arg1 = reinterpret_cast< stag::LSHFunction * >(argp1);
+  res2 = SWIG_ConvertPtr(swig_obj[1], &argp2, SWIGTYPE_p_stag__DataPoint,  0  | 0);
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "LSHFunction_apply" "', argument " "2"" of type '" "stag::DataPoint const &""'"); 
+  }
+  if (!argp2) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "LSHFunction_apply" "', argument " "2"" of type '" "stag::DataPoint const &""'"); 
+  }
+  arg2 = reinterpret_cast< stag::DataPoint * >(argp2);
+  {
+    try {
+      result = (arg1)->apply((stag::DataPoint const &)*arg2);
+    } catch (std::invalid_argument &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::runtime_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::domain_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    }
+  }
+  {
+    // StagInt typemap (out)
+    resultobj = PyLong_FromLongLong((long long) result);
+  }
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_LSHFunction_collision_probability(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  StagReal arg1 ;
+  double val1 ;
+  int ecode1 = 0 ;
+  PyObject *swig_obj[1] ;
+  StagReal result;
+  
+  if (!args) SWIG_fail;
+  swig_obj[0] = args;
+  ecode1 = SWIG_AsVal_double(swig_obj[0], &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "LSHFunction_collision_probability" "', argument " "1"" of type '" "StagReal""'");
+  } 
+  arg1 = static_cast< StagReal >(val1);
+  {
+    try {
+      result = (StagReal)stag::LSHFunction::collision_probability(arg1);
+    } catch (std::invalid_argument &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::runtime_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::domain_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    }
+  }
+  resultobj = SWIG_From_double(static_cast< double >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_delete_LSHFunction(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  stag::LSHFunction *arg1 = (stag::LSHFunction *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject *swig_obj[1] ;
+  
+  if (!args) SWIG_fail;
+  swig_obj[0] = args;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_stag__LSHFunction, SWIG_POINTER_DISOWN |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_LSHFunction" "', argument " "1"" of type '" "stag::LSHFunction *""'"); 
+  }
+  arg1 = reinterpret_cast< stag::LSHFunction * >(argp1);
+  {
+    try {
+      delete arg1;
+    } catch (std::invalid_argument &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::runtime_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::domain_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    }
+  }
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *LSHFunction_swigregister(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *obj;
+  if (!SWIG_Python_UnpackTuple(args, "swigregister", 1, 1, &obj)) return NULL;
+  SWIG_TypeNewClientData(SWIGTYPE_p_stag__LSHFunction, SWIG_NewClientData(obj));
+  return SWIG_Py_Void();
+}
+
+SWIGINTERN PyObject *LSHFunction_swiginit(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  return SWIG_Python_InitShadowInstance(args);
+}
+
+SWIGINTERN PyObject *_wrap_new_MultiLSHFunction(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  StagInt arg1 ;
+  StagInt arg2 ;
+  PyObject *swig_obj[2] ;
+  stag::MultiLSHFunction *result = 0 ;
+  
+  if (!SWIG_Python_UnpackTuple(args, "new_MultiLSHFunction", 2, 2, swig_obj)) SWIG_fail;
+  {
+    // StagInt typemap (in)
+    if (!PyLong_Check((PyObject *) swig_obj[0])) {
+      PyErr_SetString(PyExc_TypeError, "Expected an integer.");
+      return NULL;
+    }
+    arg1 = (StagInt) PyLong_AsLong((PyObject*) swig_obj[0]);
+  }
+  {
+    // StagInt typemap (in)
+    if (!PyLong_Check((PyObject *) swig_obj[1])) {
+      PyErr_SetString(PyExc_TypeError, "Expected an integer.");
+      return NULL;
+    }
+    arg2 = (StagInt) PyLong_AsLong((PyObject*) swig_obj[1]);
+  }
+  {
+    try {
+      result = (stag::MultiLSHFunction *)new stag::MultiLSHFunction(arg1,arg2);
+    } catch (std::invalid_argument &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::runtime_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::domain_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    }
+  }
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_stag__MultiLSHFunction, SWIG_POINTER_NEW |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_MultiLSHFunction_apply(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  stag::MultiLSHFunction *arg1 = (stag::MultiLSHFunction *) 0 ;
+  stag::DataPoint *arg2 = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  void *argp2 = 0 ;
+  int res2 = 0 ;
+  PyObject *swig_obj[2] ;
+  StagInt result;
+  
+  if (!SWIG_Python_UnpackTuple(args, "MultiLSHFunction_apply", 2, 2, swig_obj)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_stag__MultiLSHFunction, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "MultiLSHFunction_apply" "', argument " "1"" of type '" "stag::MultiLSHFunction *""'"); 
+  }
+  arg1 = reinterpret_cast< stag::MultiLSHFunction * >(argp1);
+  res2 = SWIG_ConvertPtr(swig_obj[1], &argp2, SWIGTYPE_p_stag__DataPoint,  0  | 0);
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "MultiLSHFunction_apply" "', argument " "2"" of type '" "stag::DataPoint const &""'"); 
+  }
+  if (!argp2) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "MultiLSHFunction_apply" "', argument " "2"" of type '" "stag::DataPoint const &""'"); 
+  }
+  arg2 = reinterpret_cast< stag::DataPoint * >(argp2);
+  {
+    try {
+      result = (arg1)->apply((stag::DataPoint const &)*arg2);
+    } catch (std::invalid_argument &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::runtime_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::domain_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    }
+  }
+  {
+    // StagInt typemap (out)
+    resultobj = PyLong_FromLongLong((long long) result);
+  }
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_delete_MultiLSHFunction(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  stag::MultiLSHFunction *arg1 = (stag::MultiLSHFunction *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject *swig_obj[1] ;
+  
+  if (!args) SWIG_fail;
+  swig_obj[0] = args;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_stag__MultiLSHFunction, SWIG_POINTER_DISOWN |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_MultiLSHFunction" "', argument " "1"" of type '" "stag::MultiLSHFunction *""'"); 
+  }
+  arg1 = reinterpret_cast< stag::MultiLSHFunction * >(argp1);
+  {
+    try {
+      delete arg1;
+    } catch (std::invalid_argument &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::runtime_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::domain_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    }
+  }
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *MultiLSHFunction_swigregister(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *obj;
+  if (!SWIG_Python_UnpackTuple(args, "swigregister", 1, 1, &obj)) return NULL;
+  SWIG_TypeNewClientData(SWIGTYPE_p_stag__MultiLSHFunction, SWIG_NewClientData(obj));
+  return SWIG_Py_Void();
+}
+
+SWIGINTERN PyObject *MultiLSHFunction_swiginit(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  return SWIG_Python_InitShadowInstance(args);
+}
+
+SWIGINTERN PyObject *_wrap_new_E2LSH__SWIG_0(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **SWIGUNUSEDPARM(swig_obj)) {
+  PyObject *resultobj = 0;
+  stag::E2LSH *result = 0 ;
+  
+  if ((nobjs < 0) || (nobjs > 0)) SWIG_fail;
+  {
+    try {
+      result = (stag::E2LSH *)new stag::E2LSH();
+    } catch (std::invalid_argument &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::runtime_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::domain_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    }
+  }
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_stag__E2LSH, SWIG_POINTER_NEW |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_new_E2LSH__SWIG_1(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
+  PyObject *resultobj = 0;
+  StagUInt arg1 ;
+  StagUInt arg2 ;
+  std::vector< stag::DataPoint > *arg3 = 0 ;
+  size_t val1 ;
+  int ecode1 = 0 ;
+  size_t val2 ;
+  int ecode2 = 0 ;
+  PyArrayObject *array3 = NULL ;
+  int is_new_object3 = 0 ;
+  std::vector< stag::DataPoint > temp_vec3 ;
+  stag::E2LSH *result = 0 ;
+  
+  if ((nobjs < 3) || (nobjs > 3)) SWIG_fail;
+  ecode1 = SWIG_AsVal_size_t(swig_obj[0], &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "new_E2LSH" "', argument " "1"" of type '" "StagUInt""'");
+  } 
+  arg1 = static_cast< StagUInt >(val1);
+  ecode2 = SWIG_AsVal_size_t(swig_obj[1], &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "new_E2LSH" "', argument " "2"" of type '" "StagUInt""'");
+  } 
+  arg2 = static_cast< StagUInt >(val2);
+  {
+    // Typemap (in) for std::vector<stag::DataPoint>&
+    
+    // Get the number of elements in the python list.
+    StagInt list_size = PyList_Size((PyObject*) swig_obj[2]);
+    temp_vec3.reserve(list_size);
+    
+    // Construct a new DataPoint for each list object, and add to the vector
+    for (StagInt i = 0; i < list_size; i++) {
+      PyObject* python_datapoint = PyList_GetItem((PyObject*) swig_obj[2], i);
+      void* cpp_datapoint = 0;
+      int res = SWIG_ConvertPtr(python_datapoint, &cpp_datapoint, SWIGTYPE_p_stag__DataPoint, 0 | 0);
+      temp_vec3.push_back(*(reinterpret_cast<stag::DataPoint*>(cpp_datapoint)));
+    }
+    
+    arg3 = &temp_vec3;
+  }
+  {
+    try {
+      result = (stag::E2LSH *)new stag::E2LSH(arg1,arg2,*arg3);
+    } catch (std::invalid_argument &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::runtime_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::domain_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    }
+  }
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_stag__E2LSH, SWIG_POINTER_NEW |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_new_E2LSH(PyObject *self, PyObject *args) {
+  Py_ssize_t argc;
+  PyObject *argv[4] = {
+    0
+  };
+  
+  if (!(argc = SWIG_Python_UnpackTuple(args, "new_E2LSH", 0, 3, argv))) SWIG_fail;
+  --argc;
+  if (argc == 0) {
+    return _wrap_new_E2LSH__SWIG_0(self, argc, argv);
+  }
+  if (argc == 3) {
+    int _v;
+    {
+      int res = SWIG_AsVal_size_t(argv[0], NULL);
+      _v = SWIG_CheckState(res);
+    }
+    if (_v) {
+      {
+        int res = SWIG_AsVal_size_t(argv[1], NULL);
+        _v = SWIG_CheckState(res);
+      }
+      if (_v) {
+        {
+          // Typecheck for std::vector<stag::DataPoint>&
+          _v = 1;
+        }
+        if (_v) {
+          return _wrap_new_E2LSH__SWIG_1(self, argc, argv);
+        }
+      }
+    }
+  }
+  
+fail:
+  SWIG_Python_RaiseOrModifyTypeError("Wrong number or type of arguments for overloaded function 'new_E2LSH'.\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    stag::E2LSH::E2LSH()\n"
+    "    stag::E2LSH::E2LSH(StagUInt,StagUInt,std::vector< stag::DataPoint > &)\n");
+  return 0;
+}
+
+
+SWIGINTERN PyObject *_wrap_E2LSH_get_near_neighbors(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  stag::E2LSH *arg1 = (stag::E2LSH *) 0 ;
+  stag::DataPoint *arg2 = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  void *argp2 = 0 ;
+  int res2 = 0 ;
+  PyObject *swig_obj[2] ;
+  SwigValueWrapper< std::vector< stag::DataPoint > > result;
+  
+  if (!SWIG_Python_UnpackTuple(args, "E2LSH_get_near_neighbors", 2, 2, swig_obj)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_stag__E2LSH, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "E2LSH_get_near_neighbors" "', argument " "1"" of type '" "stag::E2LSH *""'"); 
+  }
+  arg1 = reinterpret_cast< stag::E2LSH * >(argp1);
+  res2 = SWIG_ConvertPtr(swig_obj[1], &argp2, SWIGTYPE_p_stag__DataPoint,  0  | 0);
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "E2LSH_get_near_neighbors" "', argument " "2"" of type '" "stag::DataPoint const &""'"); 
+  }
+  if (!argp2) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "E2LSH_get_near_neighbors" "', argument " "2"" of type '" "stag::DataPoint const &""'"); 
+  }
+  arg2 = reinterpret_cast< stag::DataPoint * >(argp2);
+  {
+    try {
+      result = (arg1)->get_near_neighbors((stag::DataPoint const &)*arg2);
+    } catch (std::invalid_argument &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::runtime_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::domain_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    }
+  }
+  {
+    // Construct a python list of data point objects
+    StagInt outer_length = (&result)->size();
+    resultobj = PyList_New(outer_length);
+    
+    // Construct a new DataPoint for each inner object, and add to the list.
+    for (StagInt i = 0; i < outer_length; i++) {
+      PyObject* new_datapoint_object = SWIG_NewPointerObj(SWIG_as_voidptr(&(&result)->at(i)), SWIGTYPE_p_stag__DataPoint, SWIG_POINTER_NEW |  0 );
+      
+      PyList_SET_ITEM(resultobj, i, new_datapoint_object);
+    }
+  }
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_E2LSH_collision_probability__SWIG_0(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
+  PyObject *resultobj = 0;
+  stag::E2LSH *arg1 = (stag::E2LSH *) 0 ;
+  StagReal arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  double val2 ;
+  int ecode2 = 0 ;
+  StagReal result;
+  
+  if ((nobjs < 2) || (nobjs > 2)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_stag__E2LSH, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "E2LSH_collision_probability" "', argument " "1"" of type '" "stag::E2LSH *""'"); 
+  }
+  arg1 = reinterpret_cast< stag::E2LSH * >(argp1);
+  ecode2 = SWIG_AsVal_double(swig_obj[1], &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "E2LSH_collision_probability" "', argument " "2"" of type '" "StagReal""'");
+  } 
+  arg2 = static_cast< StagReal >(val2);
+  {
+    try {
+      result = (StagReal)(arg1)->collision_probability(arg2);
+    } catch (std::invalid_argument &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::runtime_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::domain_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    }
+  }
+  resultobj = SWIG_From_double(static_cast< double >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_E2LSH_collision_probability__SWIG_1(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
+  PyObject *resultobj = 0;
+  StagUInt arg1 ;
+  StagUInt arg2 ;
+  StagReal arg3 ;
+  size_t val1 ;
+  int ecode1 = 0 ;
+  size_t val2 ;
+  int ecode2 = 0 ;
+  double val3 ;
+  int ecode3 = 0 ;
+  StagReal result;
+  
+  if ((nobjs < 3) || (nobjs > 3)) SWIG_fail;
+  ecode1 = SWIG_AsVal_size_t(swig_obj[0], &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "E2LSH_collision_probability" "', argument " "1"" of type '" "StagUInt""'");
+  } 
+  arg1 = static_cast< StagUInt >(val1);
+  ecode2 = SWIG_AsVal_size_t(swig_obj[1], &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "E2LSH_collision_probability" "', argument " "2"" of type '" "StagUInt""'");
+  } 
+  arg2 = static_cast< StagUInt >(val2);
+  ecode3 = SWIG_AsVal_double(swig_obj[2], &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "E2LSH_collision_probability" "', argument " "3"" of type '" "StagReal""'");
+  } 
+  arg3 = static_cast< StagReal >(val3);
+  {
+    try {
+      result = (StagReal)stag::E2LSH::collision_probability(arg1,arg2,arg3);
+    } catch (std::invalid_argument &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::runtime_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::domain_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    }
+  }
+  resultobj = SWIG_From_double(static_cast< double >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_E2LSH_collision_probability(PyObject *self, PyObject *args) {
+  Py_ssize_t argc;
+  PyObject *argv[4] = {
+    0
+  };
+  
+  if (!(argc = SWIG_Python_UnpackTuple(args, "E2LSH_collision_probability", 0, 3, argv))) SWIG_fail;
+  --argc;
+  if (argc == 2) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_stag__E2LSH, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      {
+        int res = SWIG_AsVal_double(argv[1], NULL);
+        _v = SWIG_CheckState(res);
+      }
+      if (_v) {
+        return _wrap_E2LSH_collision_probability__SWIG_0(self, argc, argv);
+      }
+    }
+  }
+  if (argc == 3) {
+    int _v;
+    {
+      int res = SWIG_AsVal_size_t(argv[0], NULL);
+      _v = SWIG_CheckState(res);
+    }
+    if (_v) {
+      {
+        int res = SWIG_AsVal_size_t(argv[1], NULL);
+        _v = SWIG_CheckState(res);
+      }
+      if (_v) {
+        {
+          int res = SWIG_AsVal_double(argv[2], NULL);
+          _v = SWIG_CheckState(res);
+        }
+        if (_v) {
+          return _wrap_E2LSH_collision_probability__SWIG_1(self, argc, argv);
+        }
+      }
+    }
+  }
+  
+fail:
+  SWIG_Python_RaiseOrModifyTypeError("Wrong number or type of arguments for overloaded function 'E2LSH_collision_probability'.\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    stag::E2LSH::collision_probability(StagReal)\n"
+    "    stag::E2LSH::collision_probability(StagUInt,StagUInt,StagReal)\n");
+  return 0;
+}
+
+
+SWIGINTERN PyObject *_wrap_delete_E2LSH(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  stag::E2LSH *arg1 = (stag::E2LSH *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject *swig_obj[1] ;
+  
+  if (!args) SWIG_fail;
+  swig_obj[0] = args;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_stag__E2LSH, SWIG_POINTER_DISOWN |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_E2LSH" "', argument " "1"" of type '" "stag::E2LSH *""'"); 
+  }
+  arg1 = reinterpret_cast< stag::E2LSH * >(argp1);
+  {
+    try {
+      delete arg1;
+    } catch (std::invalid_argument &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::runtime_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::domain_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    }
+  }
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *E2LSH_swigregister(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *obj;
+  if (!SWIG_Python_UnpackTuple(args, "swigregister", 1, 1, &obj)) return NULL;
+  SWIG_TypeNewClientData(SWIGTYPE_p_stag__E2LSH, SWIG_NewClientData(obj));
+  return SWIG_Py_Void();
+}
+
+SWIGINTERN PyObject *E2LSH_swiginit(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  return SWIG_Python_InitShadowInstance(args);
+}
+
 SWIGINTERN PyObject *_wrap_delete_SprsMat(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   SprsMat *arg1 = (SprsMat *) 0 ;
@@ -12122,7 +14936,7 @@ SWIGINTERN PyObject *_wrap_delete_SprsMat(PyObject *SWIGUNUSEDPARM(self), PyObje
   
   if (!args) SWIG_fail;
   swig_obj[0] = args;
-  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_Eigen__SparseMatrixT_double_Eigen__ColMajor_stag_int_t, SWIG_POINTER_DISOWN |  0 );
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_Eigen__SparseMatrixT_StagReal_Eigen__ColMajor_StagInt_t, SWIG_POINTER_DISOWN |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_SprsMat" "', argument " "1"" of type '" "SprsMat *""'"); 
   }
@@ -12154,18 +14968,18 @@ SWIGINTERN PyObject *_wrap_SprsMat_get_rows(PyObject *SWIGUNUSEDPARM(self), PyOb
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
-  stag_int result;
+  StagInt result;
   
   if (!args) SWIG_fail;
   swig_obj[0] = args;
-  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_Eigen__SparseMatrixT_double_Eigen__ColMajor_stag_int_t, 0 |  0 );
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_Eigen__SparseMatrixT_StagReal_Eigen__ColMajor_StagInt_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SprsMat_get_rows" "', argument " "1"" of type '" "SprsMat *""'"); 
   }
   arg1 = reinterpret_cast< SprsMat * >(argp1);
   {
     try {
-      result = (stag_int)SprsMat_get_rows(arg1);
+      result = SprsMat_get_rows(arg1);
     } catch (std::invalid_argument &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
@@ -12177,7 +14991,10 @@ SWIGINTERN PyObject *_wrap_SprsMat_get_rows(PyObject *SWIGUNUSEDPARM(self), PyOb
       return NULL;
     }
   }
-  resultobj = SWIG_From_long_SS_long(static_cast< long long >(result));
+  {
+    // StagInt typemap (out)
+    resultobj = PyLong_FromLongLong((long long) result);
+  }
   return resultobj;
 fail:
   return NULL;
@@ -12190,18 +15007,18 @@ SWIGINTERN PyObject *_wrap_SprsMat_get_cols(PyObject *SWIGUNUSEDPARM(self), PyOb
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
-  stag_int result;
+  StagInt result;
   
   if (!args) SWIG_fail;
   swig_obj[0] = args;
-  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_Eigen__SparseMatrixT_double_Eigen__ColMajor_stag_int_t, 0 |  0 );
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_Eigen__SparseMatrixT_StagReal_Eigen__ColMajor_StagInt_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SprsMat_get_cols" "', argument " "1"" of type '" "SprsMat *""'"); 
   }
   arg1 = reinterpret_cast< SprsMat * >(argp1);
   {
     try {
-      result = (stag_int)SprsMat_get_cols(arg1);
+      result = SprsMat_get_cols(arg1);
     } catch (std::invalid_argument &e) {
       PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
       return NULL;
@@ -12213,7 +15030,10 @@ SWIGINTERN PyObject *_wrap_SprsMat_get_cols(PyObject *SWIGUNUSEDPARM(self), PyOb
       return NULL;
     }
   }
-  resultobj = SWIG_From_long_SS_long(static_cast< long long >(result));
+  {
+    // StagInt typemap (out)
+    resultobj = PyLong_FromLongLong((long long) result);
+  }
   return resultobj;
 fail:
   return NULL;
@@ -12232,12 +15052,12 @@ SWIGINTERN PyObject *_wrap_SprsMat___add__(PyObject *SWIGUNUSEDPARM(self), PyObj
   SprsMat result;
   
   if (!SWIG_Python_UnpackTuple(args, "SprsMat___add__", 2, 2, swig_obj)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_Eigen__SparseMatrixT_double_Eigen__ColMajor_stag_int_t, 0 |  0 );
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_Eigen__SparseMatrixT_StagReal_Eigen__ColMajor_StagInt_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SprsMat___add__" "', argument " "1"" of type '" "SprsMat *""'"); 
   }
   arg1 = reinterpret_cast< SprsMat * >(argp1);
-  res2 = SWIG_ConvertPtr(swig_obj[1], &argp2,SWIGTYPE_p_Eigen__SparseMatrixT_double_Eigen__ColMajor_stag_int_t, 0 |  0 );
+  res2 = SWIG_ConvertPtr(swig_obj[1], &argp2,SWIGTYPE_p_Eigen__SparseMatrixT_StagReal_Eigen__ColMajor_StagInt_t, 0 |  0 );
   if (!SWIG_IsOK(res2)) {
     SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "SprsMat___add__" "', argument " "2"" of type '" "SprsMat *""'"); 
   }
@@ -12256,7 +15076,7 @@ SWIGINTERN PyObject *_wrap_SprsMat___add__(PyObject *SWIGUNUSEDPARM(self), PyObj
       return NULL;
     }
   }
-  resultobj = SWIG_NewPointerObj((new SprsMat(static_cast< const SprsMat& >(result))), SWIGTYPE_p_Eigen__SparseMatrixT_double_Eigen__ColMajor_stag_int_t, SWIG_POINTER_OWN |  0 );
+  resultobj = SWIG_NewPointerObj((new SprsMat(static_cast< const SprsMat& >(result))), SWIGTYPE_p_Eigen__SparseMatrixT_StagReal_Eigen__ColMajor_StagInt_t, SWIG_POINTER_OWN |  0 );
   return resultobj;
 fail:
   PyErr_Clear();
@@ -12277,12 +15097,12 @@ SWIGINTERN PyObject *_wrap_SprsMat___sub__(PyObject *SWIGUNUSEDPARM(self), PyObj
   SprsMat result;
   
   if (!SWIG_Python_UnpackTuple(args, "SprsMat___sub__", 2, 2, swig_obj)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_Eigen__SparseMatrixT_double_Eigen__ColMajor_stag_int_t, 0 |  0 );
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_Eigen__SparseMatrixT_StagReal_Eigen__ColMajor_StagInt_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SprsMat___sub__" "', argument " "1"" of type '" "SprsMat *""'"); 
   }
   arg1 = reinterpret_cast< SprsMat * >(argp1);
-  res2 = SWIG_ConvertPtr(swig_obj[1], &argp2,SWIGTYPE_p_Eigen__SparseMatrixT_double_Eigen__ColMajor_stag_int_t, 0 |  0 );
+  res2 = SWIG_ConvertPtr(swig_obj[1], &argp2,SWIGTYPE_p_Eigen__SparseMatrixT_StagReal_Eigen__ColMajor_StagInt_t, 0 |  0 );
   if (!SWIG_IsOK(res2)) {
     SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "SprsMat___sub__" "', argument " "2"" of type '" "SprsMat *""'"); 
   }
@@ -12301,7 +15121,7 @@ SWIGINTERN PyObject *_wrap_SprsMat___sub__(PyObject *SWIGUNUSEDPARM(self), PyObj
       return NULL;
     }
   }
-  resultobj = SWIG_NewPointerObj((new SprsMat(static_cast< const SprsMat& >(result))), SWIGTYPE_p_Eigen__SparseMatrixT_double_Eigen__ColMajor_stag_int_t, SWIG_POINTER_OWN |  0 );
+  resultobj = SWIG_NewPointerObj((new SprsMat(static_cast< const SprsMat& >(result))), SWIGTYPE_p_Eigen__SparseMatrixT_StagReal_Eigen__ColMajor_StagInt_t, SWIG_POINTER_OWN |  0 );
   return resultobj;
 fail:
   PyErr_Clear();
@@ -12322,12 +15142,12 @@ SWIGINTERN PyObject *_wrap_SprsMat___mul__(PyObject *SWIGUNUSEDPARM(self), PyObj
   SprsMat result;
   
   if (!SWIG_Python_UnpackTuple(args, "SprsMat___mul__", 2, 2, swig_obj)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_Eigen__SparseMatrixT_double_Eigen__ColMajor_stag_int_t, 0 |  0 );
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_Eigen__SparseMatrixT_StagReal_Eigen__ColMajor_StagInt_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SprsMat___mul__" "', argument " "1"" of type '" "SprsMat *""'"); 
   }
   arg1 = reinterpret_cast< SprsMat * >(argp1);
-  res2 = SWIG_ConvertPtr(swig_obj[1], &argp2,SWIGTYPE_p_Eigen__SparseMatrixT_double_Eigen__ColMajor_stag_int_t, 0 |  0 );
+  res2 = SWIG_ConvertPtr(swig_obj[1], &argp2,SWIGTYPE_p_Eigen__SparseMatrixT_StagReal_Eigen__ColMajor_StagInt_t, 0 |  0 );
   if (!SWIG_IsOK(res2)) {
     SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "SprsMat___mul__" "', argument " "2"" of type '" "SprsMat *""'"); 
   }
@@ -12346,7 +15166,7 @@ SWIGINTERN PyObject *_wrap_SprsMat___mul__(PyObject *SWIGUNUSEDPARM(self), PyObj
       return NULL;
     }
   }
-  resultobj = SWIG_NewPointerObj((new SprsMat(static_cast< const SprsMat& >(result))), SWIGTYPE_p_Eigen__SparseMatrixT_double_Eigen__ColMajor_stag_int_t, SWIG_POINTER_OWN |  0 );
+  resultobj = SWIG_NewPointerObj((new SprsMat(static_cast< const SprsMat& >(result))), SWIGTYPE_p_Eigen__SparseMatrixT_StagReal_Eigen__ColMajor_StagInt_t, SWIG_POINTER_OWN |  0 );
   return resultobj;
 fail:
   PyErr_Clear();
@@ -12367,7 +15187,7 @@ SWIGINTERN PyObject *_wrap_SprsMat___mulfloat__(PyObject *SWIGUNUSEDPARM(self), 
   SprsMat result;
   
   if (!SWIG_Python_UnpackTuple(args, "SprsMat___mulfloat__", 2, 2, swig_obj)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_Eigen__SparseMatrixT_double_Eigen__ColMajor_stag_int_t, 0 |  0 );
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_Eigen__SparseMatrixT_StagReal_Eigen__ColMajor_StagInt_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SprsMat___mulfloat__" "', argument " "1"" of type '" "SprsMat *""'"); 
   }
@@ -12391,7 +15211,7 @@ SWIGINTERN PyObject *_wrap_SprsMat___mulfloat__(PyObject *SWIGUNUSEDPARM(self), 
       return NULL;
     }
   }
-  resultobj = SWIG_NewPointerObj((new SprsMat(static_cast< const SprsMat& >(result))), SWIGTYPE_p_Eigen__SparseMatrixT_double_Eigen__ColMajor_stag_int_t, SWIG_POINTER_OWN |  0 );
+  resultobj = SWIG_NewPointerObj((new SprsMat(static_cast< const SprsMat& >(result))), SWIGTYPE_p_Eigen__SparseMatrixT_StagReal_Eigen__ColMajor_StagInt_t, SWIG_POINTER_OWN |  0 );
   return resultobj;
 fail:
   return NULL;
@@ -12401,25 +15221,26 @@ fail:
 SWIGINTERN PyObject *_wrap_SprsMat___mulint__(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   SprsMat *arg1 = (SprsMat *) 0 ;
-  stag_int arg2 ;
+  StagInt arg2 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-  long long val2 ;
-  int ecode2 = 0 ;
   PyObject *swig_obj[2] ;
   SprsMat result;
   
   if (!SWIG_Python_UnpackTuple(args, "SprsMat___mulint__", 2, 2, swig_obj)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_Eigen__SparseMatrixT_double_Eigen__ColMajor_stag_int_t, 0 |  0 );
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_Eigen__SparseMatrixT_StagReal_Eigen__ColMajor_StagInt_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SprsMat___mulint__" "', argument " "1"" of type '" "SprsMat *""'"); 
   }
   arg1 = reinterpret_cast< SprsMat * >(argp1);
-  ecode2 = SWIG_AsVal_long_SS_long(swig_obj[1], &val2);
-  if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "SprsMat___mulint__" "', argument " "2"" of type '" "stag_int""'");
-  } 
-  arg2 = static_cast< stag_int >(val2);
+  {
+    // StagInt typemap (in)
+    if (!PyLong_Check((PyObject *) swig_obj[1])) {
+      PyErr_SetString(PyExc_TypeError, "Expected an integer.");
+      return NULL;
+    }
+    arg2 = (StagInt) PyLong_AsLong((PyObject*) swig_obj[1]);
+  }
   {
     try {
       result = SprsMat___mulint__(arg1,arg2);
@@ -12434,7 +15255,7 @@ SWIGINTERN PyObject *_wrap_SprsMat___mulint__(PyObject *SWIGUNUSEDPARM(self), Py
       return NULL;
     }
   }
-  resultobj = SWIG_NewPointerObj((new SprsMat(static_cast< const SprsMat& >(result))), SWIGTYPE_p_Eigen__SparseMatrixT_double_Eigen__ColMajor_stag_int_t, SWIG_POINTER_OWN |  0 );
+  resultobj = SWIG_NewPointerObj((new SprsMat(static_cast< const SprsMat& >(result))), SWIGTYPE_p_Eigen__SparseMatrixT_StagReal_Eigen__ColMajor_StagInt_t, SWIG_POINTER_OWN |  0 );
   return resultobj;
 fail:
   return NULL;
@@ -12451,7 +15272,7 @@ SWIGINTERN PyObject *_wrap_SprsMat___neg__(PyObject *SWIGUNUSEDPARM(self), PyObj
   
   if (!args) SWIG_fail;
   swig_obj[0] = args;
-  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_Eigen__SparseMatrixT_double_Eigen__ColMajor_stag_int_t, 0 |  0 );
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_Eigen__SparseMatrixT_StagReal_Eigen__ColMajor_StagInt_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SprsMat___neg__" "', argument " "1"" of type '" "SprsMat *""'"); 
   }
@@ -12470,7 +15291,7 @@ SWIGINTERN PyObject *_wrap_SprsMat___neg__(PyObject *SWIGUNUSEDPARM(self), PyObj
       return NULL;
     }
   }
-  resultobj = SWIG_NewPointerObj((new SprsMat(static_cast< const SprsMat& >(result))), SWIGTYPE_p_Eigen__SparseMatrixT_double_Eigen__ColMajor_stag_int_t, SWIG_POINTER_OWN |  0 );
+  resultobj = SWIG_NewPointerObj((new SprsMat(static_cast< const SprsMat& >(result))), SWIGTYPE_p_Eigen__SparseMatrixT_StagReal_Eigen__ColMajor_StagInt_t, SWIG_POINTER_OWN |  0 );
   return resultobj;
 fail:
   PyErr_Clear();
@@ -12491,7 +15312,7 @@ SWIGINTERN PyObject *_wrap_SprsMat___truedivfloat__(PyObject *SWIGUNUSEDPARM(sel
   SprsMat result;
   
   if (!SWIG_Python_UnpackTuple(args, "SprsMat___truedivfloat__", 2, 2, swig_obj)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_Eigen__SparseMatrixT_double_Eigen__ColMajor_stag_int_t, 0 |  0 );
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_Eigen__SparseMatrixT_StagReal_Eigen__ColMajor_StagInt_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SprsMat___truedivfloat__" "', argument " "1"" of type '" "SprsMat *""'"); 
   }
@@ -12515,7 +15336,7 @@ SWIGINTERN PyObject *_wrap_SprsMat___truedivfloat__(PyObject *SWIGUNUSEDPARM(sel
       return NULL;
     }
   }
-  resultobj = SWIG_NewPointerObj((new SprsMat(static_cast< const SprsMat& >(result))), SWIGTYPE_p_Eigen__SparseMatrixT_double_Eigen__ColMajor_stag_int_t, SWIG_POINTER_OWN |  0 );
+  resultobj = SWIG_NewPointerObj((new SprsMat(static_cast< const SprsMat& >(result))), SWIGTYPE_p_Eigen__SparseMatrixT_StagReal_Eigen__ColMajor_StagInt_t, SWIG_POINTER_OWN |  0 );
   return resultobj;
 fail:
   return NULL;
@@ -12525,25 +15346,26 @@ fail:
 SWIGINTERN PyObject *_wrap_SprsMat___truedivint__(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   SprsMat *arg1 = (SprsMat *) 0 ;
-  stag_int arg2 ;
+  StagInt arg2 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-  long long val2 ;
-  int ecode2 = 0 ;
   PyObject *swig_obj[2] ;
   SprsMat result;
   
   if (!SWIG_Python_UnpackTuple(args, "SprsMat___truedivint__", 2, 2, swig_obj)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_Eigen__SparseMatrixT_double_Eigen__ColMajor_stag_int_t, 0 |  0 );
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_Eigen__SparseMatrixT_StagReal_Eigen__ColMajor_StagInt_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SprsMat___truedivint__" "', argument " "1"" of type '" "SprsMat *""'"); 
   }
   arg1 = reinterpret_cast< SprsMat * >(argp1);
-  ecode2 = SWIG_AsVal_long_SS_long(swig_obj[1], &val2);
-  if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "SprsMat___truedivint__" "', argument " "2"" of type '" "stag_int""'");
-  } 
-  arg2 = static_cast< stag_int >(val2);
+  {
+    // StagInt typemap (in)
+    if (!PyLong_Check((PyObject *) swig_obj[1])) {
+      PyErr_SetString(PyExc_TypeError, "Expected an integer.");
+      return NULL;
+    }
+    arg2 = (StagInt) PyLong_AsLong((PyObject*) swig_obj[1]);
+  }
   {
     try {
       result = SprsMat___truedivint__(arg1,arg2);
@@ -12558,7 +15380,7 @@ SWIGINTERN PyObject *_wrap_SprsMat___truedivint__(PyObject *SWIGUNUSEDPARM(self)
       return NULL;
     }
   }
-  resultobj = SWIG_NewPointerObj((new SprsMat(static_cast< const SprsMat& >(result))), SWIGTYPE_p_Eigen__SparseMatrixT_double_Eigen__ColMajor_stag_int_t, SWIG_POINTER_OWN |  0 );
+  resultobj = SWIG_NewPointerObj((new SprsMat(static_cast< const SprsMat& >(result))), SWIGTYPE_p_Eigen__SparseMatrixT_StagReal_Eigen__ColMajor_StagInt_t, SWIG_POINTER_OWN |  0 );
   return resultobj;
 fail:
   return NULL;
@@ -12575,7 +15397,7 @@ SWIGINTERN PyObject *_wrap_SprsMat___transpose__(PyObject *SWIGUNUSEDPARM(self),
   
   if (!args) SWIG_fail;
   swig_obj[0] = args;
-  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_Eigen__SparseMatrixT_double_Eigen__ColMajor_stag_int_t, 0 |  0 );
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_Eigen__SparseMatrixT_StagReal_Eigen__ColMajor_StagInt_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SprsMat___transpose__" "', argument " "1"" of type '" "SprsMat *""'"); 
   }
@@ -12594,7 +15416,7 @@ SWIGINTERN PyObject *_wrap_SprsMat___transpose__(PyObject *SWIGUNUSEDPARM(self),
       return NULL;
     }
   }
-  resultobj = SWIG_NewPointerObj((new SprsMat(static_cast< const SprsMat& >(result))), SWIGTYPE_p_Eigen__SparseMatrixT_double_Eigen__ColMajor_stag_int_t, SWIG_POINTER_OWN |  0 );
+  resultobj = SWIG_NewPointerObj((new SprsMat(static_cast< const SprsMat& >(result))), SWIGTYPE_p_Eigen__SparseMatrixT_StagReal_Eigen__ColMajor_StagInt_t, SWIG_POINTER_OWN |  0 );
   return resultobj;
 fail:
   return NULL;
@@ -12620,7 +15442,7 @@ SWIGINTERN PyObject *_wrap_new_SprsMat(PyObject *SWIGUNUSEDPARM(self), PyObject 
       return NULL;
     }
   }
-  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_Eigen__SparseMatrixT_double_Eigen__ColMajor_stag_int_t, SWIG_POINTER_NEW |  0 );
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_Eigen__SparseMatrixT_StagReal_Eigen__ColMajor_StagInt_t, SWIG_POINTER_NEW |  0 );
   return resultobj;
 fail:
   return NULL;
@@ -12630,7 +15452,7 @@ fail:
 SWIGINTERN PyObject *SprsMat_swigregister(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *obj;
   if (!SWIG_Python_UnpackTuple(args, "swigregister", 1, 1, &obj)) return NULL;
-  SWIG_TypeNewClientData(SWIGTYPE_p_Eigen__SparseMatrixT_double_Eigen__ColMajor_stag_int_t, SWIG_NewClientData(obj));
+  SWIG_TypeNewClientData(SWIGTYPE_p_Eigen__SparseMatrixT_StagReal_Eigen__ColMajor_StagInt_t, SWIG_NewClientData(obj));
   return SWIG_Py_Void();
 }
 
@@ -12640,21 +15462,21 @@ SWIGINTERN PyObject *SprsMat_swiginit(PyObject *SWIGUNUSEDPARM(self), PyObject *
 
 SWIGINTERN PyObject *_wrap_sprsMatFromVectorsDims(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
-  stag_int arg1 ;
-  stag_int arg2 ;
-  std::vector< stag_int > *arg3 = 0 ;
-  std::vector< stag_int > *arg4 = 0 ;
+  long arg1 ;
+  long arg2 ;
+  std::vector< StagInt > *arg3 = 0 ;
+  std::vector< StagInt > *arg4 = 0 ;
   std::vector< double > *arg5 = 0 ;
-  long long val1 ;
+  long val1 ;
   int ecode1 = 0 ;
-  long long val2 ;
+  long val2 ;
   int ecode2 = 0 ;
   PyArrayObject *array3 = NULL ;
   int is_new_object3 = 0 ;
-  std::vector< long long > temp_vec3 ;
+  std::vector< int64_t > temp_vec3 ;
   PyArrayObject *array4 = NULL ;
   int is_new_object4 = 0 ;
-  std::vector< long long > temp_vec4 ;
+  std::vector< int64_t > temp_vec4 ;
   PyArrayObject *array5 = NULL ;
   int is_new_object5 = 0 ;
   std::vector< double > temp_vec5 ;
@@ -12662,16 +15484,16 @@ SWIGINTERN PyObject *_wrap_sprsMatFromVectorsDims(PyObject *SWIGUNUSEDPARM(self)
   SprsMat result;
   
   if (!SWIG_Python_UnpackTuple(args, "sprsMatFromVectorsDims", 5, 5, swig_obj)) SWIG_fail;
-  ecode1 = SWIG_AsVal_long_SS_long(swig_obj[0], &val1);
+  ecode1 = SWIG_AsVal_long(swig_obj[0], &val1);
   if (!SWIG_IsOK(ecode1)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "sprsMatFromVectorsDims" "', argument " "1"" of type '" "stag_int""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "sprsMatFromVectorsDims" "', argument " "1"" of type '" "long""'");
   } 
-  arg1 = static_cast< stag_int >(val1);
-  ecode2 = SWIG_AsVal_long_SS_long(swig_obj[1], &val2);
+  arg1 = static_cast< long >(val1);
+  ecode2 = SWIG_AsVal_long(swig_obj[1], &val2);
   if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "sprsMatFromVectorsDims" "', argument " "2"" of type '" "stag_int""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "sprsMatFromVectorsDims" "', argument " "2"" of type '" "long""'");
   } 
-  arg2 = static_cast< stag_int >(val2);
+  arg2 = static_cast< long >(val2);
   {
     // Get the number of elements in the numpy array3
     npy_intp size[1] = {
@@ -12680,13 +15502,13 @@ SWIGINTERN PyObject *_wrap_sprsMatFromVectorsDims(PyObject *SWIGUNUSEDPARM(self)
     
     // Check that the dimensions of the array3 are correct
     array3 = obj_to_array_contiguous_allow_conversion(swig_obj[2],
-      NPY_LONGLONG,
+      NPY_INT64,
       &is_new_object3);
     if (!array3 || !require_dimensions(array3, 1) ||
       !require_size(array3, size, 1)) SWIG_fail;
     
     // Get a pointer to the data in the numpy array3
-    long long* data_ptr = (long long*) array_data(array3);
+    int64_t* data_ptr = (int64_t*) array_data(array3);
     
     // Copy the numpy data into the new vector.
     temp_vec3.reserve(size[0]);
@@ -12703,13 +15525,13 @@ SWIGINTERN PyObject *_wrap_sprsMatFromVectorsDims(PyObject *SWIGUNUSEDPARM(self)
     
     // Check that the dimensions of the array4 are correct
     array4 = obj_to_array_contiguous_allow_conversion(swig_obj[3],
-      NPY_LONGLONG,
+      NPY_INT64,
       &is_new_object4);
     if (!array4 || !require_dimensions(array4, 1) ||
       !require_size(array4, size, 1)) SWIG_fail;
     
     // Get a pointer to the data in the numpy array4
-    long long* data_ptr = (long long*) array_data(array4);
+    int64_t* data_ptr = (int64_t*) array_data(array4);
     
     // Copy the numpy data into the new vector.
     temp_vec4.reserve(size[0]);
@@ -12755,7 +15577,7 @@ SWIGINTERN PyObject *_wrap_sprsMatFromVectorsDims(PyObject *SWIGUNUSEDPARM(self)
       return NULL;
     }
   }
-  resultobj = SWIG_NewPointerObj((new SprsMat(static_cast< const SprsMat& >(result))), SWIGTYPE_p_Eigen__SparseMatrixT_double_Eigen__ColMajor_stag_int_t, SWIG_POINTER_OWN |  0 );
+  resultobj = SWIG_NewPointerObj((new SprsMat(static_cast< const SprsMat& >(result))), SWIGTYPE_p_Eigen__SparseMatrixT_StagReal_Eigen__ColMajor_StagInt_t, SWIG_POINTER_OWN |  0 );
   return resultobj;
 fail:
   return NULL;
@@ -12826,6 +15648,8 @@ static PyMethodDef SwigMethods[] = {
 	 { "Graph_average_degree", _wrap_Graph_average_degree, METH_O, NULL},
 	 { "Graph_number_of_vertices", _wrap_Graph_number_of_vertices, METH_O, NULL},
 	 { "Graph_number_of_edges", _wrap_Graph_number_of_edges, METH_O, NULL},
+	 { "Graph_add_edge", _wrap_Graph_add_edge, METH_VARARGS, NULL},
+	 { "Graph_remove_edge", _wrap_Graph_remove_edge, METH_VARARGS, NULL},
 	 { "Graph_has_self_loops", _wrap_Graph_has_self_loops, METH_O, NULL},
 	 { "Graph_is_connected", _wrap_Graph_is_connected, METH_O, NULL},
 	 { "Graph_subgraph", _wrap_Graph_subgraph, METH_VARARGS, NULL},
@@ -12882,6 +15706,8 @@ static PyMethodDef SwigMethods[] = {
 	 { "normalised_mutual_information", _wrap_normalised_mutual_information, METH_VARARGS, NULL},
 	 { "conductance", _wrap_conductance, METH_VARARGS, NULL},
 	 { "symmetric_difference", _wrap_symmetric_difference, METH_VARARGS, NULL},
+	 { "approximate_similarity_graph", _wrap_approximate_similarity_graph, METH_VARARGS, NULL},
+	 { "similarity_graph", _wrap_similarity_graph, METH_VARARGS, NULL},
 	 { "load_edgelist", _wrap_load_edgelist, METH_O, NULL},
 	 { "save_edgelist", _wrap_save_edgelist, METH_VARARGS, NULL},
 	 { "parse_adjacencylist_content_line", _wrap_parse_adjacencylist_content_line, METH_O, NULL},
@@ -12891,6 +15717,8 @@ static PyMethodDef SwigMethods[] = {
 	 { "save_adjacencylist", _wrap_save_adjacencylist, METH_VARARGS, NULL},
 	 { "edgelist_to_adjacencylist", _wrap_edgelist_to_adjacencylist, METH_VARARGS, NULL},
 	 { "adjacencylist_to_edgelist", _wrap_adjacencylist_to_edgelist, METH_VARARGS, NULL},
+	 { "get_global_rng", _wrap_get_global_rng, METH_NOARGS, NULL},
+	 { "create_rng", _wrap_create_rng, METH_NOARGS, NULL},
 	 { "sbm", _wrap_sbm, METH_VARARGS, NULL},
 	 { "general_sbm", _wrap_general_sbm, METH_VARARGS, NULL},
 	 { "general_sbm_edgelist", _wrap_general_sbm_edgelist, METH_VARARGS, NULL},
@@ -12898,10 +15726,55 @@ static PyMethodDef SwigMethods[] = {
 	 { "sbm_gt_labels", _wrap_sbm_gt_labels, METH_VARARGS, NULL},
 	 { "general_sbm_gt_labels", _wrap_general_sbm_gt_labels, METH_O, NULL},
 	 { "compute_eigensystem", _wrap_compute_eigensystem, METH_VARARGS, NULL},
-	 { "compute_eigenvalues", _wrap_compute_eigenvalues, METH_VARARGS, NULL},
 	 { "compute_eigenvectors", _wrap_compute_eigenvectors, METH_VARARGS, NULL},
+	 { "compute_eigenvalues", _wrap_compute_eigenvalues, METH_VARARGS, NULL},
 	 { "power_method", _wrap_power_method, METH_VARARGS, NULL},
 	 { "rayleigh_quotient", _wrap_rayleigh_quotient, METH_VARARGS, NULL},
+	 { "new_DataPoint", _wrap_new_DataPoint, METH_VARARGS, NULL},
+	 { "DataPoint_dimension_set", _wrap_DataPoint_dimension_set, METH_VARARGS, NULL},
+	 { "DataPoint_dimension_get", _wrap_DataPoint_dimension_get, METH_O, NULL},
+	 { "DataPoint_coordinates_set", _wrap_DataPoint_coordinates_set, METH_VARARGS, NULL},
+	 { "DataPoint_coordinates_get", _wrap_DataPoint_coordinates_get, METH_O, NULL},
+	 { "delete_DataPoint", _wrap_delete_DataPoint, METH_O, NULL},
+	 { "DataPoint_swigregister", DataPoint_swigregister, METH_O, NULL},
+	 { "DataPoint_swiginit", DataPoint_swiginit, METH_VARARGS, NULL},
+	 { "load_matrix", _wrap_load_matrix, METH_O, NULL},
+	 { "save_matrix", _wrap_save_matrix, METH_VARARGS, NULL},
+	 { "matrix_to_datapoints", _wrap_matrix_to_datapoints, METH_O, NULL},
+	 { "gaussian_kernel", _wrap_gaussian_kernel, METH_VARARGS, NULL},
+	 { "new_CKNSGaussianKDEHashUnit", _wrap_new_CKNSGaussianKDEHashUnit, METH_VARARGS, NULL},
+	 { "CKNSGaussianKDEHashUnit_query", _wrap_CKNSGaussianKDEHashUnit_query, METH_VARARGS, NULL},
+	 { "delete_CKNSGaussianKDEHashUnit", _wrap_delete_CKNSGaussianKDEHashUnit, METH_O, NULL},
+	 { "CKNSGaussianKDEHashUnit_swigregister", CKNSGaussianKDEHashUnit_swigregister, METH_O, NULL},
+	 { "CKNSGaussianKDEHashUnit_swiginit", CKNSGaussianKDEHashUnit_swiginit, METH_VARARGS, NULL},
+	 { "new_CKNSGaussianKDE", _wrap_new_CKNSGaussianKDE, METH_VARARGS, NULL},
+	 { "CKNSGaussianKDE_query", _wrap_CKNSGaussianKDE_query, METH_VARARGS, NULL},
+	 { "delete_CKNSGaussianKDE", _wrap_delete_CKNSGaussianKDE, METH_O, NULL},
+	 { "CKNSGaussianKDE_swigregister", CKNSGaussianKDE_swigregister, METH_O, NULL},
+	 { "CKNSGaussianKDE_swiginit", CKNSGaussianKDE_swiginit, METH_VARARGS, NULL},
+	 { "new_ExactGaussianKDE", _wrap_new_ExactGaussianKDE, METH_VARARGS, NULL},
+	 { "ExactGaussianKDE_query", _wrap_ExactGaussianKDE_query, METH_VARARGS, NULL},
+	 { "ExactGaussianKDE_sample_neighbors", _wrap_ExactGaussianKDE_sample_neighbors, METH_VARARGS, NULL},
+	 { "delete_ExactGaussianKDE", _wrap_delete_ExactGaussianKDE, METH_O, NULL},
+	 { "ExactGaussianKDE_swigregister", ExactGaussianKDE_swigregister, METH_O, NULL},
+	 { "ExactGaussianKDE_swiginit", ExactGaussianKDE_swiginit, METH_VARARGS, NULL},
+	 { "new_LSHFunction", _wrap_new_LSHFunction, METH_O, NULL},
+	 { "LSHFunction_apply", _wrap_LSHFunction_apply, METH_VARARGS, NULL},
+	 { "LSHFunction_collision_probability", _wrap_LSHFunction_collision_probability, METH_O, NULL},
+	 { "delete_LSHFunction", _wrap_delete_LSHFunction, METH_O, NULL},
+	 { "LSHFunction_swigregister", LSHFunction_swigregister, METH_O, NULL},
+	 { "LSHFunction_swiginit", LSHFunction_swiginit, METH_VARARGS, NULL},
+	 { "new_MultiLSHFunction", _wrap_new_MultiLSHFunction, METH_VARARGS, NULL},
+	 { "MultiLSHFunction_apply", _wrap_MultiLSHFunction_apply, METH_VARARGS, NULL},
+	 { "delete_MultiLSHFunction", _wrap_delete_MultiLSHFunction, METH_O, NULL},
+	 { "MultiLSHFunction_swigregister", MultiLSHFunction_swigregister, METH_O, NULL},
+	 { "MultiLSHFunction_swiginit", MultiLSHFunction_swiginit, METH_VARARGS, NULL},
+	 { "new_E2LSH", _wrap_new_E2LSH, METH_VARARGS, NULL},
+	 { "E2LSH_get_near_neighbors", _wrap_E2LSH_get_near_neighbors, METH_VARARGS, NULL},
+	 { "E2LSH_collision_probability", _wrap_E2LSH_collision_probability, METH_VARARGS, NULL},
+	 { "delete_E2LSH", _wrap_delete_E2LSH, METH_O, NULL},
+	 { "E2LSH_swigregister", E2LSH_swigregister, METH_O, NULL},
+	 { "E2LSH_swiginit", E2LSH_swiginit, METH_VARARGS, NULL},
 	 { "delete_SprsMat", _wrap_delete_SprsMat, METH_O, NULL},
 	 { "SprsMat_get_rows", _wrap_SprsMat_get_rows, METH_O, NULL},
 	 { "SprsMat_get_cols", _wrap_SprsMat_get_cols, METH_O, NULL},
@@ -12934,87 +15807,131 @@ static void *_p_stag__GraphTo_p_stag__LocalGraph(void *x, int *SWIGUNUSEDPARM(ne
 static void *_p_stag__AdjacencyListLocalGraphTo_p_stag__LocalGraph(void *x, int *SWIGUNUSEDPARM(newmemory)) {
     return (void *)((stag::LocalGraph *)  ((stag::AdjacencyListLocalGraph *) x));
 }
-static swig_type_info _swigt__p_Eigen__MatrixXd = {"_p_Eigen__MatrixXd", "Eigen::MatrixXd *|DenseMat *", 0, 0, (void*)0, 0};
-static swig_type_info _swigt__p_Eigen__SparseMatrixT_double_Eigen__ColMajor_stag_int_t = {"_p_Eigen__SparseMatrixT_double_Eigen__ColMajor_stag_int_t", "Eigen::SparseMatrix< double,Eigen::ColMajor,stag_int > *|SprsMat *", 0, 0, (void*)0, 0};
-static swig_type_info _swigt__p_Eigen__TripletT_double_stag_int_t = {"_p_Eigen__TripletT_double_stag_int_t", "EdgeTriplet *|Eigen::Triplet< double,stag_int > *", 0, 0, (void*)0, 0};
-static swig_type_info _swigt__p_Spectra__SparseSymMatProdT_double_Eigen__Upper_Eigen__ColMajor_stag_int_t = {"_p_Spectra__SparseSymMatProdT_double_Eigen__Upper_Eigen__ColMajor_stag_int_t", "stag::SprsMatOp *|Spectra::SparseSymMatProd< double,Eigen::Upper,Eigen::ColMajor,stag_int > *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_Eigen__MatrixT_StagReal_Eigen__Dynamic_Eigen__Dynamic_Eigen__RowMajor_t = {"_p_Eigen__MatrixT_StagReal_Eigen__Dynamic_Eigen__Dynamic_Eigen__RowMajor_t", "Eigen::Matrix< StagReal,Eigen::Dynamic,Eigen::Dynamic,Eigen::RowMajor > *|DenseMat *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_Eigen__SparseMatrixT_StagReal_Eigen__ColMajor_StagInt_t = {"_p_Eigen__SparseMatrixT_StagReal_Eigen__ColMajor_StagInt_t", "Eigen::SparseMatrix< StagReal,Eigen::ColMajor,StagInt > *|SprsMat *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_Eigen__TripletT_StagReal_StagInt_t = {"_p_Eigen__TripletT_StagReal_StagInt_t", "EdgeTriplet *|Eigen::Triplet< StagReal,StagInt > *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_Spectra__SparseSymMatProdT_StagReal_Eigen__Upper_Eigen__ColMajor_StagInt_t = {"_p_Spectra__SparseSymMatProdT_StagReal_Eigen__Upper_Eigen__ColMajor_StagInt_t", "stag::SprsMatProdOp *|Spectra::SparseSymMatProd< StagReal,Eigen::Upper,Eigen::ColMajor,StagInt > *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_Spectra__SparseSymShiftSolveT_StagReal_Eigen__Upper_Eigen__ColMajor_StagInt_t = {"_p_Spectra__SparseSymShiftSolveT_StagReal_Eigen__Upper_Eigen__ColMajor_StagInt_t", "Spectra::SparseSymShiftSolve< StagReal,Eigen::Upper,Eigen::ColMajor,StagInt > *|stag::SprsMatShiftSolveOp *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_char = {"_p_char", "char *", 0, 0, (void*)0, 0};
-static swig_type_info _swigt__p_long_long = {"_p_long_long", "long long *|stag_int *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_double = {"_p_double", "StagReal *|double *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_int64_t = {"_p_int64_t", "int64_t *|StagInt *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_size_t = {"_p_size_t", "StagUInt *|size_t *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_stag__AdjacencyListLocalGraph = {"_p_stag__AdjacencyListLocalGraph", "stag::AdjacencyListLocalGraph *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_stag__CKNSGaussianKDE = {"_p_stag__CKNSGaussianKDE", "stag::CKNSGaussianKDE *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_stag__CKNSGaussianKDEHashUnit = {"_p_stag__CKNSGaussianKDEHashUnit", "stag::CKNSGaussianKDEHashUnit *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_stag__DataPoint = {"_p_stag__DataPoint", "stag::DataPoint *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_stag__E2LSH = {"_p_stag__E2LSH", "stag::E2LSH *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_stag__ExactGaussianKDE = {"_p_stag__ExactGaussianKDE", "stag::ExactGaussianKDE *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_stag__Graph = {"_p_stag__Graph", "stag::Graph *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_stag__LSHFunction = {"_p_stag__LSHFunction", "stag::LSHFunction *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_stag__LocalGraph = {"_p_stag__LocalGraph", "stag::LocalGraph *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_stag__MultiLSHFunction = {"_p_stag__MultiLSHFunction", "stag::MultiLSHFunction *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_stag__edge = {"_p_stag__edge", "stag::edge *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_std__istream = {"_p_std__istream", "std::istream *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_std__mt19937_64 = {"_p_std__mt19937_64", "std::mt19937_64 *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_std__ofstream = {"_p_std__ofstream", "std::ofstream *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_std__string = {"_p_std__string", "std::string *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_std__tupleT_Eigen__VectorXd_Eigen__MatrixXd_t = {"_p_std__tupleT_Eigen__VectorXd_Eigen__MatrixXd_t", "std::tuple< Eigen::VectorXd,Eigen::MatrixXd > *|stag::EigenSystem *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_std__tupleT_SprsMat_SprsMat_t = {"_p_std__tupleT_SprsMat_SprsMat_t", "std::tuple< SprsMat,SprsMat > *", 0, 0, (void*)0, 0};
-static swig_type_info _swigt__p_std__tupleT_stag_int_stag_int_t = {"_p_std__tupleT_stag_int_stag_int_t", "std::tuple< stag_int,stag_int > *", 0, 0, (void*)0, 0};
-static swig_type_info _swigt__p_std__vectorT_double_t = {"_p_std__vectorT_double_t", "std::vector< double > *", 0, 0, (void*)0, 0};
-static swig_type_info _swigt__p_std__vectorT_long_long_t = {"_p_std__vectorT_long_long_t", "std::vector< long long > *|std::vector< stag_int > *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_std__tupleT_StagInt_StagInt_t = {"_p_std__tupleT_StagInt_StagInt_t", "std::tuple< StagInt,StagInt > *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_std__vectorT_double_t = {"_p_std__vectorT_double_t", "std::vector< StagReal > *|std::vector< double > *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_std__vectorT_int64_t_t = {"_p_std__vectorT_int64_t_t", "std::vector< int64_t > *|std::vector< StagInt > *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_std__vectorT_stag__edge_t = {"_p_std__vectorT_stag__edge_t", "std::vector< stag::edge > *", 0, 0, (void*)0, 0};
 
 static swig_type_info *swig_type_initial[] = {
-  &_swigt__p_Eigen__MatrixXd,
-  &_swigt__p_Eigen__SparseMatrixT_double_Eigen__ColMajor_stag_int_t,
-  &_swigt__p_Eigen__TripletT_double_stag_int_t,
-  &_swigt__p_Spectra__SparseSymMatProdT_double_Eigen__Upper_Eigen__ColMajor_stag_int_t,
+  &_swigt__p_Eigen__MatrixT_StagReal_Eigen__Dynamic_Eigen__Dynamic_Eigen__RowMajor_t,
+  &_swigt__p_Eigen__SparseMatrixT_StagReal_Eigen__ColMajor_StagInt_t,
+  &_swigt__p_Eigen__TripletT_StagReal_StagInt_t,
+  &_swigt__p_Spectra__SparseSymMatProdT_StagReal_Eigen__Upper_Eigen__ColMajor_StagInt_t,
+  &_swigt__p_Spectra__SparseSymShiftSolveT_StagReal_Eigen__Upper_Eigen__ColMajor_StagInt_t,
   &_swigt__p_char,
-  &_swigt__p_long_long,
+  &_swigt__p_double,
+  &_swigt__p_int64_t,
+  &_swigt__p_size_t,
   &_swigt__p_stag__AdjacencyListLocalGraph,
+  &_swigt__p_stag__CKNSGaussianKDE,
+  &_swigt__p_stag__CKNSGaussianKDEHashUnit,
+  &_swigt__p_stag__DataPoint,
+  &_swigt__p_stag__E2LSH,
+  &_swigt__p_stag__ExactGaussianKDE,
   &_swigt__p_stag__Graph,
+  &_swigt__p_stag__LSHFunction,
   &_swigt__p_stag__LocalGraph,
+  &_swigt__p_stag__MultiLSHFunction,
   &_swigt__p_stag__edge,
   &_swigt__p_std__istream,
+  &_swigt__p_std__mt19937_64,
   &_swigt__p_std__ofstream,
   &_swigt__p_std__string,
   &_swigt__p_std__tupleT_Eigen__VectorXd_Eigen__MatrixXd_t,
   &_swigt__p_std__tupleT_SprsMat_SprsMat_t,
-  &_swigt__p_std__tupleT_stag_int_stag_int_t,
+  &_swigt__p_std__tupleT_StagInt_StagInt_t,
   &_swigt__p_std__vectorT_double_t,
-  &_swigt__p_std__vectorT_long_long_t,
+  &_swigt__p_std__vectorT_int64_t_t,
   &_swigt__p_std__vectorT_stag__edge_t,
 };
 
-static swig_cast_info _swigc__p_Eigen__MatrixXd[] = {  {&_swigt__p_Eigen__MatrixXd, 0, 0, 0},{0, 0, 0, 0}};
-static swig_cast_info _swigc__p_Eigen__SparseMatrixT_double_Eigen__ColMajor_stag_int_t[] = {  {&_swigt__p_Eigen__SparseMatrixT_double_Eigen__ColMajor_stag_int_t, 0, 0, 0},{0, 0, 0, 0}};
-static swig_cast_info _swigc__p_Eigen__TripletT_double_stag_int_t[] = {  {&_swigt__p_Eigen__TripletT_double_stag_int_t, 0, 0, 0},{0, 0, 0, 0}};
-static swig_cast_info _swigc__p_Spectra__SparseSymMatProdT_double_Eigen__Upper_Eigen__ColMajor_stag_int_t[] = {  {&_swigt__p_Spectra__SparseSymMatProdT_double_Eigen__Upper_Eigen__ColMajor_stag_int_t, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_Eigen__MatrixT_StagReal_Eigen__Dynamic_Eigen__Dynamic_Eigen__RowMajor_t[] = {  {&_swigt__p_Eigen__MatrixT_StagReal_Eigen__Dynamic_Eigen__Dynamic_Eigen__RowMajor_t, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_Eigen__SparseMatrixT_StagReal_Eigen__ColMajor_StagInt_t[] = {  {&_swigt__p_Eigen__SparseMatrixT_StagReal_Eigen__ColMajor_StagInt_t, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_Eigen__TripletT_StagReal_StagInt_t[] = {  {&_swigt__p_Eigen__TripletT_StagReal_StagInt_t, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_Spectra__SparseSymMatProdT_StagReal_Eigen__Upper_Eigen__ColMajor_StagInt_t[] = {  {&_swigt__p_Spectra__SparseSymMatProdT_StagReal_Eigen__Upper_Eigen__ColMajor_StagInt_t, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_Spectra__SparseSymShiftSolveT_StagReal_Eigen__Upper_Eigen__ColMajor_StagInt_t[] = {  {&_swigt__p_Spectra__SparseSymShiftSolveT_StagReal_Eigen__Upper_Eigen__ColMajor_StagInt_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_char[] = {  {&_swigt__p_char, 0, 0, 0},{0, 0, 0, 0}};
-static swig_cast_info _swigc__p_long_long[] = {  {&_swigt__p_long_long, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_double[] = {  {&_swigt__p_double, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_int64_t[] = {  {&_swigt__p_int64_t, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_size_t[] = {  {&_swigt__p_size_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_stag__AdjacencyListLocalGraph[] = {  {&_swigt__p_stag__AdjacencyListLocalGraph, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_stag__CKNSGaussianKDE[] = {  {&_swigt__p_stag__CKNSGaussianKDE, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_stag__CKNSGaussianKDEHashUnit[] = {  {&_swigt__p_stag__CKNSGaussianKDEHashUnit, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_stag__DataPoint[] = {  {&_swigt__p_stag__DataPoint, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_stag__E2LSH[] = {  {&_swigt__p_stag__E2LSH, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_stag__ExactGaussianKDE[] = {  {&_swigt__p_stag__ExactGaussianKDE, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_stag__Graph[] = {  {&_swigt__p_stag__Graph, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_stag__LSHFunction[] = {  {&_swigt__p_stag__LSHFunction, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_stag__LocalGraph[] = {  {&_swigt__p_stag__Graph, _p_stag__GraphTo_p_stag__LocalGraph, 0, 0},  {&_swigt__p_stag__LocalGraph, 0, 0, 0},  {&_swigt__p_stag__AdjacencyListLocalGraph, _p_stag__AdjacencyListLocalGraphTo_p_stag__LocalGraph, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_stag__MultiLSHFunction[] = {  {&_swigt__p_stag__MultiLSHFunction, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_stag__edge[] = {  {&_swigt__p_stag__edge, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_std__istream[] = {  {&_swigt__p_std__istream, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_std__mt19937_64[] = {  {&_swigt__p_std__mt19937_64, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_std__ofstream[] = {  {&_swigt__p_std__ofstream, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_std__string[] = {  {&_swigt__p_std__string, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_std__tupleT_Eigen__VectorXd_Eigen__MatrixXd_t[] = {  {&_swigt__p_std__tupleT_Eigen__VectorXd_Eigen__MatrixXd_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_std__tupleT_SprsMat_SprsMat_t[] = {  {&_swigt__p_std__tupleT_SprsMat_SprsMat_t, 0, 0, 0},{0, 0, 0, 0}};
-static swig_cast_info _swigc__p_std__tupleT_stag_int_stag_int_t[] = {  {&_swigt__p_std__tupleT_stag_int_stag_int_t, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_std__tupleT_StagInt_StagInt_t[] = {  {&_swigt__p_std__tupleT_StagInt_StagInt_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_std__vectorT_double_t[] = {  {&_swigt__p_std__vectorT_double_t, 0, 0, 0},{0, 0, 0, 0}};
-static swig_cast_info _swigc__p_std__vectorT_long_long_t[] = {  {&_swigt__p_std__vectorT_long_long_t, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_std__vectorT_int64_t_t[] = {  {&_swigt__p_std__vectorT_int64_t_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_std__vectorT_stag__edge_t[] = {  {&_swigt__p_std__vectorT_stag__edge_t, 0, 0, 0},{0, 0, 0, 0}};
 
 static swig_cast_info *swig_cast_initial[] = {
-  _swigc__p_Eigen__MatrixXd,
-  _swigc__p_Eigen__SparseMatrixT_double_Eigen__ColMajor_stag_int_t,
-  _swigc__p_Eigen__TripletT_double_stag_int_t,
-  _swigc__p_Spectra__SparseSymMatProdT_double_Eigen__Upper_Eigen__ColMajor_stag_int_t,
+  _swigc__p_Eigen__MatrixT_StagReal_Eigen__Dynamic_Eigen__Dynamic_Eigen__RowMajor_t,
+  _swigc__p_Eigen__SparseMatrixT_StagReal_Eigen__ColMajor_StagInt_t,
+  _swigc__p_Eigen__TripletT_StagReal_StagInt_t,
+  _swigc__p_Spectra__SparseSymMatProdT_StagReal_Eigen__Upper_Eigen__ColMajor_StagInt_t,
+  _swigc__p_Spectra__SparseSymShiftSolveT_StagReal_Eigen__Upper_Eigen__ColMajor_StagInt_t,
   _swigc__p_char,
-  _swigc__p_long_long,
+  _swigc__p_double,
+  _swigc__p_int64_t,
+  _swigc__p_size_t,
   _swigc__p_stag__AdjacencyListLocalGraph,
+  _swigc__p_stag__CKNSGaussianKDE,
+  _swigc__p_stag__CKNSGaussianKDEHashUnit,
+  _swigc__p_stag__DataPoint,
+  _swigc__p_stag__E2LSH,
+  _swigc__p_stag__ExactGaussianKDE,
   _swigc__p_stag__Graph,
+  _swigc__p_stag__LSHFunction,
   _swigc__p_stag__LocalGraph,
+  _swigc__p_stag__MultiLSHFunction,
   _swigc__p_stag__edge,
   _swigc__p_std__istream,
+  _swigc__p_std__mt19937_64,
   _swigc__p_std__ofstream,
   _swigc__p_std__string,
   _swigc__p_std__tupleT_Eigen__VectorXd_Eigen__MatrixXd_t,
   _swigc__p_std__tupleT_SprsMat_SprsMat_t,
-  _swigc__p_std__tupleT_stag_int_stag_int_t,
+  _swigc__p_std__tupleT_StagInt_StagInt_t,
   _swigc__p_std__vectorT_double_t,
-  _swigc__p_std__vectorT_long_long_t,
+  _swigc__p_std__vectorT_int64_t_t,
   _swigc__p_std__vectorT_stag__edge_t,
 };
 
@@ -13771,6 +16688,12 @@ SWIG_init(void) {
   SWIG_addvarlink(globals, "VERSION_MAJOR", Swig_var_VERSION_MAJOR_get, Swig_var_VERSION_MAJOR_set);
   SWIG_addvarlink(globals, "VERSION_MINOR", Swig_var_VERSION_MINOR_get, Swig_var_VERSION_MINOR_set);
   SWIG_addvarlink(globals, "VERSION_PATCH", Swig_var_VERSION_PATCH_get, Swig_var_VERSION_PATCH_set);
+  SWIG_Python_SetConstant(d, "Largest",SWIG_From_int(static_cast< int >(stag::Largest)));
+  SWIG_Python_SetConstant(d, "Smallest",SWIG_From_int(static_cast< int >(stag::Smallest)));
+  SWIG_Python_SetConstant(d, "Adjacency",SWIG_From_int(static_cast< int >(stag::Adjacency)));
+  SWIG_Python_SetConstant(d, "Laplacian",SWIG_From_int(static_cast< int >(stag::Laplacian)));
+  SWIG_Python_SetConstant(d, "NormalisedLaplacian",SWIG_From_int(static_cast< int >(stag::NormalisedLaplacian)));
+  SWIG_Python_SetConstant(d, "LSH_PARAMETER_W",SWIG_From_double(static_cast< double >(4.0)));
   SWIG_Python_SetConstant(d, "EPSILON",SWIG_From_double(static_cast< double >(0.0000000001)));
   SWIG_Python_SetConstant(d, "VERSION",SWIG_FromCharPtr("1.2.1"));
 #if PY_VERSION_HEX >= 0x03000000

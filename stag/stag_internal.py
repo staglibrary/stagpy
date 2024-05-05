@@ -168,7 +168,6 @@ class TupleEigensystem(object):
 # Register TupleEigensystem in _stag_internal:
 _stag_internal.TupleEigensystem_swigregister(TupleEigensystem)
 
-EPSILON = _stag_internal.EPSILON
 class edge(object):
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
     __repr__ = _swig_repr
@@ -269,6 +268,12 @@ class Graph(LocalGraph):
 
     def number_of_edges(self):
         return _stag_internal.Graph_number_of_edges(self)
+
+    def add_edge(self, i, j, w):
+        return _stag_internal.Graph_add_edge(self, i, j, w)
+
+    def remove_edge(self, i, j):
+        return _stag_internal.Graph_remove_edge(self, i, j)
 
     def has_self_loops(self):
         return _stag_internal.Graph_has_self_loops(self)
@@ -433,6 +438,12 @@ def conductance(graph, cluster):
 def symmetric_difference(S, T):
     return _stag_internal.symmetric_difference(S, T)
 
+def approximate_similarity_graph(data, a):
+    return _stag_internal.approximate_similarity_graph(data, a)
+
+def similarity_graph(data, a):
+    return _stag_internal.similarity_graph(data, a)
+
 def load_edgelist(filename):
     return _stag_internal.load_edgelist(filename)
 
@@ -460,6 +471,12 @@ def edgelist_to_adjacencylist(edgelist_fname, adjacencylist_fname):
 def adjacencylist_to_edgelist(adjacencylist_fname, edgelist_fname):
     return _stag_internal.adjacencylist_to_edgelist(adjacencylist_fname, edgelist_fname)
 
+def get_global_rng():
+    return _stag_internal.get_global_rng()
+
+def create_rng():
+    return _stag_internal.create_rng()
+
 def sbm(*args):
     return _stag_internal.sbm(*args)
 
@@ -477,21 +494,154 @@ def sbm_gt_labels(n, k):
 
 def general_sbm_gt_labels(cluster_sizes):
     return _stag_internal.general_sbm_gt_labels(cluster_sizes)
+Largest = _stag_internal.Largest
+Smallest = _stag_internal.Smallest
+Adjacency = _stag_internal.Adjacency
+Laplacian = _stag_internal.Laplacian
+NormalisedLaplacian = _stag_internal.NormalisedLaplacian
 
-def compute_eigensystem(*args):
-    return _stag_internal.compute_eigensystem(*args)
+def compute_eigensystem(g, mat, num_eigs, which):
+    return _stag_internal.compute_eigensystem(g, mat, num_eigs, which)
 
-def compute_eigenvalues(*args):
-    return _stag_internal.compute_eigenvalues(*args)
+def compute_eigenvectors(g, mat, num_eigs, which):
+    return _stag_internal.compute_eigenvectors(g, mat, num_eigs, which)
 
-def compute_eigenvectors(*args):
-    return _stag_internal.compute_eigenvectors(*args)
+def compute_eigenvalues(g, mat, num_eigs, which):
+    return _stag_internal.compute_eigenvalues(g, mat, num_eigs, which)
 
 def power_method(*args):
     return _stag_internal.power_method(*args)
 
 def rayleigh_quotient(mat, vec):
     return _stag_internal.rayleigh_quotient(mat, vec)
+class DataPoint(object):
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
+    __repr__ = _swig_repr
+
+    def __init__(self, *args):
+        _stag_internal.DataPoint_swiginit(self, _stag_internal.new_DataPoint(*args))
+    dimension = property(_stag_internal.DataPoint_dimension_get, _stag_internal.DataPoint_dimension_set)
+    coordinates = property(_stag_internal.DataPoint_coordinates_get, _stag_internal.DataPoint_coordinates_set)
+    __swig_destroy__ = _stag_internal.delete_DataPoint
+
+# Register DataPoint in _stag_internal:
+_stag_internal.DataPoint_swigregister(DataPoint)
+
+
+def load_matrix(filename):
+    return _stag_internal.load_matrix(filename)
+
+def save_matrix(data, filename):
+    return _stag_internal.save_matrix(data, filename)
+
+def matrix_to_datapoints(data):
+    return _stag_internal.matrix_to_datapoints(data)
+
+def gaussian_kernel(*args):
+    return _stag_internal.gaussian_kernel(*args)
+class CKNSGaussianKDEHashUnit(object):
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
+    __repr__ = _swig_repr
+
+    def __init__(self, a, data, log_nmu, j, K2_constant, prob_offset):
+        _stag_internal.CKNSGaussianKDEHashUnit_swiginit(self, _stag_internal.new_CKNSGaussianKDEHashUnit(a, data, log_nmu, j, K2_constant, prob_offset))
+
+    def query(self, q):
+        return _stag_internal.CKNSGaussianKDEHashUnit_query(self, q)
+    __swig_destroy__ = _stag_internal.delete_CKNSGaussianKDEHashUnit
+
+# Register CKNSGaussianKDEHashUnit in _stag_internal:
+_stag_internal.CKNSGaussianKDEHashUnit_swigregister(CKNSGaussianKDEHashUnit)
+
+class CKNSGaussianKDE(object):
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
+    __repr__ = _swig_repr
+
+    def __init__(self, *args):
+        _stag_internal.CKNSGaussianKDE_swiginit(self, _stag_internal.new_CKNSGaussianKDE(*args))
+
+    def query(self, *args):
+        return _stag_internal.CKNSGaussianKDE_query(self, *args)
+    __swig_destroy__ = _stag_internal.delete_CKNSGaussianKDE
+
+# Register CKNSGaussianKDE in _stag_internal:
+_stag_internal.CKNSGaussianKDE_swigregister(CKNSGaussianKDE)
+
+class ExactGaussianKDE(object):
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
+    __repr__ = _swig_repr
+
+    def __init__(self, *args):
+        _stag_internal.ExactGaussianKDE_swiginit(self, _stag_internal.new_ExactGaussianKDE(*args))
+
+    def query(self, *args):
+        return _stag_internal.ExactGaussianKDE_query(self, *args)
+
+    def sample_neighbors(self, q, degree, rs):
+        return _stag_internal.ExactGaussianKDE_sample_neighbors(self, q, degree, rs)
+    __swig_destroy__ = _stag_internal.delete_ExactGaussianKDE
+
+# Register ExactGaussianKDE in _stag_internal:
+_stag_internal.ExactGaussianKDE_swigregister(ExactGaussianKDE)
+
+LSH_PARAMETER_W = _stag_internal.LSH_PARAMETER_W
+class LSHFunction(object):
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
+    __repr__ = _swig_repr
+
+    def __init__(self, dimension):
+        _stag_internal.LSHFunction_swiginit(self, _stag_internal.new_LSHFunction(dimension))
+
+    def apply(self, point):
+        return _stag_internal.LSHFunction_apply(self, point)
+
+    @staticmethod
+    def collision_probability(distance):
+        return _stag_internal.LSHFunction_collision_probability(distance)
+    __swig_destroy__ = _stag_internal.delete_LSHFunction
+
+# Register LSHFunction in _stag_internal:
+_stag_internal.LSHFunction_swigregister(LSHFunction)
+
+def LSHFunction_collision_probability(distance):
+    return _stag_internal.LSHFunction_collision_probability(distance)
+
+class MultiLSHFunction(object):
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
+    __repr__ = _swig_repr
+
+    def __init__(self, dimension, num_functions):
+        _stag_internal.MultiLSHFunction_swiginit(self, _stag_internal.new_MultiLSHFunction(dimension, num_functions))
+
+    def apply(self, point):
+        return _stag_internal.MultiLSHFunction_apply(self, point)
+    __swig_destroy__ = _stag_internal.delete_MultiLSHFunction
+
+# Register MultiLSHFunction in _stag_internal:
+_stag_internal.MultiLSHFunction_swigregister(MultiLSHFunction)
+
+class E2LSH(object):
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
+    __repr__ = _swig_repr
+
+    def __init__(self, *args):
+        _stag_internal.E2LSH_swiginit(self, _stag_internal.new_E2LSH(*args))
+
+    def get_near_neighbors(self, query):
+        return _stag_internal.E2LSH_get_near_neighbors(self, query)
+
+    @staticmethod
+    def collision_probability(*args):
+        return _stag_internal.E2LSH_collision_probability(*args)
+    __swig_destroy__ = _stag_internal.delete_E2LSH
+
+# Register E2LSH in _stag_internal:
+_stag_internal.E2LSH_swigregister(E2LSH)
+
+def E2LSH_collision_probability(*args):
+    return _stag_internal.E2LSH_collision_probability(*args)
+
+EPSILON = _stag_internal.EPSILON
 class SprsMat(object):
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
     __repr__ = _swig_repr

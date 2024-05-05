@@ -106,6 +106,28 @@ def test_approximate_pagerank_no_push():
     np.testing.assert_almost_equal(r.to_dense().transpose().tolist()[0], expected_r)
 
 
+def test_approximate_pagerank_zero_degree():
+    """See STAG C++ Issue 128."""
+    # Test the behaviour of the approximate pagerank method when the seed
+    # vertex has degree 0.
+    mat = scipy.sparse.csc_matrix([[0, 0, 0, 0],
+                                   [0, 0, 1, 1],
+                                   [0, 1, 0, 1],
+                                   [0, 1, 1, 0]])
+    graph = stag.graph.Graph(mat)
+
+    # Construct seed matrix.
+    s = scipy.sparse.lil_matrix((1, 1))
+    s[0, 0] = 1
+
+    # Run the personalised pagerank and check that we get the right result
+    p, r = stag.cluster.approximate_pagerank(graph, s.tocsc(), 1./3, 1./2)
+    expected_p = [0]
+    expected_r = [1]
+    np.testing.assert_almost_equal(p.to_dense().transpose().tolist()[0], expected_p)
+    np.testing.assert_almost_equal(r.to_dense().transpose().tolist()[0], expected_r)
+
+
 def test_sweep_set():
     # Construct a simple graph to test with
     graph = stag.graph.barbell_graph(4)

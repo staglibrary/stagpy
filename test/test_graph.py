@@ -440,3 +440,14 @@ def test_scalar_multiplication():
                                              [2, 0, 2, 0]])
     mat_diff = g3.adjacency().to_scipy() - expected_adj_mat
     assert (np.all(mat_diff.todense() == pytest.approx(0)))
+
+
+def test_invalid_matrix_initialisation():
+    """See STAG C++ Issue 43."""
+    # Try creating a bad graph
+    with pytest.raises(AttributeError):
+        bad_mat = sp.sparse.csc_matrix([[0, -1, 0, 1],
+                                        [-1, 0, 1, 0],
+                                        [0, 1, 0, 1],
+                                        [1, 0, 1, 0]])
+        g = stag.graph.Graph(bad_mat)

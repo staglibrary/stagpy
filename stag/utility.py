@@ -49,9 +49,9 @@ class SprsMat(object):
         self.scipy_mat = None
 
         if issubclass(type(matrix), scipy.sparse.spmatrix):
-            self.scipy_mat = matrix.tocsc().astype(np.int64)
+            self.scipy_mat = matrix.tocsc().astype(np.double)
         if isinstance(matrix, List):
-            self.scipy_mat = scipy.sparse.csc_matrix(matrix, dtype=np.int64)
+            self.scipy_mat = scipy.sparse.csc_matrix(matrix, dtype=np.double)
 
         if isinstance(matrix, stag_internal.SprsMat):
             self.internal_sprsmat = matrix

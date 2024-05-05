@@ -531,6 +531,27 @@ class Graph(LocalGraph):
         """
         return self.internal_graph.number_of_edges()
 
+    def add_edge(self, i: int, j: int, w: float):
+        """
+        Add an edge to the graph.
+
+        The edge goes from node \f$i\f$ to node \f$j\f$, and is added with
+        weight \f$w\f$. If there is already an edge from \f$i\f$ to \f$j\f$,
+        then \f$w\f$ is added to its weight.
+
+        If either of \f$i\f$ of \f$j\f$ are larger than the number of nodes
+        in the graph, the graph is resized to have enough nodes.
+        """
+        self.internal_graph.add_edge(i, j, w)
+
+    def remove_edge(self, i: int, j: int):
+        """
+        Remove an edge from the graph.
+
+        Remove any edge between nodes \f$i\f$ and \f$j\f$.
+        """
+        self.internal_graph.remove_edge(i, j)
+
     def has_self_loops(self) -> bool:
         """Returns a boolean indicating whether this graph contains self loops."""
         return self.internal_graph.has_self_loops()

@@ -451,3 +451,87 @@ def test_invalid_matrix_initialisation():
                                         [0, 1, 0, 1],
                                         [1, 0, 1, 0]])
         g = stag.graph.Graph(bad_mat)
+
+
+def test_add_edge():
+    # Create a graph
+    mat = sp.sparse.csc_matrix([[5.3333, -2, -3.3333, 0],
+                                [-2, 8, -6, 0],
+                                [-3.3333, -6, 10.3333, -1],
+                                [0, 0, -1, 1]])
+    g = stag.graph.Graph(mat)
+
+    # Add an edge
+    g.add_edge(1, 3, 1.5)
+
+    # Check that the graph looks as we expect
+    expected_adj_mat = sp.sparse.csc_matrix([[0, 2, 3.3333, 0],
+                                             [2, 0, 6, 1.5],
+                                             [3.3333, 6, 0, 1],
+                                             [0, 1.5, 1, 0]])
+    mat_diff = g.adjacency().to_scipy() - expected_adj_mat
+    assert (np.all(mat_diff.todense() == pytest.approx(0)))
+
+
+def test_increase_weight():
+    # Create a graph
+    mat = sp.sparse.csc_matrix([[5.3333, -2, -3.3333, 0],
+                                [-2, 8, -6, 0],
+                                [-3.3333, -6, 10.3333, -1],
+                                [0, 0, -1, 1]])
+    g = stag.graph.Graph(mat)
+
+    # Add an edge
+    g.add_edge(0, 1, 0.5)
+
+    # Check that the graph looks as we expect
+    expected_adj_mat = sp.sparse.csc_matrix([[0, 2.5, 3.3333, 0],
+                                             [2.5, 0, 6, 0],
+                                             [3.3333, 6, 0, 1],
+                                             [0, 0, 1, 0]])
+    mat_diff = g.adjacency().to_scipy() - expected_adj_mat
+    assert (np.all(mat_diff.todense() == pytest.approx(0)))
+
+
+def test_remove_edge():
+    # Create a graph
+    mat = sp.sparse.csc_matrix([[5.3333, -2, -3.3333, 0],
+                                [-2, 8, -6, 0],
+                                [-3.3333, -6, 10.3333, -1],
+                                [0, 0, -1, 1]])
+    g = stag.graph.Graph(mat)
+
+    # Remove an edge
+    g.remove_edge(0, 2)
+
+    # Check that the graph looks as we expect
+    expected_adj_mat = sp.sparse.csc_matrix([[0, 2, 0, 0],
+                                             [2, 0, 6, 0],
+                                             [0, 6, 0, 1],
+                                             [0, 0, 1, 0]])
+    mat_diff = g.adjacency().to_scipy() - expected_adj_mat
+    assert (np.all(mat_diff.todense() == pytest.approx(0)))
+
+
+def test_add_vertices():
+    # Create a graph
+    mat = sp.sparse.csc_matrix([[5.3333, -2, -3.3333, 0],
+                                [-2, 8, -6, 0],
+                                [-3.3333, -6, 10.3333, -1],
+                                [0, 0, -1, 1]])
+    g = stag.graph.Graph(mat)
+    assert(g.number_of_vertices() == 4)
+
+    # Add an edge which adds two vertices
+    g.add_edge(1, 5, 1.5)
+    assert(g.number_of_vertices() == 6)
+
+    # Check that the graph looks as we expect
+    expected_adj_mat = sp.sparse.csc_matrix([[0, 2, 3.3333, 0, 0, 0],
+                                             [2, 0, 6, 0, 0, 1.5],
+                                             [3.3333, 6, 0, 1, 0, 0],
+                                             [0, 0, 1, 0, 0, 0],
+                                             [0, 0, 0, 0, 0, 0],
+                                             [0, 1.5, 0, 0, 0, 0]])
+    mat_diff = g.adjacency().to_scipy() - expected_adj_mat
+    assert (np.all(mat_diff.todense() == pytest.approx(0)))

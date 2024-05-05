@@ -48,14 +48,14 @@ class SprsMat(object):
         ##
         self.scipy_mat = None
 
-        assert(issubclass(type(matrix), scipy.sparse.spmatrix) or
-               isinstance(matrix, List) or
-               isinstance(matrix, stag_internal.SprsMat) or
-               issubclass(type(matrix), scipy.sparse.sparray))
-
-        if issubclass(type(matrix), scipy.sparse.sparray):
-            # Handle the sparse array format
-            matrix = scipy.sparse.csc_matrix(matrix)
+        try:
+            if issubclass(type(matrix), scipy.sparse.sparray):
+                # Handle the sparse array format
+                matrix = scipy.sparse.csc_matrix(matrix)
+        except AttributeError:
+            # The sparray attribute could not be found: we are using an
+            # older version of scipy. We can ignore this error.
+            pass
         if issubclass(type(matrix), scipy.sparse.spmatrix):
             self.scipy_mat = matrix.tocsc().astype(np.double)
         if isinstance(matrix, List):

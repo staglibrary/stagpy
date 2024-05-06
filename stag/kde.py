@@ -36,6 +36,7 @@ This module provides the stag::CKNSGaussianKDE data structure which takes
 KDE estimates in time \f$O(\epsilon^{-2} n^{0.25})\f$ for each query.
 """
 import numpy as np
+import math
 from typing import Union, List
 
 import stag.data
@@ -88,3 +89,147 @@ def gaussian_kernel_dist(a: float, c: float) -> float:
     """
     return stag_internal.gaussian_kernel(a, c)
 
+class CKNSGaussianKDE(object):
+    r"""
+    \brief A CKNS Gaussian KDE data structure.
+
+    This data structure implements the CKNS algorithm for kernel density
+    estimation. Given data \f$x_1, \ldots, x_n \in \mathbb{R}^d\f$, in matrix
+    format, this data structure will preprocess the data in
+    \f$O(\epsilon^{-2} n^{1.25})\f$ time, such that for any query point,
+    a \f$(1 + \epsilon)\f$-approximate kernel density estimate can be returned
+    in \f$O(\epsilon^{-2} n^{0.25})\f$ time.
+
+    \par References
+    Charikar, Moses, et al. "Kernel density estimation through density
+    constrained near neighbor search." 2020 IEEE 61st Annual Symposium on
+    Foundations of Computer Science (FOCS). IEEE, 2020.
+    """
+
+    def __init__(self, data: stag.utility.DenseMat, a: float,
+                 eps: float = 0.5,
+                 min_mu: float = None,
+                 k1: int = None,
+                 k2_constant: float = None,
+                 sampling_offset: int = 0):
+        r"""
+        Initialise a new KDE data structure with the given dataset.
+
+        Data should be a stag.utility.DenseMat matrix \f$X \in \mathbb{R}^{n \times d}\f$
+        where each row represents a data point.
+
+        The \f$\epsilon\f$ parameter is used to control the error guarantee of the
+        CKNS data structure. A lower value of \f$\epsilon\f$ will give a more accurate
+        estimate, at the cost of a higher processing time.
+        The data structure should produce estimates which are within a
+        \f$(1 \pm \epsilon)\f$ factor of the true kernel density.
+
+        The initialisation time complexity of the data structure is
+        \f$O(\epsilon^{-2} n^{1.25} \log^2(n))\f$ and the query time for each
+        query point is \f$(O(\epsilon^{-2} n^{0.25} \log^2(n))\f$.
+
+        Usually, the data structure can be initialised only the dataset, and the
+        parameter a.
+        If more fine-grained control is needed, the eps and min_mu parameters
+        offer a trade-off between running time and accuracy.
+
+        For those familiar with the inner workings of the CKNS algorithm, the
+        k1, k2_constant, and sampling_offset optional parameters offer even more
+        fine-grained control over the performance of the algorithm.
+
+        @param data the \f$(n \times d)\f$ matrix containing the dataset.
+        @param a the parameter \f$a\f$ of the Gaussian kernel function.
+        @param eps (optional) the error parameter \f$\epsilon\f$ of the KDE data
+                   structure. Default is 0.5.
+        @param min_mu (optional) the minimum kernel density value of any query
+                      point. A smaller number will give longer preprocessing and
+                      query time complexity. If a query point has a kernel density
+                      smaller than this value, then the data structure may not
+                      return the correct result.
+                      Default is 1 / n.
+        @param k1 (optional) the number of copies of the data structure to create in parallel.
+                  This parameter controls the variance of the estimator returned
+                  by the algorithm. Default is \f$\epsilon^{-2} \cdot \log(n)\f$.
+        @param k2_constant (optional) controls the collision probability of each
+                           of the E2LSH hash tables used within the data structure.
+                           A higher value will give more accurate estimates at the cost of
+                           higher memory and time complexity. It is usually set to \f$0.1 \log(n)\f$.
+        @param sampling_offset (optional) the CKNS algorithm samples the dataset with
+                               various sampling probabilities. Setting a sampling offset
+                               of \f$k\f$ will further subsample the data by a factor
+                               of \f$1/2^k\f$. This will speed up the algorithm at the cost
+                               of some accuracy. It is usually set to \f$0\f$.
+        """
+        n = data.internal_densemat.get_rows()
+        if min_mu is None:
+            min_mu = 1 / data.internal_densemat.get_rows()
+        if k1 is None:
+            k1 = int(math.log(n) * 1 / (eps * eps))
+        if k2_constant is None:
+            k2_constant = 0.1 * math.log(n)
+        self.internal_ckns = stag_internal.CKNSGaussianKDE(
+            data.internal_densemat, a, min_mu, k1, k2_constant, sampling_offset)
+
+    def query(self, q: Union[stag.utility.DenseMat, stag.data.DataPoint]) -> Union[float, np.ndarray]:
+        r"""
+        Calculate the KDE estimate for the given query points.
+
+        The parameter q can be either a stag.data.DataPoint object to query
+        one data point, or a stag.utility.DenseMat matrix with the query points
+        as rows in order to query many data points.
+
+        For querying many data points, passing the queries as a DenseMat will
+        be more efficient.
+
+        @param q the query data point(s)
+        @return the KDE estimate(s) for the given query point(s)
+        """
+        if isinstance(q, stag.data.DataPoint):
+            return self.internal_ckns.query(q.internal_datapoint)
+        else:
+            return self.internal_ckns.query(q.internal_densemat)
+
+
+class ExactGaussianKDE(object):
+    r"""
+    \brief A data structure for computing the exact Gauussian KDE.
+
+    This data structure uses a brute-force algorithm to compute the kernel
+    density of each query point.
+
+    The time complexity of initialisation with \f$n\f$ data points is \f$O(n)\f$.
+    The query time complexity is \f$O(m n d)\f$, where \f$m\f$ is the number
+    of query points, and \f$d\f$ is the dimensionality of the data.
+    """
+
+    def __init__(self, data: stag.utility.DenseMat, a: float):
+        r"""
+        Initialise the data structure with the given dataset and Gaussian kernel
+        parameter \f$a\f$.
+
+        The initialisation time for this data structure is \f$O(1)\f$.
+
+        @param data
+        @param a
+        """
+        self.internal_kde = stag_internal.ExactGaussianKDE(data.internal_densemat,
+                                                           a)
+
+    def query(self, q: Union[stag.utility.DenseMat, stag.data.DataPoint]) -> Union[float, np.ndarray]:
+        r"""
+        Calculate the exact kernel density estimates for the given query points.
+
+        The parameter q can be either a stag.data.DataPoint object to query
+        one data point, or a stag.utility.DenseMat matrix with the query points
+        as rows in order to query many data points.
+
+        For querying many data points, passing the queries as a DenseMat will
+        be more efficient.
+
+        @param q the query data point(s)
+        @return the kernel densities for the given query point(s)
+        """
+        if isinstance(q, stag.data.DataPoint):
+            return self.internal_kde.query(q.internal_datapoint)
+        else:
+            return self.internal_kde.query(q.internal_densemat)

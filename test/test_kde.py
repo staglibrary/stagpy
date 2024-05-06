@@ -32,3 +32,25 @@ def test_gaussian_kernel_point():
     true_value = stag.kde.gaussian_kernel(a, dp1, dp2)
     assert(true_value == pytest.approx(expected_value, 0.01))
 
+def test_ckns_two_moons():
+    # Load the two moons dataset
+    filename = "data/moons.txt"
+    data = stag.data.load_matrix(filename)
+
+    # Create a CKINS KDE estimator
+    a = 20
+    eps = 0.5
+    ckns_kde = stag.kde.CKNSGaussianKDE(data, a, eps=eps)
+
+    # Create an exact kde
+    exact_kde = stag.kde.ExactGaussianKDE(data, a)
+
+    # Check that the estimates are accurate
+    exact_densities = exact_kde.query(data)
+    approx_densitites = ckns_kde.query(data)
+
+    total_error = 0
+    for i in range(len(exact_densities)):
+        total_error += abs(exact_densities[i] - approx_densitites[i]) / exact_densities[i]
+    avg_error = total_error / len(exact_densities)
+    assert(avg_error <= 0.5 * eps)

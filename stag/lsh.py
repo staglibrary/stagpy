@@ -32,7 +32,7 @@ class LSHFunction(object):
     \f]
 
     where \f$f(\cdot)\f$ is the probability density function of the Gaussian
-    distribution. The LSHFunction.collision_probability function
+    distribution. The stag.lsh.LSHFunction.collision_probability function
     computes this value.
 
     Typical STAG users will use the E2LSH hash table rather than these
@@ -67,5 +67,28 @@ class LSHFunction(object):
 
     @staticmethod
     def collision_probability(distance: float) -> float:
+        r"""
+        For two points at a given distance \f$c\f$, compute the probability that
+        they will collide in a random Euclidean LSH function.
+
+        This probability is given by
+
+        \f[
+          p(c) = \int_0^4 \frac{1}{c} f\left(\frac{t}{c}\right)\left(1 - \frac{t}{4}\right) \mathrm{dt},
+        \f]
+
+        where \f$f(\cdot)\f$ is the probability density function of the Gaussian
+        distribution.
+        This is equivalent to
+
+        \f[
+          p(c)=-\frac{1}{2\sqrt{2\pi}}\left( c e^{-\frac{8}{c^2}} \right) \left( e^{\frac{8}{c^2}} -1 \right) + \mathrm{erf}\left(\frac{2\sqrt{2}}{c}\right),
+        \f]
+
+        where \f$\mathrm{erf}(\cdot)\f$ is the [error function](https://en.wikipedia.org/wiki/Error_function).
+
+        @param distance the distance \f$c\f$.
+        @return the collision probability of two points at distance \f$c\f$.
+        """
         return stag_internal.LSHFunction.collision_probability(distance)
 

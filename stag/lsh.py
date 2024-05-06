@@ -1,4 +1,4 @@
-"""
+r"""
 Implementation of the Euclidean locality-sensitive hashing algorithm.
 
 Locality-sensitive hashing is a primitive used for near-neighbour search.

@@ -103,3 +103,48 @@ def test_e2lsh510():
     distance = math.sqrt(dim)
     prob = tables[0].collision_probability(distance)
     assert(num_collisions == pytest.approx(prob * num_tables, 0.2))
+
+def test_e2lsh_more_data():
+    # Check that an E2LSH table with K = 1 and L = 1 creates the correct number
+    # of collisions for different data points.
+    K = 1
+    L = 1
+
+    # Create data vectors
+    dim = 3
+    data_mat = stag.utility.DenseMat([[0, 0, 0],
+                                      [1, 0, 0],
+                                      [1, 1, 0],
+                                      [1, 1, 1]])
+    dp1 = stag.data.DataPoint(data_mat, 0)
+    dp2 = stag.data.DataPoint(data_mat, 1)
+    dp3 = stag.data.DataPoint(data_mat, 2)
+    dp4 = stag.data.DataPoint(data_mat, 3)
+
+    # Create 1000 tables
+    num_tables = 1000
+    tables = []
+    for i in range(num_tables):
+        tables.append(stag.lsh.E2LSH(K, L, [dp2, dp3, dp4]))
+
+    # Compute the number of collisions for each data point.
+    num_collisions = [0, 0, 0]
+    for table in tables:
+        neighbors = table.get_near_neighbors(dp1)
+        for neighbor in neighbors:
+            assert(neighbor.dimension() == dim)
+            if np.all(neighbor.to_numpy() == dp2.to_numpy()):
+                num_collisions[0] += 1
+            elif np.all(neighbor.to_numpy() == dp3.to_numpy()):
+                num_collisions[1] += 1
+            elif np.all(neighbor.to_numpy() == dp4.to_numpy()):
+                num_collisions[2] += 1
+            else:
+                # Should never get here
+                assert False
+
+    # Check that the collision probabilities look right.
+    for i in range(1, dim + 1):
+        dist = math.sqrt(i)
+        prob = tables[0].collision_probability(dist)
+        assert(num_collisions[i-1] == pytest.approx(prob * num_tables, 0.2))

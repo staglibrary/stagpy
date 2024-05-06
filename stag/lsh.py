@@ -1,5 +1,17 @@
 """
 Implementation of the Euclidean locality-sensitive hashing algorithm.
+
+Locality-sensitive hashing is a primitive used for near-neighbour search.
+In particular, a locality sensitive hash function (see stag.lsh.LSHFunction)
+hashes vectors into buckets such that two vectors are more likely to be hashed
+to the same bucket if their Euclidean distance is small.
+
+The stag.lsh.E2LSH hash table implements a full approximate-near neighbor
+data structure based on basic Euclidean locality sensitive hash functions.
+
+\par Reference
+Andoni, Alexandr, and Piotr Indyk. "Near-optimal hashing algorithms for approximate nearest neighbor in high
+dimensions." Communications of the ACM 51.1 (2008): 117-122.
 """
 import numpy as np
 from typing import Union, List
@@ -129,10 +141,26 @@ class E2LSH(object):
             K, L, [dp.internal_datapoint for dp in dataset])
 
     def get_near_neighbors(self, query: stag.data.DataPoint) -> List[stag.data.DataPoint]:
+        """
+        Query the LSH table to find the near neighbors of a given query point.
+
+        Each point in the dataset will be returned with some probability dependent
+        on the distance to the query point and the parameters K and L.
+
+        @param query the data point to be queried
+        @return a list of stag.data.DataPoint objects representing the colliding
+                data points.
+        """
         results = [data.DataPoint(None, None, int_dp=dp) for dp in self.internal_e2lsh.get_near_neighbors(query.internal_datapoint)]
         for dp in results:
             dp.__parent = self
         return results
 
     def collision_probability(self, distance: float) -> float:
+        """
+        Compute the probability that a data point at a given distance from a
+        query point will be returned by this hash table.
+
+        @param distance the distance between a query point and data point
+        """
         return stag.stag_internal.E2LSH.collision_probability(self.K, self.L, distance)

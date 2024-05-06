@@ -521,6 +521,9 @@ class DataPoint(object):
 
     def __init__(self, *args):
         _stag_internal.DataPoint_swiginit(self, _stag_internal.new_DataPoint(*args))
+
+    def to_vector(self):
+        return _stag_internal.DataPoint_to_vector(self)
     dimension = property(_stag_internal.DataPoint_dimension_get, _stag_internal.DataPoint_dimension_set)
     coordinates = property(_stag_internal.DataPoint_coordinates_get, _stag_internal.DataPoint_coordinates_set)
 

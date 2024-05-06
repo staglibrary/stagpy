@@ -12565,6 +12565,54 @@ fail:
 }
 
 
+SWIGINTERN PyObject *_wrap_DataPoint_to_vector(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  stag::DataPoint *arg1 = (stag::DataPoint *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject *swig_obj[1] ;
+  std::vector< StagReal > result;
+  
+  if (!args) SWIG_fail;
+  swig_obj[0] = args;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_stag__DataPoint, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DataPoint_to_vector" "', argument " "1"" of type '" "stag::DataPoint *""'"); 
+  }
+  arg1 = reinterpret_cast< stag::DataPoint * >(argp1);
+  {
+    try {
+      result = (arg1)->to_vector();
+    } catch (std::invalid_argument &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::runtime_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::domain_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    }
+  }
+  {
+    // For non-pointer output vectors, we just copy the data into a numpy array.
+    // The copying at least happens still on the C++ side so will be relatively
+    // fast and optimised by the compiler.
+    //
+    // This adds a small 'constant factor' to the running time of the algorithm
+    // in STAGPy over C++ STAG.
+    npy_intp length = (&result)->size();
+    resultobj = PyArray_SimpleNew(1, &length, NPY_DOUBLE);
+    memcpy(PyArray_DATA((PyArrayObject*) resultobj),
+      (&result)->data(),
+      sizeof(double) * length);
+  }
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
 SWIGINTERN PyObject *_wrap_DataPoint_dimension_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   stag::DataPoint *arg1 = (stag::DataPoint *) 0 ;
@@ -16435,6 +16483,7 @@ static PyMethodDef SwigMethods[] = {
 	 { "rayleigh_quotient", _wrap_rayleigh_quotient, METH_VARARGS, NULL},
 	 { "delete_DataPoint", _wrap_delete_DataPoint, METH_O, NULL},
 	 { "new_DataPoint", _wrap_new_DataPoint, METH_VARARGS, NULL},
+	 { "DataPoint_to_vector", _wrap_DataPoint_to_vector, METH_O, NULL},
 	 { "DataPoint_dimension_set", _wrap_DataPoint_dimension_set, METH_VARARGS, NULL},
 	 { "DataPoint_dimension_get", _wrap_DataPoint_dimension_get, METH_O, NULL},
 	 { "DataPoint_coordinates_set", _wrap_DataPoint_coordinates_set, METH_VARARGS, NULL},

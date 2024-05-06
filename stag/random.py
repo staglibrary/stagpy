@@ -2,6 +2,7 @@
 Construct graphs from random models.
 """
 import numpy as np
+from typing import Union
 from . import stag_internal
 from . import graph
 from . import utility
@@ -79,7 +80,7 @@ def general_sbm(cluster_sizes: np.ndarray,
     @return the randomly generated stag.graph.Graph
     """
     return graph.Graph(stag_internal.general_sbm(
-        cluster_sizes, probabilities.astype(float), exact))
+        cluster_sizes, utility.DenseMat(probabilities).internal_densemat, exact))
 
 
 @utility.convert_ndarrays
@@ -105,7 +106,7 @@ def general_sbm_edgelist(filename: str,
     """
     return stag_internal.general_sbm_edgelist(filename,
                                               cluster_sizes,
-                                              probabilities.astype(float),
+                                              utility.DenseMat(probabilities).internal_densemat,
                                               exact)
 
 

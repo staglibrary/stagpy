@@ -2,8 +2,9 @@
 Implementation of the Euclidean locality-sensitive hashing algorithm.
 """
 import numpy as np
-from typing import Union
+from typing import Union, List
 
+import stag.data
 from . import stag_internal
 from . import utility
 from . import data
@@ -92,3 +93,44 @@ class LSHFunction(object):
         """
         return stag_internal.LSHFunction.collision_probability(distance)
 
+
+class E2LSH(object):
+    r"""
+    \brief A Euclidean locality sensitive hash table.
+
+    The E2LSH hash table is constructed with some set of data points, which are
+    hashed with several copies of the stag::LSHFunction.
+
+    Then, for any query point, the data structure returns the points in the
+    original dataset which are close to the query point.
+    The probability that a given point \f$x\f$ in the data set is returned for
+    query \f$q\f$ is dependent on the distance between \f$q\f$ and \f$x\f$.
+
+    The E2LSH hash table takes two parameters, K and L, which control the
+    probability that two points will collide in the hash table.
+    For query point \f$q\f$, a data point \f$x\f$ at distance \f$c \in \mathbb{R}\f$
+    from \f$q\f$ is returned with probability
+    \f[
+       1 - (1 - p(c)^K)^L,
+    \f]
+    where \f$p(c)\f$ is the probability that a single stag::LSHFunction will
+    hash \f$q\f$ and \f$x\f$ to the same value.
+    This probability can be computed with the stag::E2LSH::collision_probability
+    method.
+
+    Larger values of K and L will increase both the construction and query time
+    of the hash table.
+    """
+
+    def __init__(self, K: int, L: int, dataset: List[stag.data.DataPoint]):
+        self.internal_e2lsh = stag.stag_internal.E2LSH(
+            K, L, [dp.internal_datapoint for dp in dataset])
+
+    def get_near_neighbors(self, query: stag.data.DataPoint) -> List[stag.data.DataPoint]:
+        results = [data.DataPoint(None, None, int_dp=dp) for dp in self.internal_e2lsh.get_near_neighbors(query.internal_datapoint)]
+        for dp in results:
+            dp.__parent = self
+        return results
+
+    def collision_probability(self, distance: float) -> float:
+        return self.internal_e2lsh.collision_probability(distance)

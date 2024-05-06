@@ -12327,6 +12327,41 @@ fail:
 }
 
 
+SWIGINTERN PyObject *_wrap_delete_DataPoint(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  stag::DataPoint *arg1 = (stag::DataPoint *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject *swig_obj[1] ;
+  
+  if (!args) SWIG_fail;
+  swig_obj[0] = args;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_stag__DataPoint, SWIG_POINTER_DISOWN |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_DataPoint" "', argument " "1"" of type '" "stag::DataPoint *""'"); 
+  }
+  arg1 = reinterpret_cast< stag::DataPoint * >(argp1);
+  {
+    try {
+      delete arg1;
+    } catch (std::invalid_argument &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::runtime_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::domain_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    }
+  }
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
 SWIGINTERN PyObject *_wrap_new_DataPoint__SWIG_1(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
   PyObject *resultobj = 0;
   StagUInt arg1 ;
@@ -12634,41 +12669,6 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_delete_DataPoint(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  stag::DataPoint *arg1 = (stag::DataPoint *) 0 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  PyObject *swig_obj[1] ;
-  
-  if (!args) SWIG_fail;
-  swig_obj[0] = args;
-  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_stag__DataPoint, SWIG_POINTER_DISOWN |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_DataPoint" "', argument " "1"" of type '" "stag::DataPoint *""'"); 
-  }
-  arg1 = reinterpret_cast< stag::DataPoint * >(argp1);
-  {
-    try {
-      delete arg1;
-    } catch (std::invalid_argument &e) {
-      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
-      return NULL;
-    } catch (std::runtime_error &e) {
-      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
-      return NULL;
-    } catch (std::domain_error &e) {
-      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
-      return NULL;
-    }
-  }
-  resultobj = SWIG_Py_Void();
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
 SWIGINTERN PyObject *DataPoint_swigregister(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *obj;
   if (!SWIG_Python_UnpackTuple(args, "swigregister", 1, 1, &obj)) return NULL;
@@ -12805,7 +12805,9 @@ SWIGINTERN PyObject *_wrap_matrix_to_datapoints(PyObject *SWIGUNUSEDPARM(self), 
     
     // Construct a new DataPoint for each inner object, and add to the list.
     for (StagInt i = 0; i < outer_length; i++) {
-      PyObject* new_datapoint_object = SWIG_NewPointerObj(SWIG_as_voidptr(&(&result)->at(i)), SWIGTYPE_p_stag__DataPoint, SWIG_POINTER_NEW |  0 );
+      PyObject* new_datapoint_object = SWIG_NewPointerObj(
+        (new stag::DataPoint((&result)->at(i).dimension, (&result)->at(i).coordinates)),
+        SWIGTYPE_p_stag__DataPoint, SWIG_POINTER_OWN |  0 );
       
       PyList_SET_ITEM(resultobj, i, new_datapoint_object);
     }
@@ -14810,7 +14812,9 @@ SWIGINTERN PyObject *_wrap_E2LSH_get_near_neighbors(PyObject *SWIGUNUSEDPARM(sel
     
     // Construct a new DataPoint for each inner object, and add to the list.
     for (StagInt i = 0; i < outer_length; i++) {
-      PyObject* new_datapoint_object = SWIG_NewPointerObj(SWIG_as_voidptr(&(&result)->at(i)), SWIGTYPE_p_stag__DataPoint, SWIG_POINTER_NEW |  0 );
+      PyObject* new_datapoint_object = SWIG_NewPointerObj(
+        (new stag::DataPoint((&result)->at(i).dimension, (&result)->at(i).coordinates)),
+        SWIGTYPE_p_stag__DataPoint, SWIG_POINTER_OWN |  0 );
       
       PyList_SET_ITEM(resultobj, i, new_datapoint_object);
     }
@@ -16429,12 +16433,12 @@ static PyMethodDef SwigMethods[] = {
 	 { "compute_eigenvalues", _wrap_compute_eigenvalues, METH_VARARGS, NULL},
 	 { "power_method", _wrap_power_method, METH_VARARGS, NULL},
 	 { "rayleigh_quotient", _wrap_rayleigh_quotient, METH_VARARGS, NULL},
+	 { "delete_DataPoint", _wrap_delete_DataPoint, METH_O, NULL},
 	 { "new_DataPoint", _wrap_new_DataPoint, METH_VARARGS, NULL},
 	 { "DataPoint_dimension_set", _wrap_DataPoint_dimension_set, METH_VARARGS, NULL},
 	 { "DataPoint_dimension_get", _wrap_DataPoint_dimension_get, METH_O, NULL},
 	 { "DataPoint_coordinates_set", _wrap_DataPoint_coordinates_set, METH_VARARGS, NULL},
 	 { "DataPoint_coordinates_get", _wrap_DataPoint_coordinates_get, METH_O, NULL},
-	 { "delete_DataPoint", _wrap_delete_DataPoint, METH_O, NULL},
 	 { "DataPoint_swigregister", DataPoint_swigregister, METH_O, NULL},
 	 { "DataPoint_swiginit", DataPoint_swiginit, METH_VARARGS, NULL},
 	 { "load_matrix", _wrap_load_matrix, METH_O, NULL},
@@ -17411,7 +17415,7 @@ SWIG_init(void) {
   SWIG_Python_SetConstant(d, "NormalisedLaplacian",SWIG_From_int(static_cast< int >(stag::NormalisedLaplacian)));
   SWIG_Python_SetConstant(d, "LSH_PARAMETER_W",SWIG_From_double(static_cast< double >(4.0)));
   SWIG_Python_SetConstant(d, "EPSILON",SWIG_From_double(static_cast< double >(0.0000000001)));
-  SWIG_Python_SetConstant(d, "VERSION",SWIG_FromCharPtr("1.2.1"));
+  SWIG_Python_SetConstant(d, "VERSION",SWIG_FromCharPtr("2.0.0"));
 #if PY_VERSION_HEX >= 0x03000000
   return m;
 #else

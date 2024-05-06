@@ -517,12 +517,12 @@ def rayleigh_quotient(mat, vec):
 class DataPoint(object):
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
     __repr__ = _swig_repr
+    __swig_destroy__ = _stag_internal.delete_DataPoint
 
     def __init__(self, *args):
         _stag_internal.DataPoint_swiginit(self, _stag_internal.new_DataPoint(*args))
     dimension = property(_stag_internal.DataPoint_dimension_get, _stag_internal.DataPoint_dimension_set)
     coordinates = property(_stag_internal.DataPoint_coordinates_get, _stag_internal.DataPoint_coordinates_set)
-    __swig_destroy__ = _stag_internal.delete_DataPoint
 
 # Register DataPoint in _stag_internal:
 _stag_internal.DataPoint_swigregister(DataPoint)

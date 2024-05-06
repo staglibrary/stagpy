@@ -113,7 +113,9 @@
 
     // Construct a new DataPoint for each inner object, and add to the list.
     for (StagInt i = 0; i < outer_length; i++) {
-        PyObject* new_datapoint_object = SWIG_NewPointerObj(SWIG_as_voidptr(&$1.at(i)), SWIGTYPE_p_stag__DataPoint, SWIG_POINTER_NEW |  0 );
+        PyObject* new_datapoint_object = SWIG_NewPointerObj(
+           (new stag::DataPoint($1.at(i).dimension, $1.at(i).coordinates)),
+           SWIGTYPE_p_stag__DataPoint, SWIG_POINTER_OWN |  0 );
 
         PyList_SET_ITEM($result, i, new_datapoint_object);
     }
@@ -314,7 +316,7 @@ public:
     }
 }
 
-// Add some code for constructing stag SprsMatsfrom vectors.
+// Add some code for constructing stag SprsMats from vectors.
 %inline %{
 SprsMat sprsMatFromVectorsDims(long rows,
                                long cols,
@@ -364,4 +366,4 @@ Eigen::MatrixXd ndArrayFromDenseMat(const DenseMat& mat) {
 %}
 
 // Metadata about the python interface
-#define VERSION "1.2.1"
+#define VERSION "2.0.0"

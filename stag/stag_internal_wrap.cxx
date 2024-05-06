@@ -4421,6 +4421,39 @@ SWIG_AsVal_size_t (PyObject * obj, size_t *val)
   return res;
 }
 
+SWIGINTERN StagInt DenseMat_get_rows(DenseMat *self){
+        return self->rows();
+    }
+SWIGINTERN StagInt DenseMat_get_cols(DenseMat *self){
+        return self->cols();
+    }
+SWIGINTERN DenseMat DenseMat___add__(DenseMat *self,DenseMat *other){
+        return *self + *other;
+    }
+SWIGINTERN DenseMat DenseMat___sub__(DenseMat *self,DenseMat *other){
+        return *self - *other;
+    }
+SWIGINTERN DenseMat DenseMat___mul__(DenseMat *self,DenseMat *other){
+        return *self * *other;
+    }
+SWIGINTERN DenseMat DenseMat___mulfloat__(DenseMat *self,double other){
+        return other * *self;
+    }
+SWIGINTERN DenseMat DenseMat___mulint__(DenseMat *self,StagInt other){
+        return other * *self;
+    }
+SWIGINTERN DenseMat DenseMat___neg__(DenseMat *self){
+        return - *self;
+    }
+SWIGINTERN DenseMat DenseMat___truedivfloat__(DenseMat *self,double other){
+        return *self / other;
+    }
+SWIGINTERN DenseMat DenseMat___truedivint__(DenseMat *self,StagInt other){
+        return *self / other;
+    }
+SWIGINTERN DenseMat DenseMat___transpose__(DenseMat *self){
+        return self->transpose();
+    }
 SWIGINTERN StagInt SprsMat_get_rows(SprsMat *self){
         return self->rows();
     }
@@ -4485,6 +4518,17 @@ SprsMat sprsMatFromVectorsDims(long rows,
   return constructed_mat;
 }
 
+
+
+DenseMat denseMatFromNdarray(const Eigen::MatrixXd& mat) {
+    DenseMat newDenseMat = mat;
+    return newDenseMat;
+}
+
+Eigen::MatrixXd ndArrayFromDenseMat(const DenseMat& mat) {
+    Eigen::MatrixXd new_mat = mat;
+    return new_mat;
+}
 
 
 SWIGINTERNINLINE PyObject * 
@@ -10326,15 +10370,19 @@ SWIGINTERN PyObject *_wrap_approximate_similarity_graph(PyObject *SWIGUNUSEDPARM
   PyObject *resultobj = 0;
   DenseMat *arg1 = (DenseMat *) 0 ;
   StagReal arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
   double val2 ;
   int ecode2 = 0 ;
   PyObject *swig_obj[2] ;
   SwigValueWrapper< stag::Graph > result;
   
   if (!SWIG_Python_UnpackTuple(args, "approximate_similarity_graph", 2, 2, swig_obj)) SWIG_fail;
-  {
-    PyErr_SetString(PyExc_ValueError, "The input typemap for non-const pointer is not yet implemented. Please report this problem to the developer.");
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_Eigen__MatrixT_StagReal_Eigen__Dynamic_Eigen__Dynamic_Eigen__RowMajor_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "approximate_similarity_graph" "', argument " "1"" of type '" "DenseMat *""'"); 
   }
+  arg1 = reinterpret_cast< DenseMat * >(argp1);
   ecode2 = SWIG_AsVal_double(swig_obj[1], &val2);
   if (!SWIG_IsOK(ecode2)) {
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "approximate_similarity_graph" "', argument " "2"" of type '" "StagReal""'");
@@ -10365,15 +10413,19 @@ SWIGINTERN PyObject *_wrap_similarity_graph(PyObject *SWIGUNUSEDPARM(self), PyOb
   PyObject *resultobj = 0;
   DenseMat *arg1 = (DenseMat *) 0 ;
   StagReal arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
   double val2 ;
   int ecode2 = 0 ;
   PyObject *swig_obj[2] ;
   SwigValueWrapper< stag::Graph > result;
   
   if (!SWIG_Python_UnpackTuple(args, "similarity_graph", 2, 2, swig_obj)) SWIG_fail;
-  {
-    PyErr_SetString(PyExc_ValueError, "The input typemap for non-const pointer is not yet implemented. Please report this problem to the developer.");
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_Eigen__MatrixT_StagReal_Eigen__Dynamic_Eigen__Dynamic_Eigen__RowMajor_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "similarity_graph" "', argument " "1"" of type '" "DenseMat *""'"); 
   }
+  arg1 = reinterpret_cast< DenseMat * >(argp1);
   ecode2 = SWIG_AsVal_double(swig_obj[1], &val2);
   if (!SWIG_IsOK(ecode2)) {
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "similarity_graph" "', argument " "2"" of type '" "StagReal""'");
@@ -11086,7 +11138,8 @@ SWIGINTERN PyObject *_wrap_general_sbm__SWIG_0(PyObject *SWIGUNUSEDPARM(self), P
   PyArrayObject *array1 = NULL ;
   int is_new_object1 = 0 ;
   std::vector< int64_t > temp_vec1 ;
-  DenseMat temp2 ;
+  void *argp2 = 0 ;
+  int res2 = 0 ;
   bool val3 ;
   int ecode3 = 0 ;
   SwigValueWrapper< stag::Graph > result;
@@ -11115,12 +11168,14 @@ SWIGINTERN PyObject *_wrap_general_sbm__SWIG_0(PyObject *SWIGUNUSEDPARM(self), P
     }
     arg1 = &temp_vec1;
   }
-  {
-    // In: non-const&
-    int res = ConvertFromNumpyToEigenMatrix<DenseMat>(&temp2, swig_obj[1]);
-    if (res < 0) return NULL;
-    arg2 = &temp2;
+  res2 = SWIG_ConvertPtr(swig_obj[1], &argp2, SWIGTYPE_p_Eigen__MatrixT_StagReal_Eigen__Dynamic_Eigen__Dynamic_Eigen__RowMajor_t,  0 );
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "general_sbm" "', argument " "2"" of type '" "DenseMat &""'"); 
   }
+  if (!argp2) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "general_sbm" "', argument " "2"" of type '" "DenseMat &""'"); 
+  }
+  arg2 = reinterpret_cast< DenseMat * >(argp2);
   ecode3 = SWIG_AsVal_bool(swig_obj[2], &val3);
   if (!SWIG_IsOK(ecode3)) {
     SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "general_sbm" "', argument " "3"" of type '" "bool""'");
@@ -11141,10 +11196,6 @@ SWIGINTERN PyObject *_wrap_general_sbm__SWIG_0(PyObject *SWIGUNUSEDPARM(self), P
     }
   }
   resultobj = SWIG_NewPointerObj((new stag::Graph(static_cast< const stag::Graph& >(result))), SWIGTYPE_p_stag__Graph, SWIG_POINTER_OWN |  0 );
-  {
-    // Argout: &
-    CopyFromEigenToNumPyMatrix<DenseMat>(swig_obj[1], arg2);
-  }
   return resultobj;
 fail:
   return NULL;
@@ -11158,7 +11209,8 @@ SWIGINTERN PyObject *_wrap_general_sbm__SWIG_1(PyObject *SWIGUNUSEDPARM(self), P
   PyArrayObject *array1 = NULL ;
   int is_new_object1 = 0 ;
   std::vector< int64_t > temp_vec1 ;
-  DenseMat temp2 ;
+  void *argp2 = 0 ;
+  int res2 = 0 ;
   SwigValueWrapper< stag::Graph > result;
   
   if ((nobjs < 2) || (nobjs > 2)) SWIG_fail;
@@ -11185,12 +11237,14 @@ SWIGINTERN PyObject *_wrap_general_sbm__SWIG_1(PyObject *SWIGUNUSEDPARM(self), P
     }
     arg1 = &temp_vec1;
   }
-  {
-    // In: non-const&
-    int res = ConvertFromNumpyToEigenMatrix<DenseMat>(&temp2, swig_obj[1]);
-    if (res < 0) return NULL;
-    arg2 = &temp2;
+  res2 = SWIG_ConvertPtr(swig_obj[1], &argp2, SWIGTYPE_p_Eigen__MatrixT_StagReal_Eigen__Dynamic_Eigen__Dynamic_Eigen__RowMajor_t,  0 );
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "general_sbm" "', argument " "2"" of type '" "DenseMat &""'"); 
   }
+  if (!argp2) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "general_sbm" "', argument " "2"" of type '" "DenseMat &""'"); 
+  }
+  arg2 = reinterpret_cast< DenseMat * >(argp2);
   {
     try {
       result = stag::general_sbm(*arg1,*arg2);
@@ -11206,10 +11260,6 @@ SWIGINTERN PyObject *_wrap_general_sbm__SWIG_1(PyObject *SWIGUNUSEDPARM(self), P
     }
   }
   resultobj = SWIG_NewPointerObj((new stag::Graph(static_cast< const stag::Graph& >(result))), SWIGTYPE_p_stag__Graph, SWIG_POINTER_OWN |  0 );
-  {
-    // Argout: &
-    CopyFromEigenToNumPyMatrix<DenseMat>(swig_obj[1], arg2);
-  }
   return resultobj;
 fail:
   return NULL;
@@ -11230,9 +11280,9 @@ SWIGINTERN PyObject *_wrap_general_sbm(PyObject *self, PyObject *args) {
       _v = is_array((PyObject *) argv[0]) ? 1 : 0;
     }
     if (_v) {
-      {
-        _v = is_array((PyObject *) argv[1]) ? 1 : 0;
-      }
+      void *vptr = 0;
+      int res = SWIG_ConvertPtr(argv[1], &vptr, SWIGTYPE_p_Eigen__MatrixT_StagReal_Eigen__Dynamic_Eigen__Dynamic_Eigen__RowMajor_t, SWIG_POINTER_NO_NULL);
+      _v = SWIG_CheckState(res);
       if (_v) {
         return _wrap_general_sbm__SWIG_1(self, argc, argv);
       }
@@ -11244,9 +11294,9 @@ SWIGINTERN PyObject *_wrap_general_sbm(PyObject *self, PyObject *args) {
       _v = is_array((PyObject *) argv[0]) ? 1 : 0;
     }
     if (_v) {
-      {
-        _v = is_array((PyObject *) argv[1]) ? 1 : 0;
-      }
+      void *vptr = 0;
+      int res = SWIG_ConvertPtr(argv[1], &vptr, SWIGTYPE_p_Eigen__MatrixT_StagReal_Eigen__Dynamic_Eigen__Dynamic_Eigen__RowMajor_t, SWIG_POINTER_NO_NULL);
+      _v = SWIG_CheckState(res);
       if (_v) {
         {
           int res = SWIG_AsVal_bool(argv[2], NULL);
@@ -11278,7 +11328,8 @@ SWIGINTERN PyObject *_wrap_general_sbm_edgelist__SWIG_0(PyObject *SWIGUNUSEDPARM
   PyArrayObject *array2 = NULL ;
   int is_new_object2 = 0 ;
   std::vector< int64_t > temp_vec2 ;
-  DenseMat temp3 ;
+  void *argp3 = 0 ;
+  int res3 = 0 ;
   bool val4 ;
   int ecode4 = 0 ;
   
@@ -11314,12 +11365,14 @@ SWIGINTERN PyObject *_wrap_general_sbm_edgelist__SWIG_0(PyObject *SWIGUNUSEDPARM
     }
     arg2 = &temp_vec2;
   }
-  {
-    // In: non-const&
-    int res = ConvertFromNumpyToEigenMatrix<DenseMat>(&temp3, swig_obj[2]);
-    if (res < 0) return NULL;
-    arg3 = &temp3;
+  res3 = SWIG_ConvertPtr(swig_obj[2], &argp3, SWIGTYPE_p_Eigen__MatrixT_StagReal_Eigen__Dynamic_Eigen__Dynamic_Eigen__RowMajor_t,  0 );
+  if (!SWIG_IsOK(res3)) {
+    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "general_sbm_edgelist" "', argument " "3"" of type '" "DenseMat &""'"); 
   }
+  if (!argp3) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "general_sbm_edgelist" "', argument " "3"" of type '" "DenseMat &""'"); 
+  }
+  arg3 = reinterpret_cast< DenseMat * >(argp3);
   ecode4 = SWIG_AsVal_bool(swig_obj[3], &val4);
   if (!SWIG_IsOK(ecode4)) {
     SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "general_sbm_edgelist" "', argument " "4"" of type '" "bool""'");
@@ -11340,10 +11393,6 @@ SWIGINTERN PyObject *_wrap_general_sbm_edgelist__SWIG_0(PyObject *SWIGUNUSEDPARM
     }
   }
   resultobj = SWIG_Py_Void();
-  {
-    // Argout: &
-    CopyFromEigenToNumPyMatrix<DenseMat>(swig_obj[2], arg3);
-  }
   if (SWIG_IsNewObj(res1)) delete arg1;
   return resultobj;
 fail:
@@ -11361,7 +11410,8 @@ SWIGINTERN PyObject *_wrap_general_sbm_edgelist__SWIG_1(PyObject *SWIGUNUSEDPARM
   PyArrayObject *array2 = NULL ;
   int is_new_object2 = 0 ;
   std::vector< int64_t > temp_vec2 ;
-  DenseMat temp3 ;
+  void *argp3 = 0 ;
+  int res3 = 0 ;
   
   if ((nobjs < 3) || (nobjs > 3)) SWIG_fail;
   res1 = SWIG_AsPtr_std_string(swig_obj[0], &arg1);
@@ -11395,12 +11445,14 @@ SWIGINTERN PyObject *_wrap_general_sbm_edgelist__SWIG_1(PyObject *SWIGUNUSEDPARM
     }
     arg2 = &temp_vec2;
   }
-  {
-    // In: non-const&
-    int res = ConvertFromNumpyToEigenMatrix<DenseMat>(&temp3, swig_obj[2]);
-    if (res < 0) return NULL;
-    arg3 = &temp3;
+  res3 = SWIG_ConvertPtr(swig_obj[2], &argp3, SWIGTYPE_p_Eigen__MatrixT_StagReal_Eigen__Dynamic_Eigen__Dynamic_Eigen__RowMajor_t,  0 );
+  if (!SWIG_IsOK(res3)) {
+    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "general_sbm_edgelist" "', argument " "3"" of type '" "DenseMat &""'"); 
   }
+  if (!argp3) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "general_sbm_edgelist" "', argument " "3"" of type '" "DenseMat &""'"); 
+  }
+  arg3 = reinterpret_cast< DenseMat * >(argp3);
   {
     try {
       stag::general_sbm_edgelist(*arg1,*arg2,*arg3);
@@ -11416,10 +11468,6 @@ SWIGINTERN PyObject *_wrap_general_sbm_edgelist__SWIG_1(PyObject *SWIGUNUSEDPARM
     }
   }
   resultobj = SWIG_Py_Void();
-  {
-    // Argout: &
-    CopyFromEigenToNumPyMatrix<DenseMat>(swig_obj[2], arg3);
-  }
   if (SWIG_IsNewObj(res1)) delete arg1;
   return resultobj;
 fail:
@@ -11445,9 +11493,9 @@ SWIGINTERN PyObject *_wrap_general_sbm_edgelist(PyObject *self, PyObject *args) 
         _v = is_array((PyObject *) argv[1]) ? 1 : 0;
       }
       if (_v) {
-        {
-          _v = is_array((PyObject *) argv[2]) ? 1 : 0;
-        }
+        void *vptr = 0;
+        int res = SWIG_ConvertPtr(argv[2], &vptr, SWIGTYPE_p_Eigen__MatrixT_StagReal_Eigen__Dynamic_Eigen__Dynamic_Eigen__RowMajor_t, SWIG_POINTER_NO_NULL);
+        _v = SWIG_CheckState(res);
         if (_v) {
           return _wrap_general_sbm_edgelist__SWIG_1(self, argc, argv);
         }
@@ -11463,9 +11511,9 @@ SWIGINTERN PyObject *_wrap_general_sbm_edgelist(PyObject *self, PyObject *args) 
         _v = is_array((PyObject *) argv[1]) ? 1 : 0;
       }
       if (_v) {
-        {
-          _v = is_array((PyObject *) argv[2]) ? 1 : 0;
-        }
+        void *vptr = 0;
+        int res = SWIG_ConvertPtr(argv[2], &vptr, SWIGTYPE_p_Eigen__MatrixT_StagReal_Eigen__Dynamic_Eigen__Dynamic_Eigen__RowMajor_t, SWIG_POINTER_NO_NULL);
+        _v = SWIG_CheckState(res);
         if (_v) {
           {
             int res = SWIG_AsVal_bool(argv[3], NULL);
@@ -12325,16 +12373,19 @@ SWIGINTERN PyObject *_wrap_new_DataPoint__SWIG_2(PyObject *SWIGUNUSEDPARM(self),
   PyObject *resultobj = 0;
   DenseMat *arg1 = 0 ;
   StagInt arg2 ;
-  DenseMat temp1 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
   stag::DataPoint *result = 0 ;
   
   if ((nobjs < 2) || (nobjs > 2)) SWIG_fail;
-  {
-    // In: non-const&
-    int res = ConvertFromNumpyToEigenMatrix<DenseMat>(&temp1, swig_obj[0]);
-    if (res < 0) return NULL;
-    arg1 = &temp1;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1, SWIGTYPE_p_Eigen__MatrixT_StagReal_Eigen__Dynamic_Eigen__Dynamic_Eigen__RowMajor_t,  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "new_DataPoint" "', argument " "1"" of type '" "DenseMat &""'"); 
   }
+  if (!argp1) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "new_DataPoint" "', argument " "1"" of type '" "DenseMat &""'"); 
+  }
+  arg1 = reinterpret_cast< DenseMat * >(argp1);
   {
     // StagInt typemap (in)
     if (!PyLong_Check((PyObject *) swig_obj[1])) {
@@ -12358,10 +12409,6 @@ SWIGINTERN PyObject *_wrap_new_DataPoint__SWIG_2(PyObject *SWIGUNUSEDPARM(self),
     }
   }
   resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_stag__DataPoint, SWIG_POINTER_NEW |  0 );
-  {
-    // Argout: &
-    CopyFromEigenToNumPyMatrix<DenseMat>(swig_obj[0], arg1);
-  }
   return resultobj;
 fail:
   return NULL;
@@ -12443,6 +12490,21 @@ SWIGINTERN PyObject *_wrap_new_DataPoint(PyObject *self, PyObject *args) {
   }
   if (argc == 2) {
     int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_Eigen__MatrixT_StagReal_Eigen__Dynamic_Eigen__Dynamic_Eigen__RowMajor_t, SWIG_POINTER_NO_NULL);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      {
+        // Typecheck for StagInt
+        _v = PyLong_Check((PyObject*) argv[1]);
+      }
+      if (_v) {
+        return _wrap_new_DataPoint__SWIG_2(self, argc, argv);
+      }
+    }
+  }
+  if (argc == 2) {
+    int _v;
     {
       int res = SWIG_AsVal_size_t(argv[0], NULL);
       _v = SWIG_CheckState(res);
@@ -12453,21 +12515,6 @@ SWIGINTERN PyObject *_wrap_new_DataPoint(PyObject *self, PyObject *args) {
       _v = SWIG_CheckState(res);
       if (_v) {
         return _wrap_new_DataPoint__SWIG_1(self, argc, argv);
-      }
-    }
-  }
-  if (argc == 2) {
-    int _v;
-    {
-      _v = is_array((PyObject *) argv[0]) ? 1 : 0;
-    }
-    if (_v) {
-      {
-        // Typecheck for StagInt
-        _v = PyLong_Check((PyObject*) argv[1]);
-      }
-      if (_v) {
-        return _wrap_new_DataPoint__SWIG_2(self, argc, argv);
       }
     }
   }
@@ -12664,10 +12711,7 @@ SWIGINTERN PyObject *_wrap_load_matrix(PyObject *SWIGUNUSEDPARM(self), PyObject 
       return NULL;
     }
   }
-  {
-    int res = ConvertFromEigenToNumPyMatrix<DenseMat>(&resultobj, &result);
-    if (res < 0) return NULL;
-  }
+  resultobj = SWIG_NewPointerObj((new DenseMat(static_cast< const DenseMat& >(result))), SWIGTYPE_p_Eigen__MatrixT_StagReal_Eigen__Dynamic_Eigen__Dynamic_Eigen__RowMajor_t, SWIG_POINTER_OWN |  0 );
   if (SWIG_IsNewObj(res1)) delete arg1;
   return resultobj;
 fail:
@@ -12680,17 +12724,20 @@ SWIGINTERN PyObject *_wrap_save_matrix(PyObject *SWIGUNUSEDPARM(self), PyObject 
   PyObject *resultobj = 0;
   DenseMat *arg1 = 0 ;
   std::string *arg2 = 0 ;
-  DenseMat temp1 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
   int res2 = 0 ;
   PyObject *swig_obj[2] ;
   
   if (!SWIG_Python_UnpackTuple(args, "save_matrix", 2, 2, swig_obj)) SWIG_fail;
-  {
-    // In: non-const&
-    int res = ConvertFromNumpyToEigenMatrix<DenseMat>(&temp1, swig_obj[0]);
-    if (res < 0) return NULL;
-    arg1 = &temp1;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1, SWIGTYPE_p_Eigen__MatrixT_StagReal_Eigen__Dynamic_Eigen__Dynamic_Eigen__RowMajor_t,  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "save_matrix" "', argument " "1"" of type '" "DenseMat &""'"); 
   }
+  if (!argp1) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "save_matrix" "', argument " "1"" of type '" "DenseMat &""'"); 
+  }
+  arg1 = reinterpret_cast< DenseMat * >(argp1);
   res2 = SWIG_AsPtr_std_string(swig_obj[1], &arg2);
   if (!SWIG_IsOK(res2)) {
     SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "save_matrix" "', argument " "2"" of type '" "std::string &""'");
@@ -12714,10 +12761,6 @@ SWIGINTERN PyObject *_wrap_save_matrix(PyObject *SWIGUNUSEDPARM(self), PyObject 
     }
   }
   resultobj = SWIG_Py_Void();
-  {
-    // Argout: &
-    CopyFromEigenToNumPyMatrix<DenseMat>(swig_obj[0], arg1);
-  }
   if (SWIG_IsNewObj(res2)) delete arg2;
   return resultobj;
 fail:
@@ -12729,14 +12772,18 @@ fail:
 SWIGINTERN PyObject *_wrap_matrix_to_datapoints(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   DenseMat *arg1 = (DenseMat *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
   PyObject *swig_obj[1] ;
   SwigValueWrapper< std::vector< stag::DataPoint > > result;
   
   if (!args) SWIG_fail;
   swig_obj[0] = args;
-  {
-    PyErr_SetString(PyExc_ValueError, "The input typemap for non-const pointer is not yet implemented. Please report this problem to the developer.");
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_Eigen__MatrixT_StagReal_Eigen__Dynamic_Eigen__Dynamic_Eigen__RowMajor_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "matrix_to_datapoints" "', argument " "1"" of type '" "DenseMat *""'"); 
   }
+  arg1 = reinterpret_cast< DenseMat * >(argp1);
   {
     try {
       result = stag::matrix_to_datapoints(arg1);
@@ -12929,6 +12976,8 @@ SWIGINTERN PyObject *_wrap_new_CKNSGaussianKDEHashUnit(PyObject *SWIGUNUSEDPARM(
   StagInt arg6 ;
   double val1 ;
   int ecode1 = 0 ;
+  void *argp2 = 0 ;
+  int res2 = 0 ;
   double val5 ;
   int ecode5 = 0 ;
   PyObject *swig_obj[6] ;
@@ -12940,9 +12989,11 @@ SWIGINTERN PyObject *_wrap_new_CKNSGaussianKDEHashUnit(PyObject *SWIGUNUSEDPARM(
     SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "new_CKNSGaussianKDEHashUnit" "', argument " "1"" of type '" "StagReal""'");
   } 
   arg1 = static_cast< StagReal >(val1);
-  {
-    PyErr_SetString(PyExc_ValueError, "The input typemap for non-const pointer is not yet implemented. Please report this problem to the developer.");
+  res2 = SWIG_ConvertPtr(swig_obj[1], &argp2,SWIGTYPE_p_Eigen__MatrixT_StagReal_Eigen__Dynamic_Eigen__Dynamic_Eigen__RowMajor_t, 0 |  0 );
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "new_CKNSGaussianKDEHashUnit" "', argument " "2"" of type '" "DenseMat *""'"); 
   }
+  arg2 = reinterpret_cast< DenseMat * >(argp2);
   {
     // StagInt typemap (in)
     if (!PyLong_Check((PyObject *) swig_obj[2])) {
@@ -13117,6 +13168,8 @@ SWIGINTERN PyObject *_wrap_new_CKNSGaussianKDE__SWIG_1(PyObject *SWIGUNUSEDPARM(
   StagReal arg2 ;
   StagReal arg3 ;
   StagReal arg4 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
   double val2 ;
   int ecode2 = 0 ;
   double val3 ;
@@ -13126,9 +13179,11 @@ SWIGINTERN PyObject *_wrap_new_CKNSGaussianKDE__SWIG_1(PyObject *SWIGUNUSEDPARM(
   stag::CKNSGaussianKDE *result = 0 ;
   
   if ((nobjs < 4) || (nobjs > 4)) SWIG_fail;
-  {
-    PyErr_SetString(PyExc_ValueError, "The input typemap for non-const pointer is not yet implemented. Please report this problem to the developer.");
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_Eigen__MatrixT_StagReal_Eigen__Dynamic_Eigen__Dynamic_Eigen__RowMajor_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "new_CKNSGaussianKDE" "', argument " "1"" of type '" "DenseMat *""'"); 
   }
+  arg1 = reinterpret_cast< DenseMat * >(argp1);
   ecode2 = SWIG_AsVal_double(swig_obj[1], &val2);
   if (!SWIG_IsOK(ecode2)) {
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "new_CKNSGaussianKDE" "', argument " "2"" of type '" "StagReal""'");
@@ -13170,6 +13225,8 @@ SWIGINTERN PyObject *_wrap_new_CKNSGaussianKDE__SWIG_2(PyObject *SWIGUNUSEDPARM(
   DenseMat *arg1 = (DenseMat *) 0 ;
   StagReal arg2 ;
   StagReal arg3 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
   double val2 ;
   int ecode2 = 0 ;
   double val3 ;
@@ -13177,9 +13234,11 @@ SWIGINTERN PyObject *_wrap_new_CKNSGaussianKDE__SWIG_2(PyObject *SWIGUNUSEDPARM(
   stag::CKNSGaussianKDE *result = 0 ;
   
   if ((nobjs < 3) || (nobjs > 3)) SWIG_fail;
-  {
-    PyErr_SetString(PyExc_ValueError, "The input typemap for non-const pointer is not yet implemented. Please report this problem to the developer.");
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_Eigen__MatrixT_StagReal_Eigen__Dynamic_Eigen__Dynamic_Eigen__RowMajor_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "new_CKNSGaussianKDE" "', argument " "1"" of type '" "DenseMat *""'"); 
   }
+  arg1 = reinterpret_cast< DenseMat * >(argp1);
   ecode2 = SWIG_AsVal_double(swig_obj[1], &val2);
   if (!SWIG_IsOK(ecode2)) {
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "new_CKNSGaussianKDE" "', argument " "2"" of type '" "StagReal""'");
@@ -13215,14 +13274,18 @@ SWIGINTERN PyObject *_wrap_new_CKNSGaussianKDE__SWIG_3(PyObject *SWIGUNUSEDPARM(
   PyObject *resultobj = 0;
   DenseMat *arg1 = (DenseMat *) 0 ;
   StagReal arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
   double val2 ;
   int ecode2 = 0 ;
   stag::CKNSGaussianKDE *result = 0 ;
   
   if ((nobjs < 2) || (nobjs > 2)) SWIG_fail;
-  {
-    PyErr_SetString(PyExc_ValueError, "The input typemap for non-const pointer is not yet implemented. Please report this problem to the developer.");
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_Eigen__MatrixT_StagReal_Eigen__Dynamic_Eigen__Dynamic_Eigen__RowMajor_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "new_CKNSGaussianKDE" "', argument " "1"" of type '" "DenseMat *""'"); 
   }
+  arg1 = reinterpret_cast< DenseMat * >(argp1);
   ecode2 = SWIG_AsVal_double(swig_obj[1], &val2);
   if (!SWIG_IsOK(ecode2)) {
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "new_CKNSGaussianKDE" "', argument " "2"" of type '" "StagReal""'");
@@ -13257,6 +13320,8 @@ SWIGINTERN PyObject *_wrap_new_CKNSGaussianKDE__SWIG_4(PyObject *SWIGUNUSEDPARM(
   StagInt arg4 ;
   StagReal arg5 ;
   StagInt arg6 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
   double val2 ;
   int ecode2 = 0 ;
   double val3 ;
@@ -13266,9 +13331,11 @@ SWIGINTERN PyObject *_wrap_new_CKNSGaussianKDE__SWIG_4(PyObject *SWIGUNUSEDPARM(
   stag::CKNSGaussianKDE *result = 0 ;
   
   if ((nobjs < 6) || (nobjs > 6)) SWIG_fail;
-  {
-    PyErr_SetString(PyExc_ValueError, "The input typemap for non-const pointer is not yet implemented. Please report this problem to the developer.");
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_Eigen__MatrixT_StagReal_Eigen__Dynamic_Eigen__Dynamic_Eigen__RowMajor_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "new_CKNSGaussianKDE" "', argument " "1"" of type '" "DenseMat *""'"); 
   }
+  arg1 = reinterpret_cast< DenseMat * >(argp1);
   ecode2 = SWIG_AsVal_double(swig_obj[1], &val2);
   if (!SWIG_IsOK(ecode2)) {
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "new_CKNSGaussianKDE" "', argument " "2"" of type '" "StagReal""'");
@@ -13331,6 +13398,8 @@ SWIGINTERN PyObject *_wrap_new_CKNSGaussianKDE__SWIG_5(PyObject *SWIGUNUSEDPARM(
   StagInt arg6 ;
   StagInt arg7 ;
   StagInt arg8 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
   double val2 ;
   int ecode2 = 0 ;
   double val3 ;
@@ -13340,9 +13409,11 @@ SWIGINTERN PyObject *_wrap_new_CKNSGaussianKDE__SWIG_5(PyObject *SWIGUNUSEDPARM(
   stag::CKNSGaussianKDE *result = 0 ;
   
   if ((nobjs < 8) || (nobjs > 8)) SWIG_fail;
-  {
-    PyErr_SetString(PyExc_ValueError, "The input typemap for non-const pointer is not yet implemented. Please report this problem to the developer.");
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_Eigen__MatrixT_StagReal_Eigen__Dynamic_Eigen__Dynamic_Eigen__RowMajor_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "new_CKNSGaussianKDE" "', argument " "1"" of type '" "DenseMat *""'"); 
   }
+  arg1 = reinterpret_cast< DenseMat * >(argp1);
   ecode2 = SWIG_AsVal_double(swig_obj[1], &val2);
   if (!SWIG_IsOK(ecode2)) {
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "new_CKNSGaussianKDE" "', argument " "2"" of type '" "StagReal""'");
@@ -13595,6 +13666,8 @@ SWIGINTERN PyObject *_wrap_CKNSGaussianKDE_query__SWIG_0(PyObject *SWIGUNUSEDPAR
   DenseMat *arg2 = (DenseMat *) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
+  void *argp2 = 0 ;
+  int res2 = 0 ;
   std::vector< StagReal > result;
   
   if ((nobjs < 2) || (nobjs > 2)) SWIG_fail;
@@ -13603,9 +13676,11 @@ SWIGINTERN PyObject *_wrap_CKNSGaussianKDE_query__SWIG_0(PyObject *SWIGUNUSEDPAR
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "CKNSGaussianKDE_query" "', argument " "1"" of type '" "stag::CKNSGaussianKDE *""'"); 
   }
   arg1 = reinterpret_cast< stag::CKNSGaussianKDE * >(argp1);
-  {
-    PyErr_SetString(PyExc_ValueError, "The input typemap for non-const pointer is not yet implemented. Please report this problem to the developer.");
+  res2 = SWIG_ConvertPtr(swig_obj[1], &argp2,SWIGTYPE_p_Eigen__MatrixT_StagReal_Eigen__Dynamic_Eigen__Dynamic_Eigen__RowMajor_t, 0 |  0 );
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "CKNSGaussianKDE_query" "', argument " "2"" of type '" "DenseMat *""'"); 
   }
+  arg2 = reinterpret_cast< DenseMat * >(argp2);
   {
     try {
       result = (arg1)->query(arg2);
@@ -13805,14 +13880,18 @@ SWIGINTERN PyObject *_wrap_new_ExactGaussianKDE__SWIG_1(PyObject *SWIGUNUSEDPARM
   PyObject *resultobj = 0;
   DenseMat *arg1 = (DenseMat *) 0 ;
   StagReal arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
   double val2 ;
   int ecode2 = 0 ;
   stag::ExactGaussianKDE *result = 0 ;
   
   if ((nobjs < 2) || (nobjs > 2)) SWIG_fail;
-  {
-    PyErr_SetString(PyExc_ValueError, "The input typemap for non-const pointer is not yet implemented. Please report this problem to the developer.");
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_Eigen__MatrixT_StagReal_Eigen__Dynamic_Eigen__Dynamic_Eigen__RowMajor_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "new_ExactGaussianKDE" "', argument " "1"" of type '" "DenseMat *""'"); 
   }
+  arg1 = reinterpret_cast< DenseMat * >(argp1);
   ecode2 = SWIG_AsVal_double(swig_obj[1], &val2);
   if (!SWIG_IsOK(ecode2)) {
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "new_ExactGaussianKDE" "', argument " "2"" of type '" "StagReal""'");
@@ -13845,14 +13924,18 @@ SWIGINTERN PyObject *_wrap_new_ExactGaussianKDE__SWIG_2(PyObject *SWIGUNUSEDPARM
   StagReal arg2 ;
   StagInt arg3 ;
   StagInt arg4 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
   double val2 ;
   int ecode2 = 0 ;
   stag::ExactGaussianKDE *result = 0 ;
   
   if ((nobjs < 4) || (nobjs > 4)) SWIG_fail;
-  {
-    PyErr_SetString(PyExc_ValueError, "The input typemap for non-const pointer is not yet implemented. Please report this problem to the developer.");
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_Eigen__MatrixT_StagReal_Eigen__Dynamic_Eigen__Dynamic_Eigen__RowMajor_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "new_ExactGaussianKDE" "', argument " "1"" of type '" "DenseMat *""'"); 
   }
+  arg1 = reinterpret_cast< DenseMat * >(argp1);
   ecode2 = SWIG_AsVal_double(swig_obj[1], &val2);
   if (!SWIG_IsOK(ecode2)) {
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "new_ExactGaussianKDE" "', argument " "2"" of type '" "StagReal""'");
@@ -13965,6 +14048,8 @@ SWIGINTERN PyObject *_wrap_ExactGaussianKDE_query__SWIG_0(PyObject *SWIGUNUSEDPA
   DenseMat *arg2 = (DenseMat *) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
+  void *argp2 = 0 ;
+  int res2 = 0 ;
   std::vector< StagReal > result;
   
   if ((nobjs < 2) || (nobjs > 2)) SWIG_fail;
@@ -13973,9 +14058,11 @@ SWIGINTERN PyObject *_wrap_ExactGaussianKDE_query__SWIG_0(PyObject *SWIGUNUSEDPA
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ExactGaussianKDE_query" "', argument " "1"" of type '" "stag::ExactGaussianKDE *""'"); 
   }
   arg1 = reinterpret_cast< stag::ExactGaussianKDE * >(argp1);
-  {
-    PyErr_SetString(PyExc_ValueError, "The input typemap for non-const pointer is not yet implemented. Please report this problem to the developer.");
+  res2 = SWIG_ConvertPtr(swig_obj[1], &argp2,SWIGTYPE_p_Eigen__MatrixT_StagReal_Eigen__Dynamic_Eigen__Dynamic_Eigen__RowMajor_t, 0 |  0 );
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "ExactGaussianKDE_query" "', argument " "2"" of type '" "DenseMat *""'"); 
   }
+  arg2 = reinterpret_cast< DenseMat * >(argp2);
   {
     try {
       result = (arg1)->query(arg2);
@@ -14927,6 +15014,539 @@ SWIGINTERN PyObject *E2LSH_swiginit(PyObject *SWIGUNUSEDPARM(self), PyObject *ar
   return SWIG_Python_InitShadowInstance(args);
 }
 
+SWIGINTERN PyObject *_wrap_delete_DenseMat(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  DenseMat *arg1 = (DenseMat *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject *swig_obj[1] ;
+  
+  if (!args) SWIG_fail;
+  swig_obj[0] = args;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_Eigen__MatrixT_StagReal_Eigen__Dynamic_Eigen__Dynamic_Eigen__RowMajor_t, SWIG_POINTER_DISOWN |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_DenseMat" "', argument " "1"" of type '" "DenseMat *""'"); 
+  }
+  arg1 = reinterpret_cast< DenseMat * >(argp1);
+  {
+    try {
+      delete arg1;
+    } catch (std::invalid_argument &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::runtime_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::domain_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    }
+  }
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_DenseMat_get_rows(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  DenseMat *arg1 = (DenseMat *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject *swig_obj[1] ;
+  StagInt result;
+  
+  if (!args) SWIG_fail;
+  swig_obj[0] = args;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_Eigen__MatrixT_StagReal_Eigen__Dynamic_Eigen__Dynamic_Eigen__RowMajor_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DenseMat_get_rows" "', argument " "1"" of type '" "DenseMat *""'"); 
+  }
+  arg1 = reinterpret_cast< DenseMat * >(argp1);
+  {
+    try {
+      result = DenseMat_get_rows(arg1);
+    } catch (std::invalid_argument &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::runtime_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::domain_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    }
+  }
+  {
+    // StagInt typemap (out)
+    resultobj = PyLong_FromLongLong((long long) result);
+  }
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_DenseMat_get_cols(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  DenseMat *arg1 = (DenseMat *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject *swig_obj[1] ;
+  StagInt result;
+  
+  if (!args) SWIG_fail;
+  swig_obj[0] = args;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_Eigen__MatrixT_StagReal_Eigen__Dynamic_Eigen__Dynamic_Eigen__RowMajor_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DenseMat_get_cols" "', argument " "1"" of type '" "DenseMat *""'"); 
+  }
+  arg1 = reinterpret_cast< DenseMat * >(argp1);
+  {
+    try {
+      result = DenseMat_get_cols(arg1);
+    } catch (std::invalid_argument &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::runtime_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::domain_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    }
+  }
+  {
+    // StagInt typemap (out)
+    resultobj = PyLong_FromLongLong((long long) result);
+  }
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_DenseMat___add__(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  DenseMat *arg1 = (DenseMat *) 0 ;
+  DenseMat *arg2 = (DenseMat *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  void *argp2 = 0 ;
+  int res2 = 0 ;
+  PyObject *swig_obj[2] ;
+  DenseMat result;
+  
+  if (!SWIG_Python_UnpackTuple(args, "DenseMat___add__", 2, 2, swig_obj)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_Eigen__MatrixT_StagReal_Eigen__Dynamic_Eigen__Dynamic_Eigen__RowMajor_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DenseMat___add__" "', argument " "1"" of type '" "DenseMat *""'"); 
+  }
+  arg1 = reinterpret_cast< DenseMat * >(argp1);
+  res2 = SWIG_ConvertPtr(swig_obj[1], &argp2,SWIGTYPE_p_Eigen__MatrixT_StagReal_Eigen__Dynamic_Eigen__Dynamic_Eigen__RowMajor_t, 0 |  0 );
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "DenseMat___add__" "', argument " "2"" of type '" "DenseMat *""'"); 
+  }
+  arg2 = reinterpret_cast< DenseMat * >(argp2);
+  {
+    try {
+      result = DenseMat___add__(arg1,arg2);
+    } catch (std::invalid_argument &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::runtime_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::domain_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    }
+  }
+  resultobj = SWIG_NewPointerObj((new DenseMat(static_cast< const DenseMat& >(result))), SWIGTYPE_p_Eigen__MatrixT_StagReal_Eigen__Dynamic_Eigen__Dynamic_Eigen__RowMajor_t, SWIG_POINTER_OWN |  0 );
+  return resultobj;
+fail:
+  PyErr_Clear();
+  Py_INCREF(Py_NotImplemented);
+  return Py_NotImplemented;
+}
+
+
+SWIGINTERN PyObject *_wrap_DenseMat___sub__(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  DenseMat *arg1 = (DenseMat *) 0 ;
+  DenseMat *arg2 = (DenseMat *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  void *argp2 = 0 ;
+  int res2 = 0 ;
+  PyObject *swig_obj[2] ;
+  DenseMat result;
+  
+  if (!SWIG_Python_UnpackTuple(args, "DenseMat___sub__", 2, 2, swig_obj)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_Eigen__MatrixT_StagReal_Eigen__Dynamic_Eigen__Dynamic_Eigen__RowMajor_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DenseMat___sub__" "', argument " "1"" of type '" "DenseMat *""'"); 
+  }
+  arg1 = reinterpret_cast< DenseMat * >(argp1);
+  res2 = SWIG_ConvertPtr(swig_obj[1], &argp2,SWIGTYPE_p_Eigen__MatrixT_StagReal_Eigen__Dynamic_Eigen__Dynamic_Eigen__RowMajor_t, 0 |  0 );
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "DenseMat___sub__" "', argument " "2"" of type '" "DenseMat *""'"); 
+  }
+  arg2 = reinterpret_cast< DenseMat * >(argp2);
+  {
+    try {
+      result = DenseMat___sub__(arg1,arg2);
+    } catch (std::invalid_argument &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::runtime_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::domain_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    }
+  }
+  resultobj = SWIG_NewPointerObj((new DenseMat(static_cast< const DenseMat& >(result))), SWIGTYPE_p_Eigen__MatrixT_StagReal_Eigen__Dynamic_Eigen__Dynamic_Eigen__RowMajor_t, SWIG_POINTER_OWN |  0 );
+  return resultobj;
+fail:
+  PyErr_Clear();
+  Py_INCREF(Py_NotImplemented);
+  return Py_NotImplemented;
+}
+
+
+SWIGINTERN PyObject *_wrap_DenseMat___mul__(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  DenseMat *arg1 = (DenseMat *) 0 ;
+  DenseMat *arg2 = (DenseMat *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  void *argp2 = 0 ;
+  int res2 = 0 ;
+  PyObject *swig_obj[2] ;
+  DenseMat result;
+  
+  if (!SWIG_Python_UnpackTuple(args, "DenseMat___mul__", 2, 2, swig_obj)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_Eigen__MatrixT_StagReal_Eigen__Dynamic_Eigen__Dynamic_Eigen__RowMajor_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DenseMat___mul__" "', argument " "1"" of type '" "DenseMat *""'"); 
+  }
+  arg1 = reinterpret_cast< DenseMat * >(argp1);
+  res2 = SWIG_ConvertPtr(swig_obj[1], &argp2,SWIGTYPE_p_Eigen__MatrixT_StagReal_Eigen__Dynamic_Eigen__Dynamic_Eigen__RowMajor_t, 0 |  0 );
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "DenseMat___mul__" "', argument " "2"" of type '" "DenseMat *""'"); 
+  }
+  arg2 = reinterpret_cast< DenseMat * >(argp2);
+  {
+    try {
+      result = DenseMat___mul__(arg1,arg2);
+    } catch (std::invalid_argument &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::runtime_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::domain_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    }
+  }
+  resultobj = SWIG_NewPointerObj((new DenseMat(static_cast< const DenseMat& >(result))), SWIGTYPE_p_Eigen__MatrixT_StagReal_Eigen__Dynamic_Eigen__Dynamic_Eigen__RowMajor_t, SWIG_POINTER_OWN |  0 );
+  return resultobj;
+fail:
+  PyErr_Clear();
+  Py_INCREF(Py_NotImplemented);
+  return Py_NotImplemented;
+}
+
+
+SWIGINTERN PyObject *_wrap_DenseMat___mulfloat__(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  DenseMat *arg1 = (DenseMat *) 0 ;
+  double arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  double val2 ;
+  int ecode2 = 0 ;
+  PyObject *swig_obj[2] ;
+  DenseMat result;
+  
+  if (!SWIG_Python_UnpackTuple(args, "DenseMat___mulfloat__", 2, 2, swig_obj)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_Eigen__MatrixT_StagReal_Eigen__Dynamic_Eigen__Dynamic_Eigen__RowMajor_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DenseMat___mulfloat__" "', argument " "1"" of type '" "DenseMat *""'"); 
+  }
+  arg1 = reinterpret_cast< DenseMat * >(argp1);
+  ecode2 = SWIG_AsVal_double(swig_obj[1], &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "DenseMat___mulfloat__" "', argument " "2"" of type '" "double""'");
+  } 
+  arg2 = static_cast< double >(val2);
+  {
+    try {
+      result = DenseMat___mulfloat__(arg1,arg2);
+    } catch (std::invalid_argument &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::runtime_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::domain_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    }
+  }
+  resultobj = SWIG_NewPointerObj((new DenseMat(static_cast< const DenseMat& >(result))), SWIGTYPE_p_Eigen__MatrixT_StagReal_Eigen__Dynamic_Eigen__Dynamic_Eigen__RowMajor_t, SWIG_POINTER_OWN |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_DenseMat___mulint__(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  DenseMat *arg1 = (DenseMat *) 0 ;
+  StagInt arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject *swig_obj[2] ;
+  DenseMat result;
+  
+  if (!SWIG_Python_UnpackTuple(args, "DenseMat___mulint__", 2, 2, swig_obj)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_Eigen__MatrixT_StagReal_Eigen__Dynamic_Eigen__Dynamic_Eigen__RowMajor_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DenseMat___mulint__" "', argument " "1"" of type '" "DenseMat *""'"); 
+  }
+  arg1 = reinterpret_cast< DenseMat * >(argp1);
+  {
+    // StagInt typemap (in)
+    if (!PyLong_Check((PyObject *) swig_obj[1])) {
+      PyErr_SetString(PyExc_TypeError, "Expected an integer.");
+      return NULL;
+    }
+    arg2 = (StagInt) PyLong_AsLong((PyObject*) swig_obj[1]);
+  }
+  {
+    try {
+      result = DenseMat___mulint__(arg1,arg2);
+    } catch (std::invalid_argument &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::runtime_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::domain_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    }
+  }
+  resultobj = SWIG_NewPointerObj((new DenseMat(static_cast< const DenseMat& >(result))), SWIGTYPE_p_Eigen__MatrixT_StagReal_Eigen__Dynamic_Eigen__Dynamic_Eigen__RowMajor_t, SWIG_POINTER_OWN |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_DenseMat___neg__(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  DenseMat *arg1 = (DenseMat *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject *swig_obj[1] ;
+  DenseMat result;
+  
+  if (!args) SWIG_fail;
+  swig_obj[0] = args;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_Eigen__MatrixT_StagReal_Eigen__Dynamic_Eigen__Dynamic_Eigen__RowMajor_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DenseMat___neg__" "', argument " "1"" of type '" "DenseMat *""'"); 
+  }
+  arg1 = reinterpret_cast< DenseMat * >(argp1);
+  {
+    try {
+      result = DenseMat___neg__(arg1);
+    } catch (std::invalid_argument &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::runtime_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::domain_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    }
+  }
+  resultobj = SWIG_NewPointerObj((new DenseMat(static_cast< const DenseMat& >(result))), SWIGTYPE_p_Eigen__MatrixT_StagReal_Eigen__Dynamic_Eigen__Dynamic_Eigen__RowMajor_t, SWIG_POINTER_OWN |  0 );
+  return resultobj;
+fail:
+  PyErr_Clear();
+  Py_INCREF(Py_NotImplemented);
+  return Py_NotImplemented;
+}
+
+
+SWIGINTERN PyObject *_wrap_DenseMat___truedivfloat__(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  DenseMat *arg1 = (DenseMat *) 0 ;
+  double arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  double val2 ;
+  int ecode2 = 0 ;
+  PyObject *swig_obj[2] ;
+  DenseMat result;
+  
+  if (!SWIG_Python_UnpackTuple(args, "DenseMat___truedivfloat__", 2, 2, swig_obj)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_Eigen__MatrixT_StagReal_Eigen__Dynamic_Eigen__Dynamic_Eigen__RowMajor_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DenseMat___truedivfloat__" "', argument " "1"" of type '" "DenseMat *""'"); 
+  }
+  arg1 = reinterpret_cast< DenseMat * >(argp1);
+  ecode2 = SWIG_AsVal_double(swig_obj[1], &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "DenseMat___truedivfloat__" "', argument " "2"" of type '" "double""'");
+  } 
+  arg2 = static_cast< double >(val2);
+  {
+    try {
+      result = DenseMat___truedivfloat__(arg1,arg2);
+    } catch (std::invalid_argument &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::runtime_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::domain_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    }
+  }
+  resultobj = SWIG_NewPointerObj((new DenseMat(static_cast< const DenseMat& >(result))), SWIGTYPE_p_Eigen__MatrixT_StagReal_Eigen__Dynamic_Eigen__Dynamic_Eigen__RowMajor_t, SWIG_POINTER_OWN |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_DenseMat___truedivint__(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  DenseMat *arg1 = (DenseMat *) 0 ;
+  StagInt arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject *swig_obj[2] ;
+  DenseMat result;
+  
+  if (!SWIG_Python_UnpackTuple(args, "DenseMat___truedivint__", 2, 2, swig_obj)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_Eigen__MatrixT_StagReal_Eigen__Dynamic_Eigen__Dynamic_Eigen__RowMajor_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DenseMat___truedivint__" "', argument " "1"" of type '" "DenseMat *""'"); 
+  }
+  arg1 = reinterpret_cast< DenseMat * >(argp1);
+  {
+    // StagInt typemap (in)
+    if (!PyLong_Check((PyObject *) swig_obj[1])) {
+      PyErr_SetString(PyExc_TypeError, "Expected an integer.");
+      return NULL;
+    }
+    arg2 = (StagInt) PyLong_AsLong((PyObject*) swig_obj[1]);
+  }
+  {
+    try {
+      result = DenseMat___truedivint__(arg1,arg2);
+    } catch (std::invalid_argument &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::runtime_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::domain_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    }
+  }
+  resultobj = SWIG_NewPointerObj((new DenseMat(static_cast< const DenseMat& >(result))), SWIGTYPE_p_Eigen__MatrixT_StagReal_Eigen__Dynamic_Eigen__Dynamic_Eigen__RowMajor_t, SWIG_POINTER_OWN |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_DenseMat___transpose__(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  DenseMat *arg1 = (DenseMat *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject *swig_obj[1] ;
+  DenseMat result;
+  
+  if (!args) SWIG_fail;
+  swig_obj[0] = args;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_Eigen__MatrixT_StagReal_Eigen__Dynamic_Eigen__Dynamic_Eigen__RowMajor_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DenseMat___transpose__" "', argument " "1"" of type '" "DenseMat *""'"); 
+  }
+  arg1 = reinterpret_cast< DenseMat * >(argp1);
+  {
+    try {
+      result = DenseMat___transpose__(arg1);
+    } catch (std::invalid_argument &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::runtime_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::domain_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    }
+  }
+  resultobj = SWIG_NewPointerObj((new DenseMat(static_cast< const DenseMat& >(result))), SWIGTYPE_p_Eigen__MatrixT_StagReal_Eigen__Dynamic_Eigen__Dynamic_Eigen__RowMajor_t, SWIG_POINTER_OWN |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_new_DenseMat(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  DenseMat *result = 0 ;
+  
+  if (!SWIG_Python_UnpackTuple(args, "new_DenseMat", 0, 0, 0)) SWIG_fail;
+  {
+    try {
+      result = (DenseMat *)new DenseMat();
+    } catch (std::invalid_argument &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::runtime_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::domain_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    }
+  }
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_Eigen__MatrixT_StagReal_Eigen__Dynamic_Eigen__Dynamic_Eigen__RowMajor_t, SWIG_POINTER_NEW |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *DenseMat_swigregister(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *obj;
+  if (!SWIG_Python_UnpackTuple(args, "swigregister", 1, 1, &obj)) return NULL;
+  SWIG_TypeNewClientData(SWIGTYPE_p_Eigen__MatrixT_StagReal_Eigen__Dynamic_Eigen__Dynamic_Eigen__RowMajor_t, SWIG_NewClientData(obj));
+  return SWIG_Py_Void();
+}
+
+SWIGINTERN PyObject *DenseMat_swiginit(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  return SWIG_Python_InitShadowInstance(args);
+}
+
 SWIGINTERN PyObject *_wrap_delete_SprsMat(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   SprsMat *arg1 = (SprsMat *) 0 ;
@@ -15584,6 +16204,85 @@ fail:
 }
 
 
+SWIGINTERN PyObject *_wrap_denseMatFromNdarray(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Eigen::MatrixXd *arg1 = 0 ;
+  Eigen::MatrixXd temp1 ;
+  PyObject *swig_obj[1] ;
+  DenseMat result;
+  
+  if (!args) SWIG_fail;
+  swig_obj[0] = args;
+  {
+    // In: const&
+    int res = ConvertFromNumpyToEigenMatrix<Eigen::MatrixXd>(&temp1, swig_obj[0]);
+    if (res < 0) return NULL;
+    arg1 = &temp1;
+  }
+  {
+    try {
+      result = denseMatFromNdarray((Eigen::MatrixXd const &)*arg1);
+    } catch (std::invalid_argument &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::runtime_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::domain_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    }
+  }
+  resultobj = SWIG_NewPointerObj((new DenseMat(static_cast< const DenseMat& >(result))), SWIGTYPE_p_Eigen__MatrixT_StagReal_Eigen__Dynamic_Eigen__Dynamic_Eigen__RowMajor_t, SWIG_POINTER_OWN |  0 );
+  
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_ndArrayFromDenseMat(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  DenseMat *arg1 = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject *swig_obj[1] ;
+  Eigen::MatrixXd result;
+  
+  if (!args) SWIG_fail;
+  swig_obj[0] = args;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1, SWIGTYPE_p_Eigen__MatrixT_StagReal_Eigen__Dynamic_Eigen__Dynamic_Eigen__RowMajor_t,  0  | 0);
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ndArrayFromDenseMat" "', argument " "1"" of type '" "DenseMat const &""'"); 
+  }
+  if (!argp1) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "ndArrayFromDenseMat" "', argument " "1"" of type '" "DenseMat const &""'"); 
+  }
+  arg1 = reinterpret_cast< DenseMat * >(argp1);
+  {
+    try {
+      result = ndArrayFromDenseMat((Eigen::Matrix< StagReal,Eigen::Dynamic,Eigen::Dynamic,Eigen::RowMajor > const &)*arg1);
+    } catch (std::invalid_argument &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::runtime_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::domain_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    }
+  }
+  {
+    int res = ConvertFromEigenToNumPyMatrix<Eigen::MatrixXd>(&resultobj, &result);
+    if (res < 0) return NULL;
+  }
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
 static PyMethodDef SwigMethods[] = {
 	 { "SWIG_PyInstanceMethod_New", SWIG_PyInstanceMethod_New, METH_O, NULL},
 	 { "new_TupleMM", _wrap_new_TupleMM, METH_VARARGS, NULL},
@@ -15775,6 +16474,21 @@ static PyMethodDef SwigMethods[] = {
 	 { "delete_E2LSH", _wrap_delete_E2LSH, METH_O, NULL},
 	 { "E2LSH_swigregister", E2LSH_swigregister, METH_O, NULL},
 	 { "E2LSH_swiginit", E2LSH_swiginit, METH_VARARGS, NULL},
+	 { "delete_DenseMat", _wrap_delete_DenseMat, METH_O, NULL},
+	 { "DenseMat_get_rows", _wrap_DenseMat_get_rows, METH_O, NULL},
+	 { "DenseMat_get_cols", _wrap_DenseMat_get_cols, METH_O, NULL},
+	 { "DenseMat___add__", _wrap_DenseMat___add__, METH_VARARGS, NULL},
+	 { "DenseMat___sub__", _wrap_DenseMat___sub__, METH_VARARGS, NULL},
+	 { "DenseMat___mul__", _wrap_DenseMat___mul__, METH_VARARGS, NULL},
+	 { "DenseMat___mulfloat__", _wrap_DenseMat___mulfloat__, METH_VARARGS, NULL},
+	 { "DenseMat___mulint__", _wrap_DenseMat___mulint__, METH_VARARGS, NULL},
+	 { "DenseMat___neg__", _wrap_DenseMat___neg__, METH_O, NULL},
+	 { "DenseMat___truedivfloat__", _wrap_DenseMat___truedivfloat__, METH_VARARGS, NULL},
+	 { "DenseMat___truedivint__", _wrap_DenseMat___truedivint__, METH_VARARGS, NULL},
+	 { "DenseMat___transpose__", _wrap_DenseMat___transpose__, METH_O, NULL},
+	 { "new_DenseMat", _wrap_new_DenseMat, METH_NOARGS, NULL},
+	 { "DenseMat_swigregister", DenseMat_swigregister, METH_O, NULL},
+	 { "DenseMat_swiginit", DenseMat_swiginit, METH_VARARGS, NULL},
 	 { "delete_SprsMat", _wrap_delete_SprsMat, METH_O, NULL},
 	 { "SprsMat_get_rows", _wrap_SprsMat_get_rows, METH_O, NULL},
 	 { "SprsMat_get_cols", _wrap_SprsMat_get_cols, METH_O, NULL},
@@ -15791,6 +16505,8 @@ static PyMethodDef SwigMethods[] = {
 	 { "SprsMat_swigregister", SprsMat_swigregister, METH_O, NULL},
 	 { "SprsMat_swiginit", SprsMat_swiginit, METH_VARARGS, NULL},
 	 { "sprsMatFromVectorsDims", _wrap_sprsMatFromVectorsDims, METH_VARARGS, NULL},
+	 { "denseMatFromNdarray", _wrap_denseMatFromNdarray, METH_O, NULL},
+	 { "ndArrayFromDenseMat", _wrap_ndArrayFromDenseMat, METH_O, NULL},
 	 { NULL, NULL, 0, NULL }
 };
 

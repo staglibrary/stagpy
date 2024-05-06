@@ -37,7 +37,6 @@
 %}
 %eigen_typemaps(Eigen::VectorXd)
 %eigen_typemaps(Eigen::MatrixXd)
-%eigen_typemaps(DenseMat)
 
 // Create bindings for tuples
 %include <std_tuple.i>
@@ -195,6 +194,64 @@
 %include "stag_lib/lsh.h"
 %include "stag_lib/definitions.h"
 
+// Include a destructor for the dense matrix type
+class DenseMat {
+public:
+    ~DenseMat();
+};
+
+// Allow use of operators for DenseMat objects
+%extend DenseMat {
+    StagInt get_rows() {
+        return $self->rows();
+    }
+
+    StagInt get_cols() {
+        return $self->cols();
+    }
+
+    DenseMat __add__(DenseMat* other) {
+        return *$self + *other;
+    }
+
+    DenseMat __sub__(DenseMat* other) {
+        return *$self - *other;
+    }
+
+    DenseMat __mul__(DenseMat* other) {
+        return *$self * *other;
+    }
+
+    DenseMat __mulfloat__(double other) {
+        return other * *$self;
+    }
+
+    DenseMat __mulint__(StagInt other) {
+        return other * *$self;
+    }
+
+    DenseMat __neg__() {
+        return - *$self;
+    }
+
+    DenseMat __truedivfloat__(double other) {
+        return *$self / other;
+    }
+
+    DenseMat __truedivint__(StagInt other) {
+        return *$self / other;
+    }
+
+    // This is not a standard Python operator!
+    // We add it for convenience.
+    DenseMat __transpose__() {
+        return $self->transpose();
+    }
+}
+
+
+// Allow use of operators for DenseMat objects
+
 // Include a destructor for the sparse matrix type
 class SprsMat {
 public:
@@ -257,7 +314,7 @@ public:
     }
 }
 
-// Add some code for constructing stag SprsMats from vectors.
+// Add some code for constructing stag SprsMatsfrom vectors.
 %inline %{
 SprsMat sprsMatFromVectorsDims(long rows,
                                long cols,
@@ -291,7 +348,20 @@ SprsMat sprsMatFromVectorsDims(long rows,
 
 %}
 
-// Add some code for computing the eigensystem with the correct sort rule
+// Construct stag DenseMat matrices from numpy ndarrays.
+// We use the fact that we've implemented typemaps to and from numpy arrays
+// for the Eigen::MatrixXd type, but not the DenseMat type.
+%inline %{
+DenseMat denseMatFromNdarray(const Eigen::MatrixXd& mat) {
+    DenseMat newDenseMat = mat;
+    return newDenseMat;
+}
+
+Eigen::MatrixXd ndArrayFromDenseMat(const DenseMat& mat) {
+    Eigen::MatrixXd new_mat = mat;
+    return new_mat;
+}
+%}
 
 // Metadata about the python interface
 #define VERSION "1.2.1"

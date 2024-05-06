@@ -7,6 +7,62 @@ import inspect
 import numpy as np
 from typing import Union, List, Tuple
 
+class DenseMat(object):
+    """
+    An object representing a dense matrix for use with the STAG library.
+    The data is stored natively on the 'C++' side of the library, allowing
+    for fast computation.
+
+    The object is designed for easy interoperability with numpy ndarray
+    objects. The DenseMat object can be constructed directly from a numpy
+    ndarray object, and the to_numpy() method can be used to convert back
+    to a numpy ndarray.
+
+    If they are only used as arguments to STAG library methods, they will be
+    very efficient since the data will stay on the C++ side of the library.
+    """
+
+    def __init__(self, matrix: Union[np.ndarray, List[List[float]]]):
+        """
+        Construct a STAG DenseMat.
+
+        Pass either a numpy ndarray or a List of Lists representing the matrix.
+        """
+        ##
+        # \cond
+        # Do not document the internal workings of the DenseMat object
+        ##
+        self.numpy_mat = None
+
+        if isinstance(matrix, np.ndarray):
+            self.numpy_mat = matrix.astype(float)
+        if isinstance(matrix, List):
+            self.numpy_mat = np.ndarray(matrix, dtype=float)
+
+        if isinstance(matrix, stag_internal.DenseMat):
+            self.internal_densemat = matrix
+        else:
+            assert self.numpy_mat is not None
+            self.internal_densemat = stag_internal.denseMatFromNdarray(self.numpy_mat)
+        ##
+        # \endcond
+        ##
+
+    def to_numpy(self):
+        """
+        Convert the STAG DenseMat object to a numpy matrix.
+        """
+        if self.numpy_mat is None:
+            self.numpy_mat = stag_internal.ndArrayFromDenseMat(self.internal_densemat)
+        return self.numpy_mat
+
+    def transpose(self) -> 'DenseMat':
+        """
+        Return the transpose of the matrix.
+        """
+        return DenseMat(self.internal_densemat.__transpose__())
+
+
 class SprsMat(object):
     """
     An object representing a sparse matrix for use by the STAG library.

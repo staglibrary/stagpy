@@ -642,6 +642,50 @@ def E2LSH_collision_probability(*args):
     return _stag_internal.E2LSH_collision_probability(*args)
 
 EPSILON = _stag_internal.EPSILON
+class DenseMat(object):
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
+    __repr__ = _swig_repr
+    __swig_destroy__ = _stag_internal.delete_DenseMat
+
+    def get_rows(self):
+        return _stag_internal.DenseMat_get_rows(self)
+
+    def get_cols(self):
+        return _stag_internal.DenseMat_get_cols(self)
+
+    def __add__(self, other):
+        return _stag_internal.DenseMat___add__(self, other)
+
+    def __sub__(self, other):
+        return _stag_internal.DenseMat___sub__(self, other)
+
+    def __mul__(self, other):
+        return _stag_internal.DenseMat___mul__(self, other)
+
+    def __mulfloat__(self, other):
+        return _stag_internal.DenseMat___mulfloat__(self, other)
+
+    def __mulint__(self, other):
+        return _stag_internal.DenseMat___mulint__(self, other)
+
+    def __neg__(self):
+        return _stag_internal.DenseMat___neg__(self)
+
+    def __truedivfloat__(self, other):
+        return _stag_internal.DenseMat___truedivfloat__(self, other)
+
+    def __truedivint__(self, other):
+        return _stag_internal.DenseMat___truedivint__(self, other)
+
+    def __transpose__(self):
+        return _stag_internal.DenseMat___transpose__(self)
+
+    def __init__(self):
+        _stag_internal.DenseMat_swiginit(self, _stag_internal.new_DenseMat())
+
+# Register DenseMat in _stag_internal:
+_stag_internal.DenseMat_swigregister(DenseMat)
+
 class SprsMat(object):
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
     __repr__ = _swig_repr
@@ -689,6 +733,12 @@ _stag_internal.SprsMat_swigregister(SprsMat)
 
 def sprsMatFromVectorsDims(rows, cols, column_starts, row_indices, values):
     return _stag_internal.sprsMatFromVectorsDims(rows, cols, column_starts, row_indices, values)
+
+def denseMatFromNdarray(mat):
+    return _stag_internal.denseMatFromNdarray(mat)
+
+def ndArrayFromDenseMat(mat):
+    return _stag_internal.ndArrayFromDenseMat(mat)
 VERSION = _stag_internal.VERSION
 
 

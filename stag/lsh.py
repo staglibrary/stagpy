@@ -123,6 +123,8 @@ class E2LSH(object):
     """
 
     def __init__(self, K: int, L: int, dataset: List[stag.data.DataPoint]):
+        self.K = K
+        self.L = L
         self.internal_e2lsh = stag.stag_internal.E2LSH(
             K, L, [dp.internal_datapoint for dp in dataset])
 
@@ -133,4 +135,4 @@ class E2LSH(object):
         return results
 
     def collision_probability(self, distance: float) -> float:
-        return self.internal_e2lsh.collision_probability(distance)
+        return stag.stag_internal.E2LSH.collision_probability(self.K, self.L, distance)

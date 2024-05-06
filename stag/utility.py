@@ -37,7 +37,7 @@ class DenseMat(object):
         if isinstance(matrix, np.ndarray):
             self.numpy_mat = matrix.astype(float)
         if isinstance(matrix, List):
-            self.numpy_mat = np.ndarray(matrix, dtype=float)
+            self.numpy_mat = np.asarray(matrix, dtype=float)
 
         if isinstance(matrix, stag_internal.DenseMat):
             self.internal_densemat = matrix
@@ -61,6 +61,79 @@ class DenseMat(object):
         Return the transpose of the matrix.
         """
         return DenseMat(self.internal_densemat.__transpose__())
+
+    def shape(self) -> Tuple[int, int]:
+        """
+        Return the shape of the matrix.
+        """
+        return self.internal_densemat.get_rows(), self.internal_densemat.get_cols()
+
+    ##
+    # \cond
+    # Do not document the operator methods
+    ##
+    def __sub__(self, other):
+        if isinstance(other, DenseMat):
+            if self.shape() != other.shape():
+                raise ValueError(f"Matrix dimensions must match. {self.shape()} != {other.shape()}.")
+            return DenseMat(self.internal_densemat - other.internal_densemat)
+        else:
+            return NotImplemented
+
+    def __rsub__(self, other):
+        if isinstance(other, DenseMat):
+            if self.shape() != other.shape():
+                raise ValueError("Matrix dimensions must match.")
+            return DenseMat(other.internal_densemat - self.internal_densemat)
+        else:
+            return NotImplemented
+
+    def __neg__(self):
+        return DenseMat(-self.internal_densemat)
+
+    def __add__(self, other):
+        if isinstance(other, DenseMat):
+            if self.shape() != other.shape():
+                raise ValueError("Matrix dimensions must match.")
+            return DenseMat(self.internal_densemat + other.internal_densemat)
+        else:
+            return NotImplemented
+
+    def __radd__(self, other):
+        return self.__add__(other)
+
+    def __mul__(self, other):
+        if isinstance(other, int):
+            return DenseMat(self.internal_densemat.__mulint__(other))
+        elif isinstance(other, float):
+            return DenseMat(self.internal_densemat.__mulfloat__(other))
+        elif isinstance(other, DenseMat):
+            return DenseMat(self.internal_densemat * other.internal_densemat)
+        else:
+            return NotImplemented
+
+    def __rmul__(self, other):
+        if isinstance(other, DenseMat):
+            return DenseMat(other.internal_densemat * self.internal_densemat)
+        else:
+            return self.__mul__(other)
+
+    def __matmul__(self, other):
+        return self.__mul__(other)
+
+    def __rmatmul__(self, other):
+        return self.__rmul__(other)
+
+    def __truediv__(self, other):
+        if isinstance(other, int):
+            return DenseMat(self.internal_densemat.__truedivint__(other))
+        elif isinstance(other, float):
+            return DenseMat(self.internal_densemat.__truedivfloat__(other))
+        else:
+            return NotImplemented
+    ##
+    # \endcond
+    ##
 
 
 class SprsMat(object):

@@ -327,7 +327,7 @@ def symmetric_difference(s: np.ndarray, t: np.ndarray) -> np.ndarray:
 
 
 def approximate_similarity_graph(data: utility.DenseMat, a: float) -> graph.Graph:
-    """
+    r"""
     Construct an approximate similarity graph for the given dataset.
 
     Given datapoints \f$\{x_1, \ldots, x_n\} \in \mathbb{R}^n\f$ and a
@@ -351,11 +351,11 @@ def approximate_similarity_graph(data: utility.DenseMat, a: float) -> graph.Grap
     Peter Macgregor and He Sun, Fast Approximation of Similarity Graphs with
     Kernel Density Estimation. In NeurIPS'23.
     """
-    return graph.Graph(stag_internal.similarity_graph(data.internal_densemat, a))
+    return graph.Graph(stag_internal.approximate_similarity_graph(data.internal_densemat, a))
 
 
 def similarity_graph(data: utility.DenseMat, a: float):
-    """
+    r"""
     Construct a complete similarity graph for the given dataset.
 
     Given datapoints \f$\{x_1, \ldots, x_n\} \in \mathbb{R}^n\f$ and a

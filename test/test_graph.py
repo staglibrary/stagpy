@@ -548,3 +548,21 @@ def test_initialise_with_negative_weights():
     # Initialising a graph should throw an error
     with pytest.raises(AttributeError):
         _ = stag.graph.Graph(mat)
+
+        
+def test_square_adjacency():
+    # See stagpy issue #49.
+    # Create a graph with some nodes of degree 0.
+    g = stag.random.sbm(100, 10, 0.01, 0)
+
+    # Check that the adjacency matrix is square
+    adj = g.adjacency()
+    rows = adj.shape()[0]
+    cols = adj.shape()[1]
+    assert(rows == cols)
+
+    # Matrix should still be square when converted to scipy
+    adj = adj.to_scipy()
+    rows = adj.shape[0]
+    cols = adj.shape[1]
+    assert(rows == cols)

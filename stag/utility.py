@@ -48,7 +48,7 @@ class DenseMat(object):
         # \endcond
         ##
 
-    def to_numpy(self):
+    def to_numpy(self) -> np.ndarray:
         """
         Convert the STAG DenseMat object to a numpy matrix.
         """

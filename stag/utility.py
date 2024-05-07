@@ -1,6 +1,7 @@
 """
 Some objects used for interoperability between C++ and Python.
 """
+import stag.utility
 from . import stag_internal
 import scipy.sparse
 import inspect
@@ -67,6 +68,18 @@ class DenseMat(object):
         Return the shape of the matrix.
         """
         return self.internal_densemat.get_rows(), self.internal_densemat.get_cols()
+
+    def rows(self) -> int:
+        """
+        Return the number of rows in the matrix.
+        """
+        return self.internal_densemat.get_rows()
+
+    def cols(self) -> int:
+        """
+        Return the number of columns in the matrix.
+        """
+        return self.internal_densemat.get_cols()
 
     ##
     # \cond

@@ -29,7 +29,6 @@
     #include "stag_lib/kde.h"
 %}
 
-// Eigen / numpy stuff
 // We intend to make C++ vectors interface seamlessly with numpy arrays
 // from the perspective of the end user.
 %init %{

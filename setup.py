@@ -41,7 +41,7 @@ ext_modules = [Extension(name='stag._stag_internal',
                                   "stag/stag_lib/kde.cpp",
                                   "stag/stag_lib/KMeansRex/KMeansRexCore.cpp"
                                   ],
-                         include_dirs=["stag/eigen-3.3.9",
+                         include_dirs=["stag/eigen-3.4.0",
                                        "stag/spectra-1.0.1",
                                        "stag/stag_lib",
                                        "stag/stag_lib/KMeansRex",

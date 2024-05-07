@@ -36,3 +36,10 @@ def test_eigensystem():
         g, 'NormalisedLaplacian', 4, 'Smallest')
     assert np.allclose(min(eigval), np.asarray([0]))
     assert(eigvec[:, np.argmin(eigval)][3] == pytest.approx(1 / math.sqrt(10)))
+
+
+def test_real_eigenvalues():
+    g = stag.random.sbm(1000, 2, 0.1, 0.01)
+    eigvals = stag.spectrum.compute_eigenvalues(
+        g, 'NormalisedLaplacian', 4, 'Smallest')
+    assert(eigvals.dtype == np.dtype('float'))

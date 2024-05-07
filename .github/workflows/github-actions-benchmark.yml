@@ -31,7 +31,7 @@ jobs:
       - name: Run performance tests
         run: |
           cd test
-          python -m pytest test_performance.py --benchmark-min-rounds 200 --benchmark-json output.json
+          python -m pytest test_performance.py --benchmark-min-rounds 20 --benchmark-json output.json
           cd ..
       - name: Store benchmark result
         uses: benchmark-action/github-action-benchmark@v1

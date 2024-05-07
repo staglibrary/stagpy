@@ -1,6 +1,7 @@
 """
 Tests for handling reading and writing graphs to disk.
 """
+import pytest
 import scipy as sp
 import scipy.sparse
 from context import stag
@@ -119,3 +120,11 @@ def test_adjacencylist():
     stag.graphio.adjacencylist_to_edgelist(adjlist_fname, temp_edgelist_fname)
     edge_g = stag.graphio.load_edgelist(temp_edgelist_fname)
     assert edge_g == adj_g
+
+
+def test_bad_directory():
+    g = stag.graph.complete_graph(10)
+    bad_filename = "/bad/path/file.edgelist"
+
+    with pytest.raises(AttributeError):
+        stag.graphio.save_edgelist(g, bad_filename)

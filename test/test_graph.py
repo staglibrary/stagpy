@@ -535,3 +535,21 @@ def test_add_vertices():
                                              [0, 1.5, 0, 0, 0, 0]])
     mat_diff = g.adjacency().to_scipy() - expected_adj_mat
     assert (np.all(mat_diff.todense() == pytest.approx(0)))
+
+
+def test_square_adjacency():
+    # See stagpy issue #49.
+    # Create a graph with some nodes of degree 0.
+    g = stag.random.sbm(100, 10, 0.01, 0)
+
+    # Check that the adjacency matrix is square
+    adj = g.adjacency()
+    rows = adj.shape()[0]
+    cols = adj.shape()[1]
+    assert(rows == cols)
+
+    # Matrix should still be square when converted to scipy
+    adj = adj.to_scipy()
+    rows = adj.shape[0]
+    cols = adj.shape[1]
+    assert(rows == cols)

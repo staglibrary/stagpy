@@ -151,7 +151,7 @@ class E2LSH(object):
         @return a list of stag.data.DataPoint objects representing the colliding
                 data points.
         """
-        results = [data.DataPoint(None, None, int_dp=dp) for dp in self.internal_e2lsh.get_near_neighbors(query.internal_datapoint)]
+        results = [data.DataPoint(dp, None) for dp in self.internal_e2lsh.get_near_neighbors(query.internal_datapoint)]
         for dp in results:
             dp.__parent = self
         return results

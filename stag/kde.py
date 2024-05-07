@@ -128,9 +128,9 @@ class CKNSGaussianKDE(object):
         \f$O(\epsilon^{-2} n^{1.25} \log^2(n))\f$ and the query time for each
         query point is \f$(O(\epsilon^{-2} n^{0.25} \log^2(n))\f$.
 
-        Usually, the data structure can be initialised only the dataset, and the
-        parameter a.
-        If more fine-grained control is needed, the eps and min_mu parameters
+        Usually, the data structure can be initialised with only the dataset and the
+        parameter \f$a\f$.
+        If more control is needed, the eps and min_mu parameters
         offer a trade-off between running time and accuracy.
 
         For those familiar with the inner workings of the CKNS algorithm, the
@@ -154,12 +154,12 @@ class CKNSGaussianKDE(object):
         @param k2_constant (optional) controls the collision probability of each
                            of the E2LSH hash tables used within the data structure.
                            A higher value will give more accurate estimates at the cost of
-                           higher memory and time complexity. It is usually set to \f$0.1 \log(n)\f$.
+                           higher memory and time complexity. Default is \f$0.1 \log(n)\f$.
         @param sampling_offset (optional) the CKNS algorithm samples the dataset with
                                various sampling probabilities. Setting a sampling offset
                                of \f$k\f$ will further subsample the data by a factor
                                of \f$1/2^k\f$. This will speed up the algorithm at the cost
-                               of some accuracy. It is usually set to \f$0\f$.
+                               of some accuracy. Default is \f$0\f$.
         """
         n = data.internal_densemat.get_rows()
         if min_mu is None:
@@ -179,11 +179,12 @@ class CKNSGaussianKDE(object):
         one data point, or a stag.utility.DenseMat matrix with the query points
         as rows in order to query many data points.
 
-        For querying many data points, passing the queries as a DenseMat will
-        be more efficient.
+        When querying many data points, passing a DenseMat will
+        be more efficient than calling this method once for each data point.
 
         @param q the query data point(s)
-        @return the KDE estimate(s) for the given query point(s)
+        @return the KDE estimate(s) for the given query point(s), either as a
+                float (for one data point) or a numpy array.
         """
         if isinstance(q, stag.data.DataPoint):
             return self.internal_ckns.query(q.internal_datapoint)
@@ -198,7 +199,7 @@ class ExactGaussianKDE(object):
     This data structure uses a brute-force algorithm to compute the kernel
     density of each query point.
 
-    The time complexity of initialisation with \f$n\f$ data points is \f$O(n)\f$.
+    The time complexity of initialisation with \f$n\f$ data points is \f$O(1)\f$.
     The query time complexity is \f$O(m n d)\f$, where \f$m\f$ is the number
     of query points, and \f$d\f$ is the dimensionality of the data.
     """

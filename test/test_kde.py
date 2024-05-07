@@ -101,3 +101,16 @@ def test_ckns_explicit_constants():
     ckns_kde = stag.kde.CKNSGaussianKDE(data, a, k1=k1, k2_constant=k2_constant,
                                         min_mu=min_mu, sampling_offset=offset)
     assert_ckns_relative_error(ckns_kde, data, a, 0.25)
+
+
+def test_ckns_mnist():
+    # Load the mnist dataset
+    filename = "data/mnist.txt"
+    data = stag.data.load_matrix(filename)
+
+    # Create a CKNS kde estimator
+    a = 0.000001
+    ckns_kde = stag.kde.CKNSGaussianKDE(data, a)
+    assert_ckns_relative_error(ckns_kde, data, a, 0.5)
+
+

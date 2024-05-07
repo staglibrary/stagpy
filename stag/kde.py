@@ -107,7 +107,7 @@ class CKNSGaussianKDE(object):
     """
 
     def __init__(self, data: stag.utility.DenseMat, a: float,
-                 eps: float = 0.5,
+                 eps: float = 1,
                  min_mu: float = None,
                  k1: int = None,
                  k2_constant: float = None,
@@ -140,7 +140,8 @@ class CKNSGaussianKDE(object):
         @param data the \f$(n \times d)\f$ matrix containing the dataset.
         @param a the parameter \f$a\f$ of the Gaussian kernel function.
         @param eps (optional) the error parameter \f$\epsilon\f$ of the KDE data
-                   structure. Default is 0.5.
+                   structure. Default is 1 (in practice this normally gives a
+                   good result).
         @param min_mu (optional) the minimum kernel density value of any query
                       point. A smaller number will give longer preprocessing and
                       query time complexity. If a query point has a kernel density

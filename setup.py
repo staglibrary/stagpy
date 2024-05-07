@@ -6,7 +6,7 @@ from distutils.core import setup, Extension
 
 import numpy
 
-VERSION = '1.2.1'
+VERSION = '2.0.0'
 DESCRIPTION = 'STAG: Spectral Toolkit of Algorithms for Graphs'
 LONG_DESCRIPTION =\
     "This library provides several methods and algorithms relating to spectral graph theory in python."
@@ -36,6 +36,9 @@ ext_modules = [Extension(name='stag._stag_internal',
                                   "stag/stag_lib/cluster.cpp",
                                   "stag/stag_lib/utility.cpp",
                                   "stag/stag_lib/spectrum.cpp",
+                                  "stag/stag_lib/data.cpp",
+                                  "stag/stag_lib/lsh.cpp",
+                                  "stag/stag_lib/kde.cpp",
                                   "stag/stag_lib/KMeansRex/KMeansRexCore.cpp"
                                   ],
                          include_dirs=["stag/eigen-3.3.9",

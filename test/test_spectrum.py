@@ -32,6 +32,7 @@ def test_power_method():
 
 def test_eigensystem():
     g = stag.graph.complete_graph(10)
-    eigval, eigvec = stag.spectrum.compute_eigensystem(g.normalised_laplacian(), 4)
+    eigval, eigvec = stag.spectrum.compute_eigensystem(
+        g, 'NormalisedLaplacian', 4, 'Smallest')
     assert np.allclose(min(eigval), np.asarray([0]))
-    assert eigvec[:, np.argmin(eigval)][3] == - 1 / math.sqrt(10)
+    assert(eigvec[:, np.argmin(eigval)][3] == pytest.approx(1 / math.sqrt(10)))

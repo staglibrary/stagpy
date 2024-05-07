@@ -324,3 +324,54 @@ def symmetric_difference(s: np.ndarray, t: np.ndarray) -> np.ndarray:
              \f$S\f$ and \f$T\f$.
     """
     return stag_internal.symmetric_difference(s, t)
+
+
+def approximate_similarity_graph(data: utility.DenseMat, a: float) -> graph.Graph:
+    r"""
+    Construct an approximate similarity graph for the given dataset.
+
+    Given datapoints \f$\{x_1, \ldots, x_n\} \in \mathbb{R}^n\f$ and a
+    parameter \f$a\f$, the similarity between two data points is given by
+    \f[
+       k(x_i, x_j) = \mathrm{exp}\left(- a \|x_i - x_j\|^2 \right).
+    \f]
+    Then, the similarity graph of the data is a complete graph on \f$n\f$ vertices
+    such that the weight between vertex \f$i\f$ and \f$j\f$ is given by \f$k(x_i, x_j)\f$.
+    However, the complete similarity graph requires \f$O(n^2)\f$ time and space to construct.
+
+    This method implements an algorithm which approximates the similarity graph
+    with a sparse graph, while preserving any cluster structure of the graph.
+    This algorithm has running time \f$\widetilde{O}(n^{1.25})\f$.
+
+    @param data an \f$n \times d\f$ matrix representing the dataset.
+    @param a the parameter of the similarity kernel.
+    @return a stag.graph.Graph object representing the similarity of the data
+
+    \par Reference
+    Peter Macgregor and He Sun, Fast Approximation of Similarity Graphs with
+    Kernel Density Estimation. In NeurIPS'23.
+    """
+    return graph.Graph(stag_internal.approximate_similarity_graph(data.internal_densemat, a))
+
+
+def similarity_graph(data: utility.DenseMat, a: float) -> graph.Graph:
+    r"""
+    Construct a complete similarity graph for the given dataset.
+
+    Given datapoints \f$\{x_1, \ldots, x_n\} \in \mathbb{R}^n\f$ and a
+    parameter \f$a\f$, the similarity between two data points is given by
+    \f[
+       k(x_i, x_j) = \mathrm{exp}\left(- a \|x_i - x_j\|^2 \right).
+    \f]
+    Then, the similarity graph of the data is a complete graph on \f$n\f$ vertices
+    such that the weight between vertex \f$i\f$ and \f$j\f$ is given by \f$k(x_i, x_j)\f$.
+
+    Note that the time and space complexity of this method is \f$O(n^2)\f$.
+    For a faster, approximate method, you could consider using
+    stag::approximate_similarity_graph.
+
+    @param data an \f$n \times d\f$ matrix representing the dataset.
+    @param a the parameter of the similarity kernel.
+    @return a stag.graph.Graph object representing the similarity of the data
+    """
+    return graph.Graph(stag_internal.similarity_graph(data.internal_densemat, a))

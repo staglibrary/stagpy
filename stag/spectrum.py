@@ -5,96 +5,123 @@ import numpy as np
 from typing import Tuple
 
 from . import utility
+from . import graph
 from . import stag_internal
 
 
-@utility.convert_sprsmats
-def compute_eigensystem(mat: utility.SprsMat,
+def compute_eigensystem(g: graph.Graph,
+                        matrix: str,
                         num: int,
-                        which: str = 'SM') -> Tuple[np.ndarray, np.ndarray]:
+                        which: str) -> Tuple[np.ndarray, np.ndarray]:
     r"""
-    Compute the eigenvalues and eigenvectors of a given matrix.
+    Compute the eigenvalues and eigenvectors of a given graph matrix.
 
-    By default, this will compute the eigenvalues of smallest magnitude.
-    This default can be overridden by the `which `parameter which takes a
-    string and should take one of the following values.
-      - `SM` will return the eigenvalues with smallest magnitude
-      - `LM` will return the eigenvalues with largest magnitude
+    The second argument controls which graph matrix to use and should be one of
+      - 'Laplacian',
+      - 'NormalisedLaplacian', or
+      - 'Adjacency'.
+
+    The final argument specifies which eigenvalues to compute and should be
+    either
+      - 'Smallest', or
+      - 'Largest'.
 
     The following example demonstrates how to compute the 3 largest eigenvectors
-    and eigenvalues of a cycle graph.
+    and eigenvalues of the normalised Laplacian matrix of a cycle graph.
 
     \code{.py}
         import stag.graph
         import stag.spectrum
 
         myGraph = stag.graph.cycle_graph(10)
-        lap = myGraph.normalised_laplacian()
         eigenvalues, eigenvectors = stag.spectrum.compute_eigensystem(
-            lap, 3, 'LM')
+            myGraph, 'NormalisedLaplacian', 3, 'Largest')
     \endcode
 
-    @param mat the matrix on which to operate
+    @param g the graph whose spectrum you would like to compute
+    @param matrix the name of the graph matrix on which to operate
     @param num the number of eigenvalues and eigenvectors to compute
-    @param which (optional) a string indicating which eigenvectors to calculate
+    @param which whether to compute the smallest or largest eigenvalues
     @returns a tuple containing the computed eigenvalues and eigenvectors
     """
-    # We have configured compute_eigenstystem to accept a boolean value
-    # for whether we are looking for the largest magnitude.
-    largest = which != 'SM'
+    if matrix not in ['Laplacian', 'NormalisedLaplacian', 'Adjacency']:
+        raise ValueError("Matrix must be 'Laplacian', 'NormalisedLaplacian',"
+                         "or 'Adjacency'")
+    mat_conversion = {'Laplacian': stag_internal.Laplacian,
+                      'NormalisedLaplacian': stag_internal.NormalisedLaplacian,
+                      'Adjacency': stag_internal.Adjacency}
+    int_matrix = mat_conversion[matrix]
+
+    if which not in ['Smallest', 'Largest']:
+        raise ValueError("The 'which' argument must be either 'Smallest' or"
+                         "'Largest'.")
+    which_conversion = {'Smallest': stag_internal.Smallest,
+                        'Largest': stag_internal.Largest}
+    int_which = which_conversion[which]
+
+    # Call the internal eigensystem method.
     eigensystem = stag_internal.compute_eigensystem(
-        mat.internal_sprsmat, num, largest)
+        g.internal_graph, int_matrix, num, int_which)
     return eigensystem.get0(), eigensystem.get1()
 
 
-@utility.convert_sprsmats
-def compute_eigenvalues(mat: utility.SprsMat,
+def compute_eigenvalues(g: graph.Graph,
+                        matrix: str,
                         num: int,
-                        which: str = 'SM') -> np.ndarray:
+                        which: str) -> np.ndarray:
     r"""
-    Compute the eigenvalues of a given matrix.
+    Compute the eigenvalues of a specified graph matrix.
 
-    By default, this will compute the eigenvalues of smallest magnitude.
-    This default can be overridden by the which parameter which takes a string
-    and should be one of the following.
-      - `SM` will return the eigenvalues with smallest magnitude
-      - `LM` will return the eigenvalues with largest magnitude
+    The second argument controls which graph matrix to use and should be one of
+      - 'Laplacian',
+      - 'NormalisedLaplacian', or
+      - 'Adjacency'.
+
+    The final argument specifies which eigenvalues to compute and should be
+    either
+      - 'Smallest', or
+      - 'Largest'.
 
     If you would like to calculate the eigenvectors and eigenvalues together, then
     you should instead use stag.spectrum.compute_eigensystem.
 
-    @param mat the matrix on which to operate
+    @param g the graph whose spectrum you would like to compute
+    @param matrix the name of the graph matrix on which to operate
     @param num the number of eigenvalues to compute
-    @param which (optional) a string indicating which eigenvalues to calculate
+    @param which whether to compute the smallest or largest eigenvalues
     @returns a numpy array containing the computed eigenvalues
     """
-    eigs, _ = compute_eigensystem(mat, num, which=which)
+    eigs, _ = compute_eigensystem(g, matrix, num, which)
     return eigs
 
 
-@utility.convert_sprsmats
-def compute_eigenvectors(mat: utility.SprsMat,
+def compute_eigenvectors(g: graph.Graph,
+                         matrix: str,
                          num: int,
-                         which: str = 'SM') -> np.ndarray:
+                         which: str) -> np.ndarray:
     r"""
-    Compute the eigenvectors of a given matrix.
+    Compute the eigenvectors of a specified graph matrix.
 
-    By default, this will compute the eigenvectors corresponding to the
-    eigenvalues of smallest magnitude.
-    This default can be overridden by the which parameter which takes a string
-    and should be one of the following.
-      - `SM` will return the vectors corresponding to eigenvalues with smallest magnitude
-      - `LM` will return the vectors corresponding to eigenvalues with largest magnitude
+    The second argument controls which graph matrix to use and should be one of
+      - 'Laplacian',
+      - 'NormalisedLaplacian', or
+      - 'Adjacency'.
+
+    The final argument specifies which eigenvectors to compute and should be
+    either
+      - 'Smallest', or
+      - 'Largest'.
 
     If you would like to calculate the eigenvectors and eigenvalues together, then
     you should instead use stag.spectrum.compute_eigensystem.
 
-    @param mat the matrix on which to operate
+    @param g the graph whose spectrum you would like to compute
+    @param matrix the name of the graph matrix on which to operate
     @param num the number of eigenvectors to compute
-    @param which (optional) a string indicating which eigenvectors to calculate
+    @param which whether to compute the vectors corresponding to the smallest or largest eigenvalues
     @returns a numpy array containing the computed eigenvectors as columns
     """
-    _, eigvecs = compute_eigensystem(mat, num, which=which)
+    _, eigvecs = compute_eigensystem(g, matrix, num, which)
     return eigvecs
 
 

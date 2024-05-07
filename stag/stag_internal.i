@@ -23,6 +23,10 @@
     #include "stag_lib/graphio.h"
     #include "stag_lib/random.h"
     #include "stag_lib/spectrum.h"
+    #include "stag_lib/data.h"
+    #include "stag_lib/definitions.h"
+    #include "stag_lib/lsh.h"
+    #include "stag_lib/kde.h"
 %}
 
 // Eigen / numpy stuff
@@ -33,12 +37,11 @@
 %}
 %eigen_typemaps(Eigen::VectorXd)
 %eigen_typemaps(Eigen::MatrixXd)
-%eigen_typemaps(DenseMat)
 
 // Create bindings for tuples
 %include <std_tuple.i>
 %std_tuple(TupleMM, SprsMat, SprsMat)
-%std_tuple(Tupleii, stag_int, stag_int)
+%std_tuple(Tupleii, StagInt, StagInt)
 %std_tuple(TupleEigensystem, Eigen::VectorXd, Eigen::MatrixXd)
 
 // Define typemaps for passing by reference
@@ -66,14 +69,32 @@
     }
 }
 
+// Create typemaps for StagInt
+%typemap(out) StagInt {
+    // StagInt typemap (out)
+    $result = PyLong_FromLongLong((long long) $1);
+}
+%typemap(in) StagInt {
+    // StagInt typemap (in)
+    if (!PyLong_Check((PyObject *) $input)) {
+        PyErr_SetString(PyExc_TypeError, "Expected an integer.");
+        return NULL;
+    }
+    $1 = (StagInt) PyLong_AsLong((PyObject*) $input);
+}
+%typemap(typecheck, precedence=SWIG_TYPECHECK_INT64) StagInt {
+    // Typecheck for StagInt
+    $1 = PyLong_Check((PyObject*) $input);
+}
+
 // Create a typemap for a vector of Edge objects
 %typemap(out) std::vector<stag::edge> {
     // Return a vector of edges as a list of tuples
-    stag_int outer_length = $1.size();
+    StagInt outer_length = $1.size();
     $result = PyList_New(outer_length);
 
     // Construct a new 3-tuple for each inner object, and add to the list.
-    for (stag_int i = 0; i < outer_length; i++) {
+    for (StagInt i = 0; i < outer_length; i++) {
         PyObject* new_tuple_object = PyTuple_Pack(
           3,
           PyLong_FromLongLong($1.at(i).v1),
@@ -82,6 +103,68 @@
 
         PyList_SET_ITEM($result, i, new_tuple_object);
     }
+}
+
+// Create an 'out' typemap for a vector of DataPoint objects
+%typemap(out) std::vector<stag::DataPoint> {
+    // Construct a python list of data point objects
+    StagInt outer_length = $1.size();
+    $result = PyList_New(outer_length);
+
+    // Construct a new DataPoint for each inner object, and add to the list.
+    for (StagInt i = 0; i < outer_length; i++) {
+        PyObject* new_datapoint_object = SWIG_NewPointerObj(
+           (new stag::DataPoint($1.at(i).dimension, $1.at(i).coordinates)),
+           SWIGTYPE_p_stag__DataPoint, SWIG_POINTER_OWN |  0 );
+
+        PyList_SET_ITEM($result, i, new_datapoint_object);
+    }
+}
+
+// Create an 'in' typemap for a vector of DataPoint objects
+%typemap(in) std::vector<stag::DataPoint>
+  (PyArrayObject* array=NULL, int is_new_object=0, std::vector<stag::DataPoint> temp_vec)
+{
+    // Typemap (in) for std::vector<stag::DataPoint>
+
+    // Get the number of elements in the python list.
+    StagInt list_size = PyList_Size((PyObject*) $input);
+    temp_vec.reserve(list_size);
+
+    // Construct a new DataPoint for each list object, and add to the vector
+    for (StagInt i = 0; i < list_size; i++) {
+        PyObject* python_datapoint = PyList_GetItem((PyObject*) $input, i);
+        void* cpp_datapoint = 0;
+        int res = SWIG_ConvertPtr(python_datapoint, &cpp_datapoint, SWIGTYPE_p_stag__DataPoint, 0 | 0);
+        temp_vec.push_back(*(reinterpret_cast<stag::DataPoint*>(cpp_datapoint)));
+    }
+
+    $1 = temp_vec;
+}
+
+%typemap(in) std::vector<stag::DataPoint> &
+  (PyArrayObject* array=NULL, int is_new_object=0, std::vector<stag::DataPoint> temp_vec)
+{
+    // Typemap (in) for std::vector<stag::DataPoint>&
+
+    // Get the number of elements in the python list.
+    StagInt list_size = PyList_Size((PyObject*) $input);
+    temp_vec.reserve(list_size);
+
+    // Construct a new DataPoint for each list object, and add to the vector
+    for (StagInt i = 0; i < list_size; i++) {
+        PyObject* python_datapoint = PyList_GetItem((PyObject*) $input, i);
+        void* cpp_datapoint = 0;
+        int res = SWIG_ConvertPtr(python_datapoint, &cpp_datapoint, SWIGTYPE_p_stag__DataPoint, 0 | 0);
+        temp_vec.push_back(*(reinterpret_cast<stag::DataPoint*>(cpp_datapoint)));
+    }
+
+    $1 = &temp_vec;
+}
+
+%typemap(typecheck, precedence=SWIG_TYPECHECK_COMPLEX) std::vector<stag::DataPoint>& {
+    // Typecheck for std::vector<stag::DataPoint>&
+    $1 = 1;
 }
 
 // Create a typemap for the Spectra SortRule
@@ -108,6 +191,68 @@
 %include "stag_lib/graphio.h"
 %include "stag_lib/random.h"
 %include "stag_lib/spectrum.h"
+%include "stag_lib/data.h"
+%include "stag_lib/kde.h"
+%include "stag_lib/lsh.h"
+%include "stag_lib/definitions.h"
+
+// Include a destructor for the dense matrix type
+class DenseMat {
+public:
+    ~DenseMat();
+};
+
+// Allow use of operators for DenseMat objects
+%extend DenseMat {
+    StagInt get_rows() {
+        return $self->rows();
+    }
+
+    StagInt get_cols() {
+        return $self->cols();
+    }
+
+    DenseMat __add__(DenseMat* other) {
+        return *$self + *other;
+    }
+
+    DenseMat __sub__(DenseMat* other) {
+        return *$self - *other;
+    }
+
+    DenseMat __mul__(DenseMat* other) {
+        return *$self * *other;
+    }
+
+    DenseMat __mulfloat__(double other) {
+        return other * *$self;
+    }
+
+    DenseMat __mulint__(StagInt other) {
+        return other * *$self;
+    }
+
+    DenseMat __neg__() {
+        return - *$self;
+    }
+
+    DenseMat __truedivfloat__(double other) {
+        return *$self / other;
+    }
+
+    DenseMat __truedivint__(StagInt other) {
+        return *$self / other;
+    }
+
+    // This is not a standard Python operator!
+    // We add it for convenience.
+    DenseMat __transpose__() {
+        return $self->transpose();
+    }
+}
+
+
+// Allow use of operators for DenseMat objects
 
 // Include a destructor for the sparse matrix type
 class SprsMat {
@@ -117,11 +262,11 @@ public:
 
 // Allow use of operators for SprsMat objects
 %extend SprsMat {
-    stag_int get_rows() {
+    StagInt get_rows() {
         return $self->rows();
     }
 
-    stag_int get_cols() {
+    StagInt get_cols() {
         return $self->cols();
     }
 
@@ -141,7 +286,7 @@ public:
         return other * *$self;
     }
 
-    SprsMat __mulint__(stag_int other) {
+    SprsMat __mulint__(StagInt other) {
         return other * *$self;
     }
 
@@ -153,7 +298,7 @@ public:
         return *$self / other;
     }
 
-    SprsMat __truedivint__(stag_int other) {
+    SprsMat __truedivint__(StagInt other) {
         return *$self / other;
     }
 
@@ -173,10 +318,10 @@ public:
 
 // Add some code for constructing stag SprsMats from vectors.
 %inline %{
-SprsMat sprsMatFromVectorsDims(stag_int rows,
-                               stag_int cols,
-                               std::vector<stag_int>& column_starts,
-                               std::vector<stag_int>& row_indices,
+SprsMat sprsMatFromVectorsDims(long rows,
+                               long cols,
+                               std::vector<StagInt>& column_starts,
+                               std::vector<StagInt>& row_indices,
                                std::vector<double>& values) {
   // The length of the row_indices and values vectors should be the same
   if (row_indices.size() != values.size()) {
@@ -185,7 +330,7 @@ SprsMat sprsMatFromVectorsDims(stag_int rows,
 
   // The last value in the column_starts vector should be equal to the length
   // of the data vectors.
-  if (column_starts.back() != (stag_int) row_indices.size()) {
+  if (column_starts.back() != (StagInt) row_indices.size()) {
     throw std::invalid_argument("Final column starts entry should equal size of data vectors.");
   }
 
@@ -195,7 +340,7 @@ SprsMat sprsMatFromVectorsDims(stag_int rows,
 
   SprsMat constructed_mat = Eigen::Map<SprsMat>(rows,
                                                 cols,
-                                                (stag_int) values.size(),
+                                                (StagInt) values.size(),
                                                 column_starts.data(),
                                                 row_indices.data(),
                                                 values.data());
@@ -205,7 +350,20 @@ SprsMat sprsMatFromVectorsDims(stag_int rows,
 
 %}
 
-// Add some code for computing the eigensystem with the correct sort rule
+// Construct stag DenseMat matrices from numpy ndarrays.
+// We use the fact that we've implemented typemaps to and from numpy arrays
+// for the Eigen::MatrixXd type, but not the DenseMat type.
+%inline %{
+DenseMat denseMatFromNdarray(const Eigen::MatrixXd& mat) {
+    DenseMat newDenseMat = mat;
+    return newDenseMat;
+}
+
+Eigen::MatrixXd ndArrayFromDenseMat(const DenseMat& mat) {
+    Eigen::MatrixXd new_mat = mat;
+    return new_mat;
+}
+%}
 
 // Metadata about the python interface
-#define VERSION "1.2.1"
+#define VERSION "2.0.0"

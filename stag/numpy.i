@@ -3058,11 +3058,11 @@
 %typemap(out) std::vector<std::vector<DATA_TYPE>> {
     // For a nested vector, we'd like to return a python list of numpy
     // arrays.
-    stag_int outer_length = $1.size();
+    StagInt outer_length = $1.size();
     $result = PyList_New(outer_length);
 
     // Construct a new numpy array for each inner object, and add to the list.
-    for (stag_int i = 0; i < outer_length; i++) {
+    for (StagInt i = 0; i < outer_length; i++) {
         npy_intp length = $1.at(i).size();
         PyObject* new_numpy_object = PyArray_SimpleNew(1, &length, DATA_TYPECODE);
         memcpy(PyArray_DATA((PyArrayObject*) new_numpy_object),
@@ -3140,6 +3140,8 @@
 %numpy_typemaps(long              , NPY_LONG     , int)
 %numpy_typemaps(unsigned long     , NPY_ULONG    , int)
 %numpy_typemaps(long long         , NPY_LONGLONG , int)
+%numpy_typemaps(int64_t           , NPY_INT64    , int)
+%numpy_typemaps(size_t            , NPY_ULONG    , int)
 %numpy_typemaps(unsigned long long, NPY_ULONGLONG, int)
 %numpy_typemaps(float             , NPY_FLOAT    , int)
 %numpy_typemaps(double            , NPY_DOUBLE   , int)

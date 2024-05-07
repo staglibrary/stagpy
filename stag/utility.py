@@ -1,11 +1,153 @@
 """
 Some objects used for interoperability between C++ and Python.
 """
+import stag.utility
 from . import stag_internal
 import scipy.sparse
 import inspect
 import numpy as np
 from typing import Union, List, Tuple
+
+class DenseMat(object):
+    """
+    An object representing a dense matrix for use with the STAG library.
+    The data is stored natively on the 'C++' side of the library, allowing
+    for fast computation.
+
+    The object is designed for easy interoperability with numpy ndarray
+    objects. The DenseMat object can be constructed directly from a numpy
+    ndarray object, and the to_numpy() method can be used to convert back
+    to a numpy ndarray.
+
+    If they are only used as arguments to STAG library methods, they will be
+    very efficient since the data will stay on the C++ side of the library.
+    """
+
+    def __init__(self, matrix: Union[np.ndarray, List[List[float]]]):
+        """
+        Construct a STAG DenseMat.
+
+        Pass either a numpy ndarray or a List of Lists representing the matrix.
+        """
+        ##
+        # \cond
+        # Do not document the internal workings of the DenseMat object
+        ##
+        self.numpy_mat = None
+
+        if isinstance(matrix, np.ndarray):
+            self.numpy_mat = matrix.astype(float)
+        if isinstance(matrix, List):
+            self.numpy_mat = np.asarray(matrix, dtype=float)
+
+        if isinstance(matrix, stag_internal.DenseMat):
+            self.internal_densemat = matrix
+        else:
+            assert self.numpy_mat is not None
+            self.internal_densemat = stag_internal.denseMatFromNdarray(self.numpy_mat)
+        ##
+        # \endcond
+        ##
+
+    def to_numpy(self) -> np.ndarray:
+        """
+        Convert the STAG DenseMat object to a numpy matrix.
+        """
+        if self.numpy_mat is None:
+            self.numpy_mat = stag_internal.ndArrayFromDenseMat(self.internal_densemat)
+        return self.numpy_mat
+
+    def transpose(self) -> 'DenseMat':
+        """
+        Return the transpose of the matrix.
+        """
+        return DenseMat(self.internal_densemat.__transpose__())
+
+    def shape(self) -> Tuple[int, int]:
+        """
+        Return the shape of the matrix.
+        """
+        return self.internal_densemat.get_rows(), self.internal_densemat.get_cols()
+
+    def rows(self) -> int:
+        """
+        Return the number of rows in the matrix.
+        """
+        return self.internal_densemat.get_rows()
+
+    def cols(self) -> int:
+        """
+        Return the number of columns in the matrix.
+        """
+        return self.internal_densemat.get_cols()
+
+    ##
+    # \cond
+    # Do not document the operator methods
+    ##
+    def __sub__(self, other):
+        if isinstance(other, DenseMat):
+            if self.shape() != other.shape():
+                raise ValueError(f"Matrix dimensions must match. {self.shape()} != {other.shape()}.")
+            return DenseMat(self.internal_densemat - other.internal_densemat)
+        else:
+            return NotImplemented
+
+    def __rsub__(self, other):
+        if isinstance(other, DenseMat):
+            if self.shape() != other.shape():
+                raise ValueError("Matrix dimensions must match.")
+            return DenseMat(other.internal_densemat - self.internal_densemat)
+        else:
+            return NotImplemented
+
+    def __neg__(self):
+        return DenseMat(-self.internal_densemat)
+
+    def __add__(self, other):
+        if isinstance(other, DenseMat):
+            if self.shape() != other.shape():
+                raise ValueError("Matrix dimensions must match.")
+            return DenseMat(self.internal_densemat + other.internal_densemat)
+        else:
+            return NotImplemented
+
+    def __radd__(self, other):
+        return self.__add__(other)
+
+    def __mul__(self, other):
+        if isinstance(other, int):
+            return DenseMat(self.internal_densemat.__mulint__(other))
+        elif isinstance(other, float):
+            return DenseMat(self.internal_densemat.__mulfloat__(other))
+        elif isinstance(other, DenseMat):
+            return DenseMat(self.internal_densemat * other.internal_densemat)
+        else:
+            return NotImplemented
+
+    def __rmul__(self, other):
+        if isinstance(other, DenseMat):
+            return DenseMat(other.internal_densemat * self.internal_densemat)
+        else:
+            return self.__mul__(other)
+
+    def __matmul__(self, other):
+        return self.__mul__(other)
+
+    def __rmatmul__(self, other):
+        return self.__rmul__(other)
+
+    def __truediv__(self, other):
+        if isinstance(other, int):
+            return DenseMat(self.internal_densemat.__truedivint__(other))
+        elif isinstance(other, float):
+            return DenseMat(self.internal_densemat.__truedivfloat__(other))
+        else:
+            return NotImplemented
+    ##
+    # \endcond
+    ##
+
 
 class SprsMat(object):
     """
@@ -48,10 +190,18 @@ class SprsMat(object):
         ##
         self.scipy_mat = None
 
+        try:
+            if issubclass(type(matrix), scipy.sparse.sparray):
+                # Handle the sparse array format
+                matrix = scipy.sparse.csc_matrix(matrix)
+        except AttributeError:
+            # The sparray attribute could not be found: we are using an
+            # older version of scipy. We can ignore this error.
+            pass
         if issubclass(type(matrix), scipy.sparse.spmatrix):
-            self.scipy_mat = matrix.tocsc()
+            self.scipy_mat = matrix.tocsc().astype(np.double)
         if isinstance(matrix, List):
-            self.scipy_mat = scipy.sparse.csc_matrix(matrix)
+            self.scipy_mat = scipy.sparse.csc_matrix(matrix, dtype=np.double)
 
         if isinstance(matrix, stag_internal.SprsMat):
             self.internal_sprsmat = matrix
@@ -105,7 +255,7 @@ class SprsMat(object):
     def __sub__(self, other):
         if isinstance(other, SprsMat):
             if self.shape() != other.shape():
-                raise ValueError("Matrix dimensions must match.")
+                raise ValueError(f"Matrix dimensions must match. {self.shape()} != {other.shape()}.")
             return SprsMat(self.internal_sprsmat - other.internal_sprsmat)
         else:
             return NotImplemented

@@ -231,3 +231,215 @@ def test_sprsmat_outer_product():
     mat3 = vec1.transpose() @ vec2
     mat_diff = mat3 - expected_mat
     assert(np.all(mat_diff.to_dense() == pytest.approx(0)))
+
+
+def create_test_densemats():
+    mat1 = np.asarray([[0, 1, 0, 1],
+                       [1, 0, 1, 0],
+                       [0, 1, 0, 1],
+                       [1, 0, 1, 0]])
+    mat2 = np.asarray([[2, 0, 1, 1],
+                       [0, 2, 0, 0],
+                       [0, 0, 2, 0],
+                       [1, 1, 0, 2]])
+    densemat1 = stag.utility.DenseMat(mat1)
+    densemat2 = stag.utility.DenseMat(mat2)
+    return densemat1, densemat2
+
+
+def test_add_densemat():
+    densemat1, densemat2 = create_test_densemats()
+    mat3 = (densemat1 + densemat2).to_numpy()
+
+    expected_mat = np.asarray([[2, 1, 1, 2],
+                               [1, 2, 1, 0],
+                               [0, 1, 2, 1],
+                               [2, 1, 1, 2]])
+    mat_diff = mat3 - expected_mat
+    assert(np.all(mat_diff == pytest.approx(0)))
+
+    # Test the compound addition operator
+    densemat1 += densemat2
+    mat_diff = densemat1.to_numpy() - expected_mat
+    assert(np.all(mat_diff == pytest.approx(0)))
+
+
+def test_sub_densemat():
+    densemat1, densemat2 = create_test_densemats()
+    mat3 = (densemat1 - densemat2).to_numpy()
+
+    expected_mat = np.asarray([[-2, 1, -1, 0],
+                               [1, -2, 1, 0],
+                               [0, 1, -2, 1],
+                               [0, -1, 1, -2]])
+    mat_diff = (mat3 - expected_mat)
+    assert(np.all(mat_diff == pytest.approx(0)))
+
+    # Test the compound subtraction operator
+    densemat1 -= densemat2
+    mat_diff = densemat1.to_numpy() - expected_mat
+    assert(np.all(mat_diff == pytest.approx(0)))
+
+
+def test_subtract_bad_shapes_densemat():
+    # Subtracting matrices with different shapes should not work
+    mat1 = stag.utility.DenseMat([[1, 2, 3], [2, 3, 4]])
+    mat2 = stag.utility.DenseMat([[1, 2], [3, 2], [4, 2]])
+
+    assert mat1.shape() == (2, 3)
+    assert mat2.shape() == (3, 2)
+
+    with pytest.raises(Exception):
+        mat3 = mat1 - mat2
+
+
+def test_add_bad_shapes_densemat():
+    # Adding matrices with different shapes should not work
+    mat1 = stag.utility.DenseMat([[1, 2, 3], [2, 3, 4]])
+    mat2 = stag.utility.DenseMat([[1, 2], [3, 2], [4, 2]])
+
+    with pytest.raises(Exception):
+        mat3 = mat1 + mat2
+
+
+def test_unary_negation_densemat():
+    mat1 = np.asarray([[0, 1, 0, 1],
+                       [1, 0, 1, 0],
+                       [0, 1, 0, 1],
+                       [1, 0, 1, 0]])
+    densemat1 = stag.utility.DenseMat(mat1)
+    mat2 = (-densemat1).to_numpy()
+
+    expected_mat = np.asarray([[0, -1, 0, -1],
+                               [-1, 0, -1, 0],
+                               [0, -1, 0, -1],
+                               [-1, 0, -1, 0]])
+    mat_diff = (mat2 - expected_mat)
+    assert(np.all(mat_diff == pytest.approx(0)))
+
+
+def test_scalar_mul_densemat():
+    mat1 = np.asarray([[0, 1, 0, 1],
+                       [1, 0, 1, 0],
+                       [0, 1, 0, 1],
+                       [1, 0, 1, 0]])
+    densemat1 = stag.utility.DenseMat(mat1)
+    mat2 = (2 * densemat1).to_numpy()
+
+    expected_mat = np.asarray([[0, 2, 0, 2],
+                               [2, 0, 2, 0],
+                               [0, 2, 0, 2],
+                               [2, 0, 2, 0]])
+    mat_diff = (mat2 - expected_mat)
+    assert(np.all(mat_diff == pytest.approx(0)))
+
+    mat2 = (densemat1 * 2).to_numpy()
+    mat_diff = (mat2 - expected_mat)
+    assert(np.all(mat_diff == pytest.approx(0)))
+
+    densemat1 *= 2
+    mat_diff = (densemat1.to_numpy() - expected_mat)
+    assert(np.all(mat_diff == pytest.approx(0)))
+
+    mat2 = (0.5 * densemat1).to_numpy()
+    mat_diff = mat2 - mat1
+    assert(np.all(mat_diff == pytest.approx(0)))
+
+
+def test_scalar_div_densemat():
+    mat1 = np.asarray([[0, 2, 0, 2],
+                       [2, 0, 2, 0],
+                       [0, 2, 0, 2],
+                       [2, 0, 2, 0]])
+    densemat1 = stag.utility.DenseMat(mat1)
+    mat2 = (densemat1 / 2).to_numpy()
+
+    expected_mat = np.asarray([[0, 1, 0, 1],
+                               [1, 0, 1, 0],
+                               [0, 1, 0, 1],
+                               [1, 0, 1, 0]])
+    mat_diff = (mat2 - expected_mat)
+    assert(np.all(mat_diff == pytest.approx(0)))
+
+    densemat1 /= 2
+    mat_diff = densemat1.to_numpy() - expected_mat
+    assert(np.all(mat_diff == pytest.approx(0)))
+
+    mat2 = (densemat1 / 0.5).to_numpy()
+    mat_diff = mat2 - mat1
+    assert(np.all(mat_diff == pytest.approx(0)))
+
+
+def test_densemat_transpose():
+    mat1 = stag.utility.DenseMat([[0, 2, 0, 2],
+                                  [1, 0, 2, 0],
+                                  [0, 1, 0, 2],
+                                  [1, 0, 1, 0]])
+    mat2 = mat1.transpose()
+
+    expected_mat = stag.utility.DenseMat([[0, 1, 0, 1],
+                                          [2, 0, 1, 0],
+                                          [0, 2, 0, 1],
+                                          [2, 0, 2, 0]])
+    mat_diff = mat2 - expected_mat
+    assert(np.all(mat_diff.to_numpy() == pytest.approx(0)))
+
+
+def test_densemat_transpose_one_dim():
+    mat1 = stag.utility.DenseMat([[1, 0, 0, 0]])
+    mat2 = mat1.transpose()
+
+    expected_mat = stag.utility.DenseMat([[1], [0], [0], [0]])
+    mat_diff = mat2 - expected_mat
+    assert(np.all(mat_diff.to_numpy() == pytest.approx(0)))
+
+
+def test_densemat_multiplication():
+    mat1 = stag.utility.DenseMat([[0, 1, 0, 1],
+                                  [1, 0, 1, 0],
+                                  [0, 1, 0, 1],
+                                  [1, 0, 1, 0]])
+    mat2 = stag.utility.DenseMat([[0, 3, 1, 1],
+                                  [0, 0, 0, 2],
+                                  [3, 0, 0, 2],
+                                  [1, 1, 1, 1]])
+    expected_mat = stag.utility.DenseMat([[1, 1, 1, 3],
+                                          [3, 3, 1, 3],
+                                          [1, 1, 1, 3],
+                                          [3, 3, 1, 3]])
+    mat3 = mat1 * mat2
+    mat_diff = mat3 - expected_mat
+    assert(np.all(mat_diff.to_numpy() == pytest.approx(0)))
+
+    mat3 = mat1 @ mat2
+    mat_diff = mat3 - expected_mat
+    assert(np.all(mat_diff.to_numpy() == pytest.approx(0)))
+
+    expected_mat = stag.utility.DenseMat([[4, 1, 4, 1],
+                                          [2, 0, 2, 0],
+                                          [2, 3, 2, 3],
+                                          [2, 2, 2, 2]])
+    mat3 = mat2 * mat1
+    mat_diff = mat3 - expected_mat
+    assert(np.all(mat_diff.to_numpy() == pytest.approx(0)))
+
+    mat3 = mat2 @ mat1
+    mat_diff = mat3 - expected_mat
+    assert(np.all(mat_diff.to_numpy() == pytest.approx(0)))
+
+    mat2 *= mat1
+    mat_diff = mat2 - expected_mat
+    assert(np.all(mat_diff.to_numpy() == pytest.approx(0)))
+
+
+def test_densemat_outer_product():
+    vec1 = stag.utility.DenseMat([[1, 2, 0, 1]])
+    vec2 = stag.utility.DenseMat([[0, -2, 1, 0]])
+
+    expected_mat = stag.utility.DenseMat([[0, -2, 1, 0],
+                                          [0, -4, 2, 0],
+                                          [0, 0, 0, 0],
+                                          [0, -2, 1, 0]])
+    mat3 = vec1.transpose() @ vec2
+    mat_diff = mat3 - expected_mat
+    assert(np.all(mat_diff.to_numpy() == pytest.approx(0)))

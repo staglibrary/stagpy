@@ -6,7 +6,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [2.0.0] - Unreleased
 
-See also the release notes for the [STAG C++ 1.3.0 release](https://github.com/staglibrary/stag/releases/tag/v1.3.0).
+See also the release notes for the [STAG C++ 1.3.0 release](https://github.com/staglibrary/stag/releases/tag/v1.3.0)
+and the [STAG C++ 2.0.0 release](https://github.com/staglibrary/stag/releases/tag/v2.0.0).
 
 ### Changed
 This release changes how data is handled in the python library. Now, when possible
@@ -14,6 +15,9 @@ data is always stored on the 'C++' side of the library. The new
 `stag.utility.SprsMat` object is used to represent a sparse matrix whose data is 
 stored on the C++ side. This object provides easy compatibility with scipy sparse
 matrices. This is tracked as [Issue #28](https://github.com/staglibrary/stagpy/issues/28).
+
+This release changes the interface for computing eigenvalues and eigenvectors
+of graph matrices. See the documentation for the release to see the new syntax.
 
 ### Added
 The following changes were released in the STAG C++ 1.3.0 release.

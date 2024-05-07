@@ -7,6 +7,7 @@ import stag.graph
 import stag.cluster
 import stag.random
 import stag.utility
+import stag.data
 
 # Define the adjacency matrices of some useful graphs.
 C4_ADJ_MAT = scipy.sparse.csc_matrix([[0, 1, 0, 1], [1, 0, 1, 0], [0, 1, 0, 1], [1, 0, 1, 0]])
@@ -93,6 +94,28 @@ def test_approximate_pagerank_no_push():
     # Test the behaviour of the approximate pagerank method when there is no
     # push operation.
     graph = 3 * stag.graph.cycle_graph(4)
+
+    # Construct seed matrix.
+    s = scipy.sparse.lil_matrix((1, 1))
+    s[0, 0] = 1
+
+    # Run the personalised pagerank and check that we get the right result
+    p, r = stag.cluster.approximate_pagerank(graph, s.tocsc(), 1./3, 1./2)
+    expected_p = [0]
+    expected_r = [1]
+    np.testing.assert_almost_equal(p.to_dense().transpose().tolist()[0], expected_p)
+    np.testing.assert_almost_equal(r.to_dense().transpose().tolist()[0], expected_r)
+
+
+def test_approximate_pagerank_zero_degree():
+    """See STAG C++ Issue 128."""
+    # Test the behaviour of the approximate pagerank method when the seed
+    # vertex has degree 0.
+    mat = scipy.sparse.csc_matrix([[0, 0, 0, 0],
+                                   [0, 0, 1, 1],
+                                   [0, 1, 0, 1],
+                                   [0, 1, 1, 0]])
+    graph = stag.graph.Graph(mat)
 
     # Construct seed matrix.
     s = scipy.sparse.lil_matrix((1, 1))
@@ -202,3 +225,50 @@ def test_sym_diff():
     t = np.asarray(t)
     sym_diff = stag.cluster.symmetric_difference(s, t)
     assert set(sym_diff) == {2, 3, 4, 6, 7}
+
+
+def test_asg_mnist():
+    # Load the mnist dataseet
+    data = stag.data.load_matrix("data/mnist.txt")
+    a = 0.000001
+
+    # Create the approximate similarity graph from this matrix
+    asg = stag.cluster.approximate_similarity_graph(data, a)
+    assert(asg.number_of_vertices() == data.rows())
+
+    # Load the correct clusters
+    labels = np.squeeze(stag.data.load_matrix("data/mnist_labels.txt").transpose().to_numpy().astype(int))
+
+    # Check that the clustering performance with the asg roughly matches the
+    # performance with the fully connected graph
+    k = 10
+    clusters = stag.cluster.spectral_cluster(asg, k)
+    asg_ari = stag.cluster.adjusted_rand_index(clusters, labels)
+
+    sg = stag.cluster.similarity_graph(data, a)
+    clusters = stag.cluster.spectral_cluster(sg, k)
+    fc_ari = stag.cluster.adjusted_rand_index(clusters, labels)
+    assert(asg_ari >= 0.8 * fc_ari)
+
+
+def test_asg_moons():
+    # Load the moons dataset
+    data = stag.data.load_matrix("data/moons.txt")
+    a = 10
+
+    # Create the approximate similarity graph
+    asg = stag.cluster.approximate_similarity_graph(data, a)
+
+    # Load the correct clusters
+    labels = np.squeeze(stag.data.load_matrix("data/moons_labels.txt").transpose().to_numpy().astype(int))
+
+    # Check the clustering performance
+    k = 2
+    clusters = stag.cluster.spectral_cluster(asg, k)
+    asg_ari = stag.cluster.adjusted_rand_index(clusters, labels)
+
+    sg = stag.cluster.similarity_graph(data, a)
+    clusters = stag.cluster.spectral_cluster(sg, k)
+    fc_ari = stag.cluster.adjusted_rand_index(clusters, labels)
+    assert(fc_ari >= 0.9)
+    assert(asg_ari >= 0.8 * fc_ari)

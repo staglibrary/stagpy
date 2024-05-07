@@ -10,6 +10,7 @@ from context import stag
 import stag.graph
 import stag.random
 import stag.graphio
+import stag.utility
 
 # Define the matrices of some useful graphs.
 C4_ADJ_MAT = scipy.sparse.csc_matrix([[0, 1, 0, 1],
@@ -537,6 +538,18 @@ def test_add_vertices():
     assert (np.all(mat_diff.todense() == pytest.approx(0)))
 
 
+def test_initialise_with_negative_weights():
+    # See stagpy issue #43.
+    mat = stag.utility.SprsMat([[0, -1, 0, 1],
+                                [-1, 0, 1, 0],
+                                [0, 1, 0, 1],
+                                [1, 0, 1, 0]])
+
+    # Initialising a graph should throw an error
+    with pytest.raises(AttributeError):
+        _ = stag.graph.Graph(mat)
+
+        
 def test_square_adjacency():
     # See stagpy issue #49.
     # Create a graph with some nodes of degree 0.

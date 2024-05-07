@@ -345,7 +345,7 @@ def approximate_similarity_graph(data: utility.DenseMat, a: float) -> graph.Grap
 
     @param data an \f$n \times d\f$ matrix representing the dataset.
     @param a the parameter of the similarity kernel.
-    @return a stag::Graph object representing the similarity of the data
+    @return a stag.graph.Graph object representing the similarity of the data
 
     \par Reference
     Peter Macgregor and He Sun, Fast Approximation of Similarity Graphs with
@@ -354,7 +354,7 @@ def approximate_similarity_graph(data: utility.DenseMat, a: float) -> graph.Grap
     return graph.Graph(stag_internal.approximate_similarity_graph(data.internal_densemat, a))
 
 
-def similarity_graph(data: utility.DenseMat, a: float):
+def similarity_graph(data: utility.DenseMat, a: float) -> graph.Graph:
     r"""
     Construct a complete similarity graph for the given dataset.
 
@@ -372,6 +372,6 @@ def similarity_graph(data: utility.DenseMat, a: float):
 
     @param data an \f$n \times d\f$ matrix representing the dataset.
     @param a the parameter of the similarity kernel.
-    @return a stag::Graph object representing the similarity of the data
+    @return a stag.graph.Graph object representing the similarity of the data
     """
     return graph.Graph(stag_internal.similarity_graph(data.internal_densemat, a))

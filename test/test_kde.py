@@ -114,3 +114,65 @@ def test_ckns_mnist():
     assert_ckns_relative_error(ckns_kde, data, a, 0.5)
 
 
+def test_ckns_oversample():
+    # Load the two moons dataset
+    filename = "data/moons.txt"
+    data = stag.data.load_matrix(filename)
+
+    # Create a CKNS KDE estimator
+    a = 10
+    k1 = 40
+    k2_constant = 50
+    min_mu = 0.05
+    offset = -2
+    ckns_kde = stag.kde.CKNSGaussianKDE(data, a, k1=k1, k2_constant=k2_constant,
+                                        min_mu=min_mu, sampling_offset=offset)
+    assert_ckns_relative_error(ckns_kde, data, a, 0.5)
+
+
+def test_ckns_small_mu():
+    # Load the two moons dataset
+    filename = "data/moons.txt"
+    data = stag.data.load_matrix(filename)
+
+    # Create a CKNS KDE estimator
+    a = 10
+    k1 = 40
+    k2_constant = 50
+    min_mu = 0.00001
+    offset = 0
+    ckns_kde = stag.kde.CKNSGaussianKDE(data, a, k1=k1, k2_constant=k2_constant,
+                                        min_mu=min_mu, sampling_offset=offset)
+    assert_ckns_relative_error(ckns_kde, data, a, 0.5)
+
+
+def test_ckns_random_sampling():
+    # Load the two moons dataset
+    filename = "data/moons.txt"
+    data = stag.data.load_matrix(filename)
+
+    # Create a CKNS KDE estimator
+    a = 10
+    k1 = 1
+    k2_constant = 50
+    min_mu = 1
+    offset = -10
+    ckns_kde = stag.kde.CKNSGaussianKDE(data, a, k1=k1, k2_constant=k2_constant,
+                                        min_mu=min_mu, sampling_offset=offset)
+    assert_ckns_relative_error(ckns_kde, data, a, 0.5)
+
+
+def test_ckns_random_sampling_mnist():
+    # Load the dataset
+    filename = "data/mnist.txt"
+    data = stag.data.load_matrix(filename)
+
+    # Create a CKNS KDE estimator
+    a = 0.000001
+    k1 = 1
+    k2_constant = 50
+    min_mu = 1
+    offset = -10
+    ckns_kde = stag.kde.CKNSGaussianKDE(data, a, k1=k1, k2_constant=k2_constant,
+                                        min_mu=min_mu, sampling_offset=offset)
+    assert_ckns_relative_error(ckns_kde, data, a, 0.5)

@@ -365,4 +365,4 @@ Eigen::MatrixXd ndArrayFromDenseMat(const DenseMat& mat) {
 %}
 
 // Metadata about the python interface
-#define VERSION "2.0.0"
+#define VERSION "2.0.1"

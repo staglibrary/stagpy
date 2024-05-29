@@ -164,6 +164,10 @@ class SprsMat(object):
     efficient since the data will stay on the C++ side of the library.
     """
 
+    # Prioritise this object's operator implementations over numpy
+    __array_priority__ = 1000
+
+
     def __init__(self, matrix: Union[scipy.sparse.spmatrix, List[List[float]]]):
         r"""
         Construct a STAG SprsMat.
@@ -289,12 +293,16 @@ class SprsMat(object):
             return SprsMat(self.internal_sprsmat.__mulfloat__(other))
         elif isinstance(other, SprsMat):
             return SprsMat(self.internal_sprsmat * other.internal_sprsmat)
+        elif isinstance(other, np.ndarray):
+            return self.to_scipy() * other
         else:
             return NotImplemented
 
     def __rmul__(self, other):
         if isinstance(other, SprsMat):
             return SprsMat(other.internal_sprsmat * self.internal_sprsmat)
+        elif isinstance(other, np.ndarray):
+            return other * self.to_scipy()
         else:
             return self.__mul__(other)
 

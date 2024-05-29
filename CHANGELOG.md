@@ -4,7 +4,12 @@ All notable changes to the library are documented here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [2.0.0] - Unreleased
+## [Unreleased]
+
+## Fixed
+- [Issue #59](https://github.com/staglibrary/stagpy/issues/59): Allow multiplication of SprsMat objects with numpy arrays.
+
+## [2.0.0] - 2024-05-13
 
 See also the release notes for the [STAG C++ 1.3.0 release](https://github.com/staglibrary/stag/releases/tag/v1.3.0)
 and the [STAG C++ 2.0.0 release](https://github.com/staglibrary/stag/releases/tag/v2.0.0).

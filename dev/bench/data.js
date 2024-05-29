@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1715080578635,
+  "lastUpdate": 1716993588165,
   "repoUrl": "https://github.com/staglibrary/stagpy",
   "entries": {
     "Performance Tests": [
@@ -586,6 +586,93 @@ window.BENCHMARK_DATA = {
             "unit": "iter/sec",
             "range": "stddev: 0.00008001234947543228",
             "extra": "mean: 14.5437771791014 msec\nrounds: 67"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "peter.macgregor@ed.ac.uk",
+            "name": "Peter Macgregor",
+            "username": "pmacg"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "74b02628e6bfc07d941fe8fe64215c05e4ef9d4c",
+          "message": "Merge pull request #62 from staglibrary/59-numpy-matmul\n\nAllow multiplication of SprsMat with numpy array",
+          "timestamp": "2024-05-29T15:28:09+01:00",
+          "tree_id": "6ab9315cddd37290eadccb5c78ab111b55337d1a",
+          "url": "https://github.com/staglibrary/stagpy/commit/74b02628e6bfc07d941fe8fe64215c05e4ef9d4c"
+        },
+        "date": 1716993587409,
+        "tool": "pytest",
+        "benches": [
+          {
+            "name": "test/test_performance.py::test_sbm",
+            "value": 900.466859423758,
+            "unit": "iter/sec",
+            "range": "stddev: 0.000019285576389991213",
+            "extra": "mean: 1.110535040278925 msec\nrounds: 720"
+          },
+          {
+            "name": "test/test_performance.py::test_load_edgelist",
+            "value": 419.58711716190567,
+            "unit": "iter/sec",
+            "range": "stddev: 0.00008400385348679754",
+            "extra": "mean: 2.383295289817325 msec\nrounds: 383"
+          },
+          {
+            "name": "test/test_performance.py::test_spectral_cluster",
+            "value": 177.46811652188396,
+            "unit": "iter/sec",
+            "range": "stddev: 0.00005729730570912932",
+            "extra": "mean: 5.634814971830098 msec\nrounds: 142"
+          },
+          {
+            "name": "test/test_performance.py::test_local_cluster",
+            "value": 9653.695376548445,
+            "unit": "iter/sec",
+            "range": "stddev: 0.0000036869034683574704",
+            "extra": "mean: 103.58727523444365 usec\nrounds: 3517"
+          },
+          {
+            "name": "test/test_performance.py::test_compute_eigensystem",
+            "value": 84.75337300811839,
+            "unit": "iter/sec",
+            "range": "stddev: 0.00005990388490023737",
+            "extra": "mean: 11.798940437499894 msec\nrounds: 80"
+          },
+          {
+            "name": "test/test_performance.py::test_construct_ckns_kde",
+            "value": 9.720372305092363,
+            "unit": "iter/sec",
+            "range": "stddev: 0.0015672040486595384",
+            "extra": "mean: 102.87671795000222 msec\nrounds: 20"
+          },
+          {
+            "name": "test/test_performance.py::test_query_ckns_kde",
+            "value": 0.06517199670962653,
+            "unit": "iter/sec",
+            "range": "stddev: 0.045035234062359306",
+            "extra": "mean: 15.3440135409 sec\nrounds: 20"
+          },
+          {
+            "name": "test/test_performance.py::test_approximate_similarity_graph",
+            "value": 0.0835793663078013,
+            "unit": "iter/sec",
+            "range": "stddev: 0.04427878908038771",
+            "extra": "mean: 11.96467554345001 sec\nrounds: 20"
+          },
+          {
+            "name": "test/test_performance.py::test_lap_eigvecs",
+            "value": 68.14309306784924,
+            "unit": "iter/sec",
+            "range": "stddev: 0.0002423757893833872",
+            "extra": "mean: 14.675001602940336 msec\nrounds: 68"
           }
         ]
       }

@@ -59,7 +59,7 @@ setup(
     description=DESCRIPTION,
     long_description=LONG_DESCRIPTION,
     packages=find_packages(),
-    install_requires=["scipy", "networkx", "matplotlib", "neo4j", "numpy"],
+    install_requires=["scipy", "networkx", "matplotlib", "neo4j", "numpy<2.0.0"],
     long_description_content_type='text/markdown',
     url=URL,
     include_package_data=True,

@@ -3,7 +3,7 @@ scipy
 networkx
 matplotlib
 neo4j
-numpy
+numpy>=1.26.4,<2.0.0
 
 # Needed for development only
 twine
@@ -11,3 +11,4 @@ auditwheel
 pytest
 doxypypy
 pytest-benchmark
+setuptools

@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- [Issue #66](https://github.com/staglibrary/stagpy/issues/66): Add save_matrix method
+- Add equality checking between dense matrix objects.
+
 ### Fixed
 - [Issue #68](https://github.com/staglibrary/stagpy/issues/68): Pin numpy version less than 2.0
 

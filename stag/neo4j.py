@@ -25,7 +25,7 @@ class Neo4jGraph(graph.LocalGraph):
     fast.
     """
     def __init__(self, uri: str, username: str, password: str):
-        """
+        r"""
         Connect to a neo4j database backend.
 
         For example, assuming that there is a Neo4j database running locally,
@@ -111,7 +111,7 @@ class Neo4jGraph(graph.LocalGraph):
     ##
 
     def query_node_labels(self, node_id: int) -> List[str]:
-        """
+        r"""
         Query the labels of the given node.
 
         For example, using the Neo4j movie database example, you can query
@@ -152,7 +152,7 @@ class Neo4jGraph(graph.LocalGraph):
     ##
 
     def query_id(self, property_name: str, property_value: str) -> int:
-        """
+        r"""
         Find the Neo4j ID of a node with the given property.
 
         For example, using the Neo4j movie database example you can find the
@@ -199,7 +199,7 @@ class Neo4jGraph(graph.LocalGraph):
     ##
 
     def query_property(self, id: int, property_name: str) -> str:
-        """
+        r"""
         Find the requested property of a Neo4j node.
 
         For example, using the Neo4j movie database example, you can find the

@@ -5026,6 +5026,9 @@ SWIGINTERN DenseMat DenseMat___mulint__(DenseMat *self,StagInt other){
 SWIGINTERN DenseMat DenseMat___neg__(DenseMat *self){
         return - *self;
     }
+SWIGINTERN bool DenseMat___eq__(DenseMat *self,DenseMat *other){
+        return *self == *other;
+    }
 SWIGINTERN DenseMat DenseMat___truedivfloat__(DenseMat *self,double other){
         return *self / other;
     }
@@ -16249,6 +16252,55 @@ fail:
 }
 
 
+SWIGINTERN PyObject *_wrap_DenseMat___eq__(PyObject *self, PyObject *args) {
+  PyObject *resultobj = 0;
+  DenseMat *arg1 = (DenseMat *) 0 ;
+  DenseMat *arg2 = (DenseMat *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  void *argp2 = 0 ;
+  int res2 = 0 ;
+  PyObject *swig_obj[2] ;
+  bool result;
+  
+  (void)self;
+  if (!SWIG_Python_UnpackTuple(args, "DenseMat___eq__", 2, 2, swig_obj)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_Eigen__MatrixT_StagReal_Eigen__Dynamic_Eigen__Dynamic_Eigen__RowMajor_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DenseMat___eq__" "', argument " "1"" of type '" "DenseMat *""'"); 
+  }
+  arg1 = reinterpret_cast< DenseMat * >(argp1);
+  res2 = SWIG_ConvertPtr(swig_obj[1], &argp2,SWIGTYPE_p_Eigen__MatrixT_StagReal_Eigen__Dynamic_Eigen__Dynamic_Eigen__RowMajor_t, 0 |  0 );
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "DenseMat___eq__" "', argument " "2"" of type '" "DenseMat *""'"); 
+  }
+  arg2 = reinterpret_cast< DenseMat * >(argp2);
+  {
+    try {
+      result = (bool)DenseMat___eq__(arg1,arg2);
+    } catch (std::invalid_argument &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::runtime_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::domain_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    }
+  }
+  resultobj = SWIG_From_bool(static_cast< bool >(result));
+  return resultobj;
+fail:
+  if (PyErr_Occurred() && !PyErr_ExceptionMatches(PyExc_TypeError)) {
+    return NULL;
+  }
+  PyErr_Clear();
+  Py_INCREF(Py_NotImplemented);
+  return Py_NotImplemented;
+}
+
+
 SWIGINTERN PyObject *_wrap_DenseMat___truedivfloat__(PyObject *self, PyObject *args) {
   PyObject *resultobj = 0;
   DenseMat *arg1 = (DenseMat *) 0 ;
@@ -17377,6 +17429,7 @@ static PyMethodDef SwigMethods[] = {
 	 { "DenseMat___mulfloat__", _wrap_DenseMat___mulfloat__, METH_VARARGS, NULL},
 	 { "DenseMat___mulint__", _wrap_DenseMat___mulint__, METH_VARARGS, NULL},
 	 { "DenseMat___neg__", _wrap_DenseMat___neg__, METH_O, NULL},
+	 { "DenseMat___eq__", _wrap_DenseMat___eq__, METH_VARARGS, NULL},
 	 { "DenseMat___truedivfloat__", _wrap_DenseMat___truedivfloat__, METH_VARARGS, NULL},
 	 { "DenseMat___truedivint__", _wrap_DenseMat___truedivint__, METH_VARARGS, NULL},
 	 { "DenseMat___transpose__", _wrap_DenseMat___transpose__, METH_O, NULL},

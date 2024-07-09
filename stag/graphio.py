@@ -6,7 +6,7 @@ from . import graph
 
 
 def load_edgelist(filename: str) -> graph.Graph:
-    """
+    r"""
     Load a graph from an edgelist file.
 
     We define an edgelist file in the following way.

@@ -7,7 +7,7 @@
       <excludeFolder url="file://$MODULE_DIR$/dist" />
       <excludeFolder url="file://$MODULE_DIR$/stag.egg-info" />
     </content>
-    <orderEntry type="jdk" jdkName="Python 3.9.16 WSL (Ubuntu): (/home/peter/.virtualenvs/stagpy/bin/python)" jdkType="Python SDK" />
+    <orderEntry type="jdk" jdkName="Python 3.12 (stagpy)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
 </module>

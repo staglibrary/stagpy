@@ -652,6 +652,9 @@ class DenseMat(object):
     def __neg__(self):
         return _stag_internal.DenseMat___neg__(self)
 
+    def __eq__(self, other):
+        return _stag_internal.DenseMat___eq__(self, other)
+
     def __truedivfloat__(self, other):
         return _stag_internal.DenseMat___truedivfloat__(self, other)
 

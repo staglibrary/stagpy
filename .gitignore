@@ -133,3 +133,6 @@ dmypy.json
 
 # Ignore performance test output
 test/output.json
+
+# Ignore test helper files
+**/test.mat

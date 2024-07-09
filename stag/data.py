@@ -7,6 +7,7 @@ import stag.utility
 from . import stag_internal
 from . import utility
 
+
 class DataPoint(object):
     """
     A data point in d-dimensional space.
@@ -40,6 +41,7 @@ class DataPoint(object):
         """Convert this data point to a numpy array."""
         return self.internal_datapoint.to_vector()
 
+
 def load_matrix(filename: str) -> stag.utility.DenseMat:
     r"""
     Load data into a matrix from a file.
@@ -55,3 +57,14 @@ def load_matrix(filename: str) -> stag.utility.DenseMat:
     @throws a runtime exception  if the file doesn't exist or cannot be parsed
     """
     return stag.utility.DenseMat(stag_internal.load_matrix(filename))
+
+
+def save_matrix(data: stag.utility.DenseMat, filename: str) -> None:
+    r"""
+    Save a data matrix to a text file.
+
+    @param data the matrix to save
+    @param filename the name of the file to save the matrix to
+    @throws a runtime exception if the file cannot be opened for writing
+    """
+    return stag_internal.save_matrix(data.internal_densemat, filename)

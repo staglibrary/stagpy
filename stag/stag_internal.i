@@ -235,6 +235,10 @@ public:
         return - *$self;
     }
 
+    bool __eq__(DenseMat* other) {
+        return *$self == *other;
+    }
+
     DenseMat __truedivfloat__(double other) {
         return *$self / other;
     }

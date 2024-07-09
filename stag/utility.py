@@ -144,6 +144,12 @@ class DenseMat(object):
             return DenseMat(self.internal_densemat.__truedivfloat__(other))
         else:
             return NotImplemented
+
+    def __eq__(self, other):
+        if isinstance(other, DenseMat):
+            return self.internal_densemat == other.internal_densemat
+        else:
+            return False
     ##
     # \endcond
     ##

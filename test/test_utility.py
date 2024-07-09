@@ -483,3 +483,21 @@ def test_densemat_outer_product():
     mat3 = vec1.transpose() @ vec2
     mat_diff = mat3 - expected_mat
     assert(np.all(mat_diff.to_numpy() == pytest.approx(0)))
+
+
+def test_densemat_eq():
+    mat1 = stag.utility.DenseMat([[0, -2, 1, 0],
+                                  [0, -4, 2, 0],
+                                  [0, 0, 0, 0],
+                                  [0, -2, 1, 0]])
+    mat2 = stag.utility.DenseMat([[0, -2, 1, 0],
+                                  [0, -4, 2, 0],
+                                  [0, 0, 0, 0],
+                                  [0, -2, 1, 0]])
+    assert(mat1 == mat2)
+
+    mat3 = stag.utility.DenseMat([[0, -2, 1, 0],
+                                  [1, -4, 2, 0],
+                                  [0, 0, 0, 0],
+                                  [0, -2, 1, 0]])
+    assert(mat1 != mat3)

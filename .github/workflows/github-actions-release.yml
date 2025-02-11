@@ -34,6 +34,10 @@ jobs:
             python-str: 312
             python-version: "3.12"
             platform_id: win_amd64
+          - os: windows-latest
+            python-str: 313
+            python-version: "3.13"
+            platform_id: win_amd64
 
           # Linux 64 bit manylinux2014
           - os: ubuntu-latest
@@ -53,16 +57,19 @@ jobs:
             python-version: "3.10"
             platform_id: manylinux_x86_64
             manylinux_image: manylinux2014
-
           - os: ubuntu-latest
             python-str: 311
             python-version: "3.11"
             platform_id: manylinux_x86_64
             manylinux_image: manylinux2014
-
           - os: ubuntu-latest
             python-str: 312
             python-version: "3.12"
+            platform_id: manylinux_x86_64
+            manylinux_image: manylinux2014
+          - os: ubuntu-latest
+            python-str: 313
+            python-version: "3.13"
             platform_id: manylinux_x86_64
             manylinux_image: manylinux2014
 
@@ -87,6 +94,10 @@ jobs:
             python-str: 312
             python-version: "3.12"
             platform_id: macosx_x86_64
+          - os: macos-latest
+            python-str: 312
+            python-version: "3.13"
+            platform_id: macosx_x86_64
 
           # MacOS arm64
           - os: macos-latest
@@ -108,6 +119,10 @@ jobs:
           - os: macos-latest
             python-str: 312
             python-version: "3.12"
+            platform_id: macosx_arm64
+          - os: macos-latest
+            python-str: 312
+            python-version: "3.13"
             platform_id: macosx_arm64
     steps:
       - uses: actions/checkout@v3

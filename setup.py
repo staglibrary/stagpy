@@ -6,7 +6,7 @@ from distutils.core import setup, Extension
 
 import numpy
 
-VERSION = '2.1.0'
+VERSION = '2.1.1'
 DESCRIPTION = 'STAG: Spectral Toolkit of Algorithms for Graphs'
 LONG_DESCRIPTION =\
     "This library provides several methods and algorithms relating to spectral graph theory in python."

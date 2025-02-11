@@ -96,7 +96,7 @@ jobs:
             python-version: "3.12"
             platform_id: macosx_x86_64
           - os: macos-latest
-            python-str: 312
+            python-str: 313
             python-version: "3.13"
             platform_id: macosx_x86_64
 
@@ -122,7 +122,7 @@ jobs:
             python-version: "3.12"
             platform_id: macosx_arm64
           - os: macos-latest
-            python-str: 312
+            python-str: 313
             python-version: "3.13"
             platform_id: macosx_arm64
     steps:

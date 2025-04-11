@@ -17,17 +17,31 @@ URL = "https://staglibrary.io"
 numpy_path = ""
 if platform.system() == 'Linux':
     compile_args = ['-std=c++2a']
-    numpy_path = os.path.join(numpy.__path__[0], 'core/include')
+    numpy_paths = [
+        os.path.join(numpy.__path__[0], 'core/include'),
+        os.path.join(numpy.__path__[0], '_core/include')
+    ]
 elif platform.system() == 'Windows':
     compile_args = ['/std:c++20']
-    numpy_path = os.path.join(numpy.__path__[0], 'core\\include')
+    numpy_paths = [
+        os.path.join(numpy.__path__[0], 'core\\include'),
+        os.path.join(numpy.__path__[0], '_core\\include')
+    ]
 else:
     # Compile with clang on MacOS
     compile_args = ['-std=c++2a', '-mmacosx-version-min=10.15']
-    numpy_path = os.path.join(numpy.__path__[0], 'core/include')
+    numpy_paths = [
+        os.path.join(numpy.__path__[0], 'core/include'),
+        os.path.join(numpy.__path__[0], '_core/include')
+    ]
 
-# specify the name of the extension and source files
+        # specify the name of the extension and source files
 # required to compile this
+stag_include_dirs = ["stag/eigen-3.4.0",
+                     "stag/spectra-1.0.1",
+                     "stag/stag_lib",
+                     "stag/stag_lib/KMeansRex"]
+all_include_dirs = stag_include_dirs + numpy_paths
 ext_modules = [Extension(name='stag._stag_internal',
                          sources=["stag/stag_internal_wrap.cxx",
                                   "stag/stag_lib/graph.cpp",
@@ -41,12 +55,7 @@ ext_modules = [Extension(name='stag._stag_internal',
                                   "stag/stag_lib/kde.cpp",
                                   "stag/stag_lib/KMeansRex/KMeansRexCore.cpp"
                                   ],
-                         include_dirs=["stag/eigen-3.4.0",
-                                       "stag/spectra-1.0.1",
-                                       "stag/stag_lib",
-                                       "stag/stag_lib/KMeansRex",
-                                       numpy_path
-                                       ],
+                         include_dirs=all_include_dirs,
                          extra_compile_args=compile_args)]
 
 # Setting up

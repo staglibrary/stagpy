@@ -142,6 +142,7 @@ jobs:
         run: python -m cibuildwheel --output-dir dist/
       - uses: actions/upload-artifact@v4.4.3
         with:
+          name: ${{ matrix.python-str }}-${{ matrix.platform_id }}-wheel
           path: ./dist/*.whl
 
     # Build the source distribution under Linux
@@ -166,6 +167,7 @@ jobs:
       - name: Store artifacts
         uses: actions/upload-artifact@v4.4.3
         with:
+          name: source-dist
           path: dist/*.tar.gz
 
   upload_pypi:
@@ -176,9 +178,8 @@ jobs:
       - build_sdist
     steps:
       - uses: actions/setup-python@v4
-      - uses: actions/download-artifact@v3
+      - uses: actions/download-artifact@v4
         with:
-          name: artifact
           path: ./dist/
       - name: Publish package to PyPI
         uses: pypa/gh-action-pypi-publish@v1.4.1

@@ -11080,7 +11080,58 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_approximate_similarity_graph(PyObject *self, PyObject *args) {
+SWIGINTERN PyObject *_wrap_approximate_similarity_graph__SWIG_0(PyObject *self, Py_ssize_t nobjs, PyObject **swig_obj) {
+  PyObject *resultobj = 0;
+  DenseMat *arg1 = (DenseMat *) 0 ;
+  StagReal arg2 ;
+  bool arg3 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  double val2 ;
+  int ecode2 = 0 ;
+  bool val3 ;
+  int ecode3 = 0 ;
+  SwigValueWrapper< stag::Graph > result;
+  
+  (void)self;
+  if ((nobjs < 3) || (nobjs > 3)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_Eigen__MatrixT_StagReal_Eigen__Dynamic_Eigen__Dynamic_Eigen__RowMajor_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "approximate_similarity_graph" "', argument " "1"" of type '" "DenseMat *""'"); 
+  }
+  arg1 = reinterpret_cast< DenseMat * >(argp1);
+  ecode2 = SWIG_AsVal_double(swig_obj[1], &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "approximate_similarity_graph" "', argument " "2"" of type '" "StagReal""'");
+  } 
+  arg2 = static_cast< StagReal >(val2);
+  ecode3 = SWIG_AsVal_bool(swig_obj[2], &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "approximate_similarity_graph" "', argument " "3"" of type '" "bool""'");
+  } 
+  arg3 = static_cast< bool >(val3);
+  {
+    try {
+      result = stag::approximate_similarity_graph(arg1,arg2,arg3);
+    } catch (std::invalid_argument &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::runtime_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::domain_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    }
+  }
+  resultobj = SWIG_NewPointerObj((new stag::Graph(result)), SWIGTYPE_p_stag__Graph, SWIG_POINTER_OWN |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_approximate_similarity_graph__SWIG_1(PyObject *self, Py_ssize_t nobjs, PyObject **swig_obj) {
   PyObject *resultobj = 0;
   DenseMat *arg1 = (DenseMat *) 0 ;
   StagReal arg2 ;
@@ -11088,11 +11139,10 @@ SWIGINTERN PyObject *_wrap_approximate_similarity_graph(PyObject *self, PyObject
   int res1 = 0 ;
   double val2 ;
   int ecode2 = 0 ;
-  PyObject *swig_obj[2] ;
   SwigValueWrapper< stag::Graph > result;
   
   (void)self;
-  if (!SWIG_Python_UnpackTuple(args, "approximate_similarity_graph", 2, 2, swig_obj)) SWIG_fail;
+  if ((nobjs < 2) || (nobjs > 2)) SWIG_fail;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_Eigen__MatrixT_StagReal_Eigen__Dynamic_Eigen__Dynamic_Eigen__RowMajor_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "approximate_similarity_graph" "', argument " "1"" of type '" "DenseMat *""'"); 
@@ -11121,6 +11171,148 @@ SWIGINTERN PyObject *_wrap_approximate_similarity_graph(PyObject *self, PyObject
   return resultobj;
 fail:
   return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_approximate_similarity_graph__SWIG_2(PyObject *self, Py_ssize_t nobjs, PyObject **swig_obj) {
+  PyObject *resultobj = 0;
+  DenseMat *arg1 = (DenseMat *) 0 ;
+  StagReal arg2 ;
+  bool arg3 ;
+  StagInt arg4 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  double val2 ;
+  int ecode2 = 0 ;
+  bool val3 ;
+  int ecode3 = 0 ;
+  SwigValueWrapper< stag::Graph > result;
+  
+  (void)self;
+  if ((nobjs < 4) || (nobjs > 4)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_Eigen__MatrixT_StagReal_Eigen__Dynamic_Eigen__Dynamic_Eigen__RowMajor_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "approximate_similarity_graph" "', argument " "1"" of type '" "DenseMat *""'"); 
+  }
+  arg1 = reinterpret_cast< DenseMat * >(argp1);
+  ecode2 = SWIG_AsVal_double(swig_obj[1], &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "approximate_similarity_graph" "', argument " "2"" of type '" "StagReal""'");
+  } 
+  arg2 = static_cast< StagReal >(val2);
+  ecode3 = SWIG_AsVal_bool(swig_obj[2], &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "approximate_similarity_graph" "', argument " "3"" of type '" "bool""'");
+  } 
+  arg3 = static_cast< bool >(val3);
+  {
+    // StagInt typemap (in)
+    if (!PyLong_Check((PyObject *) swig_obj[3])) {
+      PyErr_SetString(PyExc_TypeError, "Expected an integer.");
+      return NULL;
+    }
+    arg4 = (StagInt) PyLong_AsLong((PyObject*) swig_obj[3]);
+  }
+  {
+    try {
+      result = stag::approximate_similarity_graph(arg1,arg2,arg3,SWIG_STD_MOVE(arg4));
+    } catch (std::invalid_argument &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::runtime_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    } catch (std::domain_error &e) {
+      PyErr_SetString(PyExc_AttributeError, const_cast<char*>(e.what()));
+      return NULL;
+    }
+  }
+  resultobj = SWIG_NewPointerObj((new stag::Graph(result)), SWIGTYPE_p_stag__Graph, SWIG_POINTER_OWN |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_approximate_similarity_graph(PyObject *self, PyObject *args) {
+  Py_ssize_t argc;
+  PyObject *argv[5] = {
+    0
+  };
+  
+  if (!(argc = SWIG_Python_UnpackTuple(args, "approximate_similarity_graph", 0, 4, argv))) SWIG_fail;
+  --argc;
+  if (argc == 2) {
+    int _v = 0;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_Eigen__MatrixT_StagReal_Eigen__Dynamic_Eigen__Dynamic_Eigen__RowMajor_t, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      {
+        int res = SWIG_AsVal_double(argv[1], NULL);
+        _v = SWIG_CheckState(res);
+      }
+      if (_v) {
+        return _wrap_approximate_similarity_graph__SWIG_1(self, argc, argv);
+      }
+    }
+  }
+  if (argc == 3) {
+    int _v = 0;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_Eigen__MatrixT_StagReal_Eigen__Dynamic_Eigen__Dynamic_Eigen__RowMajor_t, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      {
+        int res = SWIG_AsVal_double(argv[1], NULL);
+        _v = SWIG_CheckState(res);
+      }
+      if (_v) {
+        {
+          int res = SWIG_AsVal_bool(argv[2], NULL);
+          _v = SWIG_CheckState(res);
+        }
+        if (_v) {
+          return _wrap_approximate_similarity_graph__SWIG_0(self, argc, argv);
+        }
+      }
+    }
+  }
+  if (argc == 4) {
+    int _v = 0;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_Eigen__MatrixT_StagReal_Eigen__Dynamic_Eigen__Dynamic_Eigen__RowMajor_t, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      {
+        int res = SWIG_AsVal_double(argv[1], NULL);
+        _v = SWIG_CheckState(res);
+      }
+      if (_v) {
+        {
+          int res = SWIG_AsVal_bool(argv[2], NULL);
+          _v = SWIG_CheckState(res);
+        }
+        if (_v) {
+          {
+            // Typecheck for StagInt
+            _v = PyLong_Check((PyObject*) argv[3]);
+          }
+          if (_v) {
+            return _wrap_approximate_similarity_graph__SWIG_2(self, argc, argv);
+          }
+        }
+      }
+    }
+  }
+  
+fail:
+  SWIG_Python_RaiseOrModifyTypeError("Wrong number or type of arguments for overloaded function 'approximate_similarity_graph'.\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    stag::approximate_similarity_graph(DenseMat *,StagReal,bool)\n"
+    "    stag::approximate_similarity_graph(DenseMat *,StagReal)\n"
+    "    stag::approximate_similarity_graph(DenseMat *,StagReal,bool,StagInt)\n");
+  return 0;
 }
 
 
@@ -18084,7 +18276,7 @@ SWIG_init(void) {
   SWIG_Python_SetConstant(d, "NormalisedLaplacian",SWIG_From_int(static_cast< int >(stag::NormalisedLaplacian)));
   SWIG_Python_SetConstant(d, "LSH_PARAMETER_W",SWIG_From_double(static_cast< double >(4.0)));
   SWIG_Python_SetConstant(d, "EPSILON",SWIG_From_double(static_cast< double >(0.0000000001)));
-  SWIG_Python_SetConstant(d, "VERSION",SWIG_FromCharPtr("2.0.2"));
+  SWIG_Python_SetConstant(d, "VERSION",SWIG_FromCharPtr("2.1.1"));
 #if PY_VERSION_HEX >= 0x03000000
   return m;
 #else

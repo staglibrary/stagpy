@@ -4,6 +4,16 @@ All notable changes to the library are documented here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.1.0] - 2025-06-06
+### Changed
+- [Issue #160](https://github.com/staglibrary/stag/issues/160): Make progress bar an optional parameter when constructing
+  an approximate similarity graph.
+
+### Fixed
+- [Issue #158](https://github.com/staglibrary/stag/issues/158): Fix iteration order in KDE query
+- [Issue #165](https://github.com/staglibrary/stag/issues/165): Approximate similarity graph bug with large numbers of points
+- [Issue #177](https://github.com/staglibrary/stag/issues/177): Check for approximate symmetry in adjacency matrices to allow for floating point errors
+
 ## [2.0.0] - 2024-05-04
 ### Added
 - [Issue #131](https://github.com/staglibrary/stag/issues/131): Implement the Euclidean locality-sensitive hashing algorithm

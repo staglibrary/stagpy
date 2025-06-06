@@ -346,13 +346,31 @@ namespace stag {
    *
    * @param data an \f$n \times d\f$ Eigen matrix representing the dataset.
    * @param a the parameter of the similarity kernel.
+   * @param show_progress (optional) whether to show a progress bar when
+   *                      constructing the graph. Default: false.
    * @return a stag::Graph object representing the similarity of the data
    *
    * \par Reference
    * Peter Macgregor and He Sun, Fast Approximation of Similarity Graphs with
    * Kernel Density Estimation. In NeurIPS'23.
    */
+  Graph approximate_similarity_graph(DenseMat* data, StagReal a,
+                                     bool show_progress);
+
+  /**
+   * @overload
+   */
   Graph approximate_similarity_graph(DenseMat* data, StagReal a);
+
+  /**
+   * \cond
+   * Do not document these additional methods for testing the node cutoff
+   */
+  Graph approximate_similarity_graph(DenseMat* data, StagReal a,
+                                     bool show_progress, StagInt asg_tree_node_cutoff);
+  /**
+   * \endcond
+   */
 
   /**
    * Construct a complete similarity graph for the given dataset.
@@ -372,7 +390,6 @@ namespace stag {
    * @param data an \f$n \times d\f$ Eigen matrix representing the dataset.
    * @param a the parameter of the similarity kernel.
    * @return a stag::Graph object representing the similarity of the data
-   *
    */
   Graph similarity_graph(DenseMat* data, StagReal a);
 }

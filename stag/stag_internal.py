@@ -429,8 +429,8 @@ def conductance(graph, cluster):
 def symmetric_difference(S, T):
     return _stag_internal.symmetric_difference(S, T)
 
-def approximate_similarity_graph(data, a):
-    return _stag_internal.approximate_similarity_graph(data, a)
+def approximate_similarity_graph(*args):
+    return _stag_internal.approximate_similarity_graph(*args)
 
 def similarity_graph(data, a):
     return _stag_internal.similarity_graph(data, a)

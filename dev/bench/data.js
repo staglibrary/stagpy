@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1744379189241,
+  "lastUpdate": 1749208733584,
   "repoUrl": "https://github.com/staglibrary/stagpy",
   "entries": {
     "Performance Tests": [
@@ -1019,6 +1019,93 @@ window.BENCHMARK_DATA = {
             "unit": "iter/sec",
             "range": "stddev: 0.0001080196749581858",
             "extra": "mean: 14.161304676056549 msec\nrounds: 71"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "prm4@st-andrews.ac.uk",
+            "name": "Peter Macgregor",
+            "username": "pmacg"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "c4cead88a67a2d9b479c22675ed788a19b4eb9de",
+          "message": "Merge pull request #76 from staglibrary/release-2.1.2\n\nRelease 2.1.2",
+          "timestamp": "2025-06-06T12:08:12+01:00",
+          "tree_id": "8fd71c6df01bd44a89506ff46410a5230a846bce",
+          "url": "https://github.com/staglibrary/stagpy/commit/c4cead88a67a2d9b479c22675ed788a19b4eb9de"
+        },
+        "date": 1749208731784,
+        "tool": "pytest",
+        "benches": [
+          {
+            "name": "test/test_performance.py::test_sbm",
+            "value": 922.8898055595804,
+            "unit": "iter/sec",
+            "range": "stddev: 0.000021909723416034687",
+            "extra": "mean: 1.0835529810557012 msec\nrounds: 739"
+          },
+          {
+            "name": "test/test_performance.py::test_load_edgelist",
+            "value": 437.09995323070086,
+            "unit": "iter/sec",
+            "range": "stddev: 0.000018627018667494765",
+            "extra": "mean: 2.287806238844874 msec\nrounds: 381"
+          },
+          {
+            "name": "test/test_performance.py::test_spectral_cluster",
+            "value": 177.47540541328638,
+            "unit": "iter/sec",
+            "range": "stddev: 0.00005104593657485381",
+            "extra": "mean: 5.634583550725259 msec\nrounds: 138"
+          },
+          {
+            "name": "test/test_performance.py::test_local_cluster",
+            "value": 10336.052046419854,
+            "unit": "iter/sec",
+            "range": "stddev: 0.0000045592830212100005",
+            "extra": "mean: 96.74873883267398 usec\nrounds: 3649"
+          },
+          {
+            "name": "test/test_performance.py::test_compute_eigensystem",
+            "value": 82.72264517481058,
+            "unit": "iter/sec",
+            "range": "stddev: 0.0020077754736247963",
+            "extra": "mean: 12.088588292683182 msec\nrounds: 82"
+          },
+          {
+            "name": "test/test_performance.py::test_construct_ckns_kde",
+            "value": 8.81112813375549,
+            "unit": "iter/sec",
+            "range": "stddev: 0.0035281855895709386",
+            "extra": "mean: 113.49284504999915 msec\nrounds: 20"
+          },
+          {
+            "name": "test/test_performance.py::test_query_ckns_kde",
+            "value": 0.06370359769172494,
+            "unit": "iter/sec",
+            "range": "stddev: 0.08416566225875748",
+            "extra": "mean: 15.697700541800002 sec\nrounds: 20"
+          },
+          {
+            "name": "test/test_performance.py::test_approximate_similarity_graph",
+            "value": 0.11251267056524158,
+            "unit": "iter/sec",
+            "range": "stddev: 0.03345319854151934",
+            "extra": "mean: 8.887887870550012 sec\nrounds: 20"
+          },
+          {
+            "name": "test/test_performance.py::test_lap_eigvecs",
+            "value": 67.57921400953055,
+            "unit": "iter/sec",
+            "range": "stddev: 0.00005801262878574389",
+            "extra": "mean: 14.797449402992052 msec\nrounds: 67"
           }
         ]
       }
